@@ -14,6 +14,9 @@ async function get_dias_uteis(data_inicial, data_final) {
             // return retorno;
         })
         .fail(function (xhr, status, errorThrown) {
+            console.log("E001: teste 5");
+            console.log(data_inicial);
+            console.log(data_final);
             console.log("E001: Erro ao proessar requisição de dias-uteis-periodo");
             // console.log(xhr);
             // console.log(status);
@@ -84,6 +87,7 @@ async function get_indice_contratos_digitados_pagos_sintetico(mes, ano) {
             console.log("E001: Erro ao proessar requisição de indice-contratos-digitados-pagos-sintetico");
         });
 }
+
 
 async function get_campanha_perfil() {
     return $.ajax({

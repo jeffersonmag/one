@@ -128,22 +128,21 @@
 
             <div class="col-sm-12 col-md-12" >
                 <div class="box box-info"style="overflow-y: hidden;overflow-x: auto;">
-                <div class="box-header with-border">
-                <h3 class="box-title">Contratos Digitados x Pagos</h3>
-                <!--<h3 class="box-title">Contratos digitados x pagos (<?php //echo date('m').'/'.date('Y');?>)</h3>-->
+                <div class="box-header with-border">  
                 <div class="box-footer clearfix">
-                <ul class="pagination pagination-sm no-margin pull-left">
+                <h3 class="box-title">Contratos Digitados x Pagos</h3>              
+                <!--<h3 class="box-title">Contratos digitados x pagos (<?php //echo date('m').'/'.date('Y');?>)</h3>-->                                
+                <ul id="lista_meses" class="pagination pagination-sm no-margin pull-right">
                   <!--<li><a href="#">&laquo;</a></li>-->
-                  <li><a href="#"><?php echo date('m').'/'.date('Y');?></a></li>
-                  <li><a href="#"><?php echo date('m', strtotime('-1 months')).'/'.date('Y');?></a></li>
-                  <li><a href="#"><?php echo date('m', strtotime('-2 months')).'/'.date('Y');?></a></li>
-                  <!--<li><a href="#">&raquo;</a></li>-->
+                  <li><a href="#" onclick="get_indice_contratos_digitados_pagos_sintetico_mes(<?php echo date('m', strtotime('-2 months'));?>, <?php echo date('Y');?>); escreve_mesano(<?php echo date('m', strtotime('-2 months'));?>, <?php echo date('Y');?>, this);"><?php echo date('m', strtotime('-2 months')).'/'.date('Y');?></a></li>
+                  <li><a href="#" onclick="get_indice_contratos_digitados_pagos_sintetico_mes(<?php echo date('m', strtotime('-1 months'));?>, <?php echo date('Y');?>); escreve_mesano(<?php echo date('m', strtotime('-1 months'));?>, <?php echo date('Y');?>, this);"><?php echo date('m', strtotime('-1 months')).'/'.date('Y');?></a></li>
+                  <li><a href="#" onclick="get_indice_contratos_digitados_pagos_sintetico_mes(<?php echo date('m');?>, <?php echo date('Y');?>); escreve_mesano(<?php echo date('m');?>, <?php echo date('Y');?>, this);"><?php echo date('m').'/'.date('Y');?></a></li>                 
+                  <!--<li><a href="#">&raquo;</a></li>-->                  
                 </ul>
                 </div>
 
                 <div class="box-tools pull-right">
-                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                  </button>
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 </div>
                 </div>
                 <div class="box-body grafico">
@@ -198,7 +197,7 @@
                         </tr>
                       <!-- </table>
 
-                      <table style="width: 100%;"> -->
+                      <table style="width: 100%;">-->
                         <tr class="w-25">
                           <th scope="row">Propostas digitadas</th>
                           <td style="text-align: right;padding-left: 4px;" class="propostas_digitadas">
@@ -240,7 +239,6 @@
           </div>
 
           <div class="row">
-
                     <!-- carrossel -->
                     <div class="col-sm-12">
                     <div class="box box-solid">
@@ -279,15 +277,10 @@
                         <!-- /.box-body -->
                     </div>
                     <!-- carrossel -->
-                </div>
-
-                
-
+                </div> 
             </div>
-
             </section>
             <!-- /.content -->
-
         </div>
         <!-- /.content-wrapper -->
         <?php require_once('../footer.php');?>

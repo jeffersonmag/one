@@ -140,13 +140,13 @@ function get_indice_contratos_digitados_pagos($mes, $ano){
                 "Authorization: " . $_SESSION['token']
             ),
             'content' => '{
-                "ano": "'.$mes.'",
-                "mes": "'.$ano.'"
-              }'
-           // 'content' => '{
-           //     "ano": "'.date('Y').'",
-           //     "mes": "'.date('m').'"
-           // }'
+                "ano": "'.$ano.'",
+                "mes": "'.$mes.'"
+            }'
+            //'content' => '{
+            //    "ano": "'.date('Y').'",
+            //    "mes": "'.date('m').'"
+            //}'
         ),
         //aqui serve para usar ssl desabilitando a verificacao do certificado
         'ssl' => array(
@@ -173,8 +173,8 @@ function get_indice_contratos_digitados_pagos_sintetico($mes, $ano){
                 "Authorization: " . $_SESSION['token']
             ),
             'content' => '{
-                "ano": "'.$mes.'",
-                "mes": "'.$ano.'"
+                "ano": "'.$ano.'",
+                "mes": "'.$mes.'"
               }'
 
             //'content' => '{
