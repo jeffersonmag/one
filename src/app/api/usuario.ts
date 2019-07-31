@@ -14,12 +14,18 @@ export class UsuarioApiService {
     private sessionService: SessionService,
   ) { }
 
-  dados() {
+  dados(user) {
     return new Promise((resolve, reject) => {
-      const response = this.requestService.get(`${environment.urlApi}/dados-usuario`, {}, true);
+      const response = this.requestService.post(`${environment.urlApi}/dados-usuario`, {
+        "cpf": user.cpf,
+        "senha": String(user.senha).toUpperCase(),
+        "projeto": "CORBAN",
+        "at_cliente": "RIBERCRED"
+      });
       response
         .then((s) => {
           this.sessionService.set('user', s);
+          this.sessionService.set('token', s.token);
           resolve(s);
         })
         .catch((e) => {

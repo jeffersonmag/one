@@ -16,7 +16,12 @@ import {
 
 import { ThemeModule } from './../@theme/theme.module';
 import { DashboardModule } from './../pages/dashboard/dashboard.module';
+import { ButtonsComponent } from './../pages/forms/buttons/buttons.component';
+import { DatepickerComponent } from './../pages/forms/datepicker/datepicker.component';
+import { FormInputsComponent } from './../pages/forms/form-inputs/form-inputs.component';
+import { FormLayoutsComponent } from './../pages/forms/form-layouts/form-layouts.component';
 import { FormsRoutingModule } from './../pages/forms/forms-routing.module';
+import { FormsComponent } from './../pages/forms/forms.component';
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './login.component';
 import { TelaComponent } from './tela/tela.component';
@@ -29,7 +34,12 @@ import { TelaComponent } from './tela/tela.component';
 @NgModule({
   declarations: [
     LoginComponent,
-    TelaComponent
+    TelaComponent,
+    FormsComponent,
+    FormInputsComponent,
+    FormLayoutsComponent,
+    ButtonsComponent,
+    DatepickerComponent
   ],
   imports: [
     LoginRoutingModule,

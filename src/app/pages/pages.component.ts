@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { SessionService } from '../services/session.service';
-import { UsuarioApiService } from './../api/usuario';
 import { MENU_ITEMS } from './pages-menu';
 
 @Component({
@@ -22,7 +21,6 @@ export class PagesComponent implements OnInit {
   constructor(
     private router: Router,
     private sessionService: SessionService,
-    private usuarioApiService: UsuarioApiService
   ) { }
 
 
@@ -32,14 +30,6 @@ export class PagesComponent implements OnInit {
     console.log(token);
     if (!token) {
       this.router.navigate(['/']);
-    } else {
-      this.usuarioApiService.dados()
-        .then((s) => {
-          console.log(s)
-        })
-        .catch((e) => {
-          console.log(e)
-        });
     }
   }
 

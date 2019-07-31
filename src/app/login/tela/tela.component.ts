@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { SessionService } from '../../services/session.service';
-import { LoginApiService } from './../../api/login';
+import { UsuarioApiService } from './../../api/usuario';
 
 @Component({
   selector: 'ngx-tela',
@@ -20,7 +20,7 @@ export class TelaComponent implements OnInit {
 
 
   constructor(
-    private loginApiService: LoginApiService,
+    private usuarioApiService: UsuarioApiService,
     private router: Router,
     private sessionService: SessionService,
   ) { }
@@ -52,7 +52,7 @@ export class TelaComponent implements OnInit {
     if (f.valid) {
       console.log('dados validos');
 
-      this.loginApiService.openToken({
+      this.usuarioApiService.dados({
         "cpf": f.value.cpf,
         "senha": f.value.senha
       })
