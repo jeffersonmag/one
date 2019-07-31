@@ -1,0 +1,32 @@
+import { Injectable } from '@angular/core';
+
+import { environment } from '../../environments/environment';
+import { RequestService } from '../services/request.service';
+import { SessionService } from './../services/session.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UsuarioApiService {
+
+  constructor(
+    private requestService: RequestService,
+    private sessionService: SessionService,
+  ) { }
+
+  dados() {
+    return new Promise((resolve, reject) => {
+      const response = this.requestService.get(`${environment.urlApi}/dados-usuario`, {}, true);
+      response
+        .then((s) => {
+          this.sessionService.set('user', s);
+          resolve(s);
+        })
+        .catch((e) => {
+          console.log(e);
+          reject('Sem informação do usuarios.');
+        })
+    })
+
+  }
+}
