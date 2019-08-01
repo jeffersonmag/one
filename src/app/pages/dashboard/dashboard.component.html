@@ -4,35 +4,104 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-xxxl-3 col-xxl-4 col-lg-5 col-md-6">
-    aaa
+<div class="infinite-cards row">
+  <div class="col-md-12">
+
+    <nb-card [nbSpinner]="campanhasPerfil.length < 1" nbSpinnerStatus="success">
+      <nb-card-header>Campanhas</nb-card-header>
+      <div class="maxContent">
+        <nb-card-body>
+          <table class="tabela">
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Nome</th>
+                <th>Criterio</th>
+                <th class="textCenter">Data inicio campanha</th>
+                <th class="textCenter">Data fim campanha</th>
+                <th class="textCenter">Data inicio pendencia fisico</th>
+                <th class="textCenter">Data fim pendencia fisico</th>
+                <th class="textCenter">Situação da operação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let i of campanhasPerfil" [ngClass]="{'active': i.codigo_campanha === filtro.campanha.codigo}"
+                (click)="atualizarFiltro(i)">
+                <td>{{i.codigo_campanha}}</td>
+                <td>{{i.nome_campanha}}</td>
+                <td>{{i.criterio_data}}</td>
+                <td class="textCenter">{{i.data_inicio_campanha | moment: 'DD/MM/YYYY'}}</td>
+                <td class="textCenter">{{i.data_fim_campanha | moment: 'DD/MM/YYYY'}}</td>
+                <td class="textCenter">{{i.data_inicio_pendencia_fisico | moment: 'DD/MM/YYYY'}}</td>
+                <td class="textCenter">{{i.data_fim_pendencia_fisico | moment: 'DD/MM/YYYY'}}</td>
+                <td class="textCenter">{{i.status_operacao_agrupado}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </div>
+    </nb-card>
   </div>
 
-  <div class="col-xxxl-9 col-xxl-8 col-lg-7 col-md-6">
-    aaa
+</div>
+
+<div class="row" *ngIf="filtro.campanha.codigo > 0">
+  <div class="col-12 alert alert-dark">
+    Filtros: {{filtro.campanha.label}}: {{filtro.campanha.codigo}}
   </div>
 </div>
 
 <div class="row">
-  <div class="col-xxxl-9 col-xl-12">
-    aa
+  <div class="col-md-6">
+    <nb-card [nbSpinner]="contratosPagos.length < 1" nbSpinnerStatus="success">
+      <nb-card-header>Contratos Pagos</nb-card-header>
+      <div class="maxContent">
+        <nb-card-body>
+          <table class="tabela">
+            <thead>
+              <tr>
+                <th class="textCenter">Data</th>
+                <th class="textRight">Quantidade</th>
+                <th class="textRight">Valor total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let i of contratosPagos">
+                <td class="textCenter">{{i.dia}}/{{i.mes}}/{{i.ano}}</td>
+                <td class="textRight">{{i.qtd_contratos}}</td>
+                <td class="textRight">{{i.total_valor_elegivel}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </div>
+    </nb-card>
   </div>
 
-  <div class="col-xxxl-3 col-xxl-4 col-lg-7 col-md-6">
-    aa
+  <div class="col-md-6">
+    <nb-card [nbSpinner]="contratosDigitados.length < 1" nbSpinnerStatus="success">
+      <nb-card-header>Contratos Digitados</nb-card-header>
+      <div class="maxContent">
+        <nb-card-body>
+          <table class="tabela">
+            <thead>
+              <tr>
+                <th class="textCenter">Data</th>
+                <th class="textRight">Quantidade</th>
+                <th class="textRight">Valor total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let i of contratosDigitados">
+                <td class="textCenter">{{i.dia}}/{{i.mes}}/{{i.ano}}</td>
+                <td class="textRight">{{i.qtd_contratos}}</td>
+                <td class="textRight">{{i.total_valor_elegivel}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </div>
+    </nb-card>
   </div>
 
-  <div class="col-xxxl-3 col-xxl-4 col-lg-5 col-md-6">
-    ddd
-  </div>
-
-  <div class="col-xxxl-3 col-xxl-4 col-md-5">
-    dddd
-  </div>
-
-  <div class="col-xxxl-6 col-xxl-12 col-md-7">
-
-    ddd
-  </div>
 </div>

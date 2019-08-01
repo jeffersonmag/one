@@ -8,12 +8,14 @@ import {
   NbListModule,
   NbRadioModule,
   NbSelectModule,
+  NbSpinnerModule,
   NbTabsetModule,
   NbUserModule,
 } from '@nebular/theme';
 import { NgxEchartsModule } from 'ngx-echarts';
 
 import { ThemeModule } from '../../@theme/theme.module';
+import { PipesModule } from '../../pipes/pipes.module';
 import { DashboardComponent } from './dashboard.component';
 
 @NgModule({
@@ -31,6 +33,8 @@ import { DashboardComponent } from './dashboard.component';
     NbIconModule,
     NbButtonModule,
     NgxEchartsModule,
+    PipesModule,
+    NbSpinnerModule
   ],
   declarations: [
     DashboardComponent,

@@ -14,3 +14,34 @@
     }
   }
 }
+
+.tabela {
+  width: 100%;
+
+  tr {
+    border-bottom: 1px solid #ccc;
+
+    th,
+    td {
+      padding: 7px;
+    }
+  }
+
+  .active {
+    background: #a5d0517a;
+  }
+
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.textRight {
+  text-align: right;
+}
+
+.maxContent {
+  max-height: 500px;
+  overflow: auto;
+}
