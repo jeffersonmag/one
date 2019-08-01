@@ -13,7 +13,7 @@
     "ng": "ng",
     "conventional-changelog": "conventional-changelog",
     "start": "ng serve --port 3000 --host 0.0.0.0",
-    "build": "ng build",
+    "build": "ng build --base-href /one/ --deploy-url /one/",
     "build:prod": "npm run build -- --prod --aot",
     "test": "ng test",
     "test:coverage": "rimraf coverage && npm run test -- --code-coverage",
