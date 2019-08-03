@@ -1,13 +1,7 @@
-<div class="row">
-  <div class="col-xxxl-3 col-md-6" *ngFor="let statusCard of statusCards">
-    aaa
-  </div>
-</div>
-
 <div class="infinite-cards row">
   <div class="col-md-12">
 
-    <nb-card [nbSpinner]="campanhasPerfil.length < 1" nbSpinnerStatus="success">
+    <nb-card accent="info" [nbSpinner]="campanhasPerfil.length < 1" nbSpinnerStatus="success">
       <nb-card-header>Campanhas</nb-card-header>
       <div class="maxContent">
         <nb-card-body>
@@ -45,6 +39,94 @@
 
 </div>
 
+<div class="row">
+  <div class="col-12 alert alert-dark">Índice de contratos digitados pagos sintético</div>
+</div>
+
+<div class="row">
+  <div class="col-md-2">
+    <nb-card accent="danger" size="tiny" class="solar-card">
+      <nb-card-body>
+        <div class="info" style="text-align: center;">
+          <div style="padding-top: 15px;">
+            <div class="details subtitle-2">Total digitados</div>
+            <div class="h4 value">{{contratosPagosSinteticos?.qtd_total_digitado}}</div>
+          </div>
+          <div style="padding-top: 15px;">
+            <div class="details subtitle-2">Total pagos</div>
+            <div class="h4 value">{{contratosPagosSinteticos?.qtd_total_pago}}</div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-3">
+    <nb-card accent="danger" size="tiny" class="solar-card">
+      <nb-card-body>
+        <div class="info" style="text-align: center;">
+          <div style="padding-top: 15px;">
+            <div class="details subtitle-2">Relação quantidade digitado pago</div>
+            <div class="h4 value">{{contratosPagosSinteticos?.relacao_qtd_digitado_pago}}</div>
+          </div>
+          <div style="padding-top: 15px;">
+            <div class="details subtitle-2">Relação valor digitado pago</div>
+            <div class="h4 value">{{contratosPagosSinteticos?.relacao_valor_digitado_pago | moeda}}</div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-3">
+    <nb-card accent="danger" size="tiny" class="solar-card">
+      <nb-card-body>
+        <div class="info" style="text-align: center;">
+          <div style="padding-top: 15px;">
+            <div class="details subtitle-2">Valor elegivel total digitado</div>
+            <div class="h4 value">{{contratosPagosSinteticos?.valor_elegivel_total_digitado | moeda}}</div>
+          </div>
+          <div style="padding-top: 15px;">
+            <div class="details subtitle-2">Valor elegivel total pago</div>
+            <div class="h4 value">{{contratosPagosSinteticos?.valor_elegivel_total_pago | moeda}}</div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-2">
+    <nb-card accent="danger" size="tiny" class="solar-card">
+      <nb-card-body>
+        <div class="info" style="text-align: center;">
+          <div style="padding-top: 15px;">
+            <div class="details subtitle-2">Dias campanhas</div>
+            <div class="h4 value">{{campanhaDias}}</div>
+          </div>
+          <div style="padding-top: 15px;">
+            <div class="details subtitle-2">Dias pendencia fisico</div>
+            <div class="h4 value">{{campanhaPendencias}}</div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-2">
+    <nb-card accent="danger" size="tiny" class="solar-card">
+      <nb-card-body>
+        <div class="info" style="text-align: center;">
+          <div style="padding-top: 15px;">
+            <div class="details subtitle-2">Ticket medio global</div>
+            <div class="h4 value">{{ticketGlobal | moeda}}</div>
+          </div>
+          <div style="padding-top: 15px;">
+            <div class="details subtitle-2">Ticket medio perfil</div>
+            <div class="h4 value">{{ticketPerfil | moeda}}</div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+
 <div class="row" *ngIf="filtro.campanha.codigo > 0">
   <div class="col-12 alert alert-dark">
     Filtros: {{filtro.campanha.label}}: {{filtro.campanha.codigo}}
@@ -53,7 +135,7 @@
 
 <div class="row">
   <div class="col-md-6">
-    <nb-card [nbSpinner]="contratosPagos.length < 1" nbSpinnerStatus="success">
+    <nb-card accent="info" [nbSpinner]="contratosPagos.length < 1" nbSpinnerStatus="success">
       <nb-card-header>Contratos Pagos</nb-card-header>
       <div class="maxContent">
         <nb-card-body>
@@ -69,7 +151,7 @@
               <tr *ngFor="let i of contratosPagos">
                 <td class="textCenter">{{i.dia}}/{{i.mes}}/{{i.ano}}</td>
                 <td class="textRight">{{i.qtd_contratos}}</td>
-                <td class="textRight">{{i.total_valor_elegivel}}</td>
+                <td class="textRight">{{i.total_valor_elegivel | moeda}}</td>
               </tr>
             </tbody>
           </table>
@@ -79,7 +161,7 @@
   </div>
 
   <div class="col-md-6">
-    <nb-card [nbSpinner]="contratosDigitados.length < 1" nbSpinnerStatus="success">
+    <nb-card accent="info" [nbSpinner]="contratosDigitados.length < 1" nbSpinnerStatus="success">
       <nb-card-header>Contratos Digitados</nb-card-header>
       <div class="maxContent">
         <nb-card-body>
@@ -95,7 +177,7 @@
               <tr *ngFor="let i of contratosDigitados">
                 <td class="textCenter">{{i.dia}}/{{i.mes}}/{{i.ano}}</td>
                 <td class="textRight">{{i.qtd_contratos}}</td>
-                <td class="textRight">{{i.total_valor_elegivel}}</td>
+                <td class="textRight">{{i.total_valor_elegivel | moeda}}</td>
               </tr>
             </tbody>
           </table>
@@ -104,4 +186,60 @@
     </nb-card>
   </div>
 
+</div>
+
+
+<div class="row">
+  <div class="col-12">
+    <nb-card accent="info" [nbSpinner]="dadosCampanhaMetas.length < 1" nbSpinnerStatus="success">
+      <nb-card-header>Metas campanhas do perfil</nb-card-header>
+
+      <nb-card-body>
+        <nb-tabset fullWidth (changeTab)="filtraCampanhaPerfil($event)">
+          <nb-tab *ngFor="let p of perfis" [tabTitle]="p.label">
+
+            <table class="tabela">
+              <thead>
+                <tr>
+                  <th style="width: 9%;" class="textCenter">Atingimento total campanha</th>
+                  <th style="width: 9%;" class="textCenter">Codigo agrupamento</th>
+                  <th style="width: 9%;" class="textCenter">Meta diaria campanha</th>
+                  <th style="width: 9%;" class="textCenter">Meta total campanha</th>
+                  <th style="width: 9%;" class="textCenter">Nivel atingimento campanha</th>
+                  <th style="width: 9%;" class="textCenter">Nome agrupamento</th>
+                  <th style="width: 9%;" class="textCenter">Perfil</th>
+                  <th style="width: 9%;" class="textCenter">Projeção total campanha</th>
+                  <th style="width: 9%;" class="textCenter">Qtd. total contratos campanha</th>
+                  <th style="width: 9%;" class="textCenter">Ticket medio campanha</th>
+                  <th style="width: 9%;" class="textCenter">Total HC participantes</th>
+                </tr>
+              </thead>
+
+            </table>
+
+            <div class="maxContent">
+              <table class="tabela">
+                <tbody>
+                  <tr *ngFor="let i of dadosCampanhaMetas">
+                    <td style="width: 9%;" class="textCenter">{{i.atingimento_total_campanha}}</td>
+                    <td style="width: 9%;" class="textCenter">{{i.codigo_agrupamento}}</td>
+                    <td style="width: 9%;" class="textCenter">{{i.meta_diaria_campanha}}</td>
+                    <td style="width: 9%;" class="textCenter">{{i.meta_total_campanha | moeda}}</td>
+                    <td style="width: 9%;" class="textCenter">{{i.nivel_atingimento_campanha}}</td>
+                    <td style="width: 9%;" class="textCenter">{{i.nome_agrupamento}}</td>
+                    <td style="width: 9%;" class="textCenter">{{i.perfil}}</td>
+                    <td style="width: 9%;" class="textCenter">{{i.projecao_total_campanha}}</td>
+                    <td style="width: 9%;" class="textCenter">{{i.qtd_total_contratos_campanha}}</td>
+                    <td style="width: 9%;" class="textCenter">{{i.ticket_medio_campanha}}</td>
+                    <td style="width: 9%;" class="textCenter">{{i.total_hc_participantes}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </nb-tab>
+        </nb-tabset>
+      </nb-card-body>
+
+    </nb-card>
+  </div>
 </div>

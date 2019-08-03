@@ -9,6 +9,10 @@
   "bugs": {
     "url": "https://github.com/akveo/ngx-admin/issues"
   },
+  "browser": {
+    "crypto": false,
+    "stream": false
+  },
   "scripts": {
     "ng": "ng",
     "conventional-changelog": "conventional-changelog",
@@ -53,11 +57,13 @@
     "ckeditor": "4.7.3",
     "classlist.js": "1.1.20150312",
     "core-js": "2.5.1",
+    "crypto-js": "^3.1.9-1",
     "echarts": "^4.0.2",
     "eva-icons": "^1.1.0",
     "intl": "1.2.5",
     "ionicons": "2.0.1",
     "leaflet": "1.2.0",
+    "locutus": "^2.0.11",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "nebular-icons": "1.1.0",

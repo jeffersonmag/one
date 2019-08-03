@@ -13,8 +13,7 @@ export class DiasUteisPeriodoApiService {
   ) { }
 
   periodo(dados = {}) {
-    return this.requestService.get(`${environment.urlApi}/dias-uteis-periodo`, dados, true);
+    return this.requestService.post(`${environment.urlApi}/dias-uteis-periodo`, dados, true);
   }
-
 
 }
