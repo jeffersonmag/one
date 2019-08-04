@@ -1,6 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
+import { number_format, str_pad } from 'locutus/php/strings/';
 import _ from 'lodash';
+import * as moment from 'moment';
 import { takeWhile } from 'rxjs/operators';
 
 import { CampanhasApiService } from './../../api/campanhas';
@@ -41,9 +43,14 @@ export class DashboardComponent implements OnDestroy {
     campanha: {
       label: 'Campanha',
       codigo: 0
+    },
+    produto: {
+      label: 'Produto',
+      codigo: 0
     }
-
   }
+
+  chartOptions: any = {};
 
   campanhaSelecionada: any;
   campanhasPerfil = [];
@@ -62,6 +69,8 @@ export class DashboardComponent implements OnDestroy {
   ticketPerfil = 0;
   ticketGlobal = 0;
   dadosCampanhaMetas = [];
+  dadosProdutoCorbanCampanha = [];
+  dadosCampanhaMetasLoad = true;
   perfis = [
     {
       id: 5,
@@ -85,6 +94,8 @@ export class DashboardComponent implements OnDestroy {
     }
   ];
 
+  themeSubscription: any;
+
   constructor(
     private themeService: NbThemeService,
     private campanhasApiService: CampanhasApiService,
@@ -101,8 +112,178 @@ export class DashboardComponent implements OnDestroy {
     this.findCampanha();
   }
 
+  gerarGrafico() {
+    this.themeSubscription = this.themeService.getJsTheme().subscribe(config => {
+
+      const colors: any = config.variables;
+      const echarts: any = config.variables.echarts;
+
+      let datas = [];
+      let digitados = [];
+      let pagos = [];
+
+      for (let i of this.contratosPagos) {
+        datas.push(`${i.ano}-${str_pad(i.mes, 2, 0, 'STR_PAD_LEFT')}-${str_pad(i.dia, 2, 0, 'STR_PAD_LEFT')}`);
+      }
+      for (let i of this.contratosDigitados) {
+        let find = datas.find((val: any) => {
+          return String(`${i.ano}-${str_pad(i.mes, 2, 0, 'STR_PAD_LEFT')}-${str_pad(i.dia, 2, 0, 'STR_PAD_LEFT')}`) === String(val);
+        });
+        if (!find) {
+          datas.push(`${i.ano}-${str_pad(i.mes, 2, 0, 'STR_PAD_LEFT')}-${str_pad(i.dia, 2, 0, 'STR_PAD_LEFT')}`);
+        }
+      }
+
+      for (let i of datas) {
+        let find = _.find(this.contratosDigitados, (o: any) => {
+          return String(i) === String(`${o.ano}-${str_pad(o.mes, 2, 0, 'STR_PAD_LEFT')}-${str_pad(o.dia, 2, 0, 'STR_PAD_LEFT')}`)
+        });
+        if (!find) {
+          digitados.push(0);
+        } else {
+          digitados.push(find.total_valor_elegivel);
+        }
+        find = _.find(this.contratosPagos, (o: any) => {
+          return String(i) === String(`${o.ano}-${str_pad(o.mes, 2, 0, 'STR_PAD_LEFT')}-${str_pad(o.dia, 2, 0, 'STR_PAD_LEFT')}`)
+        });
+        if (!find) {
+          pagos.push(0);
+        } else {
+          pagos.push(find.total_valor_elegivel);
+        }
+      }
+
+      datas = _.orderBy(datas, [(o: any) => {
+        return o;
+      }], ['asc']);
+
+      for (let i in datas) {
+        datas[i] = moment(datas[i]).format('MM/YYYY');
+      }
+
+      console.log('Datas');
+      console.log(datas);
+      console.log(digitados);
+      console.log(pagos);
+
+
+      this.chartOptions = {
+        backgroundColor: echarts.bg,
+        color: [colors.success, colors.info],
+        tooltip: {
+          trigger: 'none',
+          axisPointer: {
+            type: 'cross',
+          },
+        },
+        legend: {
+          data: ['Digitados', 'Pagos'],
+          textStyle: {
+            color: echarts.textColor,
+          },
+        },
+        grid: {
+          top: 70,
+          bottom: 50,
+        },
+        xAxis: [
+          {
+            type: 'category',
+            axisTick: {
+              alignWithLabel: true,
+            },
+            axisLine: {
+              onZero: false,
+              lineStyle: {
+                color: colors.info,
+              },
+            },
+            axisLabel: {
+              textStyle: {
+                color: echarts.textColor,
+              },
+            },
+            axisPointer: {
+              label: {
+                formatter: params => {
+                  return (
+                    'Valores ' + params.value + (params.seriesData.length ? ' ： ' + 'R$ ' + number_format(params.seriesData[0].data, 2, ',', '.') : '')
+                  );
+                },
+              },
+            },
+            data: datas,
+          },
+          {
+            type: 'category',
+            axisTick: {
+              alignWithLabel: true,
+            },
+            axisLine: {
+              onZero: false,
+              lineStyle: {
+                color: colors.success,
+              },
+            },
+            axisLabel: {
+              textStyle: {
+                color: echarts.textColor,
+              },
+            },
+            axisPointer: {
+              label: {
+                formatter: params => {
+                  return (
+                    'Valores ' + params.value + (params.seriesData.length ? ' ： ' + 'R$ ' + number_format(params.seriesData[0].data, 2, ',', '.') : '')
+                  );
+                },
+              },
+            },
+            data: datas,
+          },
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            axisLine: {
+              lineStyle: {
+                color: echarts.axisLineColor,
+              },
+            },
+            splitLine: {
+              lineStyle: {
+                color: echarts.splitLineColor,
+              },
+            },
+            axisLabel: {
+              textStyle: {
+                color: echarts.textColor,
+              },
+            },
+          },
+        ],
+        series: [
+          {
+            name: 'Pagos',
+            type: 'line',
+            xAxisIndex: 1,
+            smooth: true,
+            data: pagos,
+          },
+          {
+            name: 'Digitados',
+            type: 'line',
+            smooth: true,
+            data: digitados,
+          },
+        ],
+      };
+    });
+  }
+
   ngOnDestroy() {
     this.alive = false;
+    this.themeSubscription.unsubscribe();
   }
 
   findCampanha() {
@@ -118,7 +299,9 @@ export class DashboardComponent implements OnDestroy {
   }
 
   findCampanhaMeta(visao = 5) {
+    this.dadosCampanhaMetasLoad = true;
     this.dadosCampanhaMetas = [];
+    this.dadosProdutoCorbanCampanha = [];
     this.campanhasApiService.metas(
       {
         "codigo_campanha": this.filtro.campanha.codigo,
@@ -127,9 +310,14 @@ export class DashboardComponent implements OnDestroy {
     )
       .then((s) => {
         this.dadosCampanhaMetas = s;
+        this.dadosCampanhaMetasLoad = false;
+        if (this.dadosCampanhaMetas) {
+          this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas[0]);
+        }
       })
       .catch((e) => {
-        console.log(e)
+        console.log(e);
+        this.dadosCampanhaMetasLoad = false;
       });
   }
 
@@ -150,6 +338,7 @@ export class DashboardComponent implements OnDestroy {
         this.contratosDigitados = _.filter(s, (o: any) => {
           return String(o.status) === 'DIGITADAS';
         });
+        this.gerarGrafico();
       })
       .catch((e) => {
         console.log(e)
@@ -255,6 +444,11 @@ export class DashboardComponent implements OnDestroy {
       return String(o.label) === String(event.tabTitle);
     })
     this.findCampanhaMeta(find.id);
+  }
+
+  findDadosProdutoCorbanCampanha(item) {
+    this.filtro.produto.codigo = item.codigo_agrupamento
+    this.dadosProdutoCorbanCampanha = item.produto_corban_campanha;
   }
 
 }

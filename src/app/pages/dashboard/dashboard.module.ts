@@ -6,6 +6,7 @@ import {
   NbCardModule,
   NbIconModule,
   NbListModule,
+  NbProgressBarModule,
   NbRadioModule,
   NbSelectModule,
   NbSpinnerModule,
@@ -34,7 +35,8 @@ import { DashboardComponent } from './dashboard.component';
     NbButtonModule,
     NgxEchartsModule,
     PipesModule,
-    NbSpinnerModule
+    NbSpinnerModule,
+    NbProgressBarModule
   ],
   declarations: [
     DashboardComponent,

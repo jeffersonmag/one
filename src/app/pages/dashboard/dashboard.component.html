@@ -126,10 +126,20 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col-md-12">
+    <nb-card accent="danger" class="solar-card">
+      <nb-card-body>
+        <div echarts [options]="chartOptions" class="echart"></div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
 
 <div class="row" *ngIf="filtro.campanha.codigo > 0">
   <div class="col-12 alert alert-dark">
-    Filtros: {{filtro.campanha.label}}: {{filtro.campanha.codigo}}
+    Filtros: {{filtro.campanha.label}}: {{filtro.campanha.codigo}}, {{filtro.produto.label}}: {{filtro.produto.codigo}}
   </div>
 </div>
 
@@ -188,10 +198,9 @@
 
 </div>
 
-
 <div class="row">
   <div class="col-12">
-    <nb-card accent="info" [nbSpinner]="dadosCampanhaMetas.length < 1" nbSpinnerStatus="success">
+    <nb-card accent="info" [nbSpinner]="dadosCampanhaMetasLoad" nbSpinnerStatus="success">
       <nb-card-header>Metas campanhas do perfil</nb-card-header>
 
       <nb-card-body>
@@ -201,16 +210,16 @@
             <table class="tabela">
               <thead>
                 <tr>
-                  <th style="width: 9%;" class="textCenter">Atingimento total campanha</th>
+                  <th style="width: 9%;" class="textCenter">Atingimento total</th>
                   <th style="width: 9%;" class="textCenter">Codigo agrupamento</th>
-                  <th style="width: 9%;" class="textCenter">Meta diaria campanha</th>
-                  <th style="width: 9%;" class="textCenter">Meta total campanha</th>
-                  <th style="width: 9%;" class="textCenter">Nivel atingimento campanha</th>
+                  <th style="width: 9%;" class="textCenter">Meta diaria</th>
+                  <th style="width: 9%;" class="textCenter">Meta total</th>
+                  <th style="width: 9%;" class="textCenter">Nivel atingimento</th>
                   <th style="width: 9%;" class="textCenter">Nome agrupamento</th>
                   <th style="width: 9%;" class="textCenter">Perfil</th>
-                  <th style="width: 9%;" class="textCenter">Projeção total campanha</th>
-                  <th style="width: 9%;" class="textCenter">Qtd. total contratos campanha</th>
-                  <th style="width: 9%;" class="textCenter">Ticket medio campanha</th>
+                  <th style="width: 9%;" class="textCenter">Projeção total</th>
+                  <th style="width: 9%;" class="textCenter">Qtd. total contratos</th>
+                  <th style="width: 9%;" class="textCenter">Ticket medio</th>
                   <th style="width: 9%;" class="textCenter">Total HC participantes</th>
                 </tr>
               </thead>
@@ -220,7 +229,9 @@
             <div class="maxContent">
               <table class="tabela">
                 <tbody>
-                  <tr *ngFor="let i of dadosCampanhaMetas">
+                  <tr *ngFor="let i of dadosCampanhaMetas"
+                    [ngClass]="{'active': i.codigo_agrupamento === filtro.produto.codigo}"
+                    (click)="findDadosProdutoCorbanCampanha(i)">
                     <td style="width: 9%;" class="textCenter">{{i.atingimento_total_campanha}}</td>
                     <td style="width: 9%;" class="textCenter">{{i.codigo_agrupamento}}</td>
                     <td style="width: 9%;" class="textCenter">{{i.meta_diaria_campanha}}</td>
@@ -239,7 +250,48 @@
           </nb-tab>
         </nb-tabset>
       </nb-card-body>
+    </nb-card>
+  </div>
+</div>
 
+<div class="row">
+  <div class="col-12">
+    <nb-card accent="danger" [nbSpinner]="dadosCampanhaMetasLoad" nbSpinnerStatus="success">
+      <nb-card-header>Produtos Corban Campanha</nb-card-header>
+
+      <nb-card-body>
+
+        <table class="tabela">
+          <thead>
+            <tr>
+              <th class="textCenter">Meta producao</th>
+              <th class="textCenter">Nível atingimento</th>
+              <th class="textCenter">Nome</th>
+              <th class="textCenter">Valor atingido meta produção</th>
+              <th style="width: 50%;" class="textCenter">Andamento</th>
+            </tr>
+          </thead>
+
+        </table>
+
+        <div class="maxContent">
+          <table class="tabela">
+            <tbody>
+              <tr *ngFor="let i of dadosProdutoCorbanCampanha">
+                <td class="textCenter">{{i.meta_producao_produto_corban}}</td>
+                <td class="textCenter">{{i.nivel_atingimento_produto_corban || 0}}</td>
+                <td class="textCenter">{{i.nome_produto_corban}}</td>
+                <td class="textCenter">{{i.valor_atingido_meta_producao_produto_corban}}</td>
+                <td style="width: 50%;" class="textCenter">
+                  <nb-progress-bar [value]="i.valor_atingido_meta_producao_produto_corban" status="primary"
+                    [displayValue]="true">
+                  </nb-progress-bar>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </nb-card-body>
     </nb-card>
   </div>
 </div>
