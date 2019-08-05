@@ -158,7 +158,7 @@ export class DashboardComponent implements OnDestroy {
       }], ['asc']);
 
       for (let i in datas) {
-        datas[i] = moment(datas[i]).format('MM/YYYY');
+        datas[i] = moment(datas[i]).format('DD/MM');
       }
 
       console.log('Datas');
