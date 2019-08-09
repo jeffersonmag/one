@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
@@ -35,6 +36,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private sessionService: SessionService,
     private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
+    private router: Router,
     private themeService: NbThemeService,
     private layoutService: LayoutService,
     private breakpointService: NbMediaBreakpointsService
@@ -53,6 +55,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
+
+    setTimeout(() => {
+      this.toggleSidebar();
+    }, 500);
+
   }
 
   ngOnDestroy() {
@@ -75,4 +82,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.menuService.navigateHome();
     return false;
   }
+
+  sair() {
+    this.sessionService.clean();
+    setTimeout(() => {
+      this.router.navigate(['/']);
+    }, 1000);
+
+  }
+
 }

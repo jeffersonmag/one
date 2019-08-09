@@ -90,7 +90,7 @@ export class DashboardComponent implements OnDestroy {
     },
     {
       id: 1,
-      label: 'Consumidor'
+      label: 'Promotor'
     }
   ];
 

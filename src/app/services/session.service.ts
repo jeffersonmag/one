@@ -27,6 +27,10 @@ export class SessionService {
     return window.sessionStorage.setItem(key, val);
   }
 
+  clean() {
+    window.sessionStorage.clear();
+  }
+
   isJson(item) {
     item = typeof item !== "string"
       ? JSON.stringify(item)
