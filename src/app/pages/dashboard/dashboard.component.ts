@@ -69,7 +69,7 @@ export class DashboardComponent implements OnDestroy {
   ticketPerfil = 0;
   ticketGlobal = 0;
   dadosCampanhaMetas = [];
-  dadosProdutoCorbanCampanha = [];
+  dadosProdutoCorbanCampanha = {};
   dadosCampanhaMetasLoad = true;
   perfis = [
     {
@@ -93,6 +93,13 @@ export class DashboardComponent implements OnDestroy {
       label: 'Promotor'
     }
   ];
+
+  revealed = {
+    campanhas: true,
+    chart: true,
+    metasCampanhas: true,
+    produtosCorban: true
+  }
 
   themeSubscription: any;
 
@@ -301,7 +308,7 @@ export class DashboardComponent implements OnDestroy {
   findCampanhaMeta(visao = 5) {
     this.dadosCampanhaMetasLoad = true;
     this.dadosCampanhaMetas = [];
-    this.dadosProdutoCorbanCampanha = [];
+    this.dadosProdutoCorbanCampanha = {};
     this.campanhasApiService.metas(
       {
         "codigo_campanha": this.filtro.campanha.codigo,
@@ -310,6 +317,8 @@ export class DashboardComponent implements OnDestroy {
     )
       .then((s) => {
         this.dadosCampanhaMetas = s;
+        console.log('findCampanhaMeta');
+        console.log(s)
         this.dadosCampanhaMetasLoad = false;
         if (this.dadosCampanhaMetas) {
           this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas[0]);
@@ -386,7 +395,8 @@ export class DashboardComponent implements OnDestroy {
       })
     this.diasUteisPeriodoApiService.periodo(
       {
-        "data_inicial": this.campanhaSelecionada.data_inicio_pendencia_fisico,
+        //"data_inicial": this.campanhaSelecionada.data_inicio_pendencia_fisico,
+        "data_inicial": moment().format('YYYY-MM-DD'),
         "data_final": this.campanhaSelecionada.data_fim_pendencia_fisico
       }
     )
@@ -432,6 +442,7 @@ export class DashboardComponent implements OnDestroy {
   atualizarFiltro(item) {
     this.filtro.campanha.codigo = item.codigo_campanha;
     this.campanhaSelecionada = item;
+
     this.findContratos();
     this.findDiasUteis();
     this.findTickets();
@@ -448,7 +459,13 @@ export class DashboardComponent implements OnDestroy {
 
   findDadosProdutoCorbanCampanha(item) {
     this.filtro.produto.codigo = item.codigo_agrupamento
-    this.dadosProdutoCorbanCampanha = item.produto_corban_campanha;
+    this.dadosProdutoCorbanCampanha = item;
+    console.log('this.dadosProdutoCorbanCampanha');
+    console.log(this.dadosProdutoCorbanCampanha);
+  }
+
+  toggleView(acao) {
+    this.revealed[acao] = !this.revealed[acao];
   }
 
 }

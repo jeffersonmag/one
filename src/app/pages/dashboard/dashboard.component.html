@@ -8,16 +8,22 @@
   <div class="col-md-12">
 
     <nb-card accent="info" [nbSpinner]="campanhasPerfil.length < 1" nbSpinnerStatus="success">
+
+      <nb-icon *ngIf="revealed.campanhas" class="toggle-icon" icon="chevron-up-outline" pack="eva"
+        (click)="toggleView('campanhas')"></nb-icon>
+      <nb-icon *ngIf="!revealed.campanhas" class="toggle-icon" icon="chevron-down-outline" pack="eva"
+        (click)="toggleView('campanhas')"> </nb-icon>
+
       <nb-card-header>Campanhas</nb-card-header>
-      <div class="maxContent">
+      <div class="maxContent" *ngIf="revealed.campanhas">
         <nb-card-body>
           <table class="tabela">
             <thead>
               <tr>
                 <th>Código</th>
                 <th>Nome</th>
-                <th class="textCenter">Data início</th>
-                <th class="textCenter">Data fim</th>
+                <th class="textRight">Data início</th>
+                <th class="textRight">Data fim</th>
               </tr>
             </thead>
             <tbody>
@@ -25,8 +31,8 @@
                 (click)="atualizarFiltro(i)">
                 <td>{{i.codigo_campanha}}</td>
                 <td>{{i.nome_campanha}}</td>
-                <td class="textCenter">{{i.data_inicio_campanha | moment: 'DD/MM/YYYY'}}</td>
-                <td class="textCenter">{{i.data_fim_campanha | moment: 'DD/MM/YYYY'}}</td>
+                <td class="textRight">{{i.data_inicio_campanha | moment: 'DD/MM/YYYY'}}</td>
+                <td class="textRight">{{i.data_fim_campanha | moment: 'DD/MM/YYYY'}}</td>
               </tr>
             </tbody>
           </table>
@@ -46,6 +52,7 @@
 
   <div class="col-md-4">
     <nb-card accent="danger" class="solar-card">
+
       <nb-card-body>
         <div class="info" style="text-align: center;">
           <div style="padding-top: 15px;">
@@ -73,15 +80,15 @@
         <div class="info" style="text-align: center;">
           <div style="padding-top: 15px;">
             <div class="details subtitle-2">Meta da Campanha</div>
-            <div class="h4 value">{{campanhaSelecionada?.meta_total_campanha | moeda}}</div>
+            <div class="h4 value">{{dadosProdutoCorbanCampanha?.meta_total_campanha | moeda}}</div>
           </div>
           <div style="padding-top: 15px;">
             <div class="details subtitle-2">Atingimento da Campanha</div>
-            <div class="h4 value">{{campanhaSelecionada?.atingimento_total_campanha | moeda}}</div>
+            <div class="h4 value">{{dadosProdutoCorbanCampanha?.atingimento_total_campanha | moeda}}</div>
           </div>
           <div style="padding-top: 15px;">
             <div class="details subtitle-2">Projeção da Campanha</div>
-            <div class="h4 value">{{campanhaSelecionada?.projecao_total_campanha | moeda}}</div>
+            <div class="h4 value">{{dadosProdutoCorbanCampanha?.projecao_total_campanha | moeda}}</div>
           </div>
         </div>
       </nb-card-body>
@@ -129,7 +136,12 @@
 <div class="row">
   <div class="col-md-12">
     <nb-card accent="danger" class="solar-card">
-      <nb-card-body>
+      <nb-icon *ngIf="revealed.chart" class="toggle-icon" icon="chevron-up-outline" pack="eva"
+        (click)="toggleView('chart')"></nb-icon>
+      <nb-icon *ngIf="!revealed.chart" class="toggle-icon" icon="chevron-down-outline" pack="eva"
+        (click)="toggleView('chart')"> </nb-icon>
+      <nb-card-header>Gráfico</nb-card-header>
+      <nb-card-body *ngIf="revealed.chart">
         <div echarts [options]="chartOptions" class="echart"></div>
       </nb-card-body>
     </nb-card>
@@ -137,84 +149,31 @@
 </div>
 
 
-
-
-<!-- div class="row">
-  <div class="col-md-6">
-    <nb-card accent="info" [nbSpinner]="contratosPagos.length < 1" nbSpinnerStatus="success">
-      <nb-card-header>Contratos Pagos</nb-card-header>
-      <div class="maxContent">
-        <nb-card-body>
-          <table class="tabela">
-            <thead>
-              <tr>
-                <th class="textCenter">Data</th>
-                <th class="textRight">Quantidade</th>
-                <th class="textRight">Valor total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let i of contratosPagos">
-                <td class="textCenter">{{i.dia}}/{{i.mes}}/{{i.ano}}</td>
-                <td class="textRight">{{i.qtd_contratos}}</td>
-                <td class="textRight">{{i.total_valor_elegivel | moeda}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </nb-card-body>
-      </div>
-    </nb-card>
-  </div>
-
-  <div class="col-md-6">
-    <nb-card accent="info" [nbSpinner]="contratosDigitados.length < 1" nbSpinnerStatus="success">
-      <nb-card-header>Contratos Digitados</nb-card-header>
-      <div class="maxContent">
-        <nb-card-body>
-          <table class="tabela">
-            <thead>
-              <tr>
-                <th class="textCenter">Data</th>
-                <th class="textRight">Quantidade</th>
-                <th class="textRight">Valor total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let i of contratosDigitados">
-                <td class="textCenter">{{i.dia}}/{{i.mes}}/{{i.ano}}</td>
-                <td class="textRight">{{i.qtd_contratos}}</td>
-                <td class="textRight">{{i.total_valor_elegivel | moeda}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </nb-card-body>
-      </div>
-    </nb-card>
-  </div>
-
-</!-->
-
 <div class="row">
   <div class="col-12">
     <nb-card accent="info" [nbSpinner]="dadosCampanhaMetasLoad" nbSpinnerStatus="success">
+      <nb-icon *ngIf="revealed.metasCampanhas" class="toggle-icon" icon="chevron-up-outline" pack="eva"
+        (click)="toggleView('metasCampanhas')"></nb-icon>
+      <nb-icon *ngIf="!revealed.metasCampanhas" class="toggle-icon" icon="chevron-down-outline" pack="eva"
+        (click)="toggleView('metasCampanhas')"> </nb-icon>
       <nb-card-header>Metas campanhas do perfil</nb-card-header>
 
-      <nb-card-body>
+      <nb-card-body *ngIf="revealed.metasCampanhas">
         <nb-tabset fullWidth (changeTab)="filtraCampanhaPerfil($event)">
           <nb-tab *ngFor="let p of perfis" [tabTitle]="p.label">
 
             <table class="tabela">
               <thead>
                 <tr>
-                  <th style="width: 25%" class="textCenter">Agrupamento</th>
-                  <th style="width: 15%" class="textCenter">Nível</th>
-                  <th style="width: 10%" class="textCenter">Meta total</th>
-                  <th style="width: 10%" class="textCenter">Atingimento</th>
+                  <th style="width: 25%" class="">Agrupamento</th>
+                  <th style="width: 15%" class="">Nível</th>
+                  <th style="width: 10%" class="textRight">Meta total</th>
+                  <th style="width: 10%" class="textRight">Atingimento</th>
 
-                  <th style="width: 10%" class="textCenter">Meta diária</th>
-                  <th style="width: 10%" class="textCenter">Projeção</th>
-                  <th style="width: 10%" class="textCenter">Ticket médio</th>
-                  <th style="width: 10%" class="textCenter">HC</th>
+                  <th style="width: 10%" class="textRight">Meta diária</th>
+                  <th style="width: 10%" class="textRight">Projeção</th>
+                  <th style="width: 10%" class="textRight">Ticket médio</th>
+                  <th style="width: 10%" class="textRight">HC</th>
                 </tr>
               </thead>
 
@@ -227,14 +186,14 @@
                     [ngClass]="{'active': i.codigo_agrupamento === filtro.produto.codigo}"
                     (click)="findDadosProdutoCorbanCampanha(i)">
                     <td style="width: 25%">{{i.nome_agrupamento}} - [{{i.codigo_agrupamento}}]</td>
-                    <td style="width: 15%" class="textCenter">{{i.nivel_atingimento_campanha}}</td>
+                    <td style="width: 15%" class="">{{i.nivel_atingimento_campanha}}</td>
                     <td style="width: 10%" class="textRight">{{i.meta_total_campanha | moeda}}</td>
                     <td style="width: 10%" class="textRight">{{i.atingimento_total_campanha | moeda}}</td>
 
                     <td style="width: 10%" class="textRight">{{i.meta_diaria_campanha | moeda}}</td>
                     <td style="width: 10%" class="textRight">{{i.projecao_total_campanha | moeda}}</td>
                     <td style="width: 10%" class="textRight">{{i.ticket_medio_campanha | moeda}}</td>
-                    <td style="width: 10%" class="textCenter">{{i.total_hc_participantes}}</td>
+                    <td style="width: 10%" class="textRight">{{i.total_hc_participantes}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -249,18 +208,24 @@
 <div class="row">
   <div class="col-12">
     <nb-card accent="danger" [nbSpinner]="dadosCampanhaMetasLoad" nbSpinnerStatus="success">
+
+      <nb-icon *ngIf="revealed.produtosCorban" class="toggle-icon" icon="chevron-up-outline" pack="eva"
+        (click)="toggleView('produtosCorban')"></nb-icon>
+      <nb-icon *ngIf="!revealed.produtosCorban" class="toggle-icon" icon="chevron-down-outline" pack="eva"
+        (click)="toggleView('produtosCorban')"> </nb-icon>
+
       <nb-card-header>Produtos Corban Campanha</nb-card-header>
 
-      <nb-card-body>
+      <nb-card-body *ngIf="revealed.produtosCorban">
 
         <table class="tabela">
           <thead>
             <tr>
-              <th style="width: 10%;" class="textCenter">Meta producao</th>
-              <th style="width: 10%;" class="textCenter">Nível atingimento</th>
-              <th style="width: 20%;" class="textCenter">Nome</th>
-              <th style="width: 10%;" class="textCenter">Valor atingido meta produção</th>
-              <th style="width: 50%;" class="textCenter">Andamento</th>
+              <th style="width: 10%;" class="textRight">Meta producao</th>
+              <th style="width: 10%;" class="">Nível atingimento</th>
+              <th style="width: 20%;" class="">Nome</th>
+              <th style="width: 10%;" class="textRight">Valor atingido meta produção</th>
+              <th style="width: 50%;" class="">Andamento</th>
             </tr>
           </thead>
 
@@ -269,12 +234,12 @@
         <div class="maxContent">
           <table class="tabela">
             <tbody>
-              <tr *ngFor="let i of dadosProdutoCorbanCampanha">
-                <td style="width: 10%;" class="textCenter">{{i.meta_producao_produto_corban}}</td>
-                <td style="width: 10%;" class="textCenter">{{i.nivel_atingimento_produto_corban || 0}}</td>
-                <td style="width: 20%;" class="textCenter">{{i.nome_produto_corban}}</td>
-                <td style="width: 10%;" class="textCenter">{{i.valor_atingido_meta_producao_produto_corban}}</td>
-                <td style="width: 50%;" class="textCenter">
+              <tr *ngFor="let i of dadosProdutoCorbanCampanha.produto_corban_campanha">
+                <td style="width: 10%;" class="textRight">{{i.meta_producao_produto_corban | moeda}}</td>
+                <td style="width: 10%;" class="">{{i.nivel_atingimento_produto_corban || 0}}</td>
+                <td style="width: 20%;" class="">{{i.nome_produto_corban}}</td>
+                <td style="width: 10%;" class="textRight">{{i.valor_atingido_meta_producao_produto_corban | moeda}}</td>
+                <td style="width: 50%;" class="">
                   <nb-progress-bar [value]="i.percentual_atingido_produto_corban || 0" status="primary"
                     [displayValue]="true">
                   </nb-progress-bar>
