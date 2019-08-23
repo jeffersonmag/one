@@ -14,16 +14,16 @@
       <nb-icon *ngIf="!revealed.campanhas" class="toggle-icon" icon="chevron-down-outline" pack="eva"
         (click)="toggleView('campanhas')"> </nb-icon>
 
-      <nb-card-header>Campanhas</nb-card-header>
+      <nb-card-header>Campanhas - {{campanhaSelecionada?.nome_campanha}} - [{{campanhaSelecionada?.codigo_campanha}}]</nb-card-header>
       <div class="maxContent" *ngIf="revealed.campanhas">
         <nb-card-body>
           <table class="tabela">
             <thead>
               <tr>
-                <th>Código</th>
-                <th>Nome</th>
-                <th class="textRight">Data início</th>
-                <th class="textRight">Data fim</th>
+                <th (click)="ordernar('campanhasPerfil', 'campanhas', 'codigo_campanha')">Código</th>
+                <th (click)="ordernar('campanhasPerfil', 'campanhas', 'nome_campanha')">Nome</th>
+                <th (click)="ordernar('campanhasPerfil', 'campanhas', 'data_inicio_campanha')" class="textRight">Data início</th>
+                <th (click)="ordernar('campanhasPerfil', 'campanhas', 'data_fim_campanha')" class="textRight">Data fim</th>
               </tr>
             </thead>
             <tbody>
@@ -159,21 +159,21 @@
       <nb-card-header>Metas campanhas do perfil</nb-card-header>
 
       <nb-card-body *ngIf="revealed.metasCampanhas">
-        <nb-tabset fullWidth (changeTab)="filtraCampanhaPerfil($event)">
+        <nb-tabset fullWidth (changeTab)="filtraCampanhaPerfil($event.tabTitle)">
           <nb-tab *ngFor="let p of perfis" [tabTitle]="p.label">
 
             <table class="tabela">
               <thead>
                 <tr>
-                  <th style="width: 25%" class="">Agrupamento</th>
-                  <th style="width: 15%" class="">Nível</th>
-                  <th style="width: 10%" class="textRight">Meta total</th>
-                  <th style="width: 10%" class="textRight">Atingimento</th>
+                  <th (click)="ordernar('dadosCampanhaMetas', 'metas', 'nome_agrupamento')" style="width: 25%" class="">Agrupamento</th>
+                  <th (click)="ordernar('dadosCampanhaMetas', 'metas', 'nivel_atingimento_campanha')" style="width: 15%" class="">Nível</th>
+                  <th (click)="ordernar('dadosCampanhaMetas', 'metas', 'meta_total_campanha')" style="width: 10%" class="textRight">Meta total</th>
+                  <th (click)="ordernar('dadosCampanhaMetas', 'metas', 'atingimento_total_campanha')" style="width: 10%" class="textRight">Atingimento</th>
 
-                  <th style="width: 10%" class="textRight">Meta diária</th>
-                  <th style="width: 10%" class="textRight">Projeção</th>
-                  <th style="width: 10%" class="textRight">Ticket médio</th>
-                  <th style="width: 10%" class="textRight">HC</th>
+                  <th (click)="ordernar('dadosCampanhaMetas', 'metas', 'meta_diaria_campanha')" style="width: 10%" class="textRight">Meta diária</th>
+                  <th (click)="ordernar('dadosCampanhaMetas', 'metas', 'projecao_total_campanha')" style="width: 10%" class="textRight">Projeção</th>
+                  <th (click)="ordernar('dadosCampanhaMetas', 'metas', 'ticket_medio_campanha')" style="width: 10%" class="textRight">Ticket médio</th>
+                  <th (click)="ordernar('dadosCampanhaMetas', 'metas', 'total_hc_participantes')" style="width: 10%" class="textRight">HC</th>
                 </tr>
               </thead>
 
@@ -221,11 +221,16 @@
         <table class="tabela">
           <thead>
             <tr>
-              <th style="width: 10%;" class="textRight">Meta producao</th>
-              <th style="width: 10%;" class="">Nível atingimento</th>
-              <th style="width: 20%;" class="">Nome</th>
-              <th style="width: 10%;" class="textRight">Valor atingido meta produção</th>
-              <th style="width: 50%;" class="">Andamento</th>
+              <th (click)="ordernar('dadosProdutoCorbanCampanha.produto_corban_campanha', 'produtos', 'nome_produto_corban')" style="width: 15%;" class="">Nome</th>
+
+              <th (click)="ordernar('dadosProdutoCorbanCampanha.produto_corban_campanha', 'produtos', 'meta_producao_produto_corban')" style="width: 10%;" class="textRight">Meta</th>
+              <th (click)="ordernar('dadosProdutoCorbanCampanha.produto_corban_campanha', 'produtos', 'valor_atingido_meta_producao_produto_corban')" style="width: 10%;" class="textRight">Atingido</th>
+              <th (click)="ordernar('dadosProdutoCorbanCampanha.produto_corban_campanha', 'produtos', 'nivel_atingimento_produto_corban')" style="width: 10%;" class="">Nível atingimento</th>
+              <th (click)="ordernar('dadosProdutoCorbanCampanha.produto_corban_campanha', 'produtos', 'projecao_produto_corban')" style="width: 10%;" class="textRight">Projeção</th>
+              <th (click)="ordernar('dadosProdutoCorbanCampanha.produto_corban_campanha', 'produtos', 'meta_diaria_produto_corban')" style="width: 10%;" class="textRight">Meta diária</th>
+              <th (click)="ordernar('dadosProdutoCorbanCampanha.produto_corban_campanha', 'produtos', 'ticket_medio_produto_corban')" style="width: 10%;" class="textRight">Ticket médio </th>
+              
+              <th (click)="ordernar('dadosProdutoCorbanCampanha.produto_corban_campanha', 'produtos', 'percentual_atingido_produto_corban')" style="width: 25%;" class="">Andamento</th>
             </tr>
           </thead>
 
@@ -235,11 +240,15 @@
           <table class="tabela">
             <tbody>
               <tr *ngFor="let i of dadosProdutoCorbanCampanha.produto_corban_campanha">
+                <td style="width: 15%;" class="">{{i.nome_produto_corban}}</td>
                 <td style="width: 10%;" class="textRight">{{i.meta_producao_produto_corban | moeda}}</td>
-                <td style="width: 10%;" class="">{{i.nivel_atingimento_produto_corban || 0}}</td>
-                <td style="width: 20%;" class="">{{i.nome_produto_corban}}</td>
                 <td style="width: 10%;" class="textRight">{{i.valor_atingido_meta_producao_produto_corban | moeda}}</td>
-                <td style="width: 50%;" class="">
+                <td style="width: 10%;" class="">{{i.nivel_atingimento_produto_corban || 0}}</td>
+                <td style="width: 10%;" class="textRight">{{i.projecao_produto_corban | moeda}}</td>
+                <td style="width: 10%;" class="textRight">{{i.meta_diaria_produto_corban | moeda}}</td>
+                <td style="width: 10%;" class="textRight">{{i.ticket_medio_produto_corban | moeda}}</td>
+               
+                <td style="width: 25%;" class="">
                   <nb-progress-bar [value]="i.percentual_atingido_produto_corban || 0" status="primary"
                     [displayValue]="true">
                   </nb-progress-bar>
