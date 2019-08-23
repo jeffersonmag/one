@@ -104,33 +104,33 @@ export class DashboardComponent implements OnDestroy {
   }
 
   ordem = {
-    campanhas:{
-      codigo_campanha:'asc',
-      nome_campanha:'asc',
-      data_inicio_campanha:'asc',
-      data_fim_campanha:'asc'
+    campanhas: {
+      codigo_campanha: 'asc',
+      nome_campanha: 'asc',
+      data_inicio_campanha: 'asc',
+      data_fim_campanha: 'asc'
     },
-    metas:{
-      nome_agrupamento:'asc',
-      nivel_atingimento_campanha:'asc',
-      meta_total_campanha:'asc',
-      atingimento_total_campanha:'asc',
-      meta_diaria_campanha:'asc',
-      projecao_total_campanha:'asc',
-      ticket_medio_campanha:'asc',
-      total_hc_participantes:'asc'
+    metas: {
+      nome_agrupamento: 'asc',
+      nivel_atingimento_campanha: 'asc',
+      meta_total_campanha: 'asc',
+      atingimento_total_campanha: 'asc',
+      meta_diaria_campanha: 'asc',
+      projecao_total_campanha: 'asc',
+      ticket_medio_campanha: 'asc',
+      total_hc_participantes: 'asc'
     },
-    produtos:{
-      nome_produto_corban:'asc',
-      valor_atingido_meta_producao_produto_corban:'asc',
-      nivel_atingimento_produto_corban:'asc',
-      projecao_produto_corban:'asc',
-      meta_diaria_produto_corban:'asc',
-      ticket_medio_produto_corban:'asc',
-      percentual_atingido_produto_corban:'asc'
+    produtos: {
+      nome_produto_corban: 'asc',
+      valor_atingido_meta_producao_produto_corban: 'asc',
+      nivel_atingimento_produto_corban: 'asc',
+      projecao_produto_corban: 'asc',
+      meta_diaria_produto_corban: 'asc',
+      ticket_medio_produto_corban: 'asc',
+      percentual_atingido_produto_corban: 'asc'
     }
   }
- 
+
 
   codigos = {
     codigo_regional: "",
@@ -138,7 +138,7 @@ export class DashboardComponent implements OnDestroy {
     codigo_loja: "",
     codigo_funcionario: ""
   }
- 
+
 
   themeSubscription: any;
 
@@ -369,8 +369,8 @@ export class DashboardComponent implements OnDestroy {
     this.indiceContratosDigitadosApiService.pagos({
       "codigo_campanha": this.filtro.campanha.codigo,
       "codigo_regional": this.codigos.codigo_regional,
-      "codigo_comercial":  this.codigos.codigo_comercial,
-      "codigo_loja":  this.codigos.codigo_loja,
+      "codigo_comercial": this.codigos.codigo_comercial,
+      "codigo_loja": this.codigos.codigo_loja,
       "codigo_funcionario": this.codigos.codigo_funcionario
     })
       .then((s) => {
@@ -398,8 +398,8 @@ export class DashboardComponent implements OnDestroy {
     this.indiceContratosDigitadosApiService.sintetico({
       "codigo_campanha": this.filtro.campanha.codigo,
       "codigo_regional": this.codigos.codigo_regional,
-      "codigo_comercial":  this.codigos.codigo_comercial,
-      "codigo_loja":  this.codigos.codigo_loja,
+      "codigo_comercial": this.codigos.codigo_comercial,
+      "codigo_loja": this.codigos.codigo_loja,
       "codigo_funcionario": this.codigos.codigo_funcionario
     })
       .then((s) => {
@@ -447,8 +447,8 @@ export class DashboardComponent implements OnDestroy {
     this.ticketMedioApiService.perfil({
       "codigo_campanha": this.filtro.campanha.codigo,
       "codigo_regional": this.codigos.codigo_regional,
-      "codigo_comercial":  this.codigos.codigo_comercial,
-      "codigo_loja":  this.codigos.codigo_loja,
+      "codigo_comercial": this.codigos.codigo_comercial,
+      "codigo_loja": this.codigos.codigo_loja,
       "codigo_funcionario": this.codigos.codigo_funcionario
     })
       .then((s) => {
@@ -460,8 +460,8 @@ export class DashboardComponent implements OnDestroy {
     this.ticketMedioApiService.global({
       "codigo_campanha": this.filtro.campanha.codigo,
       "codigo_regional": this.codigos.codigo_regional,
-      "codigo_comercial":  this.codigos.codigo_comercial,
-      "codigo_loja":  this.codigos.codigo_loja,
+      "codigo_comercial": this.codigos.codigo_comercial,
+      "codigo_loja": this.codigos.codigo_loja,
       "codigo_funcionario": this.codigos.codigo_funcionario
     })
       .then((s) => {
@@ -477,7 +477,7 @@ export class DashboardComponent implements OnDestroy {
     this.campanhaSelecionada = item;
 
     console.log('campanha selecionada');
-    console.log( this.campanhaSelecionada );
+    console.log(this.campanhaSelecionada);
 
     this.findContratos();
     this.findDiasUteis();
@@ -486,7 +486,7 @@ export class DashboardComponent implements OnDestroy {
   }
 
   filtraCampanhaPerfil(event) {
-    
+
     console.log(event);
     let find = _.find(this.perfis, (o: any) => {
       return String(o.label) === String(event);
@@ -499,27 +499,25 @@ export class DashboardComponent implements OnDestroy {
     this.filtro.produto.codigo = item.codigo_agrupamento
     this.dadosProdutoCorbanCampanha = item;
 
-    this.codigos = {
-      codigo_regional: "",
-      codigo_comercial: "",
-      codigo_loja: "",
-      codigo_funcionario: ""
+    this.codigos.codigo_regional = '';
+    this.codigos.codigo_comercial = '';
+    this.codigos.codigo_loja = '';
+    this.codigos.codigo_funcionario = '';
+
+    if (this.perfilAtivo === 4) {
+      this.codigos.codigo_regional = String(this.filtro.produto.codigo);
     }
 
-    if(this.perfilAtivo === 4){
-      this.codigos.codigo_regional = this.filtro.produto.codigo;
+    if (this.perfilAtivo === 3) {
+      this.codigos.codigo_comercial = String(this.filtro.produto.codigo);
     }
 
-    if(this.perfilAtivo === 3){
-      this.codigos.codigo_comercial = this.filtro.produto.codigo;
+    if (this.perfilAtivo === 2) {
+      this.codigos.codigo_loja = String(this.filtro.produto.codigo);
     }
 
-    if(this.perfilAtivo === 2){
-      this.codigos.codigo_loja = this.filtro.produto.codigo;
-    }
-
-    if(this.perfilAtivo === 1){
-      this.codigos.codigo_funcionario = this.filtro.produto.codigo;
+    if (this.perfilAtivo === 1) {
+      this.codigos.codigo_funcionario = String(this.filtro.produto.codigo);
     }
     console.log('this.dadosProdutoCorbanCampanha');
     console.log(this.dadosProdutoCorbanCampanha);
@@ -532,15 +530,15 @@ export class DashboardComponent implements OnDestroy {
     this.revealed[acao] = !this.revealed[acao];
   }
 
-  ordernar(dados:string, tabela, campo){
+  ordernar(dados: string, tabela, campo) {
     let l = dados.split('.');
 
     let t;
 
-    if(l.length === 1){
+    if (l.length === 1) {
       t = this[l[0]];
     }
-    if(l.length === 2){
+    if (l.length === 2) {
       t = this[l[0]];
       console.log(t);
       t = t[l[1]];
@@ -549,29 +547,29 @@ export class DashboardComponent implements OnDestroy {
     console.log(dados);
     console.log(tabela);
     console.log(campo);
-   
+
     let ordem = 'asc';
 
-    if(this.ordem[tabela][campo] === 'asc' ){
+    if (this.ordem[tabela][campo] === 'asc') {
       ordem = 'desc';
     } else {
       ordem = 'asc';
     }
 
     this.ordem[tabela][campo] = ordem;
-    
+
     console.log(ordem);
     console.log(this.ordem);
 
     t = _.orderBy(t, [campo], [ordem]);
     console.log(t);
-    if(l.length === 1){
+    if (l.length === 1) {
       this[dados] = t;
     }
-    if(l.length === 2){
+    if (l.length === 2) {
       this[l[0]][l[1]] = t;
     }
-   
+
   }
 
 }
