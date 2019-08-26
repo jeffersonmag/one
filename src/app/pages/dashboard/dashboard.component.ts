@@ -472,9 +472,18 @@ export class DashboardComponent implements OnDestroy {
       });
   }
 
+  atualizarFiltro2(item) {
+    this.codigos.codigo_regional = '';
+    this.codigos.codigo_comercial = '';
+    this.codigos.codigo_loja = '';
+    this.codigos.codigo_funcionario = '';
+    this.atualizarFiltro(item);
+  }
+
   atualizarFiltro(item) {
     this.filtro.campanha.codigo = item.codigo_campanha;
     this.campanhaSelecionada = item;
+
 
     console.log('campanha selecionada');
     console.log(this.campanhaSelecionada);
@@ -495,29 +504,24 @@ export class DashboardComponent implements OnDestroy {
     this.findCampanhaMeta(find.id);
   }
 
-  findDadosProdutoCorbanCampanha(item) {
-    this.filtro.produto.codigo = item.codigo_agrupamento
+  findDadosProdutoCorbanCampanhaFiltro(item) {
+    //this.filtro.produto.codigo = this.filtro.produto.codigo
     this.dadosProdutoCorbanCampanha = item;
 
-    this.codigos.codigo_regional = '';
-    this.codigos.codigo_comercial = '';
-    this.codigos.codigo_loja = '';
-    this.codigos.codigo_funcionario = '';
-
     if (this.perfilAtivo === 4) {
-      this.codigos.codigo_regional = String(this.filtro.produto.codigo);
+      this.codigos.codigo_regional = String(item.codigo_agrupamento);
     }
 
     if (this.perfilAtivo === 3) {
-      this.codigos.codigo_comercial = String(this.filtro.produto.codigo);
+      this.codigos.codigo_comercial = String(item.codigo_agrupamento);
     }
 
     if (this.perfilAtivo === 2) {
-      this.codigos.codigo_loja = String(this.filtro.produto.codigo);
+      this.codigos.codigo_loja = String(item.codigo_agrupamento);
     }
 
     if (this.perfilAtivo === 1) {
-      this.codigos.codigo_funcionario = String(this.filtro.produto.codigo);
+      this.codigos.codigo_funcionario = String(item.codigo_agrupamento);
     }
     console.log('this.dadosProdutoCorbanCampanha');
     console.log(this.dadosProdutoCorbanCampanha);
@@ -526,6 +530,22 @@ export class DashboardComponent implements OnDestroy {
     this.findTickets();
   }
 
+  findDadosProdutoCorbanCampanha(item) {
+    this.filtro.produto.codigo = item.codigo_agrupamento
+    this.dadosProdutoCorbanCampanha = item;
+
+    this.findContratos();
+    this.findTickets();
+  }
+
+  resetar() {
+    this.codigos.codigo_regional = '';
+    this.codigos.codigo_comercial = '';
+    this.codigos.codigo_loja = '';
+    this.codigos.codigo_funcionario = '';
+
+    this.atualizarFiltro(this.campanhaSelecionada);
+  }
   toggleView(acao) {
     this.revealed[acao] = !this.revealed[acao];
   }

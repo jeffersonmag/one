@@ -8,7 +8,7 @@ import { number_format } from 'locutus/php/strings';
 export class MoedaPipe implements PipeTransform {
 
   transform(value: any): any {
-    return number_format(Number(value), 2, ',', '.');
+    return number_format(Number(value), 0, ',', '.');
   }
 
 }
