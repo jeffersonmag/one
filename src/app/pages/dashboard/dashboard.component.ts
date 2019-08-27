@@ -345,7 +345,11 @@ export class DashboardComponent implements OnDestroy {
     this.campanhasApiService.metas(
       {
         "codigo_campanha": this.filtro.campanha.codigo,
-        "visao": visao
+        "visao": visao,
+        "codigo_regional": this.codigos.codigo_regional,
+        "codigo_comercial": this.codigos.codigo_comercial,
+        "codigo_loja": this.codigos.codigo_loja,
+        "codigo_funcionario": this.codigos.codigo_funcionario
       }
     )
       .then((s) => {
@@ -528,6 +532,7 @@ export class DashboardComponent implements OnDestroy {
 
     this.findContratos();
     this.findTickets();
+    this.findCampanhaMeta(this.perfilAtivo);
   }
 
   findDadosProdutoCorbanCampanha(item) {
@@ -538,14 +543,19 @@ export class DashboardComponent implements OnDestroy {
     this.findTickets();
   }
 
+  findDadosProdutoCorbanCampanhaDetalhes(item) {
+    this.dadosProdutoCorbanCampanha = item;
+  }
+
   resetar() {
     this.codigos.codigo_regional = '';
     this.codigos.codigo_comercial = '';
     this.codigos.codigo_loja = '';
     this.codigos.codigo_funcionario = '';
-
+    this.findCampanhaMeta(this.perfilAtivo);
     this.atualizarFiltro(this.campanhaSelecionada);
   }
+
   toggleView(acao) {
     this.revealed[acao] = !this.revealed[acao];
   }

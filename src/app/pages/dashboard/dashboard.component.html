@@ -155,7 +155,7 @@
 <div class="row">
   <div class="col-12 alert alert-dark" style="position: relative;">
     Filtros: Código regional: {{codigos.codigo_regional}} | Código comercial: {{codigos.codigo_comercial}} | Código
-    loja: {{codigos.codigo_loja}} | Código funcionário: {{codigos.codigo_funcionario}}
+    loja: {{codigos.codigo_loja}} | Código promotor: {{codigos.codigo_funcionario}}
     <span style="position: absolute; right: 5px; padding: 11px; top: 0px;" (click)="resetar()">X</span>
   </div>
   <div class="col-12">
@@ -203,14 +203,21 @@
                     <td style="width: 25%; cursor: pointer;" (click)="findDadosProdutoCorbanCampanhaFiltro(i)">
                       {{i.nome_agrupamento}} -
                       [{{i.codigo_agrupamento}}]</td>
-                    <td style="width: 15%" class="">{{i.nivel_atingimento_campanha}}</td>
-                    <td style="width: 10%" class="textRight">{{i.meta_total_campanha | moeda}}</td>
-                    <td style="width: 10%" class="textRight">{{i.atingimento_total_campanha | moeda}}</td>
+                    <td style="width: 15%; cursor: pointer;" (click)="findDadosProdutoCorbanCampanhaDetalhes(i)"
+                      class="">{{i.nivel_atingimento_campanha}}</td>
+                    <td style="width: 10%; cursor: pointer;" (click)="findDadosProdutoCorbanCampanhaDetalhes(i)"
+                      class="textRight">{{i.meta_total_campanha | moeda}}</td>
+                    <td style="width: 10%; cursor: pointer;" (click)="findDadosProdutoCorbanCampanhaDetalhes(i)"
+                      class="textRight">{{i.atingimento_total_campanha | moeda}}</td>
 
-                    <td style="width: 10%" class="textRight">{{i.meta_diaria_campanha | moeda}}</td>
-                    <td style="width: 10%" class="textRight">{{i.projecao_total_campanha | moeda}}</td>
-                    <td style="width: 10%" class="textRight">{{i.ticket_medio_campanha | moeda}}</td>
-                    <td style="width: 10%" class="textRight">{{i.total_hc_participantes}}</td>
+                    <td style="width: 10%; cursor: pointer;" (click)="findDadosProdutoCorbanCampanhaDetalhes(i)"
+                      class="textRight">{{i.meta_diaria_campanha | moeda}}</td>
+                    <td style="width: 10%; cursor: pointer;" (click)="findDadosProdutoCorbanCampanhaDetalhes(i)"
+                      class="textRight">{{i.projecao_total_campanha | moeda}}</td>
+                    <td style="width: 10%; cursor: pointer;" (click)="findDadosProdutoCorbanCampanhaDetalhes(i)"
+                      class="textRight">{{i.ticket_medio_campanha | moeda}}</td>
+                    <td style="width: 10%; cursor: pointer;" (click)="findDadosProdutoCorbanCampanhaDetalhes(i)"
+                      class="textRight">{{i.total_hc_participantes}}</td>
                   </tr>
                 </tbody>
               </table>
