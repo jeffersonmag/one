@@ -2,7 +2,7 @@
 
 variables:
   HOST: "ftp://waws-prod-dm1-145.ftp.azurewebsites.windows.net"
-  USERNAME: "rbctecnologia\$rbctecnologia"
+  USERNAME: "rbctecnologia\\$rbctecnologia"
   PASSWORD: "WpBP214Nxph21wDitbcHKRbxKhxxmDAywszXXnTy48lBbyy9ty7LH33x1qeF"
 
 deploy:
