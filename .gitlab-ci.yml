@@ -1,0 +1,13 @@
+image: ubuntu:18.04
+
+before_script:
+  - apt-get update -qy
+  - apt-get install -y lftp
+
+build:
+  script:
+    - lftp -e "open ftp://waws-prod-dm1-145.ftp.azurewebsites.windows.net; user $FTP_USERNAME $FTP_PASSWORD; mirror -X .* -X .*/ --reverse --verbose --delete ./ ./site/wwwroot/one; bye"
+  environment:
+    name: production
+  only:
+    - master
