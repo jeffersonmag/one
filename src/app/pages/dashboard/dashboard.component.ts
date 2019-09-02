@@ -489,8 +489,8 @@ export class DashboardComponent implements OnDestroy {
     this.campanhaSelecionada = item;
 
 
-    console.log('campanha selecionada');
-    console.log(this.campanhaSelecionada);
+    //console.log('campanha selecionada');
+    //console.log(this.campanhaSelecionada);
 
     this.findContratos();
     this.findDiasUteis();
@@ -527,8 +527,8 @@ export class DashboardComponent implements OnDestroy {
     if (this.perfilAtivo === 1) {
       this.codigos.codigo_funcionario = String(item.codigo_agrupamento);
     }
-    console.log('this.dadosProdutoCorbanCampanha');
-    console.log(this.dadosProdutoCorbanCampanha);
+    //console.log('this.dadosProdutoCorbanCampanha');
+    //console.log(this.dadosProdutoCorbanCampanha);
 
     this.findContratos();
     this.findTickets();
@@ -539,7 +539,7 @@ export class DashboardComponent implements OnDestroy {
     this.filtro.produto.codigo = item.codigo_agrupamento
     this.dadosProdutoCorbanCampanha = item;
 
-    this.findContratos();
+    //this.findContratos();
     this.findTickets();
   }
 
@@ -573,10 +573,10 @@ export class DashboardComponent implements OnDestroy {
       console.log(t);
       t = t[l[1]];
     }
-    console.log(t);
-    console.log(dados);
-    console.log(tabela);
-    console.log(campo);
+    //console.log(t);
+    //console.log(dados);
+    //console.log(tabela);
+    //console.log(campo);
 
     let ordem = 'asc';
 
