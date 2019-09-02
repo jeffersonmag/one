@@ -1,15 +1,13 @@
-image: ubuntu:18.04
+#image: ubuntu:18.04
 
-before_script:
-  - apt-get update -qq
-  - apt-get install -y -qq lftp
+variables:
+  HOST: "ftp://waws-prod-dm1-145.ftp.azurewebsites.windows.net"
+  USERNAME: "rbctecnologia\$rbctecnologia"
+  PASSWORD: "WpBP214Nxph21wDitbcHKRbxKhxxmDAywszXXnTy48lBbyy9ty7LH33x1qeF"
 
-build:
+deploy:
   script:
-    #- lftp -e "open ftp://waws-prod-dm1-145.ftp.azurewebsites.windows.net; user $FTP_USERNAME $FTP_PASSWORD; mirror -X .* -X .*/ --reverse --verbose --delete ./ ./site/wwwroot/one; bye"
-    - lftp -c "set ftp:ssl-allow no; open -u rbctecnologia\\$rbctecnologia,WpBP214Nxph21wDitbcHKRbxKhxxmDAywszXXnTy48lBbyy9ty7LH33x1qeF ftp://waws-prod-dm1-145.ftp.azurewebsites.windows.net; mirror -v ./ ./site/wwwroot/one --reverse --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/"  
-    #- lftp -e "set ftp:ssl-allow no; open ftp://waws-prod-dm1-145.ftp.azurewebsites.windows.net; user rbctecnologia\$rbctecnologia WpBP214Nxph21wDitbcHKRbxKhxxmDAywszXXnTy48lBbyy9ty7LH33x1qeF; mirror -X .* -X .*/ --reverse --verbose --delete ./ ./site/wwwroot/one; bye"
-  environment:
-    name: production
+    - apt-get update -qq && apt-get install -y -qq lftp
+    - lftp -c "set ftp:ssl-allow no; open -u $USERNAME,$PASSWORD $HOST; mirror -Rnev ./ ./site/wwwroot/one --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/"
   only:
     - master
