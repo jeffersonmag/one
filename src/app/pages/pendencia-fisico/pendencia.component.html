@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col-12">
+    <nb-card accent="info" [nbSpinner]="dadosPendenciaFisicoLoad" nbSpinnerStatus="success">
+      <nb-icon *ngIf="revealed.pendenciaFisico" class="toggle-icon" icon="chevron-up-outline" pack="eva"
+        (click)="toggleView('pendenciaFisico')"></nb-icon>
+      <nb-icon *ngIf="!revealed.pendenciaFisico" class="toggle-icon" icon="chevron-down-outline" pack="eva"
+        (click)="toggleView('pendenciaFisico')"> </nb-icon>
+      <nb-card-header>Pendências de Físico</nb-card-header>
+
+      <nb-card-body *ngIf="revealed.pendenciaFisico">
+        <nb-tabset fullWidth (changeTab)="filtraPendenciaPerfil($event)">
+          <nb-tab *ngFor="let p of perfis" [tabTitle]="p.label">
+
+            <table class="tabela">
+              <thead>
+                <tr>
+
+                  <th style="width: 8%" class="textCenter">Proposta</th>
+                  <th style="width: 8%" class="textCenter">Nome Cliente</th>
+                  <th style="width: 8%" class="textCenter">Nome Produto CORBAN</th>
+                  <th style="width: 8%" class="textCenter">Data Entrada Operação</th>
+                  <th style="width: 8%" class="textCenter">Tipo Operação</th>
+                  <th style="width: 8%" class="textCenter">Nome Convênio</th>
+                  <th style="width: 8%" class="textCenter">Nome Instituição</th>
+                  <th style="width: 8%" class="textCenter">Código Agente</th>
+                  <th style="width: 8%" class="textCenter">Data Status</th>
+                  <th style="width: 8%" class="textCenter">Status Físico Instituição</th>
+                  <th style="width: 8%" class="textCenter">Valor Contrato</th>
+                  <th style="width: 8%" class="textCenter">Base Cálculo</th>
+
+                </tr>
+              </thead>
+
+            </table>
+
+            <div class="maxContent">
+              <table class="tabela">
+                <tbody>
+                  <tr *ngFor="let i of dadosPendenciasFisico"
+                    [ngClass]="{'active': i.codigo_agente === filtro.pendencia.codigo}">
+
+                    <td style="width: 8%" class="textCenter">TESTE</td>
+                    <td style="width: 8%" class="textCenter">TESTE</td>
+                    <td style="width: 8%" class="textCenter">TESTE</td>
+                    <td style="width: 8%" class="textCenter">TESTE</td>
+                    <td style="width: 8%" class="textCenter">TESTE</td>
+                    <td style="width: 8%" class="textCenter">TESTE</td>
+                    <td style="width: 8%" class="textCenter">TESTE</td>
+                    <td style="width: 8%" class="textCenter">TESTE</td>
+                    <td style="width: 8%" class="textCenter">TESTE</td>
+                    <td style="width: 8%" class="textCenter">TESTE</td>
+                    <td style="width: 8%" class="textCenter">TESTE</td>
+                    <td style="width: 8%" class="textCenter">TESTE</td>
+
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </nb-tab>
+        </nb-tabset>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

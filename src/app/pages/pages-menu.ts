@@ -6,5 +6,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'home-outline',
     link: '/pages/dashboard',
     home: true,
-  }
+  },
+
+  {
+    title: 'Pendência de Físico',
+    icon: 'browser',
+    link: '/pages/pendencia-fisico',
+    home: false,
+  },
+
 ];

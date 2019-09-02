@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PagesComponent } from './pages.component';
+import { PendenciaComponent } from './pendencia-fisico/pendencia.component';
 
 const routes: Routes = [{
   path: '',
@@ -11,6 +12,11 @@ const routes: Routes = [{
     {
       path: 'dashboard',
       component: DashboardComponent,
+    },
+
+    {
+      path: 'pendencia-fisico',
+      component: PendenciaComponent,
     },
 
     {
@@ -52,6 +58,13 @@ const routes: Routes = [{
       redirectTo: 'dashboard',
       pathMatch: 'full',
     },
+
+    {
+      path: '',
+      redirectTo: 'pendencia-fisico',
+      pathMatch: 'full',
+    },
+
   ],
 }];
 
