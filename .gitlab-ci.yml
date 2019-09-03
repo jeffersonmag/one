@@ -8,16 +8,8 @@ variables:
 deploy:
   script:
     - apt-get update -qq && apt-get install -y lftp
-    - lftp -c "set ssl:verify-certificate no; open ftp://rbctecnologia%5c%24rbctecnologia:WpBP214Nxph21wDitbcHKRbxKhxxmDAywszXXnTy48lBbyy9ty7LH33x1qeF@waws-prod-dm1-145.ftp.azurewebsites.windows.net lcd ./; cd site/wwwroot/one; "
-            #mirror --only-newer \
-            #       --ignore-time \
-            #       --reverse \
-            #       --parallel=5 \
-            #       --verbose \
-            #       --exclude .git/ \
-            #       --exclude .gitignore \
-            #       --exclude-glob composer.* \
-            #       --exclude-glob *.sh"
+    - lftp -c "set ssl:verify-certificate no; open ftp://rbctecnologia%5c%24rbctecnologia:WpBP214Nxph21wDitbcHKRbxKhxxmDAywszXXnTy48lBbyy9ty7LH33x1qeF@waws-prod-dm1-145.ftp.azurewebsites.windows.net lcd /; cd site/wwwroot/one; mirror --only-newer --ignore-time --reverse --parallel=5 --verbose  --exclude .git/ --exclude .gitignore --exclude-glob composer.* --exclude-glob *.sh"
+    
     #- git ftp init --user $USERNAME --passwd $PASSWORD ftp://waws-prod-dm1-145.ftp.azurewebsites.windows.net
     #- lftp -c "set ftp:ssl-allow no; open -u $USERNAME,$PASSWORD $HOST; mirror -Rnev ./ /site/wwwroot/one --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/; bye"
     #- lftp -e "set ssl:verify-certificate no; open $HOST; user $FTP_USERNAME,$FTP_PASSWORD; mirror -Rnev ./ /site/wwwroot/one --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/; bye"
