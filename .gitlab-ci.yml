@@ -7,8 +7,20 @@ variables:
 
 deploy:
   script:
-    - apt-get update -qq && apt-get install -y git-ftp
-    - git ftp init --user $USERNAME --passwd $PASSWORD ftp://waws-prod-dm1-145.ftp.azurewebsites.windows.net
+    - apt-get update -qq && apt-get install -y lftp
+    - lftp -c "open ftp://$USERNAME:$PASSWORD@$HOST"
+            #lcd ${local_dir};
+            #cd ${remote_dir};
+            #mirror --only-newer \
+            #       --ignore-time \
+            #       --reverse \
+            #       --parallel=5 \
+            #       --verbose \
+            #       --exclude .git/ \
+            #       --exclude .gitignore \
+            #       --exclude-glob composer.* \
+            #       --exclude-glob *.sh"
+    #- git ftp init --user $USERNAME --passwd $PASSWORD ftp://waws-prod-dm1-145.ftp.azurewebsites.windows.net
     #- lftp -c "set ftp:ssl-allow no; open -u $USERNAME,$PASSWORD $HOST; mirror -Rnev ./ /site/wwwroot/one --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/; bye"
     #- lftp -e "set ssl:verify-certificate no; open $HOST; user $FTP_USERNAME,$FTP_PASSWORD; mirror -Rnev ./ /site/wwwroot/one --ignore-time --parallel=10 --exclude-glob .git* --exclude .git/; bye"
   only:
