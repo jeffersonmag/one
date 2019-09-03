@@ -8,7 +8,7 @@ variables:
 deploy:
   script:
     - apt-get update -qq && apt-get install -y lftp
-    - lftp -c "set ssl:verify-certificate no set ftp:ssl-allow no; open ftp://rbctecnologia%5c%24rbctecnologia:WpBP214Nxph21wDitbcHKRbxKhxxmDAywszXXnTy48lBbyy9ty7LH33x1qeF@waws-prod-dm1-145.ftp.azurewebsites.windows.net lcd .; cd /site/wwwroot/onenovo/; mirror -X .* -X .*/ --reverse --verbose --delete / site/wwwroot/onenovo/; bye"
+    - lftp -c "set ssl:verify-certificate no set ftp:ssl-allow no; open ftp://rbctecnologia%5c%24rbctecnologia:WpBP214Nxph21wDitbcHKRbxKhxxmDAywszXXnTy48lBbyy9ty7LH33x1qeF@waws-prod-dm1-145.ftp.azurewebsites.windows.net lcd .; cd /site/wwwroot/onenovo/; mirror -X .* -X .*/ --reverse --verbose --delete / /; bye"
     
     #- lftp -c "set ssl:verify-certificate no; open ftp://rbctecnologia%5c%24rbctecnologia:WpBP214Nxph21wDitbcHKRbxKhxxmDAywszXXnTy48lBbyy9ty7LH33x1qeF@waws-prod-dm1-145.ftp.azurewebsites.windows.net lcd /; cd site/wwwroot/onenovo; mirror --only-newer --ignore-time --reverse --parallel=5 --verbose  --exclude .git/ --exclude .gitignore --exclude-glob composer.* --exclude-glob *.sh"
     #- git ftp init --user $USERNAME --passwd $PASSWORD ftp://waws-prod-dm1-145.ftp.azurewebsites.windows.net
