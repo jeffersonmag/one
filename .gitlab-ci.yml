@@ -2,7 +2,7 @@ image: samueldebruyn/debian-git
 
 variables:
   HOST: "ftp://waws-prod-dm1-145.ftp.azurewebsites.windows.net"
-  USERNAME: "rbctecnologia%5c%24rbctecnologia"
+  USERNAME: "rbctecnologia\$rbctecnologia"
   PASSWORD: "WpBP214Nxph21wDitbcHKRbxKhxxmDAywszXXnTy48lBbyy9ty7LH33x1qeF"
 
 deploy:
