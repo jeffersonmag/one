@@ -8,9 +8,7 @@ variables:
 deploy:
   script:
     - apt-get update -qq && apt-get install -y lftp
-    - lftp -c "open ftp://rbctecnologia\$rbctecnologia:WpBP214Nxph21wDitbcHKRbxKhxxmDAywszXXnTy48lBbyy9ty7LH33x1qeF@waws-prod-dm1-145.ftp.azurewebsites.windows.net"
-            #lcd ${local_dir};
-            #cd ${remote_dir};
+    - lftp -c "set ssl:verify-certificate no; open ftp://rbctecnologia\$rbctecnologia:WpBP214Nxph21wDitbcHKRbxKhxxmDAywszXXnTy48lBbyy9ty7LH33x1qeF@waws-prod-dm1-145.ftp.azurewebsites.windows.net lcd ./; cd site/wwwroot/one; "
             #mirror --only-newer \
             #       --ignore-time \
             #       --reverse \
