@@ -12,12 +12,15 @@ import {
   NbSpinnerModule,
   NbTabsetModule,
   NbUserModule,
+  NbStepperModule,
+
 } from '@nebular/theme';
 import { NgxEchartsModule } from 'ngx-echarts';
 
 import { ThemeModule } from '../../@theme/theme.module';
 import { PipesModule } from '../../pipes/pipes.module';
 import { PendenciaComponent } from './pendencia.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -36,10 +39,14 @@ import { PendenciaComponent } from './pendencia.component';
     NgxEchartsModule,
     PipesModule,
     NbSpinnerModule,
-    NbProgressBarModule
+    NbProgressBarModule,
+    NbStepperModule,
+    HttpClientModule
   ],
   declarations: [
     PendenciaComponent,
   ],
 })
 export class PendenciaModule { }
+
+export class PageModule { }

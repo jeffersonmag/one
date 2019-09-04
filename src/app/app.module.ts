@@ -11,6 +11,7 @@ import {
   NbSidebarModule,
   NbToastrModule,
   NbWindowModule,
+  NbStepperModule,
 } from '@nebular/theme';
 
 import { CoreModule } from './@core/core.module';
@@ -36,6 +37,7 @@ import { PipesModule } from './pipes/pipes.module';
     AppRoutingModule,
     ThemeModule.forRoot(),
     FormsModule,
+    NbStepperModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),
@@ -47,8 +49,11 @@ import { PipesModule } from './pipes/pipes.module';
     }),
     CoreModule.forRoot(),
     PipesModule,
+    HttpClientModule,
   ],
   bootstrap: [AppComponent],
 })
 export class AppModule {
 }
+
+export class PageModule { }

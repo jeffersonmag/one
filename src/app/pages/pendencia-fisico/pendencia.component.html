@@ -1,45 +1,88 @@
 <div class="row">
-  <div class="col-12">
-    <nb-card accent="info" [nbSpinner]="dadosPendenciaFisicoLoad" nbSpinnerStatus="success">
-      <nb-icon *ngIf="revealed.pendenciaFisico" class="toggle-icon" icon="chevron-up-outline" pack="eva"
-        (click)="toggleView('pendenciaFisico')"></nb-icon>
-      <nb-icon *ngIf="!revealed.pendenciaFisico" class="toggle-icon" icon="chevron-down-outline" pack="eva"
-        (click)="toggleView('pendenciaFisico')"> </nb-icon>
-      <nb-card-header>Pendências de Físico</nb-card-header>
+    <div class="col-12 alert alert-dark">Pendências de Físico</div>
+  </div>
+        <nb-card accent="info" [nbSpinner]="length >= 0" nbSpinnerStatus="success">
+      <div>
+          <nb-icon *ngIf="revealed" class="toggle-icon" icon="chevron-down-outline" pack="eva"
+          (click)="toggleView('Option 1')"> </nb-icon>
+        <nb-card size="small">
+            <nb-card-body>
+                <div class="row">
+                    <div class="col-12">
 
-      <nb-card-body *ngIf="revealed.pendenciaFisico">
-        <nb-tabset fullWidth (changeTab)="filtraPendenciaPerfil($event)">
-          <nb-tab *ngFor="let p of perfis" [tabTitle]="p.label">
+      <nb-select style="width:19.5%" placeholder="Regional">
+        <nb-option value="1">Teste</nb-option>
+          </nb-select>
 
-            <table class="tabela">
-              <thead>
-                <tr>
+            <nb-select style="width:19.5%" placeholder="Comercial">
+              <nb-option value="default">Teste</nb-option>
+                </nb-select>
 
-                  <th style="width: 8%" class="textCenter">Proposta</th>
-                  <th style="width: 8%" class="textCenter">Nome Cliente</th>
-                  <th style="width: 8%" class="textCenter">Nome Produto CORBAN</th>
-                  <th style="width: 8%" class="textCenter">Data Entrada Operação</th>
-                  <th style="width: 8%" class="textCenter">Tipo Operação</th>
-                  <th style="width: 8%" class="textCenter">Nome Convênio</th>
-                  <th style="width: 8%" class="textCenter">Nome Instituição</th>
-                  <th style="width: 8%" class="textCenter">Código Agente</th>
-                  <th style="width: 8%" class="textCenter">Data Status</th>
-                  <th style="width: 8%" class="textCenter">Status Físico Instituição</th>
-                  <th style="width: 8%" class="textCenter">Valor Contrato</th>
-                  <th style="width: 8%" class="textCenter">Base Cálculo</th>
+                <nb-select style="width:19.5%" placeholder="Matriz">
+                  <nb-option value="1">Teste</nb-option>
+                    </nb-select>
 
-                </tr>
-              </thead>
+                    <nb-select style="width:19.5%" placeholder="Loja">
+                      <nb-option value="1">Teste</nb-option>
+                        </nb-select>
 
-            </table>
+                          <nb-select style="width:20%" placeholder="Funcionário">
+                          <nb-option value="1">Teste</nb-option>
+                            </nb-select>
+<!-- -
+                            <div class="row">
+                            <p>
+                          <nb-stepper orientation="horizontal">
+                                <nb-step [label]="labelOne">
+                                  <ng-template #labelOne>A Enviar</ng-template>
+                                  <h4>Pendências que estão à enviar.</h4>
 
-            <div class="maxContent">
+                                </nb-step>
+                                <nb-step [label]="labelTwo">
+                                  <ng-template #labelTwo>Borderô</ng-template>
+                                  <h4>Em processo de borderô.</h4>
+
+                                </nb-step>
+                                <nb-step label="Enviadas">
+                                  <h4>Pendências enviadas.</h4>
+
+
+                                </nb-step>
+                                <nb-step [label]="labelFour">
+                                  <ng-template #labelFour>Aguardando Baixa</ng-template>
+                                  <h4>Aguarde até que seja efetuada baixa.</h4>
+
+                                    <nb-stepper orientation="horizontal">
+                              </nb-stepper>-->
+
+    <table class="tabela">
+      <thead>
+        <tr>
+
+          <th style="width: 8%" class="textCenter">Proposta</th>
+          <th style="width: 8%" class="textCenter">Nome Cliente</th>
+          <th style="width: 8%" class="textCenter">Nome Produto CORBAN</th>
+          <th style="width: 8%" class="textCenter">Data Entrada Operação</th>
+          <th style="width: 8%" class="textCenter">Tipo Operação</th>
+          <th style="width: 8%" class="textCenter">Nome Convênio</th>
+          <th style="width: 8%" class="textCenter">Nome Instituição</th>
+          <th style="width: 8%" class="textCenter">Código Agente</th>
+          <th style="width: 8%" class="textCenter">Data Status</th>
+          <th style="width: 8%" class="textCenter">Status Físico Instituição</th>
+          <th style="width: 8%" class="textCenter">Valor Contrato</th>
+          <th style="width: 8%" class="textCenter">Base Cálculo</th>
+
+        </tr>
+      </thead>
+
+    </table>
+
+           <div class="maxContent">
               <table class="tabela">
                 <tbody>
-                  <tr *ngFor="let i of dadosPendenciasFisico"
-                    [ngClass]="{'active': i.codigo_agente === filtro.pendencia.codigo}">
 
-                    <td style="width: 8%" class="textCenter">TESTE</td>
+                    <tr *ngFor="let i of findPendencias">
+                    <td style="width: 8%" class="textCenter">{{i.proposta}}</td>
                     <td style="width: 8%" class="textCenter">TESTE</td>
                     <td style="width: 8%" class="textCenter">TESTE</td>
                     <td style="width: 8%" class="textCenter">TESTE</td>
@@ -52,13 +95,8 @@
                     <td style="width: 8%" class="textCenter">TESTE</td>
                     <td style="width: 8%" class="textCenter">TESTE</td>
 
-                  </tr>
+
                 </tbody>
               </table>
-            </div>
-          </nb-tab>
-        </nb-tabset>
-      </nb-card-body>
-    </nb-card>
-  </div>
-</div>
+
+
