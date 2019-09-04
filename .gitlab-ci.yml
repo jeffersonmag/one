@@ -8,7 +8,7 @@ variables:
 deploy:
   script:
     - apt-get update -qq && apt-get install -y lftp
-    - lftp -c "set ssl:verify-certificate no set ftp:passive-mode true; open ftp://rbctecnologia%5c%24rbctecnologia:DlwHD6le53tBhc77PwtcwnzL28ns7bcyknonGYAHvLad6bbtf9your9sqE6s@waws-prod-dm1-145.ftp.azurewebsites.windows.net; mirror --only-newer --ignore-time --reverse --parallel=5 --verbose --exclude .git/ --exclude .gitignore --exclude-glob composer.* --exclude-glob *.sh --delete /builds/VERSIONAMENTO/corban_one/ /site/wwwroot/one/dev/; bye"
+    - lftp -c "set ssl:verify-certificate no set ftp:passive-mode true; open ftp://rbctecnologia%5c%24rbctecnologia:DlwHD6le53tBhc77PwtcwnzL28ns7bcyknonGYAHvLad6bbtf9your9sqE6s@waws-prod-dm1-145.ftp.azurewebsites.windows.net; mirror --only-newer --ignore-time --reverse --parallel=5 --verbose --exclude .git/ --exclude .gitignore --exclude-glob composer.* --exclude-glob *.sh --delete /builds/VERSIONAMENTO/corban_one/ /site/wwwroot/one/; bye"
     
     #- lftp -c "set ssl:verify-certificate no; open ftp://rbctecnologia%5c%24rbctecnologia:WpBP214Nxph21wDitbcHKRbxKhxxmDAywszXXnTy48lBbyy9ty7LH33x1qeF@waws-prod-dm1-145.ftp.azurewebsites.windows.net lcd /; cd site/wwwroot/onenovo; mirror --only-newer --ignore-time --reverse --parallel=5 --verbose  --exclude .git/ --exclude .gitignore --exclude-glob composer.* --exclude-glob *.sh"
     #- git ftp init --user $USERNAME --passwd $PASSWORD ftp://waws-prod-dm1-145.ftp.azurewebsites.windows.net
