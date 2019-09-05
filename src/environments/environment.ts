@@ -10,6 +10,6 @@
 
 export const environment = {
   production: false,
-  urlAutentication: 'https://autenticador.rbc.com.br:10725/autenticador/v1/TServerMetodoToken/Token',
-  urlApi: 'https://autenticador.rbc.com.br:10740/api',
+  urlAutentication: 'https://serv-prod-01.ribercred.com.br:10725/autenticador/v1/TServerMetodoToken/Token',
+  urlApi: 'https://serv-prod-01.ribercred.com.br:10740/api',
 };

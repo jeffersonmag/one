@@ -12,9 +12,6 @@ export class PendenciaFisicoApiService {
     private requestService: RequestService,
   ) { }
 
-  perfil(dados = {}) {
-    return this.requestService.get(`${environment.urlApi}/resumo-pendencia-fisico-analitico-perfil`, dados, true);
-  }
   pendencias(dados = {}) {
     return this.requestService.post(`${environment.urlApi}/resumo-pendencia-fisico-analitico-perfil`, dados, true);
   }

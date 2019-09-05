@@ -16,6 +16,7 @@ interface CardSettings {
   selector: 'ngx-pendencia',
   styleUrls: ['./pendencia.component.scss'],
   templateUrl: './pendencia.component.html',
+  preserveWhitespaces: true,
 })
 export class PendenciaComponent   {
 
@@ -45,5 +46,33 @@ export class PendenciaComponent   {
     private themeService: NbThemeService,
     private pendenciaFisicoApiService: PendenciaFisicoApiService,
   ) {
+    this.themeService.getJsTheme()
+      .pipe(takeWhile(() => this.alive))
+      .subscribe(theme => {
+        this.statusCards = this.statusCardsByThemes[theme.name];
+      });
+    this.findPendencia();
   }
+
+
+    findPendencia(){
+    this.pendenciaFisicoApiService.pendencias(
+     {
+	"criterio_de_data": "1",
+	"data_de": "2019-05",
+	"data_ate": "2019-07-07",
+	"codigo_regional":"",
+	"codigo_comercial":"",
+	"codigo_loja": "",
+	"codigo_matriz":"",
+	"codigo_funcionario":""
+}
+    )
+  }
+
+
+  toggleView(acao) {
+    this.revealed[acao] = !this.revealed[acao];
+  }
+
 }
