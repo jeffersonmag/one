@@ -1,7 +1,7 @@
 <div class="header-container">
   <div class="logo-container">
     <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
-      <nb-icon icon="menu-2-outline"></nb-icon>
+      <nb-icon icon="menu-outline"></nb-icon>
     </a>
     <a class="logo" href="#" (click)="navigateHome()">CORBAN <span>ONE</span></a>
   </div>
@@ -10,6 +10,13 @@
   </nb-select>
 </div>
 
-<div class="header-container">
+<!--<div class="header-container">
   {{user.nome_usuario}} | <a style="cursor: pointer;" (click)="sair()">SAIR</a>
+</div>-->
+<div class="header-container">
+  <nb-action class="user-action" *nbIsGranted="['view', 'user']">
+    <nb-user [nbContextMenu]="userMenu" 
+             [name]="user?.nome_usuario" >
+    </nb-user>
+  </nb-action>
 </div>

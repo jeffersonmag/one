@@ -1,58 +1,58 @@
-<div class="row">
-    <div class="col-12 alert alert-dark">Pendências de Físico</div>
-  </div>
-        <nb-card accent="info" [nbSpinner]="length >= 0" nbSpinnerStatus="success">
-      <div>
-          <nb-icon *ngIf="revealed" class="toggle-icon" icon="chevron-down-outline" pack="eva"
-          (click)="toggleView('Option 1')"> </nb-icon>
-        <nb-card size="small">
-            <nb-card-body>
-                <div class="row">
-                    <div class="col-12">
+<nb-card>
+    <nb-card-header>Pendências de Físico</nb-card-header>
+</nb-card>
+<nb-card accent="info" [nbSpinner]="length >= 0" nbSpinnerStatus="success">
+  <div>
+    <nb-icon *ngIf="revealed" class="toggle-icon" icon="chevron-down-outline" pack="eva"
+      (click)="toggleView('Option 1')"> </nb-icon>
+    <nb-card size="small">
+      <nb-card-body>
+        <div class="row">
+          <div class="col-12">
 
-      <nb-select style="width:19.8%" placeholder="Regional">
-        <nb-option value="1">Teste</nb-option>
-          </nb-select>
+            <nb-select style="width:19.8%" placeholder="Regional">
+              <nb-option value="1">Teste</nb-option>
+            </nb-select>
 
             <nb-select style="width:19.7%" placeholder="Comercial">
               <nb-option value="default">Teste</nb-option>
-                </nb-select>
+            </nb-select>
 
-                <nb-select style="width:19.7%" placeholder="Matriz">
-                  <nb-option value="1">Teste</nb-option>
-                    </nb-select>
+            <nb-select style="width:19.7%" placeholder="Matriz">
+              <nb-option value="1">Teste</nb-option>
+            </nb-select>
 
-                    <nb-select style="width:19.7%" placeholder="Loja">
-                      <nb-option value="1">Teste</nb-option>
-                        </nb-select>
+            <nb-select style="width:19.7%" placeholder="Loja">
+              <nb-option value="1">Teste</nb-option>
+            </nb-select>
 
-                          <nb-select style="width:19.7%" placeholder="Funcionário">
-                          <nb-option value="1">Teste</nb-option>
-                            </nb-select>
+            <nb-select style="width:19.7%" placeholder="Funcionário">
+              <nb-option value="1">Teste</nb-option>
+            </nb-select>
 
-    <table class="tabela">
-      <thead>
-        <tr>
+            <table class="tabela">
+              <thead>
+                <tr>
 
-          <th style="width: 8%" class="textCenter">Proposta</th>
-          <th style="width: 8%" class="textCenter">Nome Cliente</th>
-          <th style="width: 8%" class="textCenter">Nome Produto CORBAN</th>
-          <th style="width: 8%" class="textCenter">Data Entrada Operação</th>
-          <th style="width: 8%" class="textCenter">Tipo Operação</th>
-          <th style="width: 8%" class="textCenter">Nome Convênio</th>
-          <th style="width: 8%" class="textCenter">Nome Instituição</th>
-          <th style="width: 8%" class="textCenter">Código Agente</th>
-          <th style="width: 8%" class="textCenter">Data Status</th>
-          <th style="width: 8%" class="textCenter">Status Físico Instituição</th>
-          <th style="width: 8%" class="textCenter">Valor Contrato</th>
-          <th style="width: 8%" class="textCenter">Base Cálculo</th>
+                  <th style="width: 8%" class="textCenter">Proposta</th>
+                  <th style="width: 8%" class="textCenter">Nome Cliente</th>
+                  <th style="width: 8%" class="textCenter">Nome Produto CORBAN</th>
+                  <th style="width: 8%" class="textCenter">Data Entrada Operação</th>
+                  <th style="width: 8%" class="textCenter">Tipo Operação</th>
+                  <th style="width: 8%" class="textCenter">Nome Convênio</th>
+                  <th style="width: 8%" class="textCenter">Nome Instituição</th>
+                  <th style="width: 8%" class="textCenter">Código Agente</th>
+                  <th style="width: 8%" class="textCenter">Data Status</th>
+                  <th style="width: 8%" class="textCenter">Status Físico Instituição</th>
+                  <th style="width: 8%" class="textCenter">Valor Contrato</th>
+                  <th style="width: 8%" class="textCenter">Base Cálculo</th>
 
-        </tr>
-      </thead>
+                </tr>
+              </thead>
 
-    </table>
+            </table>
 
-           <div class="maxContent">
+            <div class="maxContent">
               <table class="tabela">
                 <tbody>
 
@@ -72,5 +72,3 @@
 
                 </tbody>
               </table>
-
-

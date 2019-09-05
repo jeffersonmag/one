@@ -6,6 +6,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { PendenciaModule } from './pendencia-fisico/pendencia.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
+import { EsteiraProducaoModule } from './esteira-producao/esteira-producao.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { PagesComponent } from './pages.component';
     NbMenuModule,
     DashboardModule,
     PendenciaModule,
+    EsteiraProducaoModule
   ],
   declarations: [
     PagesComponent,

@@ -500,9 +500,9 @@ export class DashboardComponent implements OnDestroy {
 
   filtraCampanhaPerfil(event) {
 
-    console.log(event);
+    console.log('meu evento', event);
     let find = _.find(this.perfis, (o: any) => {
-      return String(o.label) === String(event);
+      return String(o.label) === String(event.tabTitle);
     })
     this.perfilAtivo = find.id;
     this.findCampanhaMeta(find.id);
@@ -570,7 +570,7 @@ export class DashboardComponent implements OnDestroy {
     }
     if (l.length === 2) {
       t = this[l[0]];
-      console.log(t);
+      //console.log(t);
       t = t[l[1]];
     }
     //console.log(t);
@@ -588,11 +588,11 @@ export class DashboardComponent implements OnDestroy {
 
     this.ordem[tabela][campo] = ordem;
 
-    console.log(ordem);
-    console.log(this.ordem);
+    //console.log(ordem);
+    //console.log(this.ordem);
 
     t = _.orderBy(t, [campo], [ordem]);
-    console.log(t);
+    //console.log(t);
     if (l.length === 1) {
       this[dados] = t;
     }

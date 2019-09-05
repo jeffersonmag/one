@@ -4,12 +4,12 @@ import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'pages',
-    loadChildren: () => import('app/pages/pages.module')
+    loadChildren: () => import('./pages/pages.module')
       .then(m => m.PagesModule),
   },
   {
     path: 'auth',
-    loadChildren: () => import('app/login/login.module')
+    loadChildren: () => import('./login/login.module')
       .then(m => m.LoginModule),
   },
   { path: '', redirectTo: 'auth', pathMatch: 'full' },

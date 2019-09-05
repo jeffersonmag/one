@@ -15,4 +15,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: false,
   },
 
+  {
+    title: 'Esteira de Produção',
+    icon: 'flip-outline',
+    link: '/pages/esteira-producao',
+    home: false,
+  },
+
 ];

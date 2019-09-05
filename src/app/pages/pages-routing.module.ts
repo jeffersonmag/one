@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PagesComponent } from './pages.component';
 import { PendenciaComponent } from './pendencia-fisico/pendencia.component';
+import { EsteiraProducaoComponent } from './esteira-producao/esteira-producao.component';
 
 const routes: Routes = [{
   path: '',
@@ -17,6 +18,11 @@ const routes: Routes = [{
     {
       path: 'pendencia-fisico',
       component: PendenciaComponent,
+    },
+
+    {
+      path: 'esteira-producao',
+      component: EsteiraProducaoComponent,
     },
 
     {
@@ -62,6 +68,12 @@ const routes: Routes = [{
     {
       path: '',
       redirectTo: 'pendencia-fisico',
+      pathMatch: 'full',
+    },
+
+    {
+      path: '',
+      redirectTo: 'esteira-producao',
       pathMatch: 'full',
     },
 

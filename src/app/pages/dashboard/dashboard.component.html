@@ -27,8 +27,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let i of campanhasPerfil"
-                (click)="atualizarFiltro(i)">
+              <tr *ngFor="let i of campanhasPerfil" (click)="atualizarFiltro(i)">
                 <td>{{i.codigo_campanha}}</td>
                 <td>{{i.nome_campanha}}</td>
                 <td class="textRight">{{i.data_inicio_campanha | moment: 'DD/MM/YYYY'}}</td>

@@ -15,22 +15,23 @@ import { SessionService } from '../../../services/session.service';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
+  userPictureOnly: boolean = false;
   user: any;
 
   themes = [
     {
       value: 'default',
-      name: 'Light',
+      name: 'Claro',
     },
     {
       value: 'dark',
-      name: 'Dark',
+      name: 'Escuro',
     },
   ];
 
   currentTheme = 'default';
 
-  userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
+  userMenu = [{ title: 'Sair' }];
 
   constructor(
     private sessionService: SessionService,
@@ -47,6 +48,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.currentTheme = this.themeService.currentTheme;
 
     this.user = this.sessionService.get('user');
+
+    this.menuService.onItemClick().subscribe((event) => {
+      this.onItemSelection(event.item.title);
+    })
+    //this.userService.getUsers()
+    //  .pipe(takeUntil(this.destroy$))
+    //  .subscribe((users: any) => this.user = this.sessionService.get('user'));
+
+    const { xl } = this.breakpointService.getBreakpointsMap();
+    this.themeService.onMediaQueryChange()
+      .pipe(
+        map(([, currentBreakpoint]) => currentBreakpoint.width < xl),
+        takeUntil(this.destroy$),
+      )
+      .subscribe((isLessThanXl: boolean) => this.userPictureOnly = isLessThanXl);
 
 
     this.themeService.onThemeChange()
@@ -81,6 +97,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   navigateHome() {
     this.menuService.navigateHome();
     return false;
+  }
+
+  onItemSelection(title){
+    if (title === 'Sair'){
+      this.sair()
+    }
   }
 
   sair() {
