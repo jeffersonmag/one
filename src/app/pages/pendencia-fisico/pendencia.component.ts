@@ -5,6 +5,7 @@ import _ from 'lodash';
 import * as moment from 'moment';
 import { takeWhile } from 'rxjs/operators';
 import { PendenciaFisicoApiService } from '../../api/pendencia-fisico';
+import { Pendencias } from './pendencia.model';
 
 interface CardSettings {
   title: string;
@@ -42,6 +43,8 @@ export class PendenciaComponent {
 
   themeSubscription: any;
 
+  pendencias = [];
+
   constructor(
     private themeService: NbThemeService,
     private pendenciaFisicoApiService: PendenciaFisicoApiService,
@@ -54,6 +57,7 @@ export class PendenciaComponent {
     this.findPendencia();
   }
 
+<<<<<<< HEAD
 
   findPendencia() {
     this.pendenciaFisicoApiService.pendencias(
@@ -68,6 +72,17 @@ export class PendenciaComponent {
         "codigo_funcionario": ""
       }
     )
+=======
+  findPendencia() {
+    this.pendencias = [];
+    this.pendenciaFisicoApiService.pendencias()
+      .then((s) => {
+        this.pendencias = s;
+      })
+      .catch((e) => {
+        console.log(e)
+      });
+>>>>>>> b8206df... listagem dados pendencia fisico
   }
 
 

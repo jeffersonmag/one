@@ -1,7 +1,7 @@
 <nb-card>
     <nb-card-header>Pendências de Físico</nb-card-header>
 </nb-card>
-<nb-card accent="info" [nbSpinner]="length >= 0" nbSpinnerStatus="success">
+<nb-card accent="info" [nbSpinner]="pendencias.length <= 0" nbSpinnerStatus="success">
   <div>
     <nb-icon *ngIf="revealed" class="toggle-icon" icon="chevron-down-outline" pack="eva"
       (click)="toggleView('Option 1')"> </nb-icon>
@@ -35,15 +35,15 @@
                 <tr>
 
                   <th style="width: 8%" class="textCenter">Proposta</th>
-                  <th style="width: 8%" class="textCenter">Nome Cliente</th>
-                  <th style="width: 8%" class="textCenter">Nome Produto CORBAN</th>
-                  <th style="width: 8%" class="textCenter">Data Entrada Operação</th>
-                  <th style="width: 8%" class="textCenter">Tipo Operação</th>
-                  <th style="width: 8%" class="textCenter">Nome Convênio</th>
-                  <th style="width: 8%" class="textCenter">Nome Instituição</th>
-                  <th style="width: 8%" class="textCenter">Código Agente</th>
+                  <th style="width: 8%" class="textCenter">Cliente</th>
+                  <th style="width: 8%" class="textCenter">Produto CORBAN</th>
+                  <th style="width: 8%" class="textCenter">Digitação</th>
+                  <th style="width: 8%" class="textCenter">Operação</th>
+                  <th style="width: 8%" class="textCenter">Convênio</th>
+                  <th style="width: 8%" class="textCenter">Instituição</th>
+                  <th style="width: 8%" class="textCenter">Agente</th>
                   <th style="width: 8%" class="textCenter">Data Status</th>
-                  <th style="width: 8%" class="textCenter">Status Físico Instituição</th>
+                  <th style="width: 8%" class="textCenter">Status Físico</th>
                   <th style="width: 8%" class="textCenter">Valor Contrato</th>
                   <th style="width: 8%" class="textCenter">Base Cálculo</th>
 
@@ -56,7 +56,7 @@
               <table class="tabela">
                 <tbody>
 
-                  <tr *ngFor="let i of findPendencia">
+                  <tr *ngFor="let i of pendencias">
                     <td style="width: 8%" class="textCenter">{{i.proposta}}</td>
                     <td style="width: 8%" class="textCenter">{{i.nome_cliente}}</td>
                     <td style="width: 8%" class="textCenter">{{i.nome_produto_corban}}</td>
