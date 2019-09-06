@@ -43,7 +43,12 @@ export class PendenciaComponent {
 
   themeSubscription: any;
 
-  pendencias = [];
+  pendencia = [];
+  comercial = [];
+  regional = [];
+  funcionario = [];
+  loja = [];
+  matriz = [];
 
   constructor(
     private themeService: NbThemeService,
@@ -57,32 +62,26 @@ export class PendenciaComponent {
     this.findPendencia();
   }
 
-<<<<<<< HEAD
-
   findPendencia() {
-    this.pendenciaFisicoApiService.pendencias(
-      {
-        "criterio_de_data": "1",
-        "data_de": "2019-05",
-        "data_ate": "2019-07-07",
-        "codigo_regional": "",
-        "codigo_comercial": "",
-        "codigo_loja": "",
-        "codigo_matriz": "",
-        "codigo_funcionario": ""
-      }
-    )
-=======
-  findPendencia() {
-    this.pendencias = [];
+    this.pendencia = [];
+    this.comercial = [];
     this.pendenciaFisicoApiService.pendencias()
       .then((s) => {
-        this.pendencias = s;
+        this.comercial = s.agrupado_comercial;
+        this.regional = s.agrupado_regional;
+        this.funcionario = s.agrupado_funcionario;
+        this.loja = s.agrupado_loja;
+        this.matriz = s.agrupado_loja_matriz;
+        this.pendencia = s.dados;
       })
       .catch((e) => {
         console.log(e)
       });
->>>>>>> b8206df... listagem dados pendencia fisico
+  }
+
+  compararPerfil(obj1, obj2) {
+    return obj1 && obj2 ? (obj1.pendencia !== obj2.pendencia) : false;
+
   }
 
 

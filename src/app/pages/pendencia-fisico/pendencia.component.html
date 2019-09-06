@@ -1,33 +1,39 @@
 <nb-card>
-    <nb-card-header>Pendências de Físico</nb-card-header>
+  <nb-card-header>Pendências de Físico</nb-card-header>
 </nb-card>
-<nb-card accent="info" [nbSpinner]="pendencias.length <= 0" nbSpinnerStatus="success">
+<nb-card accent="info" [nbSpinner]="comercial.length <= 0" nbSpinnerStatus="success">
   <div>
     <nb-icon *ngIf="revealed" class="toggle-icon" icon="chevron-down-outline" pack="eva"
       (click)="toggleView('Option 1')"> </nb-icon>
-    <nb-card size="small">
+    <nb-card size="medium">
       <nb-card-body>
         <div class="row">
           <div class="col-12">
 
             <nb-select style="width:19.8%" placeholder="Regional">
-              <nb-option value="1">Teste</nb-option>
-            </nb-select>
+              <nb-option *ngFor="let i of regional" value="nome"> {{i.nome_regional}}
+
+              </nb-option>
+              </nb-select>
 
             <nb-select style="width:19.7%" placeholder="Comercial">
-              <nb-option value="default">Teste</nb-option>
+              <nb-option *ngFor="let i of comercial" value="nome">{{i.nome_comercial}}
+
+              </nb-option>
             </nb-select>
 
             <nb-select style="width:19.7%" placeholder="Matriz">
-              <nb-option value="1">Teste</nb-option>
+              <nb-option *ngFor="let i of matriz" value="nome">{{i.nome_loja_matriz}}
+              </nb-option>
             </nb-select>
 
             <nb-select style="width:19.7%" placeholder="Loja">
-              <nb-option value="1">Teste</nb-option>
+              <nb-option *ngFor="let i of loja" value="nome">{{i.nome_loja}}</nb-option>
             </nb-select>
 
             <nb-select style="width:19.7%" placeholder="Funcionário">
-              <nb-option value="1">Teste</nb-option>
+              <nb-option *ngFor="let i of funcionario" value="nome">{{i.nome_funcionario}}
+              </nb-option>
             </nb-select>
 
             <table class="tabela">
@@ -56,16 +62,16 @@
               <table class="tabela">
                 <tbody>
 
-                  <tr *ngFor="let i of pendencias">
+                  <tr *ngFor="let i of pendencia">
                     <td style="width: 8%" class="textCenter">{{i.proposta}}</td>
                     <td style="width: 8%" class="textCenter">{{i.nome_cliente}}</td>
                     <td style="width: 8%" class="textCenter">{{i.nome_produto_corban}}</td>
-                    <td style="width: 8%" class="textCenter">{{i.data_entrada_operacao}}</td>
+                    <td style="width: 8%" class="textCenter">{{i.digitador}}</td>
                     <td style="width: 8%" class="textCenter">{{i.tipo_operacao}}</td>
                     <td style="width: 8%" class="textCenter">{{i.nome_convenio}}</td>
                     <td style="width: 8%" class="textCenter">{{i.nome_instituicao}}</td>
                     <td style="width: 8%" class="textCenter">{{i.codigo_agente}}</td>
-                    <td style="width: 8%" class="textCenter">{{i.data_status}}</td>
+                    <td style="width: 8%" class="textCenter">{{i.data_status | moment: 'DD/MM/YYYY'}}</td>
                     <td style="width: 8%" class="textCenter">{{i.status_fisico_instituicao}}</td>
                     <td style="width: 8%" class="textCenter">{{i.valor_contrato | moeda}}</td>
                     <td style="width: 8%" class="textCenter">{{i.base_calculo | moeda}}</td>
