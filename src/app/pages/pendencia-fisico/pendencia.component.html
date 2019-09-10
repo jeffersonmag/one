@@ -1,38 +1,42 @@
 <nb-card>
   <nb-card-header>Pendências de Físico</nb-card-header>
 </nb-card>
-<nb-card accent="info" [nbSpinner]="comercial.length <= 0" nbSpinnerStatus="success">
+<nb-card accent="info" [nbSpinner]="pendencia.length < 0" nbSpinnerStatus="success">
   <div>
-    <nb-icon *ngIf="revealed" class="toggle-icon" icon="chevron-down-outline" pack="eva"
+    <nb-icon *ngIf="revealed.pendencias" class="toggle-icon" icon="chevron-down-outline" pack="eva"
       (click)="toggleView('Option 1')"> </nb-icon>
-    <nb-card size="medium">
+    <nb-card size="small">
       <nb-card-body>
         <div class="row">
-          <div class="col-12">
+         <!--- <div class="col-12">-->
 
             <nb-select style="width:19.8%" placeholder="Regional">
-              <nb-option *ngFor="let i of regional" value="nome"> {{i.nome_regional}}
-
+              <nb-option *ngFor="let i of regional" id="{{i.codigo_regional}}" (click)="filtraPendenciaFisico($event)" [value]="i.label">
+                {{i.nome_regional}}
               </nb-option>
-              </nb-select>
+            </nb-select>
 
             <nb-select style="width:19.7%" placeholder="Comercial">
-              <nb-option *ngFor="let i of comercial" value="nome">{{i.nome_comercial}}
-
+              <nb-option *ngFor="let i of comercial" id="{{i.codigo_comercial}}" (click)="filtraPendenciaFisico($event)" [value]="i.label">
+                {{i.nome_comercial}}
               </nb-option>
             </nb-select>
 
             <nb-select style="width:19.7%" placeholder="Matriz">
-              <nb-option *ngFor="let i of matriz" value="nome">{{i.nome_loja_matriz}}
+              <nb-option *ngFor="let i of matriz" id="{{i.codigo_matriz}}" (click)="filtraPendenciaFisico($event)" [value]="i.label">
+                {{i.nome_loja_matriz}}
               </nb-option>
             </nb-select>
 
             <nb-select style="width:19.7%" placeholder="Loja">
-              <nb-option *ngFor="let i of loja" value="nome">{{i.nome_loja}}</nb-option>
+              <nb-option *ngFor="let i of loja" id="{{i.codigo_loja}}" (click)="filtraPendenciaFisico($event)" [value]="i.label">
+                {{i.nome_loja}}
+              </nb-option>
             </nb-select>
 
             <nb-select style="width:19.7%" placeholder="Funcionário">
-              <nb-option *ngFor="let i of funcionario" value="nome">{{i.nome_funcionario}}
+              <nb-option *ngFor="let i of funcionario" id="{{i.codigo_funcionario}}" (click)="filtraPendenciaFisico($event)" [value]="i.label">
+                {{i.nome_funcionario}}
               </nb-option>
             </nb-select>
 

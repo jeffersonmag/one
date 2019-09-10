@@ -5,7 +5,9 @@ import _ from 'lodash';
 import * as moment from 'moment';
 import { takeWhile } from 'rxjs/operators';
 import { PendenciaFisicoApiService } from '../../api/pendencia-fisico';
-import { Pendencias } from './pendencia.model';
+import { Placeholder } from '@angular/compiler/src/i18n/i18n_ast';
+import { ChildActivationEnd } from '@angular/router';
+
 
 interface CardSettings {
   title: string;
@@ -38,8 +40,8 @@ export class PendenciaComponent {
     };
   revealed = {
     pendencias: true,
-    pendenciaFisico: true
-  }
+    pendenciaFisico: true,
+  };
 
   themeSubscription: any;
 
@@ -49,6 +51,44 @@ export class PendenciaComponent {
   funcionario = [];
   loja = [];
   matriz = [];
+  dadosPendenciasLoad = true;
+  dadosPendencias = [];
+
+  codigos = {
+    codigo_regional: '',
+    codigo_comercial: '',
+    codigo_matriz: '',
+    codigo_loja: '',
+    codigo_funcionario: ''
+  };
+
+  agrupado = [
+    {
+      codigo_regional: '',
+      categoria: 'Regional',
+    },
+
+    {
+      codigo_comercial: '',
+      categoria: 'Comercial',
+    },
+
+    {
+      codigo_matriz: '',
+      categoria: 'Matriz',
+    },
+
+    {
+      codigo_loja: '',
+      categoria: 'Loja',
+    },
+
+    {
+      codigo_funcionario: '',
+      categoria: 'Funcionário',
+    },
+
+  ];
 
   constructor(
     private themeService: NbThemeService,
@@ -75,15 +115,44 @@ export class PendenciaComponent {
         this.pendencia = s.dados;
       })
       .catch((e) => {
-        console.log(e)
+        console.log(e);
       });
   }
 
-  compararPerfil(obj1, obj2) {
-    return obj1 && obj2 ? (obj1.pendencia !== obj2.pendencia) : false;
+  filterPendencia(id) {
+    this.dadosPendenciasLoad = true;
+    this.dadosPendencias = [];
+    this.pendenciaFisicoApiService.pendencias(
+      {
+        'codigo_regional': this.codigos.codigo_regional,
+        'codigo_comercial': this.codigos.codigo_comercial,
+        'codigo_matriz': this.codigos.codigo_matriz,
+        'codigo_loja': this.codigos.codigo_loja,
+        'codigo_funcionario': this.codigos.codigo_funcionario,
+      },
+    )
 
+      .then((s) => {
+        this.dadosPendencias = s;
+
+        console.log(s);
+        this.dadosPendenciasLoad = false;
+      })
+
+      .catch((e) => {
+        console.log(e);
+        this.dadosPendenciasLoad = false;
+      });
   }
 
+  filtraPendenciaFisico(event) {
+
+    // console.log('meu evento', event.currentTarget.id);
+    let filter = this.dadosPendencias.filter(this.agrupado, ((o: any) => {
+      return String(o.agrupado) === String(event.currentTarget.id);
+    })
+    this.filterPendencia(filter.id);
+  }
 
   toggleView(acao) {
     this.revealed[acao] = !this.revealed[acao];
