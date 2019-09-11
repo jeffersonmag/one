@@ -50,3 +50,7 @@ import { HttpClientModule } from '@angular/common/http';
 export class PendenciaModule { }
 
 export class PageModule { }
+
+export class SelectLabelShowcaseComponent {
+  selectedItem;
+}

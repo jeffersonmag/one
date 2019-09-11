@@ -12,6 +12,7 @@ import {
   NbToastrModule,
   NbWindowModule,
   NbStepperModule,
+  NbSelectModule,
 } from '@nebular/theme';
 
 import { CoreModule } from './@core/core.module';
@@ -19,6 +20,7 @@ import { ThemeModule } from './@theme/theme.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PipesModule } from './pipes/pipes.module';
+
 
 /**
  * @license
@@ -39,6 +41,7 @@ import { PipesModule } from './pipes/pipes.module';
     FormsModule,
     NbStepperModule,
     NbSidebarModule.forRoot(),
+    NbSelectModule,
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),
     NbDialogModule.forRoot(),

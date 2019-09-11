@@ -7,78 +7,69 @@
       (click)="toggleView('Option 1')"> </nb-icon>
     <nb-card size="small">
       <nb-card-body>
-        <div class="row">
-         <!--- <div class="col-12">-->
 
-            <nb-select style="width:19.8%" placeholder="Regional">
-              <nb-option *ngFor="let i of regional" id="{{i.codigo_regional}}" (click)="filtraPendenciaFisico($event)" [value]="i.label">
-                {{i.nome_regional}}
-              </nb-option>
-            </nb-select>
+        <nb-select placeholder="Regional" style="width:19.5%">
+          <nb-option *ngFor="let i of regional" id="{{i.codigo_regional}}" (click)="findPendenciaRegional($event)">
+            {{i.nome_regional}}
+          </nb-option>
+        </nb-select>
 
-            <nb-select style="width:19.7%" placeholder="Comercial">
-              <nb-option *ngFor="let i of comercial" id="{{i.codigo_comercial}}" (click)="filtraPendenciaFisico($event)" [value]="i.label">
-                {{i.nome_comercial}}
-              </nb-option>
-            </nb-select>
+        <nb-select placeholder="Comercial" style="width:19.5%">
+          <nb-option *ngFor="let i of comercial" id="{{i.codigo_comercial}}" (click)="findPendenciaComercial($event)">
+            {{i.nome_comercial}}
+          </nb-option>
+        </nb-select>
 
-            <nb-select style="width:19.7%" placeholder="Matriz">
-              <nb-option *ngFor="let i of matriz" id="{{i.codigo_matriz}}" (click)="filtraPendenciaFisico($event)" [value]="i.label">
-                {{i.nome_loja_matriz}}
-              </nb-option>
-            </nb-select>
+        <nb-select placeholder="Matriz" style="width:19.5%">
+          <nb-option *ngFor="let i of matriz" id="{{i.codigo_loja_matriz}}" (click)="findPendenciaMatriz($event)">
+            {{i.nome_loja_matriz}}
+          </nb-option>
+        </nb-select>
 
-            <nb-select style="width:19.7%" placeholder="Loja">
-              <nb-option *ngFor="let i of loja" id="{{i.codigo_loja}}" (click)="filtraPendenciaFisico($event)" [value]="i.label">
-                {{i.nome_loja}}
-              </nb-option>
-            </nb-select>
+        <nb-select placeholder="Loja" style="width:19.5%">
+          <nb-option *ngFor="let i of loja" id="{{i.codigo_loja}}" (click)="findPendenciaLoja($event)">
+            {{i.nome_loja}}
+          </nb-option>
+        </nb-select>
 
-            <nb-select style="width:19.7%" placeholder="Funcionário">
-              <nb-option *ngFor="let i of funcionario" id="{{i.codigo_funcionario}}" (click)="filtraPendenciaFisico($event)" [value]="i.label">
-                {{i.nome_funcionario}}
-              </nb-option>
-            </nb-select>
+        <nb-select placeholder="Funcionário" style="width:19.5%">
+          <nb-option *ngFor="let i of funcionario" id="{{i.codigo_funcionario}}"
+            (click)="findPendenciaFuncionario($event)">
+            {{i.nome_funcionario}}
 
-            <table class="tabela">
-              <thead>
-                <tr>
+          </nb-option>
+        </nb-select>
+        <div class="align-right">
 
-                  <th style="width: 8%" class="textCenter">Proposta</th>
-                  <th style="width: 8%" class="textCenter">Cliente</th>
-                  <th style="width: 8%" class="textCenter">Produto CORBAN</th>
-                  <th style="width: 8%" class="textCenter">Digitação</th>
-                  <th style="width: 8%" class="textCenter">Operação</th>
-                  <th style="width: 8%" class="textCenter">Convênio</th>
-                  <th style="width: 8%" class="textCenter">Instituição</th>
-                  <th style="width: 8%" class="textCenter">Agente</th>
-                  <th style="width: 8%" class="textCenter">Data Status</th>
-                  <th style="width: 8%" class="textCenter">Status Físico</th>
-                  <th style="width: 8%" class="textCenter">Valor Contrato</th>
-                  <th style="width: 8%" class="textCenter">Base Cálculo</th>
 
-                </tr>
-              </thead>
+        <table class="tabela">
+          <thead>
 
-            </table>
+            <tr>
+              <th style="width: 5%" class="text-center">Proposta</th>
+              <th style="width: 10%" class="text-left">Cliente</th>
+              <th style="width: 10%" class="text-left">Operação</th>
+              <th style="width: 20%" class="text-center">Órgão</th>
+              <th style="width: 5%" class="text-center">Data</th>
+              <th style="width: 5%" class="text-right">Dias Pendentes</th>
+              <th style="width: 5%" class="textCenter">Ação</th>
+            </tr>
+          </thead>
+        </table>
+        <div class="maxContent">
+          <table class="tabela1">
+            <tbody>
 
-            <div class="maxContent">
-              <table class="tabela">
-                <tbody>
+              <tr *ngFor="let i of pendencia">
+                <td style="width: 5%" class="text-center">{{i.proposta}} <br></td>
+                <td style="width: 10%" class="text-left">{{i.nome_cliente}}</td>
+                <td style="width: 10%" class="text-left">{{i.tipo_operacao}} <br> {{i.nome_produto_corban}} </td>
+                <td style="width: 20%" class="text-left">{{i.nome_convenio}} <br> {{i.nome_instituicao}}</td>
+                <td style="width: 5%" class="text-left">{{i.data_entrada_operacao | moment: 'DD/MM/YYYY'}} <br>
+                  {{i.data_status | moment: 'DD/MM/YYYY'}}</td>
+                <td style="width: 5%" class="text-center"> {{i.dias_pendentes}} </td>
+                <td style="width: 5%" class="text-center">[1]</td>
 
-                  <tr *ngFor="let i of pendencia">
-                    <td style="width: 8%" class="textCenter">{{i.proposta}}</td>
-                    <td style="width: 8%" class="textCenter">{{i.nome_cliente}}</td>
-                    <td style="width: 8%" class="textCenter">{{i.nome_produto_corban}}</td>
-                    <td style="width: 8%" class="textCenter">{{i.digitador}}</td>
-                    <td style="width: 8%" class="textCenter">{{i.tipo_operacao}}</td>
-                    <td style="width: 8%" class="textCenter">{{i.nome_convenio}}</td>
-                    <td style="width: 8%" class="textCenter">{{i.nome_instituicao}}</td>
-                    <td style="width: 8%" class="textCenter">{{i.codigo_agente}}</td>
-                    <td style="width: 8%" class="textCenter">{{i.data_status | moment: 'DD/MM/YYYY'}}</td>
-                    <td style="width: 8%" class="textCenter">{{i.status_fisico_instituicao}}</td>
-                    <td style="width: 8%" class="textCenter">{{i.valor_contrato | moeda}}</td>
-                    <td style="width: 8%" class="textCenter">{{i.base_calculo | moeda}}</td>
+            </tbody>
+          </table>
 
-                </tbody>
-              </table>
