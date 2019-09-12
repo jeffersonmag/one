@@ -21,6 +21,7 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { PipesModule } from '../../pipes/pipes.module';
 import { PendenciaComponent } from './pendencia.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbPaginationModule, NgbModalModule, NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { HttpClientModule } from '@angular/common/http';
     NbSpinnerModule,
     NbProgressBarModule,
     NbStepperModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbPaginationModule
   ],
   declarations: [
     PendenciaComponent,

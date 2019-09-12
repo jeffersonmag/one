@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NbThemeService } from '@nebular/theme';
+import { Component, OnInit } from '@angular/core';
+import { NbThemeService, NbSortDirection, NbTreeGridDataSource, } from '@nebular/theme';
 import { number_format, str_pad } from 'locutus/php/strings/';
 import _ from 'lodash';
 import * as moment from 'moment';
@@ -22,7 +22,7 @@ interface CardSettings {
   templateUrl: './pendencia.component.html',
   preserveWhitespaces: true,
 })
-export class PendenciaComponent {
+export class PendenciaComponent implements OnInit {
 
   private alive = true;
 
@@ -46,12 +46,27 @@ export class PendenciaComponent {
 
   themeSubscription: any;
 
+  currentPage = 1;
+  itemsPerPage = 20;
+  pageSize: number;
+
+  customColumn = 'name';
+  defaultColumns = ['size', 'kind', 'items'];
+  allColumns = [this.customColumn, ...this.defaultColumns];
+
+  dataSource: NbTreeGridDataSource<any>;
+
+  sortColumn: string = '';
+  sortDirection: NbSortDirection = NbSortDirection.NONE;
+
   pendencia = [];
   comercial = [];
   regional = [];
+
   funcionario = [];
   loja = [];
   matriz = [];
+
   dadosPendenciasLoad = true;
   dadosPendencias = [];
 
@@ -113,7 +128,7 @@ export class PendenciaComponent {
       "criterio_de_data": "",
       "data_de": "",
       "data_ate": "",
-      "codigo_regional": "",
+      "codigo_regional":  "",
       "codigo_comercial": event.currentTarget.id,
       "codigo_loja": "",
       "codigo_matriz": "",
@@ -217,4 +232,15 @@ export class PendenciaComponent {
   toggleView(acao) {
     this.revealed[acao] = !this.revealed[acao];
   }
+
+  public onPageChange(pageNum: number): void {
+    this.pageSize = this.itemsPerPage * (pageNum - 1);
+  }
+
+  public changePagesize(num: number): void {
+    this.itemsPerPage = this.pageSize + num;
+  }
+
+  ngOnInit() {}
+
 }
