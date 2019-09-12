@@ -36,7 +36,8 @@ export class EsteiraProducaoComponent implements OnInit {
 
   cpf_cliente: number;
   nome_cliente: string;
-  codigo_contratos_inconsistencia: number;
+  proposta: number;
+  codigo_status_agrupado_inconsistencia: number;
 
 
   currentPage = 1;
@@ -78,7 +79,6 @@ export class EsteiraProducaoComponent implements OnInit {
       });
     this.findIndicadores();
     this.findPropostasInconsistentes();
-
   }
 
   findIndicadores() {
@@ -142,17 +142,24 @@ export class EsteiraProducaoComponent implements OnInit {
     });
   }
 
-  marcarResolvida(modal, codigo_contratos_inconsistencia) {
-    this.codigo_contratos_inconsistencia = codigo_contratos_inconsistencia;
+  marcarResolvida(modal, proposta, codigo_status_agrupado_inconsistencia) {
+    this.proposta = proposta;
+    this.codigo_status_agrupado_inconsistencia = codigo_status_agrupado_inconsistencia;
     this.modalReference = this.modalService.open(modal, { size: 'xl', backdrop: 'static' })
   }
 
   JoinAndClose() {
     this.modalReference.close();
+    this.findIndicadores();
+    this.findPropostasInconsistentes();
   }
 
   public onPageChange(pageNum: number): void {
     this.pageSize = this.itemsPerPage * (pageNum - 1);
+  }
+
+  findFiltroStatus(){
+    console.log('passou');
   }
 
   public changePagesize(num: number): void {

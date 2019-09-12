@@ -6,7 +6,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm" *ngFor="let valor of indicadores">
-                            <nb-alert [size]="tiny" status="danger">
+                            <nb-alert [size]="tiny" (click)="findFiltroStatus()" status="danger">
                                 <span class="fonte-card">{{ valor.status_agrupado_inconsistencia }}</span>
                                 <span
                                     class="fonte-card-num">{{  valor.qtd_total_de_propostas_inconsistentes_status  }}/{{  qtd_total_de_propostas_inconsistentes  }}
@@ -82,10 +82,8 @@
                                                         <i class="fa fa-phone color"></i> {{ i.telefone_cliente }}
                                                     </td>
                                                     <td class="size-fonte" width="50px">
-                                                        <i class="fa fa-calendar-check color"></i>
-                                                        {{ i.data_entrada_operacao | moment: 'DD/MM/YYYY' }}<br>
-                                                        <i class="fa fa-calendar-minus color"></i>
-                                                        {{ i.data_status | moment: 'DD/MM/YYYY' }}
+                                                        <i class="fa fa-calendar-check color"></i>{{ i.data_entrada_operacao | moment: 'DD/MM/YYYY' }}<br>
+                                                        <i class="fa fa-calendar-minus color"></i>{{ i.data_status | moment: 'DD/MM/YYYY' }}
                                                     </td>
                                                     <td class="size-fonte">
                                                         {{ i.nome_convenio }}<br>
@@ -120,7 +118,7 @@
 
                                                             <div class="col-xl">
                                                                 <button nbButton status="success" [size]="small"
-                                                                    (click)="marcarResolvida(content, i.codigo_contratos_inconsistencia)"
+                                                                    (click)="marcarResolvida(content, i.proposta, i.codigo_status_agrupado_inconsistencia_)"
                                                                     ghost>
                                                                     <i class="fa fa-check color"></i>
                                                                 </button>

@@ -21,6 +21,7 @@ export class SolucaoInconsistenciasComponent implements OnInit {
   @Input() dValue;
   listaAcoes = [];
   proposta: number;
+  codigo_status_agrupado_inconsistencia: number;
   acao_escolhida: string = '';
   codigo_inconsistencia: number;
   codigo_acao_predefinida: number;
@@ -54,7 +55,8 @@ export class SolucaoInconsistenciasComponent implements OnInit {
 
   carregarInput(texto, cod_acao_predefinida) {
     this.acao_escolhida = texto;
-    this.codigo_inconsistencia = this.options.codigo_contratos_inconsistencia;
+    this.proposta = this.options.proposta;
+    this.codigo_status_agrupado_inconsistencia = this.options.codigo_status_agrupado_inconsistencia;
     this.codigo_acao_predefinida = cod_acao_predefinida;
   }
 
@@ -62,7 +64,8 @@ export class SolucaoInconsistenciasComponent implements OnInit {
     this.EsteiraProducaoApiService
       .resolveInconsistenciaAcao(
         {
-          "codigo_inconsistencia": this.codigo_inconsistencia,
+          "proposta": this.proposta,
+          "codigo_status_agrupado_inconsistencia" : this.codigo_status_agrupado_inconsistencia,
           "codigo_acao_predefinida": this.codigo_acao_predefinida,
           "descricao_acao": this.acao_escolhida
         }
@@ -71,6 +74,11 @@ export class SolucaoInconsistenciasComponent implements OnInit {
         this.makeToast(this.status, this.titulo, this.mensagem);
       })
       .catch((e) => {
+        this.status = 'danger';
+        this.titulo = 'Erro';
+        this.mensagem = 'Ocorreu um problema ao resolver!';
+        this.close();
+        this.makeToast(this.status, this.titulo, this.mensagem);
         console.log(e)
       });
   }

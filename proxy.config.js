@@ -4,13 +4,6 @@ const proxy = [{
   pathRewrite: {
     '^/autenticacao': ''
   }
-},
-{
-  context: '/one',
-  target: 'http://www.rbc.com.br',
-  pathRewrite: {
-    '^/one': ''
-  }
 }
 ];
 module.exports = proxy;

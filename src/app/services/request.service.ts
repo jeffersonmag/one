@@ -15,6 +15,7 @@ export class RequestService {
 
       let h = {
         'Content-Type': 'text/plain',
+        'Access-Control-Allow-Origin': '*',
         Accept: 'text/plain',
       };
 
