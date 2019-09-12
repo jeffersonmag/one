@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <!--<button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>-->
+</div>
+<div class="modal-body">
+    <nb-card>
+        <nb-card-header>Confirmação de resolução</nb-card-header>
+        <nb-card-body>
+            <Span>Clique para resolver: </Span><br><br>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm" *ngFor="let acao of listaAcoes">
+                        <button nbButton [size]="small" status="success"
+                            (click)="carregarInput(acao.texto_complementar, acao.pk)">{{acao.nome_acao}}</button>
+                    </div>
+                </div>
+            </div><br><br><br><br>
+
+            <Span>Informações adicionais: </Span><br><br>
+            <div class="container">
+                <div class="row">
+                    <textarea nbInput fullWidth placeholder="Texto Complementar da ação"
+                        [(ngModel)]="acao_escolhida"></textarea>
+                </div>
+            </div>
+        </nb-card-body>
+
+        <nb-card-footer>
+            <!--<button type="button" class="btn btn-outline-danger" (click)="c('Close click')">Cancelar</button>-->
+            <button type="button" ngbAutofocus class="btn btn-success"
+                (click)="resolverInconsistencia()">Confirmar</button>
+        </nb-card-footer>
+    </nb-card>
+</div>

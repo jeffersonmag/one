@@ -25,6 +25,11 @@ const routes: Routes = [{
       component: EsteiraProducaoComponent,
     },
 
+    //{
+    //  path: 'esteira-producao',
+    //  loadChildren: () => import('./esteira-producao/esteira-producao.module')
+    //    .then(m => m.EsteiraProducaoModule),
+    //},
     {
       path: 'layout',
       loadChildren: () => import('./layout/layout.module')

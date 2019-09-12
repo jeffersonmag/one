@@ -1,4 +1,70 @@
-.card{
+button[nbTreeGridRowToggle] {
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
+
+  .size-fonte{
+    font-size: 11px;
+    text-align: left;    
+  }
+
+  .card-col {
+    flex: 1 0 calc(50% - 1rem);
+    margin: 0 0.5rem;
+  }
+
+  .fonte-card{
+    color: #fff;
+    font-size: 12px;
+    text-align: left;
+  }
+
+  .fonte-card-num{
+    color: #fff;
+    font-size: 9px;
+    text-align: right;
+  }
+  
+  .label-blue {
+    background-color: #1c84c6;
+    color: #fff;
+    font-size: 14px;
+  }
+
+  .search-label {
+    display: block;
+  }
+  .search-input {
+    margin-bottom: 1rem;
+  }
+  
+  .nb-column-name {
     width: 100%;
-    white-space: nowrap;
-}
+  }
+  
+  @media screen and (min-width: 400px) {
+    .nb-column-name,
+    .nb-column-size {
+      width: 50%;
+    }
+  }
+  
+  @media screen and (min-width: 500px) {
+    .nb-column-name,
+    .nb-column-size,
+    .nb-column-kind {
+      width: 33.333%;
+    }
+  }
+  
+  @media screen and (min-width: 600px) {
+    .nb-column-name {
+      width: 31%;
+    }
+    .nb-column-size,
+    .nb-column-kind,
+    .nb-column-items {
+      width: 23%;
+    }
+  }

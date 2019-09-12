@@ -1,5 +1,5 @@
 <nb-card>
-    <nb-card-header>Pendências de Físico</nb-card-header>
+  <nb-card-header>Pendências de Físico</nb-card-header>
 </nb-card>
 <nb-card accent="info" [nbSpinner]="length >= 0" nbSpinnerStatus="success">
   <div>
@@ -33,7 +33,6 @@
             <table class="tabela">
               <thead>
                 <tr>
-
                   <th style="width: 8%" class="textCenter">Proposta</th>
                   <th style="width: 8%" class="textCenter">Nome Cliente</th>
                   <th style="width: 8%" class="textCenter">Nome Produto CORBAN</th>
@@ -46,17 +45,14 @@
                   <th style="width: 8%" class="textCenter">Status Físico Instituição</th>
                   <th style="width: 8%" class="textCenter">Valor Contrato</th>
                   <th style="width: 8%" class="textCenter">Base Cálculo</th>
-
                 </tr>
               </thead>
-
             </table>
 
             <div class="maxContent">
               <table class="tabela">
                 <tbody>
-
-                  <tr *ngFor="let i of findPendencia">
+                  <tr *ngFor="let i of pendencias">
                     <td style="width: 8%" class="textCenter">{{i.proposta}}</td>
                     <td style="width: 8%" class="textCenter">{{i.nome_cliente}}</td>
                     <td style="width: 8%" class="textCenter">{{i.nome_produto_corban}}</td>
@@ -69,6 +65,5 @@
                     <td style="width: 8%" class="textCenter">{{i.status_fisico_instituicao}}</td>
                     <td style="width: 8%" class="textCenter">{{i.valor_contrato | moeda}}</td>
                     <td style="width: 8%" class="textCenter">{{i.base_calculo | moeda}}</td>
-
                 </tbody>
               </table>

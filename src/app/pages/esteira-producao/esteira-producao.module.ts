@@ -14,17 +14,34 @@ import {
   NbTabsetModule,
   NbUserModule,
   NbStepperModule,
-
+  NbTreeGridModule,
+  NbTooltipModule,
+  NbDialogModule,
+  NbWindowModule,
+  NbCheckboxModule,
+  NbInputModule,
+  NbPopoverModule,
+  NbDialogRef
 } from '@nebular/theme';
+import { NgbPaginationModule, NgbModalModule, NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { CommonModule } from '@angular/common';
-import { EsteiraProducaoComponent } from './esteira-producao.component';
+import { EsteiraProducaoComponent, CustomModalOptions } from './esteira-producao.component';
 import { ThemeModule } from '../../@theme/theme.module';
 import { PipesModule } from '../../pipes/pipes.module';
 import { HttpClientModule } from '@angular/common/http';
+import { EsteiraProducaoRoutingModule, routedComponents } from './esteira-producao-routing.module';
+import { BaseHistoricaComponent } from './base-historica/base-historica.component';
+import { SolucaoInconsistenciasComponent } from './solucao-inconsistencias/solucao-inconsistencias.component';
 
 @NgModule({
-  declarations: [EsteiraProducaoComponent],
+  declarations: [
+    EsteiraProducaoComponent,
+    BaseHistoricaComponent,
+    SolucaoInconsistenciasComponent,
+    ...routedComponents,
+    SolucaoInconsistenciasComponent
+  ],
   imports: [
     FormsModule,
     CommonModule,
@@ -45,8 +62,20 @@ import { HttpClientModule } from '@angular/common/http';
     NbSpinnerModule,
     NbProgressBarModule,
     NbStepperModule,
-    HttpClientModule
-  ]
+    HttpClientModule,
+    NbTreeGridModule,
+    NbTooltipModule,
+    NbDialogModule,
+    NbWindowModule,
+    NbPopoverModule,
+    NbCheckboxModule,
+    NbInputModule,
+    EsteiraProducaoRoutingModule,
+    NgbModalModule,
+    NgbPaginationModule
+  ],
+  entryComponents: [BaseHistoricaComponent],
+  providers : [CustomModalOptions, NgbActiveModal]
 })
 export class EsteiraProducaoModule { }
 

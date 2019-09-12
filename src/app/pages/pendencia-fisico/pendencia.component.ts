@@ -70,9 +70,7 @@ export class PendenciaComponent {
     )
   }
 
-
   toggleView(acao) {
     this.revealed[acao] = !this.revealed[acao];
   }
-
 }

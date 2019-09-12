@@ -26,8 +26,8 @@ export class PagesComponent implements OnInit {
 
   ngOnInit() {
     const token = this.sessionService.get('token');
-    console.log('meu token');
-    console.log(token);
+    //console.log('meu token');
+    //console.log(token);
     if (!token) {
       this.router.navigate(['/']);
     }

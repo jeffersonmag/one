@@ -8,6 +8,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
 import { EsteiraProducaoModule } from './esteira-producao/esteira-producao.module';
 
+
 @NgModule({
   imports: [
     PagesRoutingModule,
@@ -18,8 +19,8 @@ import { EsteiraProducaoModule } from './esteira-producao/esteira-producao.modul
     EsteiraProducaoModule
   ],
   declarations: [
-    PagesComponent,
-  ],
+    PagesComponent
+  ]
 })
 export class PagesModule {
 }
