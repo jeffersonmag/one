@@ -12,6 +12,7 @@ import {
   NbToastrModule,
   NbWindowModule,
   NbStepperModule,
+  NbSelectModule,
 } from '@nebular/theme';
 
 import { CoreModule } from './@core/core.module';
@@ -20,6 +21,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PipesModule } from './pipes/pipes.module';
 import {NgbModal, ModalDismissReasons, NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 
 /**
  * @license
@@ -40,6 +42,7 @@ import {NgbModal, ModalDismissReasons, NgbModule} from '@ng-bootstrap/ng-bootstr
     FormsModule,
     NbStepperModule,
     NbSidebarModule.forRoot(),
+    NbSelectModule,
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),
     NbDialogModule.forRoot(),
