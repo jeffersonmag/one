@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { EsteiraProducaoApiService } from '../../../api/esteira-producao';
 import { EsteiraProducaoComponent } from '../esteira-producao.component';
 
@@ -9,8 +9,6 @@ import {
   NbGlobalPosition,
   NbToastrService,
 } from '@nebular/theme';
-import { EventEmitter } from 'events';
-
 
 @Component({
   selector: 'solucao-inconsistencias',
@@ -19,7 +17,8 @@ import { EventEmitter } from 'events';
 })
 export class SolucaoInconsistenciasComponent implements OnInit {
 
-  @Output() close = new EventEmitter();
+  @Input() cValue;
+  @Input() dValue;
   listaAcoes = [];
   proposta: number;
   acao_escolhida: string = '';
@@ -28,9 +27,9 @@ export class SolucaoInconsistenciasComponent implements OnInit {
 
   index = 1;
   destroyByClick = true;
-  duration = 2000;
+  duration = 5000;
   hasIcon = true;
-  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_LEFT;
+  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
   preventDuplicates = true;
   status: NbComponentStatus = 'success';
   titulo: string = 'Sucesso';
@@ -68,6 +67,7 @@ export class SolucaoInconsistenciasComponent implements OnInit {
           "descricao_acao": this.acao_escolhida
         }
       ).then((s) => {
+        this.close();
         this.makeToast(this.status, this.titulo, this.mensagem);
       })
       .catch((e) => {
@@ -84,17 +84,17 @@ export class SolucaoInconsistenciasComponent implements OnInit {
       position: this.position,
       preventDuplicates: this.preventDuplicates,
     };
-    const titleContent = title ? `. ${title}` : '';
+    const titleContent = title ? `${title}` : '';
 
     this.index += 1;
     this.toastrService.show(
       body,
-      `Toast ${this.index}${titleContent}`,
+      `${titleContent}`,
       config);
   }
 
-  c(template) {
-    this.close.emit(template);
+  close() {
+    this.options.JoinAndClose();
   }
 
   ngOnInit() {

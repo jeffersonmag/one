@@ -1,9 +1,9 @@
-import { Component, OnInit, TemplateRef, Injector } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { NbSortDirection, NbTreeGridDataSource, NbDialogService, NbDialogRef } from '@nebular/theme';
 import { NbThemeService } from '@nebular/theme';
 import { takeWhile } from 'rxjs/operators';
 import { EsteiraProducaoApiService } from '../../api/esteira-producao';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 interface CardSettings {
   title: string;
@@ -24,6 +24,10 @@ export class CustomModalOptions {
 
 export class EsteiraProducaoComponent implements OnInit {
 
+  @Output() childIsOpen = new EventEmitter<boolean>();
+  closeResult: string;
+  modalReference: NgbModalRef;
+
   private alive = true;
   flipped = false;
   solarValue: number;
@@ -33,7 +37,7 @@ export class EsteiraProducaoComponent implements OnInit {
   cpf_cliente: number;
   nome_cliente: string;
   codigo_contratos_inconsistencia: number;
-  closeResult: string;
+
 
   currentPage = 1;
   itemsPerPage = 20;
@@ -140,7 +144,11 @@ export class EsteiraProducaoComponent implements OnInit {
 
   marcarResolvida(modal, codigo_contratos_inconsistencia) {
     this.codigo_contratos_inconsistencia = codigo_contratos_inconsistencia;
-    this.modalService.open(modal, { size: 'xl', backdrop: 'static' })
+    this.modalReference = this.modalService.open(modal, { size: 'xl', backdrop: 'static' })
+  }
+
+  JoinAndClose() {
+    this.modalReference.close();
   }
 
   public onPageChange(pageNum: number): void {

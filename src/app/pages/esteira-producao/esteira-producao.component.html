@@ -120,14 +120,19 @@
 
                                                             <div class="col-xl">
                                                                 <button nbButton status="success" [size]="small"
-                                                                    (click)="marcarResolvida(solucaoModal, i.codigo_contratos_inconsistencia)"
+                                                                    (click)="marcarResolvida(content, i.codigo_contratos_inconsistencia)"
                                                                     ghost>
                                                                     <i class="fa fa-check color"></i>
                                                                 </button>
-                                                                <ng-template #solucaoModal let-c="close"
-                                                                    let-d="dismiss">
-                                                                    <solucao-inconsistencias>
-                                                                    </solucao-inconsistencias>
+                                                                <ng-template #content let-c="close" let-d="dismiss">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close"
+                                                                            aria-label="Close"
+                                                                            (click)="d('Cross click')">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <solucao-inconsistencias [cValue] = "this.c"></solucao-inconsistencias>
                                                                 </ng-template>
                                                             </div>
                                                         </div>

@@ -1,8 +1,3 @@
-<div class="modal-header">
-    <!--<button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
-        <span aria-hidden="true">&times;</span>
-    </button>-->
-</div>
 <div class="modal-body">
     <nb-card>
         <nb-card-header>Confirmação de resolução</nb-card-header>
@@ -25,11 +20,9 @@
                 </div>
             </div>
         </nb-card-body>
-
-        <nb-card-footer>
-            <!--<button type="button" class="btn btn-outline-danger" (click)="c('Close click')">Cancelar</button>-->
-            <button type="button" ngbAutofocus class="btn btn-success"
-                (click)="resolverInconsistencia()">Confirmar</button>
-        </nb-card-footer>
     </nb-card>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="close()">Cancelar</button>
+    <button type="button" ngbAutofocus class="btn btn-success" (click)="resolverInconsistencia()">Confirmar</button>
 </div>
