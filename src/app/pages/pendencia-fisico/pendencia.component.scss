@@ -1,61 +1,78 @@
-@import '../../@theme/styles/themes';
-@import '~bootstrap/scss/mixins/breakpoints';
-@import '~@nebular/theme/styles/global/breakpoints';
-
-@include nb-install-component() {
-  .solar-card nb-card-header {
-    border: none;
-    padding-bottom: 0;
-  }
-
-  @include media-breakpoint-down(sm) {
-    ngx-traffic {
-      display: none;
-    }
-  }
+button[nbTreeGridRowToggle] {
+  background: transparent;
+  border: none;
+  padding: 0;
 }
 
-
-.table-responsive {
-  width: 100%;
-  font-size: 10px;
-  text-justify: start;
-
-  text-align: center;
-
-  tr {
-    border-bottom: 1px solid #ccc;
-
-    th,
-    td {
-      padding: 7px;
-    }
-  }
-
-  .active {
-    background: #a5d0517a;
-  }
-
+.size-fonte{
+  font-size: 11px;
+  text-align: left;
 }
 
-.textCenter {
-  text-align: center;
+.card-col {
+  flex: 1 0 calc(50% - 1rem);
+  margin: 0 0.5rem;
 }
 
-.textRight {
+.fonte-card{
+  color: #fff;
+  font-size: 12px;
+  text-align: left;
+}
+
+.fonte-card-num{
+  color: #fff;
+  font-size: 9px;
   text-align: right;
 }
 
-.maxContent {
-  max-height: 500px;
-  overflow: auto;
+.label-blue {
+  background-color: #1c84c6;
+  color: #fff;
+  font-size: 14px;
 }
 
-.toggle-icon {
-  position: absolute;
-  top: 1rem;
-  right: 1.25rem;
-  @include nb-rtl(right, auto);
-  @include nb-rtl(left, 1.25rem);
-  cursor: pointer;
+.search-label {
+  display: block;
+}
+.search-input {
+  margin-bottom: 1rem;
+}
+
+.nb-column-name {
+  width: 100%;
+}
+
+.table {
+  font-size: 10px;
+}
+
+.headerTable{
+  font-size: 14px;
+}
+
+@media screen and (min-width: 400px) {
+  .nb-column-name,
+  .nb-column-size {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 500px) {
+  .nb-column-name,
+  .nb-column-size,
+  .nb-column-kind {
+    width: 33.333%;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .nb-column-name {
+    width: 31%;
+  }
+  .nb-column-size,
+  .nb-column-kind,
+  .nb-column-items {
+    width: 23%;
+  }
 }
