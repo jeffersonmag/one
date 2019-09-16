@@ -51,9 +51,24 @@ button[nbTreeGridRowToggle] {
   font-size: 14px;
 }
 
+.labels {
+  display: inline;
+  margin: 80px;
+  text-align: center;
+  font-size: 14px;
+
+}
+
+.fas {
+  float: right;
+  margin-bottom: 35px;
+}
+
 .nb-select {
   margin: 2.5px;
   margin-bottom: 2.5px;
+  width: 19.1%;
+  text-align-last: center;
 }
 
 @media screen and (min-width: 400px) {
