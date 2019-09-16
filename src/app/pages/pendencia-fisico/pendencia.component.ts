@@ -62,6 +62,11 @@ export class PendenciaComponent implements OnInit {
   pendencia = [];
   comercial = [];
   regional = [];
+  pendenciaRegional = [];
+  pendenciaComercial = [];
+  pendenciaMatriz = [];
+  pendenciaLoja = [];
+  pendenciaFuncionario = [];
 
   funcionario = [];
   loja = [];
@@ -101,7 +106,7 @@ export class PendenciaComponent implements OnInit {
 
   findPendenciaRegional(event) {
     this.pendencia = [];
-    this.regional = [];
+    this.pendenciaRegional = [];
     this.pendenciaFisicoApiService.pendencias({
       "criterio_de_data": "",
       "data_de": "",
@@ -113,7 +118,7 @@ export class PendenciaComponent implements OnInit {
       "codigo_funcionario": ""
     })
       .then((s) => {
-        this.regional = s.agrupado_regional;
+        this.pendenciaRegional = s.agrupado_regional;
         this.pendencia = s.dados;
       })
       .catch((e) => {
@@ -123,7 +128,7 @@ export class PendenciaComponent implements OnInit {
 
   findPendenciaComercial(event) {
     this.pendencia = [];
-    this.comercial = [];
+    this.pendenciaComercial = [];
     this.pendenciaFisicoApiService.pendencias({
       "criterio_de_data": "",
       "data_de": "",
@@ -135,7 +140,7 @@ export class PendenciaComponent implements OnInit {
       "codigo_funcionario": ""
     })
       .then((s) => {
-        this.comercial = s.agrupado_comercial;
+        this.pendenciaComercial = s.agrupado_comercial;
         this.pendencia = s.dados;
       })
       .catch((e) => {
@@ -145,7 +150,7 @@ export class PendenciaComponent implements OnInit {
 
   findPendenciaMatriz(event) {
     this.pendencia = [];
-    this.matriz = [];
+    this.pendenciaMatriz = [];
     this.pendenciaFisicoApiService.pendencias({
       "criterio_de_data": "",
       "data_de": "",
@@ -157,7 +162,7 @@ export class PendenciaComponent implements OnInit {
       "codigo_funcionario": ""
     })
       .then((s) => {
-        this.matriz = s.agrupado_loja_matriz;
+        this.pendenciaMatriz = s.agrupado_loja_matriz;
         this.pendencia = s.dados;
       })
       .catch((e) => {
@@ -167,7 +172,7 @@ export class PendenciaComponent implements OnInit {
 
   findPendenciaLoja(event) {
     this.pendencia = [];
-    this.loja = [];
+    this.pendenciaLoja = [];
     this.pendenciaFisicoApiService.pendencias({
       "criterio_de_data": "",
       "data_de": "",
@@ -179,7 +184,7 @@ export class PendenciaComponent implements OnInit {
       "codigo_funcionario": ""
     })
       .then((s) => {
-        this.loja = s.agrupado_loja;
+        this.pendenciaLoja = s.agrupado_loja;
         this.pendencia = s.dados;
       })
       .catch((e) => {
@@ -189,7 +194,7 @@ export class PendenciaComponent implements OnInit {
 
   findPendenciaFuncionario(event) {
     this.pendencia = [];
-    this.funcionario = [];
+    this.pendenciaFuncionario = [];
     this.pendenciaFisicoApiService.pendencias({
       "criterio_de_data": "",
       "data_de": "",
@@ -201,7 +206,7 @@ export class PendenciaComponent implements OnInit {
       "codigo_funcionario": event.currentTarget.id,
     })
       .then((s) => {
-        this.funcionario = s.agrupado_funcionario;
+        this.pendenciaFuncionario = s.agrupado_funcionario;
         this.pendencia = s.dados;
       })
       .catch((e) => {

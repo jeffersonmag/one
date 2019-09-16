@@ -7,35 +7,35 @@
         <div class="container">
           <div class="row">
 
-            <nb-select placeholder="Regional" style="width:19%" ngModel="result">
-              <nb-option *ngFor="let i of regional" [value]="i" id="{{i.codigo_regional}}"
+            <nb-select multiple placeholder="Regional" style="width:19%" ngModel="result">
+              <nb-option multiple *ngFor="let i of regional" [value]="i" id="{{i.codigo_regional}}"
                 (click)="findPendenciaRegional($event)">
                 {{i.nome_regional}}
               </nb-option>
             </nb-select>
 
-            <nb-select placeholder="Comercial" style="width:19%" ngModel="result">
-              <nb-option *ngFor="let i of comercial" [value]="i" id="{{i.codigo_comercial}}"
+            <nb-select multiple placeholder="Comercial" style="width:19%" ngModel="result">
+              <nb-option multiple *ngFor="let i of comercial" [value]="i" id="{{i.codigo_comercial}}"
                 (click)="findPendenciaComercial($event)">
                 {{i.nome_comercial}}
               </nb-option>
             </nb-select>
 
-            <nb-select placeholder="Matriz" style="width:19%" ngModel="result">
-              <nb-option *ngFor="let i of matriz" [value]="i" id="{{i.codigo_loja_matriz}}" value="{{i.value}}">
+            <nb-select multiple placeholder="Matriz" style="width:19%" ngModel="result">
+              <nb-option multiple *ngFor="let i of matriz" [value]="i" id="{{i.codigo_loja_matriz}}" value="{{i.value}}">
                 {{i.nome_loja_matriz}}
               </nb-option>
             </nb-select>
 
-            <nb-select placeholder="Loja" style="width:19%" ngModel="result">
-              <nb-option *ngFor="let i of loja" selected="i" [value]="i" selected=true content id="{{i.codigo_loja}}"
+            <nb-select multiple placeholder="Loja" style="width:19%" ngModel="result">
+              <nb-option multiple *ngFor="let i of loja" selected="i" [value]="i" selected=true content id="{{i.codigo_loja}}"
                 (click)="findPendenciaLoja($event)">
                 {{i.nome_loja}}
               </nb-option>
             </nb-select>
 
-            <nb-select placeholder="Funcionário" style="width:22%" ngModel="result">
-              <nb-option *ngFor="let i of funcionario" selected="i" [value]="i" selected=true content
+            <nb-select multiple placeholder="Funcionário" style="width:22%" ngModel="result">
+              <nb-option multiple *ngFor="let i of funcionario" selected="i" [value]="i" selected=true content
                 id="{{i.codigo_funcionario}}" (click)="findPendenciaFuncionario($event)">
                 {{i.nome_funcionario}}
 
