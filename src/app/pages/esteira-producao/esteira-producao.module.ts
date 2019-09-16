@@ -33,6 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { EsteiraProducaoRoutingModule, routedComponents } from './esteira-producao-routing.module';
 import { BaseHistoricaComponent } from './base-historica/base-historica.component';
 import { SolucaoInconsistenciasComponent } from './solucao-inconsistencias/solucao-inconsistencias.component';
+import { StatusCardComponent } from './status-card/status-card.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { SolucaoInconsistenciasComponent } from './solucao-inconsistencias/soluc
     BaseHistoricaComponent,
     SolucaoInconsistenciasComponent,
     ...routedComponents,
-    SolucaoInconsistenciasComponent
+    SolucaoInconsistenciasComponent,
+    StatusCardComponent,
   ],
   imports: [
     FormsModule,

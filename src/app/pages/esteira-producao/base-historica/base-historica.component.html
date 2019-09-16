@@ -2,8 +2,7 @@
     <div class="col-md-12 col-lg-20 col-xxxl-10">
         <nb-card>
             <nb-card-header>
-                NOME DO CLIENTE : {{ nome_c }}<br>
-                CPF DO CLIENTE: {{ cpf_c }} 
+                NOME DO CLIENTE: {{ nome_c }}<br>
             </nb-card-header>
             <nb-card-body>
                 <table class="table" equalColumnsWidth>
@@ -36,8 +35,8 @@
                             </td>
                             <td class="size-fonte">{{ i.nome_fantasia }}</td>
                             <td class="size-fonte">
-                                {{ i.valor_contrato }}<br>
-                                {{ i.base_calculo }}
+                                {{ i.valor_contrato | number:'.2-2':'es' }}<br>
+                                {{ i.base_calculo | number:'.2-2':'es' }}
                             </td>
                         </tr>
                     </tbody>

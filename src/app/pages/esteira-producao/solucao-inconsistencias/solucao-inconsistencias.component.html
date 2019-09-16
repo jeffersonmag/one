@@ -1,26 +1,25 @@
 <div class="modal-body">
-    <nb-card>
+    <!--<nb-card>
         <nb-card-header>Confirmação de resolução</nb-card-header>
-        <nb-card-body>
-            <Span>Clique para resolver: </Span><br><br>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm" *ngFor="let acao of listaAcoes">
-                        <button nbButton [size]="small" status="success"
-                            (click)="carregarInput(acao.texto_complementar, acao.pk)">{{acao.nome_acao}}</button>
-                    </div>
-                </div>
-            </div><br><br><br><br>
-
-            <Span>Informações adicionais: </Span><br><br>
-            <div class="container">
-                <div class="row">
-                    <textarea nbInput fullWidth placeholder="Texto Complementar da ação"
-                        [(ngModel)]="acao_escolhida"></textarea>
-                </div>
+        <nb-card-body>-->
+    <div class="container">
+        <div class="infinite-cards row">
+            <div class="col-md-4" *ngFor="let acao of listaAcoes">
+                <nb-alert class="size-fonte" [size]="small" status="success"
+                    (click)="carregarInput(acao.texto_complementar, acao.pk)">{{acao.nome_acao}}</nb-alert>
             </div>
-        </nb-card-body>
-    </nb-card>
+        </div>
+    </div><br><br>
+
+    <Span>Informações adicionais: </Span><br><br>
+    <div class="container">
+        <div class="row">
+            <textarea nbInput fullWidth placeholder="Texto Complementar da ação"
+                [(ngModel)]="acao_escolhida"></textarea>
+        </div>
+    </div>
+    <!--</nb-card-body>
+    </nb-card>-->
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="close()">Cancelar</button>

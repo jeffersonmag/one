@@ -1,12 +1,15 @@
 <div class="row">
-    <div class="col-md-12 col-lg-20 col-xxxl-10">
-        <nb-card>
+    <!--<div class="col-md-12 col-lg-20 col-xxxl-10">-->
+    <div class="col-12">
+        <nb-card [nbSpinner]="propostasInconsistencias.length < 1" nbSpinnerStatus="danger">
             <nb-card-header>Esteira de produção</nb-card-header>
             <nb-card-body>
                 <div class="container">
                     <div class="row">
                         <div class="col-sm" *ngFor="let valor of indicadores">
-                            <nb-alert [size]="tiny" (click)="findFiltroStatus()" status="danger">
+                            <nb-alert [size]="tiny"
+                                (click)="filtroFindPropostasInconsistentes(valor.codigo_status_agrupado_inconsistencia)"
+                                status="{{valor.cor}}">
                                 <span class="fonte-card">{{ valor.status_agrupado_inconsistencia }}</span>
                                 <span
                                     class="fonte-card-num">{{  valor.qtd_total_de_propostas_inconsistentes_status  }}/{{  qtd_total_de_propostas_inconsistentes  }}
@@ -34,119 +37,126 @@
                     </div>
                 </div>
 
-                <div class="infinite-cards row">
+                <!--<div class="infinite-cards row">
                     <div class="col-md-12">
                         <nb-card accent="info" [nbSpinner]="propostasInconsistencias.length < 1"
                             nbSpinnerStatus="danger">
                             <nb-card-header>Propostas Inconsistentes Analítico</nb-card-header>
                             <div class="maxContent">
-                                <nb-card-body>
-                                    <div class="table-responsive">
-                                        <table class="table" equalColumnsWidth>
-                                            <thead>
-                                                <tr>
-                                                    <th class="textRight">Proposta</th>
-                                                    <th class="textRight">Parceiro</th>
-                                                    <th class="textRight">Cliente</th>
-                                                    <th class="textRight">Data</th>
-                                                    <th class="textRight">Órgão</th>
-                                                    <th class="textRight">Status</th>
-                                                    <th class="textRight">Valor</th>
-                                                    <th class="textRight">Ação</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr
-                                                    *ngFor="let i of propostasInconsistencias | slice: pageSize | slice: 0:itemsPerPage">
-                                                    <td><button nbButton [size]="small" status="success" hero
-                                                            (click)="copyToClipboard(i.proposta)"
-                                                            nbTooltip="Clique para copiar">{{ i.proposta }}</button>
-                                                    </td>
-                                                    <td class="size-fonte">
-                                                        <i class="fa fa-address-card color"></i>
-                                                        {{ i.codigo_agente }}<br>
-                                                        <i class="fa fa-university color"></i> {{ i.nome_regional }}<br>
-                                                        <i class="fa fa fa-user color"></i> {{ i.nome_fantasia }}
-                                                    </td>
-                                                    <td class="size-fonte">
-                                                        <i class="fa fa-id-badge color"></i> {{ i.nome_cliente_ }}
-                                                        <button nbButton status="success" ghost [size]="tiny"
-                                                            (click)="baseHistorica(baseModal, i.cpf_cliente, i.nome_cliente_)">
-                                                            <i class="fa fa-archive"></i>
-                                                        </button>
-                                                        <ng-template #baseModal let-c="close" let-d="dismiss">
-                                                            <base-historica></base-historica>
-                                                        </ng-template>
-                                                        <br>
-                                                        <i class="fa fa-id-card color"></i> {{ i.cpf_cliente }}<br>
-                                                        <i class="fa fa-phone color"></i> {{ i.telefone_cliente }}
-                                                    </td>
-                                                    <td class="size-fonte" width="50px">
-                                                        <i class="fa fa-calendar-check color"></i>{{ i.data_entrada_operacao | moment: 'DD/MM/YYYY' }}<br>
-                                                        <i class="fa fa-calendar-minus color"></i>{{ i.data_status | moment: 'DD/MM/YYYY' }}
-                                                    </td>
-                                                    <td class="size-fonte">
-                                                        {{ i.nome_convenio }}<br>
-                                                        {{ i.tipo_operacao }}<br>
-                                                        {{ i.produto_corban }}<br>
-                                                        {{ i.nome_instituicao }}
-                                                    </td>
-                                                    <td class="size-fonte">
-                                                        <button nbButton status="info" outline [size]="tiny"
-                                                            nbTooltip="Quantidade de dias parado em Inconsistências">
-                                                            {{ i.qtd_dias_parada_em_inconsistencia }}
-                                                        </button>
-                                                        <button nbButton [size]="tiny"
-                                                            nbTooltip="{{  i.status_agrupado_inconsistencia_  }}">
-                                                            {{ i.status_agrupado_inconsistencia_ | slice:0:1 }}
-                                                        </button>
-                                                    </td>
-                                                    <td class="size-fonte">
-                                                        <i class="fa fa-line-chart color"></i>
-                                                        {{ i.valor_contrato }}<br>
-                                                        <i class="fa fa-usd color"></i>
-                                                        {{ i.base_calculo }}
-                                                    </td>
-                                                    <td class="size-fonte">
-                                                        <div class="row">
-                                                            <div class="col-xl">
-                                                                <button nbButton status="info" [size]="small" ghost
-                                                                    (click)="redirecionaBmgConsig()">
-                                                                    <i class="fa fa-eye color"></i>
-                                                                </button>
-                                                            </div>
+                                <nb-card-body>-->
+                <!--<div class="table-responsive">-->
 
-                                                            <div class="col-xl">
-                                                                <button nbButton status="success" [size]="small"
-                                                                    (click)="marcarResolvida(content, i.proposta, i.codigo_status_agrupado_inconsistencia_)"
-                                                                    ghost>
-                                                                    <i class="fa fa-check color"></i>
-                                                                </button>
-                                                                <ng-template #content let-c="close" let-d="dismiss">
-                                                                    <div class="modal-header">
-                                                                        <button type="button" class="close"
-                                                                            aria-label="Close"
-                                                                            (click)="d('Cross click')">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <solucao-inconsistencias [cValue] = "this.c"></solucao-inconsistencias>
-                                                                </ng-template>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <ngb-pagination [collectionSize]="propostasInconsistencias.length" #numPages
-                                            [maxSize]="25" [pageSize]="itemsPerPage" [(page)]="currentPage"
-                                            (pageChange)="onPageChange(currentPage)"></ngb-pagination>
+
+                <table class="tabela" equalColumnsWidth>
+                    <thead>
+                        <tr>
+                            <th class="textRight">Proposta</th>
+                            <th class="textRight">Parceiro</th>
+                            <th class="textRight">Cliente</th>
+                            <th class="textRight">Data</th>
+                            <th class="textRight">Órgão</th>
+                            <th class="textRight">Status</th>
+                            <th class="textRight">Valor</th>
+                            <th class="textRight">Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody style="height: 600px; overflow-y: scroll">
+                        <tr *ngFor="let i of propostasInconsistencias | slice: pageSize | slice: 0:itemsPerPage">
+                            <td><button nbButton [size]="small" status="success" hero
+                                    (click)="copyToClipboard(i.proposta)"
+                                    nbTooltip="Clique para copiar">{{ i.proposta }}</button>
+                            </td>
+                            <td class="size-fonte">
+                                <i class="fa fa-address-card color"></i>
+                                {{ i.nome_agente }}<br>
+                                <i class="fa fa-university color"></i> {{ i.nome_fantasia }}<br>
+                                <i class="fa fa fa-user color"></i> {{ i.nome_regional }}
+                            </td>
+                            <td class="size-fonte">
+                                <i class="fa fa-id-badge color"></i> {{ i.nome_cliente_ }}
+                                <button nbButton status="success" ghost [size]="tiny"
+                                    (click)="baseHistorica(baseModal, i.cpf_cliente, i.nome_cliente_)">
+                                    <i class="fa fa-archive"></i>
+                                </button>
+                                <ng-template #baseModal let-c="close" let-d="dismiss">
+                                    <base-historica></base-historica>
+                                </ng-template>
+                                <br>
+                                <i class="fa fa-id-card color"></i> {{ i.cpf_cliente }}<br>
+                                <i class="fa fa-phone color"></i> {{ i.telefone_cliente }}
+                            </td>
+                            <td class="size-fonte" width="50px">
+                                <i
+                                    class="fa fa-calendar-check color"></i>{{ i.data_entrada_operacao | moment: 'DD/MM/YYYY' }}<br>
+                                <i class="fa fa-calendar-minus color"></i>{{ i.data_status | moment: 'DD/MM/YYYY' }}
+                            </td>
+                            <td class="size-fonte">
+                                {{ i.nome_convenio }}<br>
+                                {{ i.tipo_operacao }}<br>
+                                {{ i.produto_corban }}<br>
+                                {{ i.nome_instituicao }}
+                            </td>
+                            <td class="size-fonte">
+                                <button nbButton status="info" outline [size]="tiny"
+                                    nbTooltip="Quantidade de dias parado em Inconsistências">
+                                    {{ i.qtd_dias_parada_em_inconsistencia }}
+                                </button>
+                                <button nbButton [size]="tiny" status="{{ i.cor }}"
+                                    nbTooltip="{{  i.status_agrupado_inconsistencia_  }}">
+                                    {{ i.status_agrupado_inconsistencia_ | slice:0:1 }}
+                                </button>
+                            </td>
+                            <td class="size-fonte">
+                                <i class="fa fa-line-chart color"></i>
+                                {{ i.valor_contrato | number:'.2-2':'es' }}<br>
+                                <i class="fa fa-usd color"></i>
+                                {{ i.base_calculo | number:'.2-2':'es' }}
+                            </td>
+                            <td class="size-fonte">
+                                <div class="row">
+                                    <div class="col-xl">
+                                        <button nbButton status="info" [size]="small" ghost
+                                            (click)="redirecionaBmgConsig()">
+                                            <i class="fa fa-eye color"></i>
+                                        </button>
                                     </div>
-                                </nb-card-body>
+
+                                    <div class="col-xl">
+                                        <button nbButton status="success" [size]="small"
+                                            (click)="marcarResolvida(content, i.proposta, i.codigo_status_agrupado_inconsistencia_)"
+                                            ghost>
+                                            <i class="fa fa-check color"></i>
+                                        </button>
+                                        <ng-template #content let-c="close" let-d="dismiss">
+                                            <div class="modal-header">
+                                                <span>Confirmação de resolução</span>
+                                                <button type="button" class="close" aria-label="Close"
+                                                    (click)="d('Cross click')">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <solucao-inconsistencias [cValue]="this.c">
+                                            </solucao-inconsistencias>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+
+
+                <ngb-pagination [collectionSize]="propostasInconsistencias.length" #numPages [maxSize]="25"
+                    [pageSize]="itemsPerPage" [(page)]="currentPage" (pageChange)="onPageChange(currentPage)">
+                </ngb-pagination>
+                <!--</div>-->
+                <!--</nb-card-body>
                             </div>
                         </nb-card>
                     </div>
-                </div>
+                </div>-->
             </nb-card-body>
         </nb-card>
     </div>

@@ -2,6 +2,8 @@ import { Component, Input, Injector } from '@angular/core';
 import { EsteiraProducaoApiService } from '../../../api/esteira-producao';
 import { CustomModalOptions, EsteiraProducaoComponent } from '../esteira-producao.component'
 import _ from 'lodash';
+import { registerLocaleData } from '@angular/common';
+import es from '@angular/common/locales/es';
 
 @Component({
   selector: 'base-historica',
@@ -13,10 +15,11 @@ export class BaseHistoricaComponent {
   cpf_c: number;
   nome_c: string;
   drillDown = [];
-  
+
 
   constructor(private EsteiraProducaoApiService: EsteiraProducaoApiService,
-              private options: EsteiraProducaoComponent) {
+    private options: EsteiraProducaoComponent) {
+    registerLocaleData(es);
     this.findDrillDown();
   }
 

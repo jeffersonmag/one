@@ -1,13 +1,20 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import es from '@angular/common/locales/es';
 import { NbSortDirection, NbTreeGridDataSource, NbDialogService, NbDialogRef } from '@nebular/theme';
 import { NbThemeService } from '@nebular/theme';
 import { takeWhile } from 'rxjs/operators';
 import { EsteiraProducaoApiService } from '../../api/esteira-producao';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import _ from 'lodash';
 
 interface CardSettings {
   title: string;
   iconClass: string;
+  type: string;
+}
+
+interface IndicadoresSettings {
   type: string;
 }
 
@@ -30,9 +37,25 @@ export class EsteiraProducaoComponent implements OnInit {
 
   private alive = true;
   flipped = false;
+  on = false;
   solarValue: number;
   statusCards: string;
   commonStatusCardsSet: CardSettings[] = [];
+  Prioridade1Settings: IndicadoresSettings = {
+    type: 'primary',
+  };
+  Prioridade2Settings: IndicadoresSettings = {
+    type: 'success',
+  };
+  Prioridade3Settings: IndicadoresSettings = {
+    type: 'info',
+  };
+  Prioridade4Settings: IndicadoresSettings = {
+    type: 'warning',
+  };
+  Prioridade5Settings: IndicadoresSettings = {
+    type: 'danger',
+  };
 
   cpf_cliente: number;
   nome_cliente: string;
@@ -41,7 +64,7 @@ export class EsteiraProducaoComponent implements OnInit {
 
 
   currentPage = 1;
-  itemsPerPage = 20;
+  itemsPerPage = 10;
   pageSize: number;
 
   statusCardsByThemes: {
@@ -62,7 +85,10 @@ export class EsteiraProducaoComponent implements OnInit {
   sortDirection: NbSortDirection = NbSortDirection.NONE;
 
   propostasInconsistencias = [];
+  propostasInconsistenciasC = [];
+  filtropropostasInconsistencias: any;
   indicadores = [];
+  indicadoresC = [];
   drillDown = [];
   qtd_total_de_propostas_inconsistentes: number;
 
@@ -83,6 +109,7 @@ export class EsteiraProducaoComponent implements OnInit {
 
   findIndicadores() {
     this.indicadores = [];
+    this.indicadoresC = [];
     this.EsteiraProducaoApiService.indicadores(
       {
         "codigo_regional": "",
@@ -95,6 +122,39 @@ export class EsteiraProducaoComponent implements OnInit {
     ).then((s) => {
       this.qtd_total_de_propostas_inconsistentes = s.qtd_total_de_propostas_inconsistentes;
       this.indicadores = s.status;
+      for (let i of this.indicadores) {
+        if (i.prioridade == 1) {
+          this.indicadoresC.push(i = {
+            ...i,
+            "cor": this.Prioridade1Settings.type
+          })
+        }
+        if (i.prioridade == 2) {
+          this.indicadoresC.push(i = {
+            ...i,
+            "cor": this.Prioridade2Settings.type
+          })
+        }
+        if (i.prioridade == 3) {
+          this.indicadoresC.push(i = {
+            ...i,
+            "cor": this.Prioridade3Settings.type
+          })
+        }
+        if (i.prioridade == 4) {
+          this.indicadoresC.push(i = {
+            ...i,
+            "cor": this.Prioridade4Settings.type
+          })
+        }
+        if (i.prioridade == 5) {
+          this.indicadoresC.push(i = {
+            ...i,
+            "cor": this.Prioridade5Settings.type
+          })
+        }
+      }
+      this.indicadores = this.indicadoresC;
     })
       .catch((e) => {
         console.log(e)
@@ -114,10 +174,124 @@ export class EsteiraProducaoComponent implements OnInit {
       }
     ).then((s) => {
       this.propostasInconsistencias = s;
+      this.setColors();
     })
       .catch((e) => {
         console.log(e)
       });
+  }
+
+  setColors() {
+    this.propostasInconsistenciasC = [];
+    for (let i of this.propostasInconsistencias) {
+      if (i.prioridade_status_agrupado_inconsistencia_ == 1) {
+        this.propostasInconsistenciasC.push(i = {
+          ...i,
+          "cor": this.Prioridade1Settings.type
+        })
+      }
+      if (i.prioridade_status_agrupado_inconsistencia_ == 2) {
+        this.propostasInconsistenciasC.push(i = {
+          ...i,
+          "cor": this.Prioridade2Settings.type
+        })
+      }
+      if (i.prioridade_status_agrupado_inconsistencia_ == 3) {
+        this.propostasInconsistenciasC.push(i = {
+          ...i,
+          "cor": this.Prioridade3Settings.type
+        })
+      }
+      if (i.prioridade_status_agrupado_inconsistencia_ == 4) {
+        this.propostasInconsistenciasC.push(i = {
+          ...i,
+          "cor": this.Prioridade4Settings.type
+        })
+      }
+      if (i.prioridade_status_agrupado_inconsistencia_ == 5) {
+        this.propostasInconsistenciasC.push(i = {
+          ...i,
+          "cor": this.Prioridade5Settings.type
+        })
+      }
+    }
+    this.propostasInconsistencias = this.propostasInconsistenciasC;
+  }
+
+  setColorsDisabled(on, codigo_status_agrupado_inconsistencia) {
+    this.indicadoresC = [];
+    if (on) {
+      for (let i of this.indicadores) {
+        if (i.prioridade == codigo_status_agrupado_inconsistencia) {
+          if (codigo_status_agrupado_inconsistencia == 1) {
+            this.indicadoresC.push(i = {
+              ...i,
+              "cor": this.Prioridade1Settings.type
+            })
+          }
+          if (codigo_status_agrupado_inconsistencia == 2) {
+            this.indicadoresC.push(i = {
+              ...i,
+              "cor": this.Prioridade2Settings.type
+            })
+          }
+          if (codigo_status_agrupado_inconsistencia == 3) {
+            this.indicadoresC.push(i = {
+              ...i,
+              "cor": this.Prioridade3Settings.type
+            })
+          }
+          if (codigo_status_agrupado_inconsistencia == 4) {
+            this.indicadoresC.push(i = {
+              ...i,
+              "cor": this.Prioridade4Settings.type
+            })
+          }
+          if (codigo_status_agrupado_inconsistencia == 5) {
+            this.indicadoresC.push(i = {
+              ...i,
+              "cor": this.Prioridade5Settings.type
+            })
+          }
+        } else {
+          this.indicadoresC.push(i = {
+            ...i,
+            "cor": "hover"
+          })
+        }
+      }
+      this.indicadores = this.indicadoresC;
+      this.setColors();
+    } else {
+      this.setColors();
+    }
+  }
+
+  filtroFindPropostasInconsistentes(codigo_status_agrupado_inconsistencia) {
+    this.propostasInconsistencias = [];
+    this.on = !this.on
+    if (this.on) {
+      this.EsteiraProducaoApiService.propostasInconsistentes(
+        {
+          "codigo_regional": "",
+          "codigo_comercial": "",
+          "codigo_loja": "",
+          "codigo_matriz": "",
+          "cpf_funcionario": "",
+          "cpf_cliente": "",
+          "codigo_status_agrupado_inconsistencia": codigo_status_agrupado_inconsistencia
+        }
+      ).then((s) => {
+        this.propostasInconsistencias = s;
+        this.setColorsDisabled(this.on, codigo_status_agrupado_inconsistencia);
+      })
+        .catch((e) => {
+          console.log(e)
+        });
+    } else {
+      this.findIndicadores();
+      this.findPropostasInconsistentes();
+    }
   }
 
   copyToClipboard(item) {
@@ -138,7 +312,7 @@ export class EsteiraProducaoComponent implements OnInit {
     this.nome_cliente = nome;
 
     this.modalService.open(modal, {
-      size: 'lg'
+      size: 'xl'
     });
   }
 
@@ -158,12 +332,17 @@ export class EsteiraProducaoComponent implements OnInit {
     this.pageSize = this.itemsPerPage * (pageNum - 1);
   }
 
-  findFiltroStatus(){
-    console.log('passou');
-  }
-
   public changePagesize(num: number): void {
     this.itemsPerPage = this.pageSize + num;
   }
-  ngOnInit() { }
+
+  findFiltroStatus(codigo_status_agrupado_inconsistencia) {
+    this.propostasInconsistencias = this.propostasInconsistencias.filter((item) => {
+      return item.codigo_status_agrupado_inconsistencia_ == codigo_status_agrupado_inconsistencia;
+    });
+  }
+
+  ngOnInit() {
+    registerLocaleData(es);
+  }
 }

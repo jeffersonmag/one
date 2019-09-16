@@ -4,6 +4,35 @@ button[nbTreeGridRowToggle] {
     padding: 0;
   }
 
+  .maxContent {
+    max-height: 500px;
+    overflow: auto;
+  }  
+
+  @each $status in nb-get-statuses() {
+    .hover {
+      $left-hover-color: nb-theme(button-hero-#{$status}-hover-left-background-color);
+      $right-hover-color: nb-theme(button-hero-#{$status}-hover-right-background-color);
+      background-image: linear-gradient(to right, $left-hover-color, $right-hover-color);
+    }
+  }
+
+  .tabela {
+    width: 100%;
+  
+    tr {
+      border-bottom: 1px solid #ccc;
+  
+      th,
+      td {
+        padding: 7px;
+      }
+    }
+  
+    .active {
+      background: #007bff94;
+    }  
+  }
   .size-fonte{
     font-size: 11px;
     text-align: left;    
