@@ -51,6 +51,11 @@ button[nbTreeGridRowToggle] {
   font-size: 14px;
 }
 
+.nb-select {
+  margin: 2.5px;
+  margin-bottom: 2.5px;
+}
+
 @media screen and (min-width: 400px) {
   .nb-column-name,
   .nb-column-size {
