@@ -1,83 +1,85 @@
+<div class="row">
+  <div class="col-md-12 col-lg-20 col-xxxl-10">
+    <nb-card>
+      <nb-card-header>Pendência de Físico</nb-card-header>
 
-<nb-card accent="info" [nbSpinner]="pendencia.length < 0" nbSpinnerStatus="success">
-  <div>
-      <nb-card-header>Pendências de Físico</nb-card-header>
-
-    <nb-icon *ngIf="revealed.pendencias" class="toggle-icon" icon="chevron-down-outline" pack="eva"
-      (click)="toggleView('Option 1')"> </nb-icon>
-
-    <nb-card size="small">
-
-        <nb-card-body>
+      <nb-card-body>
         <div class="container">
-          <nb-select placeholder="Regional" style="width:19.5%" ngModel="result">
-            <nb-option *ngFor="let i of regional" [value]="i" id="{{i.codigo_regional}}"
-              (click)="findPendenciaRegional($event)">
-              {{i.nome_regional}}
-            </nb-option>
-          </nb-select>
+          <div class="row">
 
-          <nb-select placeholder="Comercial" style="width:19.5%" ngModel="result">
-            <nb-option *ngFor="let i of comercial" [value]="i" id="{{i.codigo_comercial}}"
-              (click)="findPendenciaComercial($event)">
-              {{i.nome_comercial}}
-            </nb-option>
-          </nb-select>
+            <nb-select multiple placeholder="Regional" style="width:19%" ngModel="result">
+              <nb-option multiple *ngFor="let i of regional" [value]="i" id="{{i.codigo_regional}}"
+                (click)="findPendenciaRegional($event)">
+                {{i.nome_regional}}
+              </nb-option>
+            </nb-select>
 
-          <nb-select placeholder="Matriz" style="width:19.5%" ngModel="result">
-            <nb-option *ngFor="let i of matriz" [value]="i" id="{{i.codigo_loja_matriz}}" value="{{i.value}}"
-              (click)="findPendenciaMatriz($event)">
-              {{i.nome_loja_matriz}}
-            </nb-option>
-          </nb-select>
+            <nb-select multiple placeholder="Comercial" style="width:19%" ngModel="result">
+              <nb-option multiple *ngFor="let i of comercial" [value]="i" id="{{i.codigo_comercial}}"
+                (click)="findPendenciaComercial($event)">
+                {{i.nome_comercial}}
+              </nb-option>
+            </nb-select>
 
-          <nb-select placeholder="Loja" style="width:19.5%" ngModel="result">
-            <nb-option *ngFor="let i of loja" selected="i" [value]="i" selected=true content id="{{i.codigo_loja}}"
-              (click)="findPendenciaLoja($event)">
-              {{i.nome_loja}}
-            </nb-option>
-          </nb-select>
+            <nb-select multiple placeholder="Matriz" style="width:19%" ngModel="result">
+              <nb-option multiple *ngFor="let i of matriz" [value]="i" id="{{i.codigo_loja_matriz}}" value="{{i.value}}">
+                {{i.nome_loja_matriz}}
+              </nb-option>
+            </nb-select>
 
-          <nb-select placeholder="Funcionário" style="width:19.8%" ngModel="result">
-            <nb-option *ngFor="let i of funcionario" selected="i" [value]="i" selected=true content
-              id="{{i.codigo_funcionario}}" (click)="findPendenciaFuncionario($event)">
-              {{i.nome_funcionario}}
+            <nb-select multiple placeholder="Loja" style="width:19%" ngModel="result">
+              <nb-option multiple *ngFor="let i of loja" selected="i" [value]="i" selected=true content id="{{i.codigo_loja}}"
+                (click)="findPendenciaLoja($event)">
+                {{i.nome_loja}}
+              </nb-option>
+            </nb-select>
 
-            </nb-option>
-          </nb-select>
-          <div class="align-right">
-            <table class="tabela">
-              <thead>
-                <tr>
-                  <th style="width: 5%" class="text-center">Proposta</th>
-                  <th style="width: 10%" class="text-left">Cliente</th>
-                  <th style="width: 10%" class="text-left">Operação</th>
-                  <th style="width: 20%" class="text-center">Órgão</th>
-                  <th style="width: 5%" class="text-center">Data</th>
-                  <th style="width: 5%" class="text-center">Dias Pendentes</th>
-                  <th style="width: 5%" class="text-center">Ação</th>
-                </tr>
-              </thead>
-            </table>
+            <nb-select multiple placeholder="Funcionário" style="width:22%" ngModel="result">
+              <nb-option multiple *ngFor="let i of funcionario" selected="i" [value]="i" selected=true content
+                id="{{i.codigo_funcionario}}" (click)="findPendenciaFuncionario($event)">
+                {{i.nome_funcionario}}
 
-            <div class="maxContent">
-              <div class="table-responsive">
-                <table class="table" equalColumnsWidth>
-                  <tbody>
-                    <tr *ngFor="let i of pendencia">
-                      <td style="width: 5%" class="text-center">{{i.proposta}} <br></td>
-                      <td style="width: 10%" class="text-left">{{i.nome_cliente}}</td>
-                      <td style="width: 10%" class="text-left">{{i.tipo_operacao}} <br> {{i.nome_produto_corban}} </td>
-                      <td style="width: 20%" class="text-left">{{i.nome_convenio}} <br> {{i.nome_instituicao}}</td>
-                      <td style="width: 5%" class="text-left">{{i.data_entrada_operacao | moment: 'DD/MM/YYYY'}} <br>
-                        {{i.data_status | moment: 'DD/MM/YYYY'}}</td>
-                      <td style="width: 5%" class="text-center"> {{i.dias_pendentes}} </td>
-                      <td style="width: 5%" class="text-center">[1]</td>
+              </nb-option>
+            </nb-select>
+            <div class="infinite-cards row">
+                <div class="col-md-12">
 
-                  </tbody>
-                </table>
+            <nb-card accent="info" [nbSpinner]="pendencia.length < 0" nbSpinnerStatus="danger">
 
 
-               <!--- <ngb-pagination [collectionSize]="pendencia.length" #numPages [maxSize]="25" [pageSize]="itemsPerPage"
-                  [(page)]="currentPage" (pageChange)="onPageChange(currentPage)">
-                </ngb-pagination>-->
+                    <table class="table " equalColumnsWidth>
+                      <thead class="headerTable">
+                        <tr>
+                          <th class="text-left">Proposta</th>
+                          <th class="text-left">Cliente</th>
+                          <th class="text-left">Operação</th>
+                          <th class="text-center">Órgão</th>
+                          <th class="text-center"> Data</th>
+                          <th class="text-center">Pendentes</th>
+                          <th class="text-center">Ação</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let i of pendencia | slice: pageSize | slice: 0:itemsPerPage">
+                        <td style="width: 10%" class="text-left">{{i.proposta}} <br></td>
+                        <td style="width: 20%" class="text-left">{{i.nome_cliente}}</td>
+                        <td style="width: 30%" class="text-left"> TIPO: {{i.tipo_operacao}} <br>
+                         PRODUTO: {{i.nome_produto_corban}}
+                        </td>
+                        <td style="width: 30%" class="text-left">CONVÊNIO: {{i.nome_convenio}} <br> INSTITUIÇÃO: {{i.nome_instituicao}}
+                        </td>
+                        <td style="width: 25%" class="text-center"> ENTRADA: {{i.data_entrada_operacao | moment: 'DD/MM/YYYY'}}
+                          <br>
+                          STATUS: {{i.data_status | moment: 'DD/MM/YYYY'}}</td>
+                        <td style="width: 5%" class="text-center"> HÁ {{i.dias_pendentes}} DIAS </td>
+                        <td style="width: 5%" class="text-center">[1]</td>
+                      </tbody>
+                    </table>
+                    <ngb-pagination [collectionSize]="pendencia.length" #numPages [maxSize]="25"
+                      [pageSize]="itemsPerPage" [(page)]="currentPage" (pageChange)="onPageChange(currentPage)">
+                    </ngb-pagination>
+
+            </nb-card>
+            </div>
+          </div>
+        </div>

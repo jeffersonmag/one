@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown'
 import { FormsModule } from '@angular/forms';
 import {
   NbActionsModule,
@@ -43,7 +44,8 @@ import { NgbPaginationModule, NgbModalModule, NgbActiveModal, NgbModalRef } from
     NbProgressBarModule,
     NbStepperModule,
     HttpClientModule,
-    NgbPaginationModule
+    NgbPaginationModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   declarations: [
     PendenciaComponent,
@@ -52,6 +54,8 @@ import { NgbPaginationModule, NgbModalModule, NgbActiveModal, NgbModalRef } from
 export class PendenciaModule { }
 
 export class PageModule { }
+
+export class AppModule { }
 
 export class SelectLabelShowcaseComponent {
   selectedItem;
