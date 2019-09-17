@@ -21,7 +21,9 @@ import {
   NbCheckboxModule,
   NbInputModule,
   NbPopoverModule,
-  NbDialogRef
+  NbDialogRef,
+  NbSearchService,
+  NbSearchModule
 } from '@nebular/theme';
 import { NgbPaginationModule, NgbModalModule, NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgxEchartsModule } from 'ngx-echarts';
@@ -74,7 +76,8 @@ import { StatusCardComponent } from './status-card/status-card.component';
     NbInputModule,
     EsteiraProducaoRoutingModule,
     NgbModalModule,
-    NgbPaginationModule
+    NgbPaginationModule,
+    NbSearchModule
   ],
   entryComponents: [BaseHistoricaComponent],
   providers : [CustomModalOptions, NgbActiveModal]

@@ -18,10 +18,10 @@ const routes: Routes = [{
       redirectTo: 'login',
       pathMatch: 'full',
     },
-    { path: '**', redirectTo: 'login' },
+    { path: '**', redirectTo: '/login' },
   ],
 },
-{ path: '**', redirectTo: 'auth/login' }];
+{ path: '**', redirectTo: '/auth/login' }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

@@ -7,7 +7,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm" *ngFor="let valor of indicadores">
-                            <nb-alert [size]="tiny"
+                            <nb-alert class="form_cad" [size]="large"
                                 (click)="filtroFindPropostasInconsistentes(valor.codigo_status_agrupado_inconsistencia)"
                                 status="{{valor.cor}}">
                                 <span class="fonte-card">{{ valor.status_agrupado_inconsistencia }}</span>
@@ -37,6 +37,13 @@
                     </div>
                 </div>
 
+                <div *ngIf="habilitaLimparFiltro">
+                    <button nbButton shape="round" size="small" status="danger" nbTooltip="Limpar Filtro de Proposta"
+                        (click)="findPropostasInconsistentes()">
+                        <i class="fa fa-trash color"></i>
+                    </button>
+                </div>
+
                 <!--<div class="infinite-cards row">
                     <div class="col-md-12">
                         <nb-card accent="info" [nbSpinner]="propostasInconsistencias.length < 1"
@@ -50,7 +57,10 @@
                 <table class="tabela" equalColumnsWidth>
                     <thead>
                         <tr>
-                            <th class="textRight">Proposta</th>
+                            <th class="textRight">Proposta <nb-search placeholder="Pesquisar"
+                                    hint="Insira o número da proposta e pressione enter para pesquisar" show="true"
+                                    type="rotate-layout"></nb-search>
+                            </th>
                             <th class="textRight">Parceiro</th>
                             <th class="textRight">Cliente</th>
                             <th class="textRight">Data</th>
@@ -75,10 +85,17 @@
                             <td class="size-fonte">
                                 <i class="fa fa-id-badge color"></i> {{ i.nome_cliente_ }}
                                 <button nbButton status="success" ghost [size]="tiny"
-                                    (click)="baseHistorica(baseModal, i.cpf_cliente, i.nome_cliente_)">
+                                    (click)="baseHistorica(baseModal, i.cpf_cliente, i.nome_cliente_)"
+                                    nbTooltip="Histórico de contratos do cliente" nbTooltipStatus="success">
                                     <i class="fa fa-archive"></i>
                                 </button>
                                 <ng-template #baseModal let-c="close" let-d="dismiss">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" aria-label="Close"
+                                            (click)="d('Cross click')">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
                                     <base-historica></base-historica>
                                 </ng-template>
                                 <br>
@@ -86,9 +103,12 @@
                                 <i class="fa fa-phone color"></i> {{ i.telefone_cliente }}
                             </td>
                             <td class="size-fonte" width="50px">
-                                <i
-                                    class="fa fa-calendar-check color"></i>{{ i.data_entrada_operacao | moment: 'DD/MM/YYYY' }}<br>
-                                <i class="fa fa-calendar-minus color"></i>{{ i.data_status | moment: 'DD/MM/YYYY' }}
+                                <span nbTooltip="Data de Digitação">
+                                    <i
+                                        class="fa fa-calendar-check color"></i>{{ i.data_entrada_operacao | moment: 'DD/MM/YYYY' }}</span><br>
+                                <span nbTooltip="Data de Status">
+                                    <i
+                                        class="fa fa-calendar-minus color"></i>{{ i.data_status | moment: 'DD/MM/YYYY' }}</span>
                             </td>
                             <td class="size-fonte">
                                 {{ i.nome_convenio }}<br>
@@ -104,27 +124,43 @@
                                 <button nbButton [size]="tiny" status="{{ i.cor }}"
                                     nbTooltip="{{  i.status_agrupado_inconsistencia_  }}">
                                     {{ i.status_agrupado_inconsistencia_ | slice:0:1 }}
-                                </button>
+                                </button><br>
+                                <div *ngFor="let inconsistencia of i.inconsistencias">
+                                    <div *ngIf="inconsistencia.codigo_tipo_inconsistencia == 1">
+                                        <button nbButton status="success" outline [size]="tiny"
+                                            nbTooltip="{{ inconsistencia.descricao_inconsistencia }}">
+                                            {{ inconsistencia.codigo_inconsistencia }}
+                                        </button>
+                                    </div>
+                                    <div *ngIf="inconsistencia.codigo_tipo_inconsistencia == 2">
+                                        <button nbButton outline ghost [size]="tiny"
+                                            nbTooltip="{{ inconsistencia.descricao_inconsistencia }}">
+                                            <div class="text-hint">{{ inconsistencia.codigo_inconsistencia }}</div>
+                                        </button>
+                                    </div>
+                                </div>
                             </td>
-                            <td class="size-fonte">
-                                <i class="fa fa-line-chart color"></i>
-                                {{ i.valor_contrato | number:'.2-2':'es' }}<br>
-                                <i class="fa fa-usd color"></i>
-                                {{ i.base_calculo | number:'.2-2':'es' }}
+                            <td class="size-fonte-right">
+                                <span nbTooltip="Valor do contrato">
+                                    <i class="fa fa-line-chart color"></i>
+                                    {{ i.valor_contrato | number:'.2-2':'es' }}</span><br>
+                                <span nbTooltip="Base Cálculo">
+                                    <i class="fa fa-usd color"></i>
+                                    {{ i.base_calculo | number:'.2-2':'es' }}</span>
                             </td>
                             <td class="size-fonte">
                                 <div class="row">
                                     <div class="col-xl">
                                         <button nbButton status="info" [size]="small" ghost
-                                            (click)="redirecionaBmgConsig()">
+                                            (click)="redirecionaBmgConsig()"
+                                            nbTooltip="Ir para o sistema da insituição">
                                             <i class="fa fa-eye color"></i>
                                         </button>
                                     </div>
-
                                     <div class="col-xl">
                                         <button nbButton status="success" [size]="small"
                                             (click)="marcarResolvida(content, i.proposta, i.codigo_status_agrupado_inconsistencia_)"
-                                            ghost>
+                                            ghost nbTooltip="Resolver inconsistência no One">
                                             <i class="fa fa-check color"></i>
                                         </button>
                                         <ng-template #content let-c="close" let-d="dismiss">
@@ -142,12 +178,8 @@
                                 </div>
                             </td>
                         </tr>
-
                     </tbody>
                 </table>
-
-
-
                 <ngb-pagination [collectionSize]="propostasInconsistencias.length" #numPages [maxSize]="25"
                     [pageSize]="itemsPerPage" [(page)]="currentPage" (pageChange)="onPageChange(currentPage)">
                 </ngb-pagination>

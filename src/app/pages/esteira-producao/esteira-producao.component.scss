@@ -33,10 +33,29 @@ button[nbTreeGridRowToggle] {
       background: #007bff94;
     }  
   }
+
   .size-fonte{
     font-size: 11px;
     text-align: left;    
   }
+
+  .size-fonte-right{
+    font-size: 11px;
+    text-align: right;    
+  }
+
+  .form_cad form{
+    margin: 0!important;
+    padding: 0!important;}
+  .form_cad h3{
+      margin: 0!important;
+      padding: 0!important;}
+  .form_cad row {
+      margin: 0!important;
+      padding: 0!important;}
+  .form_cad span {
+    margin: 0!important;
+    padding: 0!important;}
 
   .card-col {
     flex: 1 0 calc(50% - 1rem);
@@ -70,6 +89,11 @@ button[nbTreeGridRowToggle] {
   
   .nb-column-name {
     width: 100%;
+  }
+
+  .bg-link {
+    
+    font-style: nb-theme(link-text-color);
   }
   
   @media screen and (min-width: 400px) {

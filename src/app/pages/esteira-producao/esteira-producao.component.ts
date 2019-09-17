@@ -1,12 +1,13 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
-import { NbSortDirection, NbTreeGridDataSource, NbDialogService, NbDialogRef } from '@nebular/theme';
+import { NbSortDirection, NbTreeGridDataSource, NbGlobalPhysicalPosition, NbSearchService, NbToastrService, NbComponentStatus, NbGlobalPosition } from '@nebular/theme';
 import { NbThemeService } from '@nebular/theme';
 import { takeWhile } from 'rxjs/operators';
 import { EsteiraProducaoApiService } from '../../api/esteira-producao';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import _ from 'lodash';
+import 'style-loader!angular2-toaster/toaster.css';
 
 interface CardSettings {
   title: string;
@@ -35,6 +36,16 @@ export class EsteiraProducaoComponent implements OnInit {
   closeResult: string;
   modalReference: NgbModalRef;
 
+  index = 1;
+  destroyByClick = true;
+  duration = 5000;
+  hasIcon = true;
+  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
+  preventDuplicates = true;
+  status: NbComponentStatus = 'success';
+  titulo: string = 'Sucesso';
+  mensagem: string = 'Ação realizada com sucesso!';
+
   private alive = true;
   flipped = false;
   on = false;
@@ -42,19 +53,19 @@ export class EsteiraProducaoComponent implements OnInit {
   statusCards: string;
   commonStatusCardsSet: CardSettings[] = [];
   Prioridade1Settings: IndicadoresSettings = {
-    type: 'primary',
+    type: 'danger',
   };
   Prioridade2Settings: IndicadoresSettings = {
-    type: 'success',
+    type: 'primary',
   };
   Prioridade3Settings: IndicadoresSettings = {
-    type: 'info',
+    type: 'success',
   };
   Prioridade4Settings: IndicadoresSettings = {
-    type: 'warning',
+    type: 'info',
   };
   Prioridade5Settings: IndicadoresSettings = {
-    type: 'danger',
+    type: 'warning',
   };
 
   cpf_cliente: number;
@@ -81,9 +92,12 @@ export class EsteiraProducaoComponent implements OnInit {
 
   dataSource: NbTreeGridDataSource<any>;
 
+  value = '';
+
   sortColumn: string = '';
   sortDirection: NbSortDirection = NbSortDirection.NONE;
 
+  habilitaLimparFiltro: boolean = false;
   propostasInconsistencias = [];
   propostasInconsistenciasC = [];
   filtropropostasInconsistencias: any;
@@ -96,13 +110,22 @@ export class EsteiraProducaoComponent implements OnInit {
   constructor(
     private themeService: NbThemeService,
     private EsteiraProducaoApiService: EsteiraProducaoApiService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private searchService: NbSearchService,
+    private toastrService: NbToastrService
   ) {
     this.themeService.getJsTheme()
       .pipe(takeWhile(() => this.alive))
       .subscribe(theme => {
         this.statusCards = this.statusCardsByThemes[theme.name];
       });
+
+    this.searchService.onSearchSubmit()
+      .subscribe((data: any) => {
+        this.value = data.term;
+        this.filtroFindPropostasInconsistentesSearch(this.value);
+      })
+
     this.findIndicadores();
     this.findPropostasInconsistentes();
   }
@@ -162,6 +185,7 @@ export class EsteiraProducaoComponent implements OnInit {
   }
 
   findPropostasInconsistentes() {
+    this.habilitaLimparFiltro = false;
     this.propostasInconsistencias = [];
     this.EsteiraProducaoApiService.propostasInconsistentes(
       {
@@ -294,6 +318,41 @@ export class EsteiraProducaoComponent implements OnInit {
     }
   }
 
+  filtroFindPropostasInconsistentesSearch(proposta) {
+    this.EsteiraProducaoApiService.propostasInconsistentes(
+      {
+        "codigo_regional": "",
+        "codigo_comercial": "",
+        "codigo_loja": "",
+        "codigo_matriz": "",
+        "cpf_funcionario": "",
+        "cpf_cliente": "",
+        "codigo_status_agrupado_inconsistencia": "",
+        "proposta": proposta
+      }
+    ).then((s) => {
+      if (s.length > 0) {
+        this.propostasInconsistencias = [];
+        this.propostasInconsistencias = s;
+        this.habilitaLimparFiltro = true;
+        this.findIndicadores();
+        this.setColors();
+      } else {
+        this.status = 'danger';
+        this.titulo = 'Erro';
+        this.mensagem = 'Essa proposta não foi encontrada!';
+        this.makeToast(this.status, this.titulo, this.mensagem);
+      }
+    })
+      .catch((e) => {
+        this.status = 'danger';
+        this.titulo = 'Erro';
+        this.mensagem = 'Essa proposta não foi encontrada!';
+        this.makeToast(this.status, this.titulo, this.mensagem);
+        console.log(e)
+      });
+  }
+
   copyToClipboard(item) {
     document.addEventListener('copy', (e: ClipboardEvent) => {
       e.clipboardData.setData('text/plain', (item));
@@ -340,6 +399,24 @@ export class EsteiraProducaoComponent implements OnInit {
     this.propostasInconsistencias = this.propostasInconsistencias.filter((item) => {
       return item.codigo_status_agrupado_inconsistencia_ == codigo_status_agrupado_inconsistencia;
     });
+  }
+
+  makeToast(type: NbComponentStatus, title: string, body: string) {
+    const config = {
+      status: type,
+      destroyByClick: this.destroyByClick,
+      duration: this.duration,
+      hasIcon: this.hasIcon,
+      position: this.position,
+      preventDuplicates: this.preventDuplicates,
+    };
+    const titleContent = title ? `${title}` : '';
+
+    this.index += 1;
+    this.toastrService.show(
+      body,
+      `${titleContent}`,
+      config);
   }
 
   ngOnInit() {
