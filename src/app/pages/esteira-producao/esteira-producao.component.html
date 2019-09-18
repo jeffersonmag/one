@@ -102,7 +102,7 @@
                                 <i class="fa fa-id-card color"></i> {{ i.cpf_cliente }}<br>
                                 <i class="fa fa-phone color"></i> {{ i.telefone_cliente }}
                             </td>
-                            <td class="size-fonte" width="50px">
+                            <td class="size-fonte">
                                 <span nbTooltip="Data de Digitação">
                                     <i
                                         class="fa fa-calendar-check color"></i>{{ i.data_entrada_operacao | moment: 'DD/MM/YYYY' }}</span><br>
@@ -116,7 +116,7 @@
                                 {{ i.produto_corban }}<br>
                                 {{ i.nome_instituicao }}
                             </td>
-                            <td class="size-fonte">
+                            <td class="size-fonte-right">
                                 <button nbButton status="info" outline [size]="tiny"
                                     nbTooltip="Quantidade de dias parado em Inconsistências">
                                     {{ i.qtd_dias_parada_em_inconsistencia }}
@@ -132,9 +132,9 @@
                                             {{ inconsistencia.codigo_inconsistencia }}
                                         </button>
                                     </div>
-                                    <div *ngIf="inconsistencia.codigo_tipo_inconsistencia == 2">
-                                        <button nbButton outline ghost [size]="tiny"
-                                            nbTooltip="{{ inconsistencia.descricao_inconsistencia }}">
+                                    <div *ngIf="inconsistencia.codigo_tipo_inconsistencia == 2"
+                                        nbTooltip="{{ inconsistencia.descricao_inconsistencia }}">
+                                        <button nbButton disabled [size]="tiny">
                                             <div class="text-hint">{{ inconsistencia.codigo_inconsistencia }}</div>
                                         </button>
                                     </div>
@@ -179,8 +179,8 @@
                             </td>
                         </tr>
                     </tbody>
-                </table>
-                <ngb-pagination [collectionSize]="propostasInconsistencias.length" #numPages [maxSize]="25"
+                </table><br><br>
+                <ngb-pagination [collectionSize]="propostasInconsistencias.length" #numPages [maxSize]="15"
                     [pageSize]="itemsPerPage" [(page)]="currentPage" (pageChange)="onPageChange(currentPage)">
                 </ngb-pagination>
                 <!--</div>-->
