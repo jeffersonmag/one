@@ -12,6 +12,7 @@ import {
   NbSelectModule,
   NbSpinnerModule,
   NbTabsetModule,
+  NbTooltipModule,
   NbUserModule,
   NbStepperModule,
 
@@ -38,8 +39,10 @@ import { NgbPaginationModule, NgbModalModule, NgbActiveModal, NgbModalRef } from
     NbListModule,
     NbIconModule,
     NbButtonModule,
+    NbTooltipModule,
     NgxEchartsModule,
     PipesModule,
+
     NbSpinnerModule,
     NbProgressBarModule,
     NbStepperModule,

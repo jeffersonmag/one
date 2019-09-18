@@ -67,6 +67,7 @@ export class PendenciaComponent implements OnInit {
   pendenciaMatriz = [];
   pendenciaLoja = [];
   pendenciaFuncionario = [];
+  limparFiltros: boolean = false;
 
   funcionario = [];
   loja = [];
@@ -88,6 +89,7 @@ export class PendenciaComponent implements OnInit {
   }
 
   findPendencia() {
+    this.limparFiltros = false;
     this.pendencia = [];
     this.comercial = [];
     this.pendenciaFisicoApiService.pendencias()
@@ -244,6 +246,16 @@ export class PendenciaComponent implements OnInit {
 
   public changePagesize(num: number): void {
     this.itemsPerPage = this.pageSize + num;
+  }
+
+  limparFiltro () {
+    this.pendencia = [];
+    this.limparFiltros = true;
+    this.regional[0];
+    this.comercial[0];
+    this.matriz[0];
+    this.loja[0];
+    this.funcionario[0];
   }
 
   ngOnInit() {}

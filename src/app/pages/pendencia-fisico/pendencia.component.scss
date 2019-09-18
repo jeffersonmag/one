@@ -51,26 +51,48 @@ button[nbTreeGridRowToggle] {
   font-size: 14px;
 }
 
-.labels {
+.labelXs {
   display: inline;
-  margin: 80px;
+  margin: 75px;
   text-align: center;
   font-size: 14px;
 
 }
 
-.fas {
+.fasB {
   float: right;
-  margin-bottom: 35px;
+  margin-bottom: 1.5px;
+  margin-right: 25px;
+  margin-top: 1.5px;
+  color: white;
+}
+
+.fas {
+  color:black;
+  margin-bottom: 1.5px;
 }
 
 .nb-select {
-  margin: 2.5px;
-  margin-bottom: 2.5px;
-  width: 19.1%;
+  margin: 1.5px;
+  margin-bottom: 1.5px;
+  width: 19.2%;
   text-align-last: center;
 }
 
+.labels {
+  width: 100%;
+
+  tr {
+    border-bottom: 0px solid #ccc;
+
+  .active {
+    background: #007bff94;
+  }
+
+
+  }
+
+}
 @media screen and (min-width: 400px) {
   .nb-column-name,
   .nb-column-size {
