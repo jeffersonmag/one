@@ -126,9 +126,9 @@
                                     {{ i.status_agrupado_inconsistencia_ | slice:0:1 }}
                                 </button><br>
                                 <div *ngFor="let inconsistencia of i.inconsistencias">
-                                    <div *ngIf="inconsistencia.codigo_tipo_inconsistencia == 1">
-                                        <button nbButton status="success" outline [size]="tiny"
-                                            nbTooltip="{{ inconsistencia.descricao_inconsistencia }}">
+                                    <div *ngIf="inconsistencia.codigo_tipo_inconsistencia == 1"
+                                        nbTooltip="{{ inconsistencia.descricao_inconsistencia }}">
+                                        <button nbButton status="success" outline [size]="tiny">
                                             {{ inconsistencia.codigo_inconsistencia }}
                                         </button>
                                     </div>
