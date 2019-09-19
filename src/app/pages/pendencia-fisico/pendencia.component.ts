@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NbThemeService, NbSortDirection, NbTreeGridDataSource, } from '@nebular/theme';
-import { number_format, str_pad } from 'locutus/php/strings/';
+import { NbThemeService, NbSortDirection, NbTreeGridDataSource, NbComponentStatus, NbGlobalPosition, NbGlobalPhysicalPosition, NbToastrService, } from '@nebular/theme';
 import _ from 'lodash';
-import * as moment from 'moment';
 import { takeWhile } from 'rxjs/operators';
 import { PendenciaFisicoApiService } from '../../api/pendencia-fisico';
-import { Placeholder } from '@angular/compiler/src/i18n/i18n_ast';
-import { ChildActivationEnd } from '@angular/router';
-import { id } from '@swimlane/ngx-charts/release/utils';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 
 interface CardSettings {
@@ -25,6 +21,14 @@ interface CardSettings {
 export class PendenciaComponent implements OnInit {
 
   private alive = true;
+
+  codigo_status_time_line: number;
+  codigoAba: number;
+
+  linearMode = false;
+  primeiroPasso: FormGroup;
+  segundoPasso: FormGroup;
+  terceiroPasso: FormGroup;
 
   solarValue: number;
 
@@ -45,6 +49,15 @@ export class PendenciaComponent implements OnInit {
   };
 
   themeSubscription: any;
+  index = 1;
+  destroyByClick = true;
+  duration = 5000;
+  hasIcon = true;
+  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
+  preventDuplicates = true;
+  status: NbComponentStatus = 'success';
+  titulo: string = 'Sucesso';
+  mensagem: string = 'Ação realizada com sucesso!';
 
   currentPage = 1;
   itemsPerPage = 20;
@@ -60,6 +73,8 @@ export class PendenciaComponent implements OnInit {
   sortDirection: NbSortDirection = NbSortDirection.NONE;
 
   pendencia = [];
+  pendenciaSintetico = [];
+  pendenciaSinteticoTemp = [];
   comercial = [];
   regional = [];
   pendenciaRegional = [];
@@ -73,32 +88,118 @@ export class PendenciaComponent implements OnInit {
   loja = [];
   matriz = [];
 
+  activeTab: boolean;
+
   dadosPendenciasLoad = true;
   dadosPendencias = [];
 
   constructor(
     private themeService: NbThemeService,
     private pendenciaFisicoApiService: PendenciaFisicoApiService,
+    private fb: FormBuilder,
+    private toastrService: NbToastrService
   ) {
     this.themeService.getJsTheme()
       .pipe(takeWhile(() => this.alive))
       .subscribe(theme => {
         this.statusCards = this.statusCardsByThemes[theme.name];
       });
-    this.findPendencia();
+    this.findPendenciaSintetico();
+    //this.findPendencia(this.codigo_status_time_line);
   }
 
-  findPendencia() {
+  findPendenciaSintetico() {
+    this.pendenciaSintetico = [];
+    this.pendenciaFisicoApiService.pendenciasSintetico({
+      "data_de": "",
+      "data_ate": "",
+      "criterio_de_data": "",
+      "codigo_matriz": "",
+      "codigo_comercial": "",
+      "codigo_regional": "",
+      "codigo_loja": "",
+      "codigo_funcionario": ""
+    }
+    ).then((s) => {
+      this.pendenciaSintetico = s.status_time_line;
+      for (let i of this.pendenciaSintetico) {
+        if (i.codigo_status_time_line == 0) {
+          this.pendenciaSinteticoTemp.push(i = {
+            ...i,
+            "ativo": true
+          })
+        } else {
+          this.pendenciaSinteticoTemp.push(i = {
+            ...i,
+            "ativo": false
+          })
+        }
+      }
+      this.pendenciaSintetico = this.pendenciaSinteticoTemp;
+      this.findPendenciaInicial(0);
+    })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  findPendencia(event) {
     this.limparFiltros = false;
     this.pendencia = [];
-    this.comercial = [];
-    this.pendenciaFisicoApiService.pendencias()
+    let codigo_status_time_line = _.find(this.pendenciaSintetico, (o: any) => {
+      if (String(o.status_time_line) === String(event.tabTitle)) {
+        return String(o.codigo_status_time_line)
+      }
+    })
+    this.pendenciaFisicoApiService.pendencias({
+      "data_de": "",
+      "data_ate": "",
+      "criterio_de_data": "",
+      "codigo_matriz": "",
+      "codigo_comercial": "",
+      "codigo_regional": "",
+      "codigo_loja": "",
+      "codigo_funcionario": "",
+      "status_time_line": codigo_status_time_line.codigo_status_time_line
+    })
       .then((s) => {
-        this.comercial = s.agrupado_comercial;
-        this.regional = s.agrupado_regional;
-        this.funcionario = s.agrupado_funcionario;
-        this.loja = s.agrupado_loja;
-        this.matriz = s.agrupado_loja_matriz;
+        //this.comercial = s.agrupado_comercial;
+        //this.regional = s.agrupado_regional;
+        //this.funcionario = s.agrupado_funcionario;
+        //this.loja = s.agrupado_loja;
+        //this.matriz = s.agrupado_loja_matriz;
+        this.pendencia = s.dados;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  findPendenciaInicial(codigo_status_time_line) {
+    this.limparFiltros = false;
+    this.pendencia = [];
+    //let codigo_status_time_line = _.find(this.pendenciaSintetico, (o: any) => {
+    //  if (String(o.status_time_line) === String(event.tabTitle)) {
+    //    return String(o.codigo_status_time_line)
+    //  }
+    //})
+    this.pendenciaFisicoApiService.pendencias({
+      "data_de": "",
+      "data_ate": "",
+      "criterio_de_data": "",
+      "codigo_matriz": "",
+      "codigo_comercial": "",
+      "codigo_regional": "",
+      "codigo_loja": "",
+      "codigo_funcionario": "",
+      "status_time_line": codigo_status_time_line
+    })
+      .then((s) => {
+        //this.comercial = s.agrupado_comercial;
+        //this.regional = s.agrupado_regional;
+        //this.funcionario = s.agrupado_funcionario;
+        //this.loja = s.agrupado_loja;
+        //this.matriz = s.agrupado_loja_matriz;
         this.pendencia = s.dados;
       })
       .catch((e) => {
@@ -135,7 +236,7 @@ export class PendenciaComponent implements OnInit {
       "criterio_de_data": "",
       "data_de": "",
       "data_ate": "",
-      "codigo_regional":  "",
+      "codigo_regional": "",
       "codigo_comercial": event.currentTarget.id,
       "codigo_loja": "",
       "codigo_matriz": "",
@@ -158,7 +259,7 @@ export class PendenciaComponent implements OnInit {
       "data_de": "",
       "data_ate": "",
       "codigo_regional": "",
-      "codigo_comercial":"",
+      "codigo_comercial": "",
       "codigo_loja": "",
       "codigo_matriz": event.currentTarget.id,
       "codigo_funcionario": ""
@@ -248,7 +349,7 @@ export class PendenciaComponent implements OnInit {
     this.itemsPerPage = this.pageSize + num;
   }
 
-  limparFiltro () {
+  limparFiltro() {
     this.pendencia = [];
     this.limparFiltros = true;
     this.regional[0];
@@ -258,6 +359,50 @@ export class PendenciaComponent implements OnInit {
     this.funcionario[0];
   }
 
-  ngOnInit() {}
+  enviarPreBordero(pk_contrato) {
+    this.pendenciaFisicoApiService.enviarPreBordero({
+      "pk_contrato": pk_contrato
+    })
+      .then((s) => {
+        this.makeToast('success', 'Sucesso', 'Proposta inserida no Pré Borderô');
+      })
+      .catch((e) => {
+        let erro = e.error.message;
+        this.makeToast('danger', 'Erro', erro);
+      });
+  }
+
+  retirarPreBordero(pk_contrato) { }
+
+  makeToast(type: NbComponentStatus, title: string, body: string) {
+    const config = {
+      status: type,
+      destroyByClick: this.destroyByClick,
+      duration: this.duration,
+      hasIcon: this.hasIcon,
+      position: this.position,
+      preventDuplicates: this.preventDuplicates,
+    };
+    const titleContent = title ? `${title}` : '';
+
+    this.index += 1;
+    this.toastrService.show(
+      body,
+      `${titleContent}`,
+      config);
+  }
+
+
+  ngOnInit() {
+    /*this.primeiroPasso = this.fb.group({
+      firstCtrl: ['', Validators.required],
+    });
+    this.segundoPasso = this.fb.group({
+      firstCtrl: ['', Validators.required],
+    });
+    this.terceiroPasso = this.fb.group({
+      firstCtrl: ['', Validators.required],
+    });*/
+  }
 
 }

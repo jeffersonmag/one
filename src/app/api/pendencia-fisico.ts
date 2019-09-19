@@ -12,8 +12,20 @@ export class PendenciaFisicoApiService {
     private requestService: RequestService,
   ) { }
 
-  pendencias(dados = {}) {
+  pendencias(dados) {
     return this.requestService.post(`${environment.urlApi}/resumo-pendencia-fisico-analitico-perfil`, dados, true);
+  }
+
+  pendenciasSintetico(dados) {
+    return this.requestService.post(`${environment.urlApi}/resumo-pendencia-fisico-sintetico-perfil`, dados, true);
+  }
+
+  enviarPreBordero(dados) {
+    return this.requestService.put(`${environment.urlApi}/pendencia-fisico-contrato-pre-bordero`, dados, true);
+  }
+
+  retirarPreBordero(dados) {
+    return this.requestService.delete(`${environment.urlApi}/pendencia-fisico-contrato-pre-bordero`, dados, true);
   }
 
 }

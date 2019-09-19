@@ -4,9 +4,33 @@ button[nbTreeGridRowToggle] {
   padding: 0;
 }
 
+.tabela {
+  width: 100%;
+
+  tr {
+    border-bottom: 1px solid #ccc;
+
+    th,
+    td {
+      padding: 7px;
+    }
+  }
+
+  .active {
+    background: #007bff94;
+  }  
+}
+
 .size-fonte{
   font-size: 11px;
   text-align: left;
+  vertical-align: top
+}
+
+.size-fonte-center{
+  font-size: 11px;
+  text-align: center;
+  vertical-align: top
 }
 
 .card-col {

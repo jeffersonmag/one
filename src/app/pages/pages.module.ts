@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbMenuModule } from '@nebular/theme';
+import { NbMenuModule, NbStepperModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { DashboardModule } from './dashboard/dashboard.module';
@@ -16,7 +16,8 @@ import { EsteiraProducaoModule } from './esteira-producao/esteira-producao.modul
     NbMenuModule,
     DashboardModule,
     PendenciaModule,
-    EsteiraProducaoModule
+    EsteiraProducaoModule,
+    NbStepperModule
   ],
   declarations: [
     PagesComponent

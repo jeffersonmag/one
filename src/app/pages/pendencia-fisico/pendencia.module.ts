@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown'
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   NbActionsModule,
   NbButtonModule,
@@ -23,11 +23,12 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { PipesModule } from '../../pipes/pipes.module';
 import { PendenciaComponent } from './pendencia.component';
 import { HttpClientModule } from '@angular/common/http';
-import { NgbPaginationModule, NgbModalModule, NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
     FormsModule,
+    ReactiveFormsModule,
     ThemeModule,
     NbCardModule,
     NbUserModule,
@@ -42,13 +43,12 @@ import { NgbPaginationModule, NgbModalModule, NgbActiveModal, NgbModalRef } from
     NbTooltipModule,
     NgxEchartsModule,
     PipesModule,
-
     NbSpinnerModule,
     NbProgressBarModule,
-    NbStepperModule,
     HttpClientModule,
     NgbPaginationModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    NbStepperModule
   ],
   declarations: [
     PendenciaComponent,

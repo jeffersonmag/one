@@ -1,12 +1,30 @@
 <div class="row">
   <div class="col-md-12 col-lg-12 ">
 
-    <nb-card [nbSpinner]="pendencia.length < 1" nbSpinnerStatus="success">
+    <nb-card [nbSpinner]="pendenciaSintetico.length < 1" nbSpinnerStatus="success">
       <nb-card-header>Pendência de Físico</nb-card-header>
-
       <nb-card-body>
-        <div class="container">
-            <!---  <table class="labels" equalColumnsWidth>
+        <nb-tabset class="size-fonte" fullWidth (changeTab)="findPendencia($event)">
+          <nb-tab *ngFor="let p of pendenciaSintetico" [tabTitle]="p.status_time_line" [active]="p.ativo">
+
+            <!--<nb-tab *ngFor="let p of pendenciaSintetico" [tabTitle]="p.status_time_line">
+                      <nb-stepper orientation="horizontal" [linear]="linearMode">
+                    <nb-step [stepControl]="primeiroPasso" label="00 - NA LOJA" []="teste1()">
+                        <form [formGroup]="primeiroPasso" (ngSubmit)="teste1()"></form>
+                    </nb-step>
+                    <nb-step [label]="Step2">
+                      <ng-template #Step2>Tela 2</ng-template>
+                    </nb-step>
+                    <nb-step [label]="Step3">
+                      <ng-template #Step3>Tela 3</ng-template>
+                    </nb-step>
+                    <nb-step [label]="Step4">
+                      <ng-template #Step4>Tela 4</ng-template>
+                    </nb-step>
+                  </nb-stepper>-->
+
+            <div class="container">
+              <!---  <table class="labels" equalColumnsWidth>
               <div class="col-12 col-sm-12">
                 <tr>
                   <th class="text-center" style="width: 5%">Regional</th>
@@ -60,42 +78,69 @@
                         (click)="findPendencia()">
                         <i class="fas fa-trash color"></i>
                     </button>
-                </div> -->
-            <nb-card [nbSpinner]="pendencia.length < 1" nbSpinnerStatus="sucess"></nb-card>
+                </div> 
+              <!--<nb-card [nbSpinner]="pendencia.length < 1" nbSpinnerStatus="sucess">-->
 
-            <table class="table " equalColumnsWidth>
-              <thead class="headerTable">
-                <tr>
-                  <th class="text-left">Proposta</th>
-                  <th class="text-left">Cliente</th>
-                  <th class="text-left">Operação</th>
-                  <th class="text-center">Órgão</th>
-                  <th class="text-center"> Data</th>
-                  <th class="text-center">Pendentes</th>
-                  <th class="text-center">Ação</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let i of pendencia | slice: pageSize | slice: 0:itemsPerPage">
-
-                  <td style="width: 10%" class="text-left">{{i.proposta}} <br></td>
-                  <td style="width: 20%" class="text-left">{{i.nome_cliente}}</td>
-                  <td style="width: 30%" class="text-left"> TIPO: {{i.tipo_operacao}} <br>
-                    PRODUTO: {{i.nome_produto_corban}}
-                  </td>
-                  <td style="width: 30%" class="text-left">CONVÊNIO: {{i.nome_convenio}} <br> INSTITUIÇÃO:
-                    {{i.nome_instituicao}}
-                  </td>
-                  <td style="width: 25%" class="text-center"> ENTRADA:
-                    {{i.data_entrada_operacao | moment: 'DD/MM/YYYY'}}
-                    <br>
-                    STATUS: {{i.data_status | moment: 'DD/MM/YYYY'}}</td>
-                  <td style="width: 5%" class="text-center"> HÁ {{i.dias_pendentes}} DIAS </td>
-                  <td style="width: 5%" class="text-center">[1]</td>
-              </tbody>
-            </table>
-            <ngb-pagination [collectionSize]="pendencia.length" #numPages [maxSize]="25" [pageSize]="itemsPerPage"
-              [(page)]="currentPage" (pageChange)="onPageChange(currentPage)">
-            </ngb-pagination>
-        </div>
-
+              <table class="tabela" [nbSpinner]="pendencia.length < 1" nbSpinnerStatus="success" equalColumnsWidth>
+                <thead>
+                  <!--class="headerTable"-->
+                  <tr>
+                    <th class="text-left">Proposta</th>
+                    <th class="text-left">Cliente</th>
+                    <th class="text-left">Agente</th>
+                    <th class="text-left">Operação</th>
+                    <th class="text-left">Órgão</th>
+                    <th class="text-left">Data</th>
+                    <th class="text-left">Dias Pendentes</th>
+                    <th *ngIf="p.codigo_status_time_line == 0 || p.codigo_status_time_line == 1" class="text-left">Ação
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let i of pendencia | slice: pageSize | slice: 0:itemsPerPage">
+                    <td style="width: 10%" class="size-fonte">{{i.proposta}} </td>
+                    <td style="width: 20%" class="size-fonte">{{i.nome_cliente}}</td>
+                    <td style="width: 30%" class="size-fonte">
+                      <span nbTooltip="Nome Digitador">{{i.nome_agente}}</span><br>
+                      <span nbTooltip="Nome Fantasia">{{i.nome_loja}}</span><br>
+                      <span nbTooltip="Nome Regional">{{i.nome_regional}}</span><br>
+                    </td>
+                    <td style="width: 30%" class="size-fonte">
+                      <span nbTooltip="Tipo Operação">{{i.tipo_operacao}}</span><br>
+                      <span nbTooltip="Produto Corban">{{i.nome_produto_corban}}</span>
+                    </td>
+                    <td style="width: 30%" class="size-fonte">
+                      <span nbTooltip="Nome Convênio">{{i.nome_convenio}}</span><br>
+                      <span nbTooltip="Nome Instituição">{{i.nome_instituicao}}</span>
+                    </td>
+                    <td style="width: 25%" class="size-fonte">
+                      <span
+                        nbTooltip="Data Entrada Operação">{{i.data_entrada_operacao | moment: 'DD/MM/YYYY'}}</span><br>
+                      <span nbTooltip="Data Status">{{i.data_status | moment: 'DD/MM/YYYY'}}</span></td>
+                    <td style="width: 5%" class="size-fonte-center">
+                      <button nbButton status="info" outline [size]="tiny"
+                        nbTooltip="Quantidade de dias pendentes">{{i.dias_pendentes}}</button>
+                    </td>
+                    <td style="width: 5%" class="size-fonte">
+                      <button *ngIf="p.codigo_status_time_line == 0" nbButton status="success" [size]="medium" outline
+                        (click)="enviarPreBordero(i.pk)" nbTooltip="Enviar proposta para Pré Borderô">
+                        <i class="fa fa-share color"></i>
+                      </button>
+                      <button *ngIf="p.codigo_status_time_line == 1" nbButton status="danger" [size]="medium" outline
+                        nbTooltip="Retirar proposta para Pré Borderô">
+                        <i class="fa fa-reply color"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </nb-tab>
+        </nb-tabset>
+      </nb-card-body>
+      <ngb-pagination [collectionSize]="pendencia.length" #numPages [maxSize]="15" [pageSize]="itemsPerPage"
+        [(page)]="currentPage" (pageChange)="onPageChange(currentPage)">
+      </ngb-pagination>
+    </nb-card>
+  </div>
+</div>

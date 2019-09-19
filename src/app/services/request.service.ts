@@ -84,12 +84,12 @@ export class RequestService {
     });
   }
 
-  delete(url: string, security?: boolean): Promise<any> {
+  delete(url: string, parametros: any, security?: boolean): Promise<any> {
     return new Promise((resolve, reject) => {
       this.validaUser(security)
         .then((token: any) => {
           return this.http
-            .delete(url, this._options(token))
+            .delete(url, this._options(token, parametros))
             .pipe(
               take(1),
               tap(console.log),
