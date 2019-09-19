@@ -84,12 +84,12 @@ export class RequestService {
     });
   }
 
-  delete(url: string, parametros: any, security?: boolean): Promise<any> {
+  delete(url: string, body: any, security?: boolean): Promise<any> {
     return new Promise((resolve, reject) => {
       this.validaUser(security)
         .then((token: any) => {
           return this.http
-            .delete(url, this._options(token, parametros))
+            .delete(url, this._optionsDel(token, body))
             .pipe(
               take(1),
               tap(console.log),
@@ -142,6 +142,31 @@ export class RequestService {
     return {
       headers: headers,
       params: params,
+    };
+  }
+
+  private _optionsDel(token?: string, parametros: any = null): any {
+    let h = {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    };
+
+    let b = parametros;
+    console.log('_options: ', token);
+    if (token) {
+      h['Authorization'] = token;
+    }
+    let headers = new HttpHeaders(h);
+    let params = new HttpParams();
+
+    if (parametros) {
+      for (let num in parametros) {
+        params = params.set(num, parametros[num]);
+      }
+    }
+    return {
+      headers: headers,
+      body: b,
     };
   }
 

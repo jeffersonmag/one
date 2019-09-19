@@ -78,7 +78,7 @@
                         (click)="findPendencia()">
                         <i class="fas fa-trash color"></i>
                     </button>
-                </div> 
+                </div>
               <!--<nb-card [nbSpinner]="pendencia.length < 1" nbSpinnerStatus="sucess">-->
 
               <table class="tabela" [nbSpinner]="pendencia.length < 1" nbSpinnerStatus="success" equalColumnsWidth>
@@ -127,7 +127,7 @@
                         <i class="fa fa-share color"></i>
                       </button>
                       <button *ngIf="p.codigo_status_time_line == 1" nbButton status="danger" [size]="medium" outline
-                        nbTooltip="Retirar proposta para Pré Borderô">
+                        (click)="retirarPreBordero(i.pk)" nbTooltip="Retirar proposta do Pré Borderô">
                         <i class="fa fa-reply color"></i>
                       </button>
                     </td>

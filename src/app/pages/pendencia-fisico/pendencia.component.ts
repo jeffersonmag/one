@@ -372,7 +372,18 @@ export class PendenciaComponent implements OnInit {
       });
   }
 
-  retirarPreBordero(pk_contrato) { }
+  retirarPreBordero(pk_contrato) {
+    this.pendenciaFisicoApiService.retirarPreBordero({
+      "pk_contrato": pk_contrato
+    })
+      .then((s) => {
+        this.makeToast('success', 'Sucesso', 'Proposta removida do Pré Borderô');
+      })
+      .catch((e) => {
+        let erro = e.error.message;
+        this.makeToast('danger', 'Erro', erro);
+      });
+  }
 
   makeToast(type: NbComponentStatus, title: string, body: string) {
     const config = {
