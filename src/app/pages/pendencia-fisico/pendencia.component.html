@@ -5,7 +5,8 @@
       <nb-card-header>Pendência de Físico</nb-card-header>
       <nb-card-body>
         <nb-tabset class="size-fonte" fullWidth (changeTab)="findPendencia($event)">
-          <nb-tab *ngFor="let p of pendenciaSintetico" [tabTitle]="p.status_time_line" [active]="p.ativo">
+          <nb-tab *ngFor="let p of pendenciaSintetico" [tabTitle]="p.status_time_line" [active]="p.ativo"
+            badgeText="{{p.contador_contratos_time_line}}" badgeStatus="success">
 
             <!--<nb-tab *ngFor="let p of pendenciaSintetico" [tabTitle]="p.status_time_line">
                       <nb-stepper orientation="horizontal" [linear]="linearMode">
@@ -98,30 +99,30 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let i of pendencia | slice: pageSize | slice: 0:itemsPerPage">
-                    <td style="width: 10%" class="size-fonte">{{i.proposta}} </td>
-                    <td style="width: 20%" class="size-fonte">{{i.nome_cliente}}</td>
-                    <td style="width: 30%" class="size-fonte">
+                    <td class="size-fonte">{{i.proposta}} </td>
+                    <td class="size-fonte">{{i.nome_cliente}}</td>
+                    <td class="size-fonte">
                       <span nbTooltip="Nome Digitador">{{i.nome_agente}}</span><br>
                       <span nbTooltip="Nome Fantasia">{{i.nome_loja}}</span><br>
                       <span nbTooltip="Nome Regional">{{i.nome_regional}}</span><br>
                     </td>
-                    <td style="width: 30%" class="size-fonte">
+                    <td class="size-fonte">
                       <span nbTooltip="Tipo Operação">{{i.tipo_operacao}}</span><br>
                       <span nbTooltip="Produto Corban">{{i.nome_produto_corban}}</span>
                     </td>
-                    <td style="width: 30%" class="size-fonte">
+                    <td class="size-fonte">
                       <span nbTooltip="Nome Convênio">{{i.nome_convenio}}</span><br>
                       <span nbTooltip="Nome Instituição">{{i.nome_instituicao}}</span>
                     </td>
-                    <td style="width: 25%" class="size-fonte">
+                    <td class="size-fonte">
                       <span
                         nbTooltip="Data Entrada Operação">{{i.data_entrada_operacao | moment: 'DD/MM/YYYY'}}</span><br>
                       <span nbTooltip="Data Status">{{i.data_status | moment: 'DD/MM/YYYY'}}</span></td>
-                    <td style="width: 5%" class="size-fonte-center">
+                    <td class="size-fonte-center">
                       <button nbButton status="info" outline [size]="tiny"
                         nbTooltip="Quantidade de dias pendentes">{{i.dias_pendentes}}</button>
                     </td>
-                    <td style="width: 5%" class="size-fonte">
+                    <td class="size-fonte">
                       <button *ngIf="p.codigo_status_time_line == 0" nbButton status="success" [size]="medium" outline
                         (click)="enviarPreBordero(i.pk)" nbTooltip="Enviar proposta para Pré Borderô">
                         <i class="fa fa-share color"></i>
