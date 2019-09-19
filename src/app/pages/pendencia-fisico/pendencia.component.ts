@@ -62,6 +62,7 @@ export class PendenciaComponent implements OnInit {
   currentPage = 1;
   itemsPerPage = 20;
   pageSize: number;
+  valorAtual: any;
 
   customColumn = 'name';
   defaultColumns = ['size', 'kind', 'items'];
@@ -151,6 +152,7 @@ export class PendenciaComponent implements OnInit {
         return String(o.codigo_status_time_line)
       }
     })
+    this.valorAtual = event;
     this.pendenciaFisicoApiService.pendencias({
       "data_de": "",
       "data_ate": "",
@@ -365,10 +367,12 @@ export class PendenciaComponent implements OnInit {
     })
       .then((s) => {
         this.makeToast('success', 'Sucesso', 'Proposta inserida no Pré Borderô');
+        this.findPendenciaInicial(0);
       })
       .catch((e) => {
         let erro = e.error.message;
         this.makeToast('danger', 'Erro', erro);
+        this.findPendenciaInicial(0);
       });
   }
 
@@ -378,10 +382,12 @@ export class PendenciaComponent implements OnInit {
     })
       .then((s) => {
         this.makeToast('success', 'Sucesso', 'Proposta removida do Pré Borderô');
+        this.findPendencia(this.valorAtual);
       })
       .catch((e) => {
         let erro = e.error.message;
         this.makeToast('danger', 'Erro', erro);
+        this.findPendencia(this.valorAtual);
       });
   }
 
