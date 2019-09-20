@@ -409,6 +409,9 @@ export class PendenciaComponent implements OnInit {
       config);
   }
 
+  gerarBordero(Event) {
+    alert('testando');
+  }
 
   ngOnInit() {
     /*this.primeiroPasso = this.fb.group({
