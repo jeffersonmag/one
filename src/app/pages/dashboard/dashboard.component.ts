@@ -354,8 +354,6 @@ export class DashboardComponent implements OnDestroy {
     )
       .then((s) => {
         this.dadosCampanhaMetas = s;
-        console.log('findCampanhaMeta');
-        console.log(s)
         this.dadosCampanhaMetasLoad = false;
         if (this.dadosCampanhaMetas) {
           this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas[0]);
@@ -389,7 +387,6 @@ export class DashboardComponent implements OnDestroy {
       .catch((e) => {
         console.log(e)
       });
-
 
     this.contratosPagosSinteticos = {
       "qtd_total_digitado": 0,
@@ -487,11 +484,6 @@ export class DashboardComponent implements OnDestroy {
   atualizarFiltro(item) {
     this.filtro.campanha.codigo = item.codigo_campanha;
     this.campanhaSelecionada = item;
-
-
-    //console.log('campanha selecionada');
-    //console.log(this.campanhaSelecionada);
-
     this.findContratos();
     this.findDiasUteis();
     this.findTickets();
@@ -499,8 +491,6 @@ export class DashboardComponent implements OnDestroy {
   }
 
   filtraCampanhaPerfil(event) {
-
-    console.log('meu evento', event);
     let find = _.find(this.perfis, (o: any) => {
       return String(o.label) === String(event.tabTitle);
     })
@@ -509,7 +499,6 @@ export class DashboardComponent implements OnDestroy {
   }
 
   findDadosProdutoCorbanCampanhaFiltro(item) {
-    //this.filtro.produto.codigo = this.filtro.produto.codigo
     this.dadosProdutoCorbanCampanha = item;
 
     if (this.perfilAtivo === 4) {
@@ -527,8 +516,6 @@ export class DashboardComponent implements OnDestroy {
     if (this.perfilAtivo === 1) {
       this.codigos.codigo_funcionario = String(item.codigo_agrupamento);
     }
-    //console.log('this.dadosProdutoCorbanCampanha');
-    //console.log(this.dadosProdutoCorbanCampanha);
 
     this.findContratos();
     this.findTickets();
@@ -538,8 +525,6 @@ export class DashboardComponent implements OnDestroy {
   findDadosProdutoCorbanCampanha(item) {
     this.filtro.produto.codigo = item.codigo_agrupamento
     this.dadosProdutoCorbanCampanha = item;
-
-    //this.findContratos();
     this.findTickets();
   }
 
@@ -570,13 +555,9 @@ export class DashboardComponent implements OnDestroy {
     }
     if (l.length === 2) {
       t = this[l[0]];
-      //console.log(t);
       t = t[l[1]];
     }
-    //console.log(t);
-    //console.log(dados);
-    //console.log(tabela);
-    //console.log(campo);
+
 
     let ordem = 'asc';
 
@@ -588,11 +569,7 @@ export class DashboardComponent implements OnDestroy {
 
     this.ordem[tabela][campo] = ordem;
 
-    //console.log(ordem);
-    //console.log(this.ordem);
-
     t = _.orderBy(t, [campo], [ordem]);
-    //console.log(t);
     if (l.length === 1) {
       this[dados] = t;
     }

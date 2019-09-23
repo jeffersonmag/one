@@ -13,6 +13,10 @@
     width: calc(#{nb-theme(sidebar-width)} - #{nb-theme(header-padding)});
   }
 
+  .size-bold{
+    font-weight: bolder;
+  }
+
   nb-action {
     height: auto;
     display: flex;

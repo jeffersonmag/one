@@ -6,9 +6,7 @@
 
 <div class="infinite-cards row">
   <div class="col-md-12">
-
     <nb-card accent="info" [nbSpinner]="campanhasPerfil.length < 1" nbSpinnerStatus="success">
-
       <nb-icon *ngIf="revealed.campanhas" class="toggle-icon" icon="chevron-up-outline" pack="eva"
         (click)="toggleView('campanhas')"></nb-icon>
       <nb-icon *ngIf="!revealed.campanhas" class="toggle-icon" icon="chevron-down-outline" pack="eva"
@@ -41,95 +39,95 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="col-12 alert alert-dark">Índice de contratos digitados pagos sintético</div>
-</div>
-
-<div class="row">
-
-
-  <div class="col-md-4">
-    <nb-card accent="danger" class="solar-card">
-
-      <nb-card-body>
-        <div class="info" style="text-align: center;">
-          <div style="padding-top: 15px;">
-            <div class="details subtitle-2">Produção do período</div>
-            <div class="h4 value">{{campanhaSelecionada?.data_inicio_campanha | moment: 'DD/MM/YYYY'}} a
-              {{campanhaSelecionada?.data_fim_campanha | moment: 'DD/MM/YYYY'}}</div>
-          </div>
-          <div style="padding-top: 15px;">
-            <div class="details subtitle-2">Digitado</div>
-            <div class="h4 value">{{contratosPagosSinteticos?.valor_elegivel_total_digitado | moeda}}</div>
-          </div>
-          <div style="padding-top: 15px;">
-            <div class="details subtitle-2">Pago</div>
-            <div class="h4 value">{{contratosPagosSinteticos?.valor_elegivel_total_pago | moeda}}</div>
-          </div>
-        </div>
-      </nb-card-body>
-    </nb-card>
-  </div>
+<nb-card>
+  <nb-card-header>
+    Índice de contratos digitados pagos sintético
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-md-4">
+        <nb-card accent="danger" class="solar-card">
+          <nb-card-body>
+            <div class="info" style="text-align: center;">
+              <div style="padding-top: 15px;">
+                <div class="details subtitle-2">Produção do período</div>
+                <div class="h4 value">{{campanhaSelecionada?.data_inicio_campanha | moment: 'DD/MM/YYYY'}} a
+                  {{campanhaSelecionada?.data_fim_campanha | moment: 'DD/MM/YYYY'}}</div>
+              </div>
+              <div style="padding-top: 15px;">
+                <div class="details subtitle-2">Digitado</div>
+                <div class="h4 value">{{contratosPagosSinteticos?.valor_elegivel_total_digitado | moeda}}</div>
+              </div>
+              <div style="padding-top: 15px;">
+                <div class="details subtitle-2">Pago</div>
+                <div class="h4 value">{{contratosPagosSinteticos?.valor_elegivel_total_pago | moeda}}</div>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
 
 
-  <div class="col-md-4">
-    <nb-card accent="danger" class="solar-card">
-      <nb-card-body>
-        <div class="info" style="text-align: center;">
-          <div style="padding-top: 15px;">
-            <div class="details subtitle-2">Meta da Campanha</div>
-            <div class="h4 value">{{dadosProdutoCorbanCampanha?.meta_total_campanha | moeda}}</div>
-          </div>
-          <div style="padding-top: 15px;">
-            <div class="details subtitle-2">Atingimento da Campanha</div>
-            <div class="h4 value">{{dadosProdutoCorbanCampanha?.atingimento_total_campanha | moeda}}</div>
-          </div>
-          <div style="padding-top: 15px;">
-            <div class="details subtitle-2">Projeção da Campanha</div>
-            <div class="h4 value">{{dadosProdutoCorbanCampanha?.projecao_total_campanha | moeda}}</div>
-          </div>
-        </div>
-      </nb-card-body>
-    </nb-card>
-  </div>
+      <div class="col-md-4">
+        <nb-card accent="danger" class="solar-card">
+          <nb-card-body>
+            <div class="info" style="text-align: center;">
+              <div style="padding-top: 15px;">
+                <div class="details subtitle-2">Meta da Campanha</div>
+                <div class="h4 value">{{dadosProdutoCorbanCampanha?.meta_total_campanha | moeda}}</div>
+              </div>
+              <div style="padding-top: 15px;">
+                <div class="details subtitle-2">Atingimento da Campanha</div>
+                <div class="h4 value">{{dadosProdutoCorbanCampanha?.atingimento_total_campanha | moeda}}</div>
+              </div>
+              <div style="padding-top: 15px;">
+                <div class="details subtitle-2">Projeção da Campanha</div>
+                <div class="h4 value">{{dadosProdutoCorbanCampanha?.projecao_total_campanha | moeda}}</div>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
 
 
-  <div class="col-md-2">
-    <nb-card accent="danger" class="solar-card">
-      <nb-card-body>
-        <div class="info" style="text-align: center;">
-          <div style="padding-top: 15px;">
-            <div class="details subtitle-2">Meta Diária</div>
-            <div class="h4 value">{{dadosProdutoCorbanCampanha?.meta_diaria_campanha | moeda}}</div>
-          </div>
-          <div style="padding-top: 15px;">
-            <div class="details subtitle-2">Tiket Médio</div>
-            <div class="h4 value">{{dadosProdutoCorbanCampanha?.ticket_medio_campanha | moeda}}</div>
-          </div>
-        </div>
-      </nb-card-body>
-    </nb-card>
-  </div>
+      <div class="col-md-2">
+        <nb-card accent="danger" class="solar-card">
+          <nb-card-body>
+            <div class="info" style="text-align: center;">
+              <div style="padding-top: 15px;">
+                <div class="details subtitle-2">Meta Diária</div>
+                <div class="h4 value">{{dadosProdutoCorbanCampanha?.meta_diaria_campanha | moeda}}</div>
+              </div>
+              <div style="padding-top: 15px;">
+                <div class="details subtitle-2">Tiket Médio</div>
+                <div class="h4 value">{{dadosProdutoCorbanCampanha?.ticket_medio_campanha | moeda}}</div>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
 
 
-  <div class="col-md-2">
-    <nb-card accent="danger" class="solar-card">
-      <nb-card-body>
-        <div class="info" style="text-align: center;">
-          <div style="padding-top: 15px;">
-            <div class="details subtitle-2">Dias Úteis Campanha</div>
-            <div class="h4 value">{{campanhaDias}}</div>
-          </div>
-          <div style="padding-top: 15px;">
-            <div class="details subtitle-2">Dias Úties Restantes</div>
-            <div class="h4 value">{{campanhaPendencias}}</div>
-          </div>
-        </div>
-      </nb-card-body>
-    </nb-card>
-  </div>
+      <div class="col-md-2">
+        <nb-card accent="danger" class="solar-card">
+          <nb-card-body>
+            <div class="info" style="text-align: center;">
+              <div style="padding-top: 15px;">
+                <div class="details subtitle-2">Dias Úteis Campanha</div>
+                <div class="h4 value">{{campanhaDias}}</div>
+              </div>
+              <div style="padding-top: 15px;">
+                <div class="details subtitle-2">Dias Úties Restantes</div>
+                <div class="h4 value">{{campanhaPendencias}}</div>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
 
-</div>
 
 <div class="row">
   <div class="col-md-12">
