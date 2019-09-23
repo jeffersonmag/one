@@ -15,6 +15,7 @@ import {
   NbTooltipModule,
   NbUserModule,
   NbStepperModule,
+  NbDialogModule,
 
 } from '@nebular/theme';
 import { NgxEchartsModule } from 'ngx-echarts';
@@ -48,7 +49,8 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     NgbPaginationModule,
     NgMultiSelectDropDownModule.forRoot(),
-    NbStepperModule
+    NbStepperModule,
+    NbDialogModule.forRoot()
   ],
   declarations: [
     PendenciaComponent,

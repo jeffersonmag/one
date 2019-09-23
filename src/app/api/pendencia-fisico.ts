@@ -28,4 +28,8 @@ export class PendenciaFisicoApiService {
     return this.requestService.delete(`${environment.urlApi}/pendencia-fisico-contrato-pre-bordero`, dados, true);
   }
 
+  gerarBordero(dados) {
+    return this.requestService.put(`${environment.urlApi}/pendencia-fisico-contrato-gerar-bordero`, dados, true);
+  }
+
 }

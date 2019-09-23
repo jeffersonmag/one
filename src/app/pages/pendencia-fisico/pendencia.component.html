@@ -7,84 +7,9 @@
         <nb-tabset class="size-fonte" fullWidth (changeTab)="findPendencia($event)">
           <nb-tab *ngFor="let p of pendenciaSintetico" [tabTitle]="p.status_time_line" [active]="p.ativo"
             badgeText="{{p.contador_contratos_time_line}}" badgeStatus="success">
-
-            <!--<nb-tab *ngFor="let p of pendenciaSintetico" [tabTitle]="p.status_time_line">
-                      <nb-stepper orientation="horizontal" [linear]="linearMode">
-                    <nb-step [stepControl]="primeiroPasso" label="00 - NA LOJA" []="teste1()">
-                        <form [formGroup]="primeiroPasso" (ngSubmit)="teste1()"></form>
-                    </nb-step>
-                    <nb-step [label]="Step2">
-                      <ng-template #Step2>Tela 2</ng-template>
-                    </nb-step>
-                    <nb-step [label]="Step3">
-                      <ng-template #Step3>Tela 3</ng-template>
-                    </nb-step>
-                    <nb-step [label]="Step4">
-                      <ng-template #Step4>Tela 4</ng-template>
-                    </nb-step>
-                  </nb-stepper>-->
-
             <div class="container">
-              <!---  <table class="labels" equalColumnsWidth>
-              <div class="col-12 col-sm-12">
-                <tr>
-                  <th class="text-center" style="width: 5%">Regional</th>
-                  <th class="text-center" style="width: 5%">Comercial</th>
-                  <th class="text-center" style="width: 5%">Matriz</th>
-                  <th class="text-center" style="width: 5%">Loja</th>
-                  <th class="text-center" style="width: 5%">Funcionário</th>
-                </tr>
-              </div>
-            <table>
-            <div class="infinite-cards row">
-              <div class="col-md-12">
-
-                <nb-select class="nb-select" multiple placeholder="Selecione Regional" ngModel="result">
-                  <nb-option *ngFor="let i of regional" selected="i.selected" [value]="i"
-                    id="{{i.codigo_regional}}" (click)="findPendenciaRegional($event)">
-                    {{i.nome_regional}}
-                  </nb-option>
-                </nb-select>
-
-                <nb-select class="nb-select" multiple placeholder="Selecione Comercial" ngModel="result">
-                  <nb-option *ngFor="let i of comercial" selected="i.selected" [value]="i"
-                    id="{{i.codigo_comercial}}" (click)="findPendenciaComercial($event)">
-                    {{i.nome_comercial}}
-                  </nb-option>
-                </nb-select>
-
-                <nb-select class="nb-select" multiple placeholder="Selecione Matriz" ngModel="result">
-                  <nb-option *ngFor="let i of matriz" selected="i.selected" [value]="i"
-                    id="{{i.codigo_loja_matriz}}" value="{{i.value}}">
-                    {{i.nome_loja_matriz}}
-                  </nb-option>
-                </nb-select>
-
-                <nb-select multiple class="nb-select"  placeholder="Selecione Loja" ngModel="result">
-                  <nb-option *ngFor="let i of loja" selected="i.selected" [value]="i" selected=true content
-                    id="{{i.codigo_loja}}" (click)="findPendenciaLoja($event)">
-                    {{i.nome_loja}}
-                  </nb-option>
-                </nb-select>
-
-                <nb-select multiple class="nb-select"  placeholder="Selecione Funcionário" ngModel="result">
-                  <nb-option *ngFor="let i of funcionario" selected="i.selected" [value]="i" selected=true
-                    content id="{{i.codigo_funcionario}}" (click)="findPendenciaFuncionario($event)">
-                    {{i.nome_funcionario}}
-
-                  </nb-option>
-                </nb-select>
-                <div *ngIf="limparFiltro">
-                    <button class="fasB"  nbTooltip="Limpar Filtros"
-                        (click)="findPendencia()">
-                        <i class="fas fa-trash color"></i>
-                    </button>
-                </div>---->
-              <!--<nb-card [nbSpinner]="pendencia.length < 1" nbSpinnerStatus="sucess">-->
-
               <table class="tabela" [nbSpinner]="pendencia.length < 1" nbSpinnerStatus="success" equalColumnsWidth>
                 <thead>
-                  <!--class="headerTable"-->
                   <tr>
                     <th class="text-left">Proposta</th>
                     <th class="text-left">Cliente</th>
@@ -136,12 +61,21 @@
                 </tbody>
               </table>
             </div>
+            <div class= "row justify-content-center">
+            <td class="size-font">
+            <button *ngIf="p.codigo_status_time_line == 1" class=btnGerar nbButton status="success" size="medium" hero
+              (click)="gerarBordero($event)" nbTooltip="Clique para gerar borderô"> Gerar Borderô
+            </button>
+
+            <ngb-pagination class="pagination" [collectionSize]="pendencia.length"
+            #numPages [maxSize]="15" [pageSize]="itemsPerPage" [(page)]="currentPage"
+            (pageChange)="onPageChange(currentPage)">
+          </ngb-pagination>
+          </td>
+        </div>
           </nb-tab>
         </nb-tabset>
       </nb-card-body>
-      <ngb-pagination [collectionSize]="pendencia.length" #numPages [maxSize]="15" [pageSize]="itemsPerPage"
-        [(page)]="currentPage" (pageChange)="onPageChange(currentPage)">
-      </ngb-pagination>
     </nb-card>
   </div>
 </div>

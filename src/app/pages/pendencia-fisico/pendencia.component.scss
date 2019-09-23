@@ -18,7 +18,7 @@ button[nbTreeGridRowToggle] {
 
   .active {
     background: #007bff94;
-  }  
+  }
 }
 
 .size-fonte{
@@ -117,6 +117,17 @@ button[nbTreeGridRowToggle] {
   }
 
 }
+
+.btnGerar {
+  float: right; 
+}
+
+.pagination {
+  float: left;
+ 
+}
+
+
 @media screen and (min-width: 400px) {
   .nb-column-name,
   .nb-column-size {
