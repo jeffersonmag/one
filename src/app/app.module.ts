@@ -1,8 +1,12 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { registerLocaleData } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import pt from '@angular/common/locales/pt';
+registerLocaleData(pt)
+
 import {
   NbChatModule,
   NbDatepickerModule,
@@ -20,7 +24,7 @@ import { ThemeModule } from './@theme/theme.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PipesModule } from './pipes/pipes.module';
-import {NgbModal, ModalDismissReasons, NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 /**
@@ -56,6 +60,16 @@ import {NgbModal, ModalDismissReasons, NgbModule} from '@ng-bootstrap/ng-bootstr
     HttpClientModule,
     NgbModule
   ],
+
+  providers: [
+
+    {
+      provide: LOCALE_ID,
+      useValue: 'pt',
+    }
+
+  ],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {

@@ -1,10 +1,9 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, Inject, Injectable, LOCALE_ID, Pipe, PipeTransform } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { number_format, str_pad } from 'locutus/php/strings/';
 import _ from 'lodash';
 import * as moment from 'moment';
 import { takeWhile } from 'rxjs/operators';
-
 import { CampanhasApiService } from './../../api/campanhas';
 import { DiasUteisPeriodoApiService } from './../../api/dias-uteis-periodo';
 import { IndiceContratosDigitadosApiService } from './../../api/indice-contratos-digitados';
@@ -101,6 +100,14 @@ export class DashboardComponent implements OnDestroy {
     chart: true,
     metasCampanhas: true,
     produtosCorban: true
+  }
+
+  hoje: number = Date.now();
+
+  ontem: Date = new Date();
+
+  ngOnInit() {
+    this.ontem.setDate(this.ontem.getDate() - 1);
   }
 
   ordem = {
