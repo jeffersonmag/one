@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardCampanhaComponent } from './dashboard-campanha/dashboard-campanha.component';
 import { PagesComponent } from './pages.component';
 import { PendenciaComponent } from './pendencia-fisico/pendencia.component';
 import { EsteiraProducaoComponent } from './esteira-producao/esteira-producao.component';
@@ -13,6 +14,11 @@ const routes: Routes = [{
     {
       path: 'dashboard',
       component: DashboardComponent,
+    },
+
+    {
+      path: 'dashboard-campanha',
+      component: DashboardCampanhaComponent,
     },
 
     {
@@ -67,6 +73,12 @@ const routes: Routes = [{
     {
       path: '',
       redirectTo: 'dashboard',
+      pathMatch: 'full',
+    },
+
+    {
+      path: '',
+      redirectTo: 'dashboard-campanha',
       pathMatch: 'full',
     },
 

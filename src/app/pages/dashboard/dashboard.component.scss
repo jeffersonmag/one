@@ -15,6 +15,32 @@
   }
 }
 
+.tabela {
+  width: 100%;
+
+  tr {
+    border-bottom: 1px solid #ccc;
+
+    th,
+    td {
+      padding: 7px;
+    }
+  }
+
+  .active {
+    background: #a5d0517a;
+  }
+
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.textRight {
+  text-align: right;
+}
+
 .maxContent {
   max-height: 500px;
   overflow: auto;
@@ -27,86 +53,4 @@
   @include nb-rtl(right, auto);
   @include nb-rtl(left, 1.25rem);
   cursor: pointer;
-}
-
-.mes-setado {
-  letter-spacing: 15px;
-  font-size: 25px;
-  line-height: 100%;
-  vertical-align: bottom;
-}
-
-.ano-setado {
-  letter-spacing: 8px;
-  font-size: 20px;
-  line-height: 100%;
-  vertical-align: top;
-}
-
-.dia-setado {
-  font-size: 60px;
-  line-height: 100%;
-}
-
-.simple {
-  text-align: right;
-  margin-top: 4px;
-  margin-bottom: -2px;
-  font-size: 11px;
-}
-
-.values {
-  font-size: 15px;
-  text-align: right;
-  padding-bottom: 5px;
-}
-
-.tabela {
-  margin-top: 10px;
-  margin-bottom: -10px;
-  margin-left: 10px;
-}
-
-.info {
-  border-top: 1px solid #000000;
-  margin-top: 10.5px;
-}
-
-.mes-setado2 {
-  font-size: 20px;
-  line-height: 100%;
-  align-content: right;
-  text-align: right;
-}
-
-.ano-setado2 {
-  font-size: 20px;
-  letter-spacing: 5px;
-  line-height: 100%;
-  padding-left: 10px;
-  align-content: center;
-  text-align: center;
-}
-
-.tabela2 {
-  margin-top: 28px;
-  margin-bottom: -10px;
-  margin-left: 30px;
-}
-
-.info2 {
-  border-top: 1px solid #000000;
-  margin-top: 10.5px;
-}
-
-.cardFirst {
-  height: 12rem;
-  width: 13rem;
-  margin-top: 20px;
-  margin-left: 30px;
-}
-
-.cardBody {
-  margin-top: -20px;
-  margin-bottom: -10px;
 }

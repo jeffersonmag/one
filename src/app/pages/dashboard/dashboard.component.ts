@@ -1,9 +1,9 @@
-import { Component, OnDestroy, Inject, Injectable, LOCALE_ID, Pipe, PipeTransform } from '@angular/core';
+import { Component, OnDestroy, AfterViewInit, Inject, Injectable, LOCALE_ID, Pipe, PipeTransform, Input } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { number_format, str_pad } from 'locutus/php/strings/';
 import _ from 'lodash';
 import * as moment from 'moment';
-import { takeWhile } from 'rxjs/operators';
+import { takeWhile, delay } from 'rxjs/operators';
 import { CampanhasApiService } from './../../api/campanhas';
 import { DiasUteisPeriodoApiService } from './../../api/dias-uteis-periodo';
 import { IndiceContratosDigitadosApiService } from './../../api/indice-contratos-digitados';
@@ -20,7 +20,7 @@ interface CardSettings {
   styleUrls: ['./dashboard.component.scss'],
   templateUrl: './dashboard.component.html',
 })
-export class DashboardComponent implements OnDestroy {
+export class DashboardComponent implements OnDestroy, AfterViewInit {
 
   private alive = true;
 
@@ -102,6 +102,23 @@ export class DashboardComponent implements OnDestroy {
     produtosCorban: true
   }
 
+
+  private value = 0;
+
+  @Input('chartValue')
+  set chartValue(value: number) {
+    this.value = value;
+
+    if (this.option.series) {
+      this.option.series[0].data[0].value = value;
+      this.option.series[0].data[1].value = 100 - value;
+      this.option.series[1].data[0].value = value;
+    }
+  }
+
+  option: any = {};
+  themeSubscription: any;
+
   hoje: number = Date.now();
 
   ontem: Date = new Date();
@@ -147,10 +164,9 @@ export class DashboardComponent implements OnDestroy {
   }
 
 
-  themeSubscription: any;
-
   constructor(
     private themeService: NbThemeService,
+    private theme: NbThemeService,
     private campanhasApiService: CampanhasApiService,
     private diasUteisPeriodoApiService: DiasUteisPeriodoApiService,
     private ticketMedioApiService: TicketMedioApiService,
@@ -584,6 +600,146 @@ export class DashboardComponent implements OnDestroy {
       this[l[0]][l[1]] = t;
     }
 
+  }
+
+
+
+  ngAfterViewInit() {
+    this.themeSubscription = this.theme.getJsTheme().pipe(delay(1)).subscribe(config => {
+
+      const solarTheme: any = config.variables.solar;
+
+      this.option = Object.assign({}, {
+        tooltip: {
+          trigger: 'item',
+          formatter: '{a} <br/>{b} : {c} ({d}%)',
+        },
+        series: [
+          {
+            name: ' ',
+            clockWise: true,
+            hoverAnimation: false,
+            type: 'pie',
+            center: ['10%', '50%'],
+            radius: solarTheme.radius,
+            data: [
+              {
+                value: this.value,
+                name: ' ',
+                label: {
+                  normal: {
+                    position: 'center',
+                    formatter: '{d}%',
+                    textStyle: {
+                      fontSize: '22',
+                      fontFamily: config.variables.fontSecondary,
+                      fontWeight: '600',
+                      color: config.variables.fgHeading,
+                    },
+                  },
+                },
+                tooltip: {
+                  show: false,
+                },
+                itemStyle: {
+                  normal: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                      {
+                        offset: 0,
+                        color: solarTheme.gradientLeft,
+                      },
+                      {
+                        offset: 1,
+                        color: solarTheme.gradientRight,
+                      },
+                    ]),
+                    shadowColor: solarTheme.shadowColor,
+                    shadowBlur: 0,
+                    shadowOffsetX: 10,
+                    shadowOffsetY: 3,
+                  },
+                },
+                hoverAnimation: false,
+              },
+              {
+                value: 100 - this.value,
+                name: ' ',
+                tooltip: {
+                  show: false,
+                },
+                label: {
+                  normal: {
+                    position: 'inner',
+                  },
+                },
+                itemStyle: {
+                  normal: {
+                    color: solarTheme.secondSeriesFill,
+                  },
+                },
+              },
+            ],
+          },
+          {
+            name: ' ',
+            clockWise: true,
+            hoverAnimation: false,
+            type: 'pie',
+            center: ['45%', '50%'],
+            radius: solarTheme.radius,
+            data: [
+              {
+                value: this.value,
+                name: ' ',
+                label: {
+                  normal: {
+                    position: 'inner',
+                    show: false,
+                  },
+                },
+                tooltip: {
+                  show: false,
+                },
+                itemStyle: {
+                  normal: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                      {
+                        offset: 0,
+                        color: solarTheme.gradientLeft,
+                      },
+                      {
+                        offset: 1,
+                        color: solarTheme.gradientRight,
+                      },
+                    ]),
+                    shadowColor: solarTheme.shadowColor,
+                    shadowBlur: 7,
+                  },
+                },
+                hoverAnimation: false,
+              },
+              {
+                value: 28,
+                name: ' ',
+                tooltip: {
+                  show: false,
+                },
+                label: {
+                  normal: {
+                    position: 'inner',
+                  },
+                },
+                itemStyle: {
+                  normal: {
+                    color: 'none',
+                  },
+                },
+              },
+            ],
+          },
+        ],
+      });
+    });
   }
 
 }
