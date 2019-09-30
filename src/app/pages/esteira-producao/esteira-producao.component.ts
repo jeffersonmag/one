@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
-import es from '@angular/common/locales/es';
+import pt from '@angular/common/locales/pt';
 import { NbSortDirection, NbTreeGridDataSource, NbGlobalPhysicalPosition, NbSearchService, NbToastrService, NbComponentStatus, NbGlobalPosition } from '@nebular/theme';
 import { NbThemeService } from '@nebular/theme';
 import { takeWhile } from 'rxjs/operators';
@@ -425,6 +425,6 @@ export class EsteiraProducaoComponent implements OnInit {
   }
 
   ngOnInit() {
-    registerLocaleData(es);
+    registerLocaleData(pt);
   }
 }

@@ -9,6 +9,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
 
   {
+    title: 'Dashboard-Campanha',
+    icon: 'home-outline',
+    link: '/pages/dashboard-campanha',
+    home: false,
+  },
+
+  {
     title: 'Pendência de Físico',
     icon: 'browser',
     link: '/pages/pendencia-fisico',
