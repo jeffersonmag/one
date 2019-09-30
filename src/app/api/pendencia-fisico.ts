@@ -29,7 +29,11 @@ export class PendenciaFisicoApiService {
   }
 
   gerarBordero(dados) {
-    return this.requestService.put(`${environment.urlApi}/pendencia-fisico-contrato-gerar-bordero`, dados, true);
+    return this.requestService.putDownload(`${environment.urlApi}/pendencia-fisico-contrato-gerar-bordero`, dados, true);
+  }
+
+  listarBordero(dados) {
+    return this.requestService.get(`${environment.urlApi}/lista-bordero-envio-fisico`, dados, true);
   }
 
 }

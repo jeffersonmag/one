@@ -3,13 +3,17 @@ import { NbThemeService, NbSortDirection, NbTreeGridDataSource, NbComponentStatu
 import _ from 'lodash';
 import { takeWhile } from 'rxjs/operators';
 import { PendenciaFisicoApiService } from '../../api/pendencia-fisico';
-import { FormGroup, FormBuilder } from '@angular/forms';
-
+import { FormGroup } from '@angular/forms';
+import { NgbModal, NgbModalRef, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 interface CardSettings {
   title: string;
   iconClass: string;
   type: string;
+}
+
+export interface Fruit {
+  name: string;
 }
 
 @Component({
@@ -21,20 +25,30 @@ interface CardSettings {
 export class PendenciaComponent implements OnInit {
 
   private alive = true;
-
+  flipped: boolean = false;
   codigo_status_time_line: number;
   codigoAba: number;
-
+  modalReference: NgbModalRef;
   linearMode = false;
   primeiroPasso: FormGroup;
   segundoPasso: FormGroup;
   terceiroPasso: FormGroup;
-
   solarValue: number;
-
   statusCards: string;
-
   commonStatusCardsSet: CardSettings[] = [];
+  status_time_line: number;
+
+  revealed = {
+    regional: false,
+    comercial: false,
+    funcionario: false,
+    loja: false,
+    lojaMatriz: false,
+    canalVendas: false,
+    tipoPendencia: false,
+    pendencias: true,
+    pendenciaFisico: true
+  }
 
   statusCardsByThemes: {
     default: CardSettings[];
@@ -43,15 +57,11 @@ export class PendenciaComponent implements OnInit {
       default: this.commonStatusCardsSet,
       dark: this.commonStatusCardsSet,
     };
-  revealed = {
-    pendencias: true,
-    pendenciaFisico: true,
-  };
 
   themeSubscription: any;
   index = 1;
   destroyByClick = true;
-  duration = 5000;
+  duration = 0;
   hasIcon = true;
   position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
   preventDuplicates = true;
@@ -59,45 +69,63 @@ export class PendenciaComponent implements OnInit {
   titulo: string = 'Sucesso';
   mensagem: string = 'Ação realizada com sucesso!';
 
+  ativaBotaoComercial = false;
+  ativaBotaoRegional = false;
+  ativaBotaoLoja = false;
+  ativaBotaoLojaMatriz = false;
+  ativaBotaoFuncionario = false;
+  ativaBotaocanalVendas = false;
+  ativaBotaoTipoPendencia = false;
+
+  codigoComercial = '';
+  codigoRegional = '';
+  codigoLoja = '';
+  codigoLojaMatriz = '';
+  codigoFuncionario = '';
+  codigoCanalVendas = '';
+  codigoTipoPendencia = '';
+  nomeComercial = '';
+  nomeRegional = '';
+  nomeLoja = '';
+  nomeFuncionario = '';
+  nomeLojaMatriz = '';
+  nomeCanalVendas = '';
+  nomeTipoPendencia = '';
+
   currentPage = 1;
   itemsPerPage = 20;
   pageSize: number;
   valorAtual: any;
-
+  numero_contratos: number = 0;
   customColumn = 'name';
   defaultColumns = ['size', 'kind', 'items'];
   allColumns = [this.customColumn, ...this.defaultColumns];
-
   dataSource: NbTreeGridDataSource<any>;
-
   sortColumn: string = '';
   sortDirection: NbSortDirection = NbSortDirection.NONE;
 
   pendencia = [];
   pendenciaSintetico = [];
   pendenciaSinteticoTemp = [];
-  comercial = [];
-  regional = [];
-  pendenciaRegional = [];
-  pendenciaComercial = [];
-  pendenciaMatriz = [];
-  pendenciaLoja = [];
-  pendenciaFuncionario = [];
-  limparFiltros: boolean = false;
 
   funcionario = [];
   loja = [];
   matriz = [];
+  comercial = [];
+  regional = [];
+  canalVendas = [];
+  tipoPendencia = [];
 
+  limparFiltros: boolean = false;
+  pararSpinner: boolean = true;
   activeTab: boolean;
-
   dadosPendenciasLoad = true;
   dadosPendencias = [];
 
   constructor(
     private themeService: NbThemeService,
     private pendenciaFisicoApiService: PendenciaFisicoApiService,
-    private fb: FormBuilder,
+    private modalService: NgbModal,
     private toastrService: NbToastrService
   ) {
     this.themeService.getJsTheme()
@@ -106,20 +134,58 @@ export class PendenciaComponent implements OnInit {
         this.statusCards = this.statusCardsByThemes[theme.name];
       });
     this.findPendenciaSintetico();
-    //this.findPendencia(this.codigo_status_time_line);
   }
 
-  findPendenciaSintetico() {
+  atualizaContador(vazio: boolean) {
     this.pendenciaSintetico = [];
+    this.pendenciaSinteticoTemp = [];
     this.pendenciaFisicoApiService.pendenciasSintetico({
       "data_de": "",
       "data_ate": "",
       "criterio_de_data": "",
-      "codigo_matriz": "",
-      "codigo_comercial": "",
-      "codigo_regional": "",
-      "codigo_loja": "",
-      "codigo_funcionario": ""
+      "codigo_matriz": Number(this.codigoLojaMatriz),
+      "codigo_comercial": Number(this.codigoComercial),
+      "codigo_regional": Number(this.codigoRegional),
+      "codigo_loja": Number(this.codigoLoja),
+      "codigo_funcionario": Number(this.codigoFuncionario)
+    }
+    ).then((s) => {
+      this.pendenciaSintetico = s.status_time_line;
+      for (let i of this.pendenciaSintetico) {
+        if (i.codigo_status_time_line == this.codigo_status_time_line) {
+          this.pendenciaSinteticoTemp.push(i = {
+            ...i,
+            "ativo": true
+          })
+        } else {
+          this.pendenciaSinteticoTemp.push(i = {
+            ...i,
+            "ativo": false
+          })
+        }
+      }
+      this.pendenciaSintetico = this.pendenciaSinteticoTemp;
+      if (!vazio) {
+        this.findPendenciaInicial(this.codigo_status_time_line);
+      }
+    })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  findPendenciaSintetico() {
+    this.pendenciaSintetico = [];
+    this.pendenciaSinteticoTemp = [];
+    this.pendenciaFisicoApiService.pendenciasSintetico({
+      "data_de": "",
+      "data_ate": "",
+      "criterio_de_data": "",
+      "codigo_matriz": Number(this.codigoLojaMatriz),
+      "codigo_comercial": Number(this.codigoComercial),
+      "codigo_regional": Number(this.codigoRegional),
+      "codigo_loja": Number(this.codigoLoja),
+      "codigo_funcionario": Number(this.codigoFuncionario)
     }
     ).then((s) => {
       this.pendenciaSintetico = s.status_time_line;
@@ -147,30 +213,45 @@ export class PendenciaComponent implements OnInit {
   findPendencia(event) {
     this.limparFiltros = false;
     this.pendencia = [];
+    this.comercial = [];
+    this.regional = [];
+    this.funcionario = [];
+    this.canalVendas = [];
+    this.tipoPendencia = [];
+    this.loja = [];
+    this.matriz = [];
+    this.pararSpinner = true;
     let codigo_status_time_line = _.find(this.pendenciaSintetico, (o: any) => {
       if (String(o.status_time_line) === String(event.tabTitle)) {
         return String(o.codigo_status_time_line)
       }
     })
+    this.codigo_status_time_line = codigo_status_time_line.codigo_status_time_line
     this.valorAtual = event;
     this.pendenciaFisicoApiService.pendencias({
       "data_de": "",
       "data_ate": "",
       "criterio_de_data": "",
-      "codigo_matriz": "",
-      "codigo_comercial": "",
-      "codigo_regional": "",
-      "codigo_loja": "",
-      "codigo_funcionario": "",
+      "codigo_matriz": Number(this.codigoLojaMatriz),
+      "codigo_comercial": Number(this.codigoComercial),
+      "codigo_regional": Number(this.codigoRegional),
+      "codigo_loja": Number(this.codigoLoja),
+      "codigo_funcionario": Number(this.codigoFuncionario),
       "status_time_line": codigo_status_time_line.codigo_status_time_line
     })
       .then((s) => {
-        //this.comercial = s.agrupado_comercial;
-        //this.regional = s.agrupado_regional;
-        //this.funcionario = s.agrupado_funcionario;
-        //this.loja = s.agrupado_loja;
-        //this.matriz = s.agrupado_loja_matriz;
         this.pendencia = s.dados;
+        this.comercial = s.agrupado_comercial;
+        this.regional = s.agrupado_regional;
+        this.funcionario = s.agrupado_funcionario;
+        this.loja = s.agrupado_loja;
+        this.matriz = s.agrupado_loja_matriz;
+        this.canalVendas = s.agrupado_canal_vendas;
+        this.tipoPendencia = s.agrupado_status_farol;
+        if (this.pendencia.length == 0) {
+          this.pararSpinner = false;
+          this.makeToast('danger', 'Filtro Vazio', 'Sem propostas para serem exibidas');
+        }
       })
       .catch((e) => {
         console.log(e);
@@ -180,167 +261,53 @@ export class PendenciaComponent implements OnInit {
   findPendenciaInicial(codigo_status_time_line) {
     this.limparFiltros = false;
     this.pendencia = [];
-    //let codigo_status_time_line = _.find(this.pendenciaSintetico, (o: any) => {
-    //  if (String(o.status_time_line) === String(event.tabTitle)) {
-    //    return String(o.codigo_status_time_line)
-    //  }
-    //})
+    this.comercial = [];
+    this.regional = [];
+    this.funcionario = [];
+    this.canalVendas = [];
+    this.tipoPendencia = [];
+    this.loja = [];
+    this.matriz = [];
+    this.pararSpinner = true;
+    this.codigo_status_time_line = codigo_status_time_line;
     this.pendenciaFisicoApiService.pendencias({
       "data_de": "",
       "data_ate": "",
       "criterio_de_data": "",
-      "codigo_matriz": "",
-      "codigo_comercial": "",
-      "codigo_regional": "",
-      "codigo_loja": "",
-      "codigo_funcionario": "",
+      "codigo_matriz": Number(this.codigoLojaMatriz),
+      "codigo_comercial": Number(this.codigoComercial),
+      "codigo_regional": Number(this.codigoRegional),
+      "codigo_loja": Number(this.codigoLoja),
+      "codigo_funcionario": Number(this.codigoFuncionario),
       "status_time_line": codigo_status_time_line
     })
       .then((s) => {
-        //this.comercial = s.agrupado_comercial;
-        //this.regional = s.agrupado_regional;
-        //this.funcionario = s.agrupado_funcionario;
-        //this.loja = s.agrupado_loja;
-        //this.matriz = s.agrupado_loja_matriz;
         this.pendencia = s.dados;
+        this.comercial = s.agrupado_comercial;
+        this.regional = s.agrupado_regional;
+        this.funcionario = s.agrupado_funcionario;
+        this.loja = s.agrupado_loja;
+        this.matriz = s.agrupado_loja_matriz;
+        this.canalVendas = s.agrupado_canal_vendas;
+        this.tipoPendencia = s.agrupado_status_farol;
+        if (this.pendencia.length == 0) {
+          this.pararSpinner = false;
+        }
       })
       .catch((e) => {
         console.log(e);
       });
   }
-
-  findPendenciaRegional(event) {
-    this.pendencia = [];
-    this.pendenciaRegional = [];
-    this.pendenciaFisicoApiService.pendencias({
-      "criterio_de_data": "",
-      "data_de": "",
-      "data_ate": "",
-      "codigo_regional": event.currentTarget.id,
-      "codigo_comercial": "",
-      "codigo_loja": "",
-      "codigo_matriz": "",
-      "codigo_funcionario": ""
-    })
-      .then((s) => {
-        this.pendenciaRegional = s.agrupado_regional;
-        this.pendencia = s.dados;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }
-
-  findPendenciaComercial(event) {
-    this.pendencia = [];
-    this.pendenciaComercial = [];
-    this.pendenciaFisicoApiService.pendencias({
-      "criterio_de_data": "",
-      "data_de": "",
-      "data_ate": "",
-      "codigo_regional": "",
-      "codigo_comercial": event.currentTarget.id,
-      "codigo_loja": "",
-      "codigo_matriz": "",
-      "codigo_funcionario": ""
-    })
-      .then((s) => {
-        this.pendenciaComercial = s.agrupado_comercial;
-        this.pendencia = s.dados;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }
-
-  findPendenciaMatriz(event) {
-    this.pendencia = [];
-    this.pendenciaMatriz = [];
-    this.pendenciaFisicoApiService.pendencias({
-      "criterio_de_data": "",
-      "data_de": "",
-      "data_ate": "",
-      "codigo_regional": "",
-      "codigo_comercial": "",
-      "codigo_loja": "",
-      "codigo_matriz": event.currentTarget.id,
-      "codigo_funcionario": ""
-    })
-      .then((s) => {
-        this.pendenciaMatriz = s.agrupado_loja_matriz;
-        this.pendencia = s.dados;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }
-
-  findPendenciaLoja(event) {
-    this.pendencia = [];
-    this.pendenciaLoja = [];
-    this.pendenciaFisicoApiService.pendencias({
-      "criterio_de_data": "",
-      "data_de": "",
-      "data_ate": "",
-      "codigo_regional": "",
-      "codigo_comercial": "",
-      "codigo_loja": event.currentTarget.id,
-      "codigo_matriz": "",
-      "codigo_funcionario": ""
-    })
-      .then((s) => {
-        this.pendenciaLoja = s.agrupado_loja;
-        this.pendencia = s.dados;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }
-
-  findPendenciaFuncionario(event) {
-    this.pendencia = [];
-    this.pendenciaFuncionario = [];
-    this.pendenciaFisicoApiService.pendencias({
-      "criterio_de_data": "",
-      "data_de": "",
-      "data_ate": "",
-      "codigo_regional": "",
-      "codigo_comercial": "",
-      "codigo_loja": "",
-      "codigo_matriz": "",
-      "codigo_funcionario": event.currentTarget.id,
-    })
-      .then((s) => {
-        this.pendenciaFuncionario = s.agrupado_funcionario;
-        this.pendencia = s.dados;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }
-
-  /* filtraPendenciaRegional(event) {
-     this.pendencia.filter(dados => this.pendencia === event.currentTarget.id);
-   }
-
-   filtraPendenciaComercial(event) {
-     this.pendencia.filter(dados => this.pendencia === event.currentTarget.id);
-   }
-
-   filtraPendenciaMatriz(event) {
-     this.pendencia.filter(dados => this.pendencia === event.currentTarget.id);
-   }
-
-   filtraPendenciaLoja(event) {
-     this.pendencia.filter(dados => this.pendencia === event.currentTarget.id);
-   }
-
-   filtraPendenciaFuncionario(event) {
-     this.pendencia.filter(dados => this.pendencia === event.currentTarget.id);
-   } */
 
   toggleView(acao) {
     this.revealed[acao] = !this.revealed[acao];
+  }
+
+  revelar() {
+    this.flipped = !this.flipped;
+    if (!this.flipped) {
+      this.atualizaContador(true);
+    }
   }
 
   public onPageChange(pageNum: number): void {
@@ -359,6 +326,8 @@ export class PendenciaComponent implements OnInit {
     this.matriz[0];
     this.loja[0];
     this.funcionario[0];
+    this.canalVendas[0];
+    this.tipoPendencia[0];
   }
 
   enviarPreBordero(pk_contrato) {
@@ -367,11 +336,13 @@ export class PendenciaComponent implements OnInit {
     })
       .then((s) => {
         this.makeToast('success', 'Sucesso', 'Proposta inserida no Pré Borderô');
+        this.findPendenciaSintetico();
         this.findPendenciaInicial(0);
       })
       .catch((e) => {
         let erro = e.error.message;
         this.makeToast('danger', 'Erro', erro);
+        this.findPendenciaSintetico();
         this.findPendenciaInicial(0);
       });
   }
@@ -382,11 +353,13 @@ export class PendenciaComponent implements OnInit {
     })
       .then((s) => {
         this.makeToast('success', 'Sucesso', 'Proposta removida do Pré Borderô');
+        this.findPendenciaSintetico();
         this.findPendencia(this.valorAtual);
       })
       .catch((e) => {
         let erro = e.error.message;
         this.makeToast('danger', 'Erro', erro);
+        this.findPendenciaSintetico();
         this.findPendencia(this.valorAtual);
       });
   }
@@ -409,20 +382,276 @@ export class PendenciaComponent implements OnInit {
       config);
   }
 
-  gerarBordero(Event) {
-    alert('testando');
+  confirmarBordero(modal) {
+    this.modalReference = this.modalService.open(modal, { size: 'sm', backdrop: 'static' })
   }
 
-  ngOnInit() {
-    /*this.primeiroPasso = this.fb.group({
-      firstCtrl: ['', Validators.required],
-    });
-    this.segundoPasso = this.fb.group({
-      firstCtrl: ['', Validators.required],
-    });
-    this.terceiroPasso = this.fb.group({
-      firstCtrl: ['', Validators.required],
-    });*/
+  listarBordero(modal) {
+    this.modalReference = this.modalService.open(modal, { size: 'lg' })
   }
 
+  gerarEnvioBordero() {
+    if (this.numero_contratos == 0) {
+      alert('Informe a quantidade de contratos para prosseguir');
+    } else {
+      this.pendenciaFisicoApiService.gerarBordero({
+        "data_de": "",
+        "data_ate": "",
+        "criterio_de_data": "",
+        "codigo_matriz": Number(this.codigoLojaMatriz),
+        "codigo_comercial": Number(this.codigoComercial),
+        "codigo_regional": Number(this.codigoRegional),
+        "codigo_loja": Number(this.codigoLoja),
+        "codigo_funcionario": Number(this.codigoFuncionario),
+        "qtd_contratos_conferencia": this.numero_contratos
+      })
+        .then((s) => {
+          let codigo_bordero = '';
+          this.close();
+          this.makeToast('success', 'Sucesso', 'O Borderô será aberto em uma nova página!');
+        })
+        .catch((e) => {
+          this.close();
+          this.numero_contratos = 0;
+          let erro = e.error.message;
+          this.makeToast('danger', 'Erro', erro);
+        });
+    }
+  }
+
+
+  private _filterRegional(value: number, nome?: string, limpar?: boolean): any {
+    if (limpar && value == 0) {
+      this.ativaBotaoRegional = false;
+      this.codigoRegional = "";
+      this.atualizaContador(this.ativaBotaoRegional)
+    } else {
+      this.ativaBotaoRegional = true;
+      const filterValue = value;
+      this.nomeRegional = nome;
+      this.codigoRegional = String(filterValue);
+      //this.atualizaContador(this.ativaBotaoRegional)
+      let regionaisFiltrados = this.regional.filter(valorRegional => valorRegional.codigo_regional == filterValue);
+      let pendenciaFiltrados = this.pendencia.filter(valorContratos => valorContratos.codigo_regional == filterValue);
+      this.regional = regionaisFiltrados;
+      this.pendencia = pendenciaFiltrados;
+      this.habilitaFiltrosSecundarios(this.regional);
+    }
+  }
+
+  private _filterComercial(value: number, nome?: string, limpar?: boolean): any {
+    if (limpar && value == 0) {
+      this.ativaBotaoComercial = false;
+      this.codigoComercial = "";
+      this.atualizaContador(this.ativaBotaoComercial)
+    } else {
+      const filterValue = value;
+      this.ativaBotaoComercial = true;
+      this.codigoComercial = String(filterValue);
+      this.nomeComercial = nome;
+      //this.atualizaContador(this.ativaBotaoComercial)
+      let comerciaisFiltrados = this.comercial.filter(valorComercial => valorComercial.codigo_comercial == filterValue);
+      let pendenciaFiltrados = this.pendencia.filter(valorContratos => valorContratos.codigo_comercial == filterValue);
+      this.comercial = comerciaisFiltrados;
+      this.pendencia = pendenciaFiltrados;
+      this.habilitaFiltrosSecundarios(this.comercial);
+    }
+  }
+
+  private _filterLoja(value: number, nome?: string, limpar?: boolean): any {
+    if (limpar && value == 0) {
+      this.ativaBotaoLoja = false;
+      this.codigoLoja = "";
+      this.atualizaContador(this.ativaBotaoLoja);
+    } else {
+      const filterValue = value;
+      this.codigoLoja = String(filterValue);
+      this.nomeLoja = nome;
+      this.ativaBotaoLoja = true;
+      //this.atualizaContador(this.ativaBotaoLoja);
+      let lojasFiltrados = this.loja.filter(valorLoja => valorLoja.codigo_loja == filterValue);
+      let pendenciaFiltrados = this.pendencia.filter(valorContratos => valorContratos.chave_loja == filterValue);
+      this.loja = lojasFiltrados;
+      this.pendencia = pendenciaFiltrados;
+      this.habilitaFiltrosSecundarios(this.loja);
+    }
+  }
+
+  private _filterLojaMatriz(value: number, nome?: string, limpar?: boolean): any {
+    if (limpar && value == 0) {
+      this.ativaBotaoLojaMatriz = false;
+      this.codigoLojaMatriz = "";
+      this.atualizaContador(this.ativaBotaoLoja);
+    } else {
+      const filterValue = value;
+      this.codigoLojaMatriz = String(filterValue);
+      this.nomeLojaMatriz = nome;
+      this.ativaBotaoLojaMatriz = true;
+      //this.atualizaContador(this.ativaBotaoLoja);
+      let lojasMatrizFiltrados = this.matriz.filter(valorLojaMatriz => valorLojaMatriz.codigo_loja_matriz == filterValue);
+      let pendenciaFiltrados = this.pendencia.filter(valorContratos => valorContratos.codigo_matriz == filterValue);
+      this.matriz = lojasMatrizFiltrados;
+      this.pendencia = pendenciaFiltrados;
+      this.habilitaFiltrosSecundarios(this.matriz);
+    }
+  }
+
+  private _filterFuncionario(value: number, nome?: string, limpar?: boolean): any {
+    if (limpar && value == 0) {
+      this.ativaBotaoFuncionario = false;
+      this.codigoFuncionario = "";
+      this.atualizaContador(this.ativaBotaoFuncionario);
+    } else {
+      const filterValue = value;
+      this.ativaBotaoFuncionario = true;
+      this.codigoFuncionario = String(filterValue);
+      this.nomeFuncionario = nome;
+      //this.atualizaContador(this.ativaBotaoFuncionario);
+      let funcionariosFiltrados = this.funcionario.filter(valorFuncionario => valorFuncionario.codigo_funcionario == filterValue);
+      let pendenciaFiltrados = this.pendencia.filter(valorContratos => valorContratos.codigo_funcionario == filterValue);
+      this.funcionario = funcionariosFiltrados;
+      this.pendencia = pendenciaFiltrados;
+      this.habilitaFiltrosSecundarios(this.funcionario);
+    }
+  }
+
+  private _filtercanalVendas(value: number, nome?: string, limpar?: boolean): any {
+    if (limpar && value == 0) {
+      this.ativaBotaocanalVendas = false;
+      this.codigoCanalVendas = "";
+      this.atualizaContador(this.ativaBotaocanalVendas);
+    } else {
+      const filterValue = value;
+      this.ativaBotaocanalVendas = true;
+      this.codigoCanalVendas = String(filterValue);
+      this.nomeCanalVendas = nome;
+      //this.atualizaContador(this.ativaBotaoFuncionario);
+      let canalVendasFiltrados = this.canalVendas.filter(valorCanalVendas => valorCanalVendas.codigo_canal_vendas == filterValue);
+      let pendenciaFiltrados = this.pendencia.filter(valorContratos => valorContratos.codigo_canal_vendas == filterValue);
+      this.canalVendas = canalVendasFiltrados;
+      this.pendencia = pendenciaFiltrados;
+      this.habilitaFiltrosSecundarios(this.canalVendas);
+    }
+  }
+
+  private _filterTipoPendencia(value: number, nome?: string, limpar?: boolean): any {
+    if (limpar && value == 0) {
+      this.ativaBotaoTipoPendencia = false;
+      this.codigoTipoPendencia = "";
+      this.atualizaContador(this.ativaBotaoTipoPendencia);
+    } else {
+      const filterValue = value;
+      this.ativaBotaoTipoPendencia = true;
+      this.codigoTipoPendencia = String(filterValue);
+      this.nomeTipoPendencia = nome;
+      //this.atualizaContador(this.ativaBotaoFuncionario);
+      let TipoPendenciaFiltrados = this.tipoPendencia.filter(valortipoPendencia => valortipoPendencia.codigo_status_farol == filterValue);
+      let pendenciaFiltrados = this.pendencia.filter(valorContratos => valorContratos.status_farol == filterValue);
+      this.tipoPendencia = TipoPendenciaFiltrados;
+      this.pendencia = pendenciaFiltrados;
+      this.habilitaFiltrosSecundarios(this.tipoPendencia);
+    }
+  }
+
+  habilitaFiltrosSecundarios(agrupamento) {
+    let canalVendasFiltrados = [];
+    let pendenciaFiltrados = [];
+    let regionaisFiltrados = [];
+    let comerciaisFiltrados = [];
+    let lojasMatrizFiltrados = [];
+    let lojasFiltrados = [];
+    let funcionariosFiltrados = [];
+    if (agrupamento[0].filtro_avancado.lenght != 0) {
+
+      if (agrupamento[0].filtro_avancado.canal_vendas.lenght != 0) {
+        for (var _i = 0; _i < agrupamento[0].filtro_avancado.canal_vendas.length; _i++) {
+          var num = agrupamento[0].filtro_avancado.canal_vendas[_i];
+          if (num.codigo != null) {
+            let valor = this.canalVendas.filter(valorCanalVendas => valorCanalVendas.codigo_canal_vendas == num.codigo)
+            canalVendasFiltrados.push(valor[0]);
+          }
+        }
+        this.canalVendas = [];
+        this.canalVendas = canalVendasFiltrados;
+      }
+
+      if (agrupamento[0].filtro_avancado.comercial.lenght != 0) {
+        for (var _i = 0; _i < agrupamento[0].filtro_avancado.comercial.length; _i++) {
+          var num = agrupamento[0].filtro_avancado.comercial[_i];
+          if (num.codigo != null) {
+            let valor = this.comercial.filter(valorComercial => valorComercial.codigo_comercial == num.codigo)
+            comerciaisFiltrados.push(valor[0]);
+          }
+        }
+        this.comercial = [];
+        this.comercial = comerciaisFiltrados;
+      }
+
+      if (agrupamento[0].filtro_avancado.regional.lenght != 0) {
+        for (var _i = 0; _i < agrupamento[0].filtro_avancado.regional.length; _i++) {
+          var num = agrupamento[0].filtro_avancado.regional[_i];
+          if (num.codigo != null) {
+            let valor = this.regional.filter(valorRegional => valorRegional.codigo_regional == num.codigo);
+            regionaisFiltrados.push(valor[0]);
+          }
+        }
+        this.regional = [];
+        this.regional = regionaisFiltrados;
+      }
+
+      if (agrupamento[0].filtro_avancado.loja.lenght != 0) {
+        for (var _i = 0; _i < agrupamento[0].filtro_avancado.loja.length; _i++) {
+          var num = agrupamento[0].filtro_avancado.loja[_i];
+          if (num.codigo != null) {
+            let valor = this.loja.filter(valorLoja => valorLoja.codigo_loja == num.codigo);
+            lojasFiltrados.push(valor[0]);
+          }
+        }
+        this.loja = [];
+        this.loja = lojasFiltrados;
+      }
+
+      if (agrupamento[0].filtro_avancado.loja_matriz.lenght != 0) {
+        for (var _i = 0; _i < agrupamento[0].filtro_avancado.loja_matriz.length; _i++) {
+          var num = agrupamento[0].filtro_avancado.loja_matriz[_i];
+          if (num.codigo != null) {
+            let valor = this.matriz.filter(valorLojaMatriz => valorLojaMatriz.codigo_loja_matriz == num.codigo);
+            lojasMatrizFiltrados.push(valor[0]);
+          }
+        }
+        this.matriz = [];
+        this.matriz = lojasMatrizFiltrados;
+      }
+
+      if (agrupamento[0].filtro_avancado.funcionario.lenght != 0) {
+        for (var _i = 0; _i < agrupamento[0].filtro_avancado.funcionario.length; _i++) {
+          var num = agrupamento[0].filtro_avancado.funcionario[_i];
+          if (num.codigo != null) {
+            let valor = this.funcionario.filter(valorFuncionario => valorFuncionario.codigo_funcionario == num.codigo);
+            funcionariosFiltrados.push(valor[0]);
+          }
+        }
+        this.funcionario = [];
+        this.funcionario = funcionariosFiltrados;
+      }
+
+      if (agrupamento[0].filtro_avancado.status_farol.lenght != 0) {
+        for (var _i = 0; _i < agrupamento[0].filtro_avancado.status_farol.length; _i++) {
+          var num = agrupamento[0].filtro_avancado.status_farol[_i];
+          if (num.codigo != null) {
+            let valor = this.tipoPendencia.filter(valortipoPendencia => valortipoPendencia.codigo_funcionario == num.codigo);
+            pendenciaFiltrados.push(valor[0]);
+          }
+        }
+        this.tipoPendencia = [];
+        this.tipoPendencia = pendenciaFiltrados;
+      }
+    }
+  }
+
+  close() {
+    this.modalReference.close();
+  }
+
+  ngOnInit() { }
 }

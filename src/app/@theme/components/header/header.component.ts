@@ -75,7 +75,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.toggleSidebar();
     }, 500);
-
   }
 
   ngOnDestroy() {
@@ -99,8 +98,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  onItemSelection(title){
-    if (title === 'Sair'){
+  onItemSelection(title) {
+    if (title === 'Sair') {
       this.sair()
     }
   }
