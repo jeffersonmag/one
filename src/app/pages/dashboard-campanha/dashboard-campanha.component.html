@@ -1,0 +1,153 @@
+<div class="infinite-cards row">
+  <div class="col-md-12">
+    <nb-card [nbSpinner]="campanhasPerfil.length <= 1" nbSpinnerStatus="success">
+
+      <nb-card-header>
+        Dashboard - Campanhas
+      </nb-card-header>
+
+      <div class="col-md-12 col-sm-12 col-lg-12 row justify-content-between">
+        <nb-card accent="info" class="cardFirst">
+          <nb-card-body class="cardBody">
+            <div class="row justify-content-center">
+              <div class="container">
+                <table class="tabela2">
+                  <tr>
+                    <td class="mes-setado2">{{ hoje | date:'MMMM' | uppercase }}</td>
+                  </tr>
+                  <tr>
+                    <td class="ano-setado2">{{ hoje | date:'yyyy' }}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="info2"></div>
+            <div>
+              <div class="simple">Digitado</div>
+              <div class="values">{{contratosPagosSinteticos?.valor_elegivel_total_digitado | number:'.2-2':'pt'}}</div>
+              <div class="simple">Pago</div>
+              <div class="values">{{contratosPagosSinteticos?.valor_elegivel_total_pago | number:'.2-2':'pt'}}</div>
+            </div>
+            <nb-progress-bar size="tiny" status="info"
+              [value]="valor" [displayValue]="true">
+            </nb-progress-bar>
+          </nb-card-body>
+        </nb-card>
+
+        <nb-card accent="info" class="cardFirst">
+          <nb-card-body class="cardBody">
+            <div class="row justify-content-center">
+              <div class="container">
+                <table class="tabela">
+                  <tr>
+                    <td rowspan="2" class="dia-setado">{{ ontem | date:'dd' }}</td>
+                    <td class="mes-setado">{{ ontem | date:'MMM' | uppercase }}</td>
+                  </tr>
+                  <tr>
+                    <td class="ano-setado">{{ ontem | date:'yyyy' }}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="info"></div>
+            <div>
+              <div class="simple">Digitado</div>
+              <div class="values">{{contratosPagosSinteticos?.valor_elegivel_total_digitado | number:'.2-2':'pt'}}</div>
+              <div class="simple">Pago</div>
+              <div class="values">{{contratosPagosSinteticos?.valor_elegivel_total_pago | number:'.2-2':'pt'}}</div>
+            </div>
+            <nb-progress-bar size="tiny" status="info" [value]="valor" [displayValue]="true"></nb-progress-bar>
+          </nb-card-body>
+        </nb-card>
+
+        <nb-card accent="info" class="cardFirst">
+          <nb-card-body class="cardBody">
+            <div class="row justify-content-center">
+              <div class="container">
+                <table class="tabela">
+                  <tr>
+                    <td rowspan="2" class="dia-setado">{{ hoje | date:'dd' }}</td>
+                    <td class="mes-setado">{{ hoje | date:'MMM' | uppercase }}</td>
+                  </tr>
+                  <tr>
+                    <td class="ano-setado">{{ hoje | date:'yyyy' }}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="info"></div>
+            <div>
+              <div class="simple">Digitado</div>
+              <div class="values">{{contratosPagosSinteticos?.valor_elegivel_total_digitado | number:'.2-2':'pt'}}</div>
+              <div class="simple">Pago</div>
+              <div class="values">{{contratosPagosSinteticos?.valor_elegivel_total_pago | number:'.2-2':'pt'}}</div>
+            </div>
+            <nb-progress-bar size="tiny" status="info" value="{{valor}}" [displayValue]="true"></nb-progress-bar>
+          </nb-card-body>
+        </nb-card>
+
+        <nb-card accent="info" class="cardFirst">
+          <nb-card-body class="cardBody">
+            <div class="row justify-content-center">
+              <div class="container">
+                <table class="tabela2">
+                  <tr>
+                    <td class="mes-setado2">{{ hoje | date:'MMMM' | uppercase }}</td>
+                  </tr>
+                  <tr>
+                    <td class="ano-setado2">{{ hoje | date:'yyyy' }}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            <div class="info2"></div>
+            <div>
+              <div class="simple">Digitado</div>
+              <div class="values">{{contratosPagosSinteticos?.valor_elegivel_total_digitado | number:'.2-2':'pt'}}</div>
+              <div class="simple">Pago</div>
+              <div class="values">{{contratosPagosSinteticos?.valor_elegivel_total_pago | number:'.2-2':'pt'}}</div>
+            </div>
+            <nb-progress-bar size="tiny" status="info"
+              [value]="valor" [displayValue]="true">
+            </nb-progress-bar>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-md-12 col-sm-12 col-lg-12 row justify-content-center">
+
+        <nb-card accent="danger" class="cardSnd" *ngFor="let i of dadosProdutoCorbanCampanha.produto_corban_campanha">
+          <nb-card-body class="cardBody2">
+            <div class="produtoCorban">{{i.nome_produto_corban}}</div>
+            <div class="row justify-content-center">
+              <div class="container">
+              </div>
+            </div>
+            <table class="tabelaCircle">
+              <tr>
+                <td rowspan="4">
+                  <round-progress current="{{valor}}" [animation]="'easeInOutQuart'" [max]="100" background="white"
+                    [clockwise]="true" [semicircle]="false" color="#C0C0C0" [radius]="40" [stroke]="10"
+                    [rounded]="false">
+                  </round-progress>
+                </td>
+                <td class="txtTableCircle">Digitado</td>
+              </tr>
+              <tr>
+                <td> {{contratosPagosSinteticos?.valor_elegivel_total_digitado | number}} </td>
+              </tr>
+              <tr>
+                <td class="txtTableCircle">Pago</td>
+              </tr>
+              <tr>
+                <td> {{contratosPagosSinteticos?.valor_elegivel_total_pago | number}}</td>
+              </tr>
+            </table>
+            <div class="porcentagem">{{i.percentual_atingido_produto_corban || 0}}%</div>
+          </nb-card-body>
+        </nb-card>
+
+
+      </div>
+    </nb-card>
+  </div>
+</div>
