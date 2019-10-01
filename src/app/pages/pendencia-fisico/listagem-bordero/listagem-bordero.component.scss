@@ -1,0 +1,22 @@
+.size-fonte{
+    font-size: 11px;
+    text-align: left;
+    vertical-align: top
+  }
+
+  .tabela {
+    width: 100%;
+  
+    tr {
+      border-bottom: 1px solid #ccc;
+  
+      th,
+      td {
+        padding: 7px;
+      }
+    }
+  
+    .active {
+      background: #007bff94;
+    }
+  }

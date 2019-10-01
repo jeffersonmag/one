@@ -45,6 +45,7 @@ export class EsteiraProducaoComponent implements OnInit {
   status: NbComponentStatus = 'success';
   titulo: string = 'Sucesso';
   mensagem: string = 'Ação realizada com sucesso!';
+  pararSpinner: boolean = true;
 
   private alive = true;
   flipped = false;
@@ -187,6 +188,7 @@ export class EsteiraProducaoComponent implements OnInit {
   findPropostasInconsistentes() {
     this.habilitaLimparFiltro = false;
     this.propostasInconsistencias = [];
+    this.pararSpinner = true;
     this.EsteiraProducaoApiService.propostasInconsistentes(
       {
         "codigo_regional": "",
@@ -198,6 +200,9 @@ export class EsteiraProducaoComponent implements OnInit {
       }
     ).then((s) => {
       this.propostasInconsistencias = s;
+      if (this.propostasInconsistencias.length == 0) {
+        this.pararSpinner = false;
+      }
       this.setColors();
     })
       .catch((e) => {

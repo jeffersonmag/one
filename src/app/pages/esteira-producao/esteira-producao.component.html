@@ -1,7 +1,7 @@
 <div class="row">
     <!--<div class="col-md-12 col-lg-20 col-xxxl-10">-->
     <div class="col-12">
-        <nb-card [nbSpinner]="propostasInconsistencias.length < 1" nbSpinnerStatus="danger">
+        <nb-card [nbSpinner]="propostasInconsistencias.length < 1 && pararSpinner" nbSpinnerStatus="danger">
             <nb-card-header>Esteira de Produção</nb-card-header>
             <nb-card-body>
                 <div class="container">
@@ -70,7 +70,7 @@
                             <th class="textRight">Ação</th>
                         </tr>
                     </thead>
-                    <tbody style="height: 600px; overflow-y: scroll">
+                    <tbody *ngIf="propostasInconsistencias.length != 0 && pararSpinner" style="height: 600px; overflow-y: scroll">
                         <tr *ngFor="let i of propostasInconsistencias | slice: pageSize | slice: 0:itemsPerPage">
                             <td><button nbButton [size]="small" status="success" hero
                                     (click)="copyToClipboard(i.proposta)"
@@ -177,6 +177,11 @@
                                     </div>
                                 </div>
                             </td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="propostasInconsistencias.length == 0 && !pararSpinner">
+                        <tr>
+                            <td colspan="8"> NENHUMA PROPOSTA ENCONTRADA </td>
                         </tr>
                     </tbody>
                 </table><br><br>

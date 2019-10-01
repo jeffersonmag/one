@@ -1,0 +1,53 @@
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12 col-lg-20 col-xxxl-10">
+            <!--<table class="tabela" [nbSpinner]="pendencia.length < 1 && pararSpinner" nbSpinnerStatus="success"
+                equalColumnsWidth>-->
+            <table class="tabela" equalColumnsWidth>
+                <thead>
+                    <tr>
+                        <th>Borderô</th>
+                        <th>Responsável do envio</th>
+                        <th>Responsável da Recepção</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let i of listaBordero">
+                        <td class="size-fonte">
+                            <button nbButton status="info" status="info" [size]="small"
+                                title="Filtrar contratos do Borderô">
+                                {{i.codigo_bordero}}{{i.digito_verificador_bordero}}
+                            </button><br>
+                            {{i.especie_bordero}}<br>
+                            {{i.autorizacao_postagem}}
+                        </td>
+                        <td class="size-fonte">
+                            {{i.usuario_geracao_bordero}}<br>
+                            {{i.nome_loja}}<br>
+                            {{i.nome_comercial}}<br>
+                            {{i.nome_regional}}
+                        </td>
+                        <td class="size-fonte">
+                            {{i.usuario_recepcao_bordero}}<br>
+                            {{i.data_recepcao_bordero | moment: 'DD/MM/YYYY'}}
+                        </td>
+                        <td class="size-fonte">
+                            <div class="container">
+                                <button nbButton
+                                    *ngIf="i.qtd_contratos_enviados_bordero != i.qtd_contratos_recepcionados_bordero"
+                                    status="danger" status="danger" ghost [size]="large" title="Alerta">
+                                    <nb-icon icon="alert-triangle-outline" pack="eva"></nb-icon>
+                                </button>
+                                <button nbButton status="info" status="info" ghost [size]="large"
+                                    title="Gerar PDF e imprimir Borderô">
+                                    <nb-icon icon="printer-outline" pack="eva"></nb-icon>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

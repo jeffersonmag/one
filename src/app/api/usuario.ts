@@ -30,7 +30,7 @@ export class UsuarioApiService {
         })
         .catch((e) => {
           console.log(e);
-          reject('Sem informação de usuarios.');
+          reject('Usuário ou senha inválidos');
         })
     })
 
