@@ -12,6 +12,7 @@ import {
   NbSpinnerModule,
   NbTabsetModule,
   NbUserModule,
+  NbTooltipModule,
 } from '@nebular/theme';
 import { NgxEchartsModule } from 'ngx-echarts';
 
@@ -40,6 +41,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     NbSpinnerModule,
     NbProgressBarModule,
     RoundProgressModule,
+    NbTooltipModule,
   ],
   declarations: [
     DashboardCampanhaComponent,
