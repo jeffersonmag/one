@@ -24,7 +24,7 @@ import { ThemeModule } from './@theme/theme.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PipesModule } from './pipes/pipes.module';
-import { NgbModal, ModalDismissReasons, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons, NgbModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 /**
@@ -35,12 +35,12 @@ import { NgbModal, ModalDismissReasons, NgbModule } from '@ng-bootstrap/ng-boots
 @NgModule({
   declarations: [
     AppComponent,
-
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    NgbToastModule,
     AppRoutingModule,
     ThemeModule.forRoot(),
     FormsModule,

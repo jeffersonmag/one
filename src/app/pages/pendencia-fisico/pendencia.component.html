@@ -6,9 +6,8 @@
           <nb-card-header>
             Pendência de Físico
             <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Listagem de Borderô"
-              (click)="listarBordero(listaBorderoModal)" data-toggle="modal"
-              data-target="#listaBorderoModal">
-              <nb-icon icon="email-outline" pack="eva"></nb-icon>
+              (click)="listarBordero(listaBorderoModal)" data-toggle="modal" data-target="#listaBorderoModal">
+              <nb-icon icon="layers-outline" pack="eva" class="flip-icon"></nb-icon>
             </button>
             <ng-template #listaBorderoModal let-c="close" let-d="dismiss">
               <div class="modal-header">
@@ -20,10 +19,12 @@
               <listagem-bordero></listagem-bordero>
               <div class="modal-footer">
                 <button type="button" class="btn btn-outline-dark" (click)="close()">Cancelar</button>
-                <button type="button" ngbAutofocus class="btn btn-info">Confirmar</button>
+                <button type="button" ngbAutofocus class="btn btn-danger">Confirmar</button>
               </div>
             </ng-template>
-            <nb-icon icon="chevron-right-outline" pack="eva" class="flip-icon" (click)="revelar()"></nb-icon>
+            <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Filtros" (click)="revelar()">
+              <nb-icon icon="funnel-outline" pack="eva" class="flip-icon"></nb-icon>
+            </button>
           </nb-card-header>
           <nb-card-body>
             <div class="row">
@@ -67,6 +68,12 @@
                 <button nbButton shape="round" size="small" status="primary" nbTooltip="Limpar Filtro de Proposta"
                   (click)="_filterFuncionario(0, '', true)">
                   PROMOTOR: {{nomeFuncionario}} &times;
+                </button>
+              </div>
+              <div *ngIf="ativaBotaoBordero">
+                <button nbButton shape="round" size="small" status="primary" nbTooltip="Limpar Filtro de Proposta"
+                  (click)="desabilitaFiltrosBordero()">
+                  NÚMERO BORDERÔ: {{codigoBordero}} &times;
                 </button>
               </div>
             </div>
@@ -126,6 +133,10 @@
                             nbTooltip="Quantidade de dias pendentes">{{i.dias_pendentes}}</button>
                           <button nbButton status="info" *ngIf="i.dias_pendentes > 30" status="danger" outline
                             [size]="tiny" nbTooltip="Quantidade de dias pendentes">{{i.dias_pendentes}}</button>
+                          <div *ngFor="let ocorrencia of i.pendencias_reabertura">
+                            <button *ngIf="ocorrencia != null" nbButton status="info" status="info" [size]="tiny"
+                              nbTooltip="{{ocorrencia.ocorrencia}}" nbTooltipStatus="danger">Ocorrências</button>
+                          </div>
                         </td>
                         <td class="size-fonte">
                           <button *ngIf="p.codigo_status_time_line == 0" nbButton status="success" [size]="medium"
@@ -137,12 +148,14 @@
                             <i class="fa fa-reply color"></i>
                           </button>
                           <div class="container" *ngIf="p.codigo_status_time_line > 1">
-                            <button nbButton status="info" [size]="medium" outline nbTooltip="Número do Borderô">
-                              NUM BORDERO
+                            <button *ngIf="i.codigo_bordero != null" nbButton status="info" [size]="medium" outline
+                              nbTooltip="Número do Borderô">
+                              {{i.codigo_bordero}}<br>
+                              {{i.tipo_bordero}}
                             </button><br>
-                            <button nbButton status="warning" [size]="medium" outline nbTooltip="Tipo do Borderô">
-                              TIPO BORDERO
-                            </button>
+                            <!--<button *ngIf="i.tipo_bordero != null" nbButton status="warning" [size]="medium" outline nbTooltip="Tipo do Borderô">
+                              {{i.tipo_bordero}}
+                            </button>-->
                           </div>
                         </td>
                       </tr>

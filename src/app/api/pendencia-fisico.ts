@@ -36,4 +36,7 @@ export class PendenciaFisicoApiService {
     return this.requestService.get(`${environment.urlApi}/lista-bordero-envio-fisico`, dados, true);
   }
 
+  imprimirBordero(dados, bordero: string) {
+    return this.requestService.getDownload(`${environment.urlApi}/imprime-bordero-remessa/` + bordero, dados, true);
+  }
 }
