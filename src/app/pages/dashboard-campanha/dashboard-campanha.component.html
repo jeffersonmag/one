@@ -37,21 +37,24 @@
 
         <nb-card accent="info" class="cardFirst">
           <nb-card-body class="cardBody">
-            <div class="container">
-              <table class="tabela">
-                <tr>
-                  <td rowspan="2" class="dia-setado">{{ ontem | date:'dd' }}</td>
-                  <td class="mes-setado">{{ ontem | date:'MMM' | uppercase }}</td>
-                </tr>
-                <tr>
-                  <td class="ano-setado">{{ ontem | date:'yyyy' }}</td>
-                </tr>
-              </table>
+            <div class="row justify-content-end">
+              <div class="container">
+                <table class="tabela">
+                  <tr>
+                    <td rowspan="2" class="dia-setado">{{ ontem | date:'dd' }}</td>
+                    <td class="mes-setado">{{ ontem | date:'MMM' | uppercase }}</td>
+                  </tr>
+                  <tr>
+                    <td class="ano-setado">{{ ontem | date:'yyyy' }}</td>
+                  </tr>
+                </table>
+              </div>
             </div>
             <div class="info"></div>
             <div>
               <div class="simple">Digitado</div>
-              <div class="values">{{contratosPagosSinteticos?.valor_elegivel_total_digitado | number:'.2-2':'pt'}}</div>
+              <div class="values">{{contratosPagosSinteticos?.valor_elegivel_total_digitado | number:'.2-2':'pt'}}
+              </div>
               <div class="simple">Pago</div>
               <div class="values">{{contratosPagosSinteticos?.valor_elegivel_total_pago | number:'.2-2':'pt'}}</div>
             </div>
