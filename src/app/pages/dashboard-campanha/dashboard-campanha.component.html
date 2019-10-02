@@ -1,6 +1,6 @@
 <div class="infinite-cards row">
   <div class="col-md-12">
-    <nb-card [nbSpinner]="campanhasPerfil.length <= 1" nbSpinnerStatus="success">
+    <nb-card [nbSpinner]="campanhasPerfil.length < 1" nbSpinnerStatus="success">
 
       <nb-card-header>
         Dashboard - Campanhas
@@ -28,26 +28,25 @@
               <div class="simple">Pago</div>
               <div class="values">{{contratosPagosSinteticos?.valor_elegivel_total_pago | number:'.2-2':'pt'}}</div>
             </div>
-            <nb-progress-bar size="tiny" status="info"
-              [value]="valor" [displayValue]="true">
-            </nb-progress-bar>
+            <span nbTooltip="Valor de porcentagem: {{valor}}%">
+              <nb-progress-bar size="tiny" status="info" [value]="valor" [displayValue]="true">
+              </nb-progress-bar>
+            </span>
           </nb-card-body>
         </nb-card>
 
         <nb-card accent="info" class="cardFirst">
           <nb-card-body class="cardBody">
-            <div class="row justify-content-center">
-              <div class="container">
-                <table class="tabela">
-                  <tr>
-                    <td rowspan="2" class="dia-setado">{{ ontem | date:'dd' }}</td>
-                    <td class="mes-setado">{{ ontem | date:'MMM' | uppercase }}</td>
-                  </tr>
-                  <tr>
-                    <td class="ano-setado">{{ ontem | date:'yyyy' }}</td>
-                  </tr>
-                </table>
-              </div>
+            <div class="container">
+              <table class="tabela">
+                <tr>
+                  <td rowspan="2" class="dia-setado">{{ ontem | date:'dd' }}</td>
+                  <td class="mes-setado">{{ ontem | date:'MMM' | uppercase }}</td>
+                </tr>
+                <tr>
+                  <td class="ano-setado">{{ ontem | date:'yyyy' }}</td>
+                </tr>
+              </table>
             </div>
             <div class="info"></div>
             <div>
@@ -56,13 +55,15 @@
               <div class="simple">Pago</div>
               <div class="values">{{contratosPagosSinteticos?.valor_elegivel_total_pago | number:'.2-2':'pt'}}</div>
             </div>
-            <nb-progress-bar size="tiny" status="info" [value]="valor" [displayValue]="true"></nb-progress-bar>
+            <span nbTooltip="Valor de porcentagem: {{valor}}%">
+              <nb-progress-bar size="tiny" status="info" [value]="valor" [displayValue]="true"></nb-progress-bar>
+            </span>
           </nb-card-body>
         </nb-card>
 
         <nb-card accent="info" class="cardFirst">
           <nb-card-body class="cardBody">
-            <div class="row justify-content-center">
+            <div class="row justify-content-end">
               <div class="container">
                 <table class="tabela">
                   <tr>
@@ -82,7 +83,9 @@
               <div class="simple">Pago</div>
               <div class="values">{{contratosPagosSinteticos?.valor_elegivel_total_pago | number:'.2-2':'pt'}}</div>
             </div>
-            <nb-progress-bar size="tiny" status="info" value="{{valor}}" [displayValue]="true"></nb-progress-bar>
+            <span nbTooltip="Valor de porcentagem: {{valor}}%">
+              <nb-progress-bar size="tiny" status="info" [value]="valor" [displayValue]="true"></nb-progress-bar>
+            </span>
           </nb-card-body>
         </nb-card>
 
@@ -107,14 +110,15 @@
               <div class="simple">Pago</div>
               <div class="values">{{contratosPagosSinteticos?.valor_elegivel_total_pago | number:'.2-2':'pt'}}</div>
             </div>
-            <nb-progress-bar size="tiny" status="info"
-              [value]="valor" [displayValue]="true">
-            </nb-progress-bar>
+            <span nbTooltip="Valor de porcentagem: {{valor}}%">
+              <nb-progress-bar size="tiny" status="info" [value]="valor" [displayValue]="true">
+              </nb-progress-bar>
+            </span>
           </nb-card-body>
         </nb-card>
       </div>
-      <div class="col-md-12 col-sm-12 col-lg-12 row justify-content-center">
 
+      <div class="col-md-12 col-sm-12 col-lg-12 row justify-content-between">
         <nb-card accent="danger" class="cardSnd" *ngFor="let i of dadosProdutoCorbanCampanha.produto_corban_campanha">
           <nb-card-body class="cardBody2">
             <div class="produtoCorban">{{i.nome_produto_corban}}</div>
@@ -125,27 +129,28 @@
             <table class="tabelaCircle">
               <tr>
                 <td rowspan="4">
-                  <round-progress current="{{valor}}" [animation]="'easeInOutQuart'" [max]="100" background="white"
-                    [clockwise]="true" [semicircle]="false" color="#C0C0C0" [radius]="40" [stroke]="10"
-                    [rounded]="false">
-                  </round-progress>
+                  <span nbTooltip="Valor de porcentagem: {{i.percentual_atingido_produto_corban}}%">
+                    <round-progress current="{{i.percentual_atingido_produto_corban}}" [animation]="'easeInOutQuart'"
+                      [max]="100.00" background="white" [clockwise]="true" [semicircle]="false" color="#C0C0C0"
+                      [radius]="40" [stroke]="10" [rounded]="false">
+                    </round-progress>
+                  </span>
                 </td>
-                <td class="txtTableCircle">Digitado</td>
+                <td class="txtTableCircle">Meta</td>
               </tr>
               <tr>
-                <td> {{contratosPagosSinteticos?.valor_elegivel_total_digitado | number}} </td>
+                <td> {{i.meta_producao_produto_corban | number}} </td>
               </tr>
               <tr>
-                <td class="txtTableCircle">Pago</td>
+                <td class="txtTableCircle">Realizado</td>
               </tr>
               <tr>
-                <td> {{contratosPagosSinteticos?.valor_elegivel_total_pago | number}}</td>
+                <td> {{i.valor_atingido_meta_producao_produto_corban | number}}</td>
               </tr>
             </table>
             <div class="porcentagem">{{i.percentual_atingido_produto_corban || 0}}%</div>
           </nb-card-body>
         </nb-card>
-
 
       </div>
     </nb-card>

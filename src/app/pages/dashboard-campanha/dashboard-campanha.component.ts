@@ -102,10 +102,10 @@ export class DashboardCampanhaComponent implements OnDestroy {
     campanhas: false,
     chart: true,
     metasCampanhas: true,
-    produtosCorban: true
+    produtoxsxCorbans: true
   }
 
-  valor = 70;
+  valor = 100.00;
 
 
   option: any = {};
@@ -147,8 +147,20 @@ export class DashboardCampanhaComponent implements OnDestroy {
     }
   }
 
-  percentualDadosCorban = {
+  dadosProdutosCorban = {
+    "codigo_produto_corban": 0,
+    "meta_diaria_produto_corban": 0,
+    "meta_producao_produto_corban": 0,
+    "nivel_atingimento_produto_corban": 0,
+    "nome_produto_corban": "",
+    "nota_nivel_atingido": 0,
     "percentual_atingido_produto_corban": 0,
+    "projecao_produto_corban": 0,
+    "qtd_elegivel_seguro": 0,
+    "qtd_realizado_seguro": 0,
+    "qtd_total_contratos_campanha": 0,
+    "ticket_medio_produto_corban": 0,
+    "valor_atingido_meta_producao_produto_corban": 0
   }
 
   codigos = {
