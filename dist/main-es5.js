@@ -2770,20 +2770,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
-/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm5/animations.js");
-/* harmony import */ var _nebular_theme__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @nebular/theme */ "./node_modules/@nebular/theme/fesm5/index.js");
-/* harmony import */ var _core_core_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./@core/core.module */ "./src/app/@core/core.module.ts");
-/* harmony import */ var _theme_theme_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./@theme/theme.module */ "./src/app/@theme/theme.module.ts");
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _pipes_pipes_module__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./pipes/pipes.module */ "./src/app/pipes/pipes.module.ts");
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm5/animations.js");
+/* harmony import */ var _angular_common_locales_pt__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common/locales/pt */ "./node_modules/@angular/common/locales/pt.js");
+/* harmony import */ var _angular_common_locales_pt__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_angular_common_locales_pt__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _nebular_theme__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @nebular/theme */ "./node_modules/@nebular/theme/fesm5/index.js");
+/* harmony import */ var _core_core_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./@core/core.module */ "./src/app/@core/core.module.ts");
+/* harmony import */ var _theme_theme_module__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./@theme/theme.module */ "./src/app/@theme/theme.module.ts");
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _pipes_pipes_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./pipes/pipes.module */ "./src/app/pipes/pipes.module.ts");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
 
 
 
 
 
 
+
+
+Object(_angular_common__WEBPACK_IMPORTED_MODULE_5__["registerLocaleData"])(_angular_common_locales_pt__WEBPACK_IMPORTED_MODULE_7___default.a);
 
 
 
@@ -2802,32 +2808,39 @@ var AppModule = /** @class */ (function () {
     AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
             declarations: [
-                _app_component__WEBPACK_IMPORTED_MODULE_10__["AppComponent"],
+                _app_component__WEBPACK_IMPORTED_MODULE_12__["AppComponent"],
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__["BrowserModule"],
-                _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"],
+                _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_6__["BrowserAnimationsModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClientModule"],
-                _app_routing_module__WEBPACK_IMPORTED_MODULE_9__["AppRoutingModule"],
-                _theme_theme_module__WEBPACK_IMPORTED_MODULE_8__["ThemeModule"].forRoot(),
+                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__["NgbToastModule"],
+                _app_routing_module__WEBPACK_IMPORTED_MODULE_11__["AppRoutingModule"],
+                _theme_theme_module__WEBPACK_IMPORTED_MODULE_10__["ThemeModule"].forRoot(),
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
-                _nebular_theme__WEBPACK_IMPORTED_MODULE_6__["NbStepperModule"],
-                _nebular_theme__WEBPACK_IMPORTED_MODULE_6__["NbSidebarModule"].forRoot(),
-                _nebular_theme__WEBPACK_IMPORTED_MODULE_6__["NbSelectModule"],
-                _nebular_theme__WEBPACK_IMPORTED_MODULE_6__["NbMenuModule"].forRoot(),
-                _nebular_theme__WEBPACK_IMPORTED_MODULE_6__["NbDatepickerModule"].forRoot(),
-                _nebular_theme__WEBPACK_IMPORTED_MODULE_6__["NbDialogModule"].forRoot(),
-                _nebular_theme__WEBPACK_IMPORTED_MODULE_6__["NbWindowModule"].forRoot(),
-                _nebular_theme__WEBPACK_IMPORTED_MODULE_6__["NbToastrModule"].forRoot(),
-                _nebular_theme__WEBPACK_IMPORTED_MODULE_6__["NbChatModule"].forRoot({
+                _nebular_theme__WEBPACK_IMPORTED_MODULE_8__["NbStepperModule"],
+                _nebular_theme__WEBPACK_IMPORTED_MODULE_8__["NbSidebarModule"].forRoot(),
+                _nebular_theme__WEBPACK_IMPORTED_MODULE_8__["NbSelectModule"],
+                _nebular_theme__WEBPACK_IMPORTED_MODULE_8__["NbMenuModule"].forRoot(),
+                _nebular_theme__WEBPACK_IMPORTED_MODULE_8__["NbDatepickerModule"].forRoot(),
+                _nebular_theme__WEBPACK_IMPORTED_MODULE_8__["NbDialogModule"].forRoot(),
+                _nebular_theme__WEBPACK_IMPORTED_MODULE_8__["NbWindowModule"].forRoot(),
+                _nebular_theme__WEBPACK_IMPORTED_MODULE_8__["NbToastrModule"].forRoot(),
+                _nebular_theme__WEBPACK_IMPORTED_MODULE_8__["NbChatModule"].forRoot({
                     messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
                 }),
-                _core_core_module__WEBPACK_IMPORTED_MODULE_7__["CoreModule"].forRoot(),
-                _pipes_pipes_module__WEBPACK_IMPORTED_MODULE_11__["PipesModule"],
+                _core_core_module__WEBPACK_IMPORTED_MODULE_9__["CoreModule"].forRoot(),
+                _pipes_pipes_module__WEBPACK_IMPORTED_MODULE_13__["PipesModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClientModule"],
-                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__["NgbModule"]
+                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__["NgbModule"]
             ],
-            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_10__["AppComponent"]],
+            providers: [
+                {
+                    provide: _angular_core__WEBPACK_IMPORTED_MODULE_2__["LOCALE_ID"],
+                    useValue: 'pt',
+                }
+            ],
+            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_12__["AppComponent"]],
         })
     ], AppModule);
     return AppModule;

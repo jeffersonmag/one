@@ -1,14 +1,12 @@
 <div class="modal-body">
     <div class="row">
         <div class="col-md-12 col-lg-20 col-xxxl-10">
-            <!--<table class="tabela" [nbSpinner]="pendencia.length < 1 && pararSpinner" nbSpinnerStatus="success"
-                equalColumnsWidth>-->
-            <table class="tabela" equalColumnsWidth>
+            <table class="tabela" [nbSpinner]="listaBordero.length < 1" nbSpinnerStatus="info" equalColumnsWidth>
                 <thead>
                     <tr>
                         <th>Borderô</th>
                         <th>Responsável do envio</th>
-                        <th>Responsável da Recepção</th>
+                        <th>Responsável<br> da Recepção</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -16,11 +14,11 @@
                     <tr *ngFor="let i of listaBordero">
                         <td class="size-fonte">
                             <button nbButton status="info" status="info" [size]="small"
-                                title="Filtrar contratos do Borderô">
+                                (click)="filtrarBordero(i.codigo_bordero)" title="Filtrar contratos do Borderô">
                                 {{i.codigo_bordero}}{{i.digito_verificador_bordero}}
                             </button><br>
-                            {{i.especie_bordero}}<br>
-                            {{i.autorizacao_postagem}}
+                            <span title="Espécie do Borderô">{{i.especie_bordero}}</span><br>
+                            <span title="Autorização de postagem">{{i.autorizacao_postagem}}</span>
                         </td>
                         <td class="size-fonte">
                             {{i.usuario_geracao_bordero}}<br>
@@ -29,18 +27,24 @@
                             {{i.nome_regional}}
                         </td>
                         <td class="size-fonte">
-                            {{i.usuario_recepcao_bordero}}<br>
-                            {{i.data_recepcao_bordero | moment: 'DD/MM/YYYY'}}
+                            <span *ngIf="i.usuario_recepcao_bordero == null"
+                                title="Usuário Recepção do Borderô">-</span><br>
+                            <span *ngIf="i.data_recepcao_bordero == null" title="Data Recepção do Borderô">-</span>
+                            <span *ngIf="i.usuario_recepcao_bordero != null"
+                                title="Usuário Recepção do Borderô">{{i.usuario_recepcao_bordero}}</span><br>
+                            <span *ngIf="i.data_recepcao_bordero != null"
+                                title="Data Recepção do Borderô">{{i.data_recepcao_bordero | moment: 'DD/MM/YYYY'}}</span>
                         </td>
                         <td class="size-fonte">
                             <div class="container">
                                 <button nbButton
                                     *ngIf="i.qtd_contratos_enviados_bordero != i.qtd_contratos_recepcionados_bordero"
-                                    status="danger" status="danger" ghost [size]="large" title="Alerta">
+                                    status="danger" status="danger" ghost [size]="large"
+                                    title="Alerta: Quantidade de contratos enviados diferente da quantidade de recebidos.">
                                     <nb-icon icon="alert-triangle-outline" pack="eva"></nb-icon>
                                 </button>
                                 <button nbButton status="info" status="info" ghost [size]="large"
-                                    title="Gerar PDF e imprimir Borderô">
+                                    (click)="imprimirBordero(i.codigo_bordero)" title="Gerar PDF e imprimir Borderô">
                                     <nb-icon icon="printer-outline" pack="eva"></nb-icon>
                                 </button>
                             </div>
