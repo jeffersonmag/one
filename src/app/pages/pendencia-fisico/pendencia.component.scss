@@ -6,6 +6,8 @@ button[nbTreeGridRowToggle] {
 
 .tabela {
   width: 100%;
+  max-height: 300px;
+  overflow: auto;
 
   tr {
     border-bottom: 1px solid #ccc;
@@ -145,6 +147,11 @@ button[nbTreeGridRowToggle] {
 
 .tooltip {
   z-index: 1151,!important;
+}
+
+.maxContent {
+  max-height: 400px;
+  overflow: auto;
 }
 
 @media screen and (min-width: 600px) {

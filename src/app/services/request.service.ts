@@ -120,7 +120,7 @@ export class RequestService {
     const config = {
       status: type,
       destroyByClick: true,
-      duration: 0,
+      duration: 10000,
       hasIcon: true,
       position: NbGlobalPhysicalPosition.TOP_RIGHT,
       preventDuplicates: true,

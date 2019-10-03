@@ -75,6 +75,7 @@ export class PendenciaComponent implements OnInit {
   codigoCanalVendas = '';
   codigoTipoPendencia = '';
   codigoBordero = '';
+  digitoBordero = '';
   nomeComercial = '';
   nomeRegional = '';
   nomeLoja = '';
@@ -546,6 +547,12 @@ export class PendenciaComponent implements OnInit {
       const filterValue = value;
       this.ativaBotaoTipoPendencia = true;
       this.codigoTipoPendencia = String(filterValue);
+      if (nome == 'E') {
+        nome = 'PRIMEIRA ENTREGA';
+      }
+      if (nome == 'R') {
+        nome = 'REABERTURA';
+      }
       this.nomeTipoPendencia = nome;
       //this.atualizaContador(this.ativaBotaoFuncionario);
       let TipoPendenciaFiltrados = this.tipoPendencia.filter(valortipoPendencia => valortipoPendencia.codigo_status_farol == filterValue);
@@ -652,10 +659,11 @@ export class PendenciaComponent implements OnInit {
     }
   }
 
-  habilitaFiltrosBordero(bordero) {
+  habilitaFiltrosBordero(bordero, digito_bordero) {
     this.pararSpinner = true;
     this.ativaBotaoBordero = true;
     this.codigoBordero = bordero;
+    this.digitoBordero = digito_bordero;
     let pendenciaFiltrados = this.pendencia.filter(valorContratos => valorContratos.codigo_bordero == bordero);
     this.pendencia = pendenciaFiltrados;
     if (this.pendencia.length == 0) {

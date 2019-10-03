@@ -38,9 +38,9 @@ export class ListagemBorderoComponent implements OnInit {
       });
   }
 
-  filtrarBordero(bordero) {
+  filtrarBordero(bordero, digito) {
     this.options.close();
-    this.options.habilitaFiltrosBordero(bordero);
+    this.options.habilitaFiltrosBordero(bordero, digito);
   }
 
 

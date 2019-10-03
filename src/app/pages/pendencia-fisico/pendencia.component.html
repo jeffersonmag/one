@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-12 col-lg-12 ">
+  <div class="col-md-12 col-lg-12">
     <nb-flip-card [showToggleButton]="false" [flipped]="flipped">
       <nb-card-front>
         <nb-card>
@@ -17,10 +17,10 @@
                 </button>
               </div>
               <listagem-bordero></listagem-bordero>
-              <div class="modal-footer">
+              <!--<div class="modal-footer">
                 <button type="button" class="btn btn-outline-dark" (click)="close()">Cancelar</button>
                 <button type="button" ngbAutofocus class="btn btn-danger">Confirmar</button>
-              </div>
+              </div>-->
             </ng-template>
             <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Filtros" (click)="revelar()">
               <nb-icon icon="funnel-outline" pack="eva" class="flip-icon"></nb-icon>
@@ -73,7 +73,7 @@
               <div *ngIf="ativaBotaoBordero">
                 <button nbButton shape="round" size="small" status="primary" nbTooltip="Limpar Filtro de Proposta"
                   (click)="desabilitaFiltrosBordero()">
-                  NÚMERO BORDERÔ: {{codigoBordero}} &times;
+                  NÚMERO BORDERÔ: {{codigoBordero}}{{digitoBordero}} &times;
                 </button>
               </div>
             </div>
@@ -135,7 +135,7 @@
                             [size]="tiny" nbTooltip="Quantidade de dias pendentes">{{i.dias_pendentes}}</button>
                           <div *ngFor="let ocorrencia of i.pendencias_reabertura">
                             <button *ngIf="ocorrencia != null" nbButton status="info" status="info" [size]="tiny"
-                              nbTooltip="{{ocorrencia.ocorrencia}}" nbTooltipStatus="danger">Ocorrências</button>
+                              nbTooltip="{{ocorrencia.ocorrencia}}" nbTooltipStatus="info">Ocorrências</button>
                           </div>
                         </td>
                         <td class="size-fonte">
@@ -150,7 +150,7 @@
                           <div class="container" *ngIf="p.codigo_status_time_line > 1">
                             <button *ngIf="i.codigo_bordero != null" nbButton status="info" [size]="medium" outline
                               nbTooltip="Número do Borderô">
-                              {{i.codigo_bordero}}<br>
+                              {{i.codigo_bordero}}{{i.codigo_bordero_dv}}<br>
                               {{i.tipo_bordero}}
                             </button><br>
                             <!--<button *ngIf="i.tipo_bordero != null" nbButton status="warning" [size]="medium" outline nbTooltip="Tipo do Borderô">
@@ -190,11 +190,11 @@
                       </div>
                     </div>
                   </div>
-                  <div class="modal-footer">
+                  <!--<div class="modal-footer">
                     <button type="button" class="btn btn-outline-dark" (click)="close()">Cancelar</button>
                     <button type="button" ngbAutofocus class="btn btn-danger"
                       (click)="gerarEnvioBordero()">Confirmar</button>
-                  </div>
+                  </div>-->
                 </ng-template>
                 <div class="row justify-content-center">
                   <td class="size-font">
@@ -225,7 +225,7 @@
                       <nb-icon *ngIf="!revealed.canalVendas" class="toggle-icon" icon="chevron-down-outline" pack="eva"
                         (click)="toggleView('canalVendas')"> </nb-icon>
                     </nb-card-header>
-                    <div class="maxContent" *ngIf="revealed.canalVendas">
+                    <div *ngIf="revealed.canalVendas">
                       <nb-card-body>
                         <div class="info" style="text-align: center;">
                           <div style="padding-top: 15px;">
@@ -268,7 +268,7 @@
                       <nb-icon *ngIf="!revealed.tipoPendencia" class="toggle-icon" icon="chevron-down-outline"
                         pack="eva" (click)="toggleView('tipoPendencia')"> </nb-icon>
                     </nb-card-header>
-                    <div class="maxContent" *ngIf="revealed.tipoPendencia">
+                    <div *ngIf="revealed.tipoPendencia">
                       <nb-card-body>
                         <div class="info" style="text-align: center;">
                           <div style="padding-top: 15px;">
@@ -291,7 +291,8 @@
                                       </button>
                                     </td>
                                     <!--<td class="size-fonte">{{i.codigo_status_farol}}</td>-->
-                                    <td class="size-fonte">{{i.nome_status_farol}}</td>
+                                    <td *ngIf="i.nome_status_farol == 'E'" class="size-fonte">PRIMEIRA ENTREGA</td>
+                                    <td *ngIf="i.nome_status_farol == 'R'" class="size-fonte">REABERTURA</td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -477,6 +478,7 @@
                     </div>
                   </nb-card>
                 </div>
+
 
                 <div class="col" *ngIf="funcionario.length != 0">
                   <nb-card accent="primary" status="primary" class="solar-card">
