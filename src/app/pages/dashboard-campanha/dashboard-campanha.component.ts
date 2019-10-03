@@ -115,6 +115,23 @@ export class DashboardCampanhaComponent implements OnDestroy {
 
   ontem: Date = new Date();
 
+  users: { name: string, title: string }[] = [
+    { name: 'Carla Espinosa', title: 'Nurse' },
+    { name: 'Bob Kelso', title: 'Doctor of Medicine' },
+    { name: 'Janitor', title: 'Janitor' },
+    { name: 'Perry Cox', title: 'Doctor of Medicine' },
+    { name: 'Ben Sullivan', title: 'Carpenter and photographer' },
+  ];
+
+  controleDiario = {
+    "ano": 2019,
+    "dia": 3,
+    "mes": 0,
+    "qtd_contratos": 0,
+    "status": "",
+    "total_valor_elegivel": 0
+  };
+
   ngOnInit() {
     this.ontem.setDate(this.ontem.getDate() - 1);
   }

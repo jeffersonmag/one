@@ -42,6 +42,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     NbProgressBarModule,
     RoundProgressModule,
     NbTooltipModule,
+    NbListModule
   ],
   declarations: [
     DashboardCampanhaComponent,

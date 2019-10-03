@@ -22,10 +22,18 @@
 
 .toggle-icon {
   position: absolute;
+  float:left;
+  margin-left: 5px;
+  margin-top: 3px;
+  cursor: pointer;
+}
+
+.toggle-icon2 {
+  position: absolute;
   top: 1rem;
-  right: 1.25rem;
-  @include nb-rtl(right, auto);
-  @include nb-rtl(left, 1.25rem);
+  left: 1.25rem;
+  @include nb-rtl(left, auto);
+  @include nb-rtl(right, 1.25rem);
   cursor: pointer;
 }
 
