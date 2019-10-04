@@ -56,6 +56,11 @@ export class DashboardCampanhaComponent implements OnDestroy {
   campanhasPerfil = [];
   contratosPagos = [];
   contratosDigitados = [];
+  datas = [];
+  contratosDigitadosPagos = {
+    "codigo_campanha": 0,
+    "data": 0,
+  };
   contratosPagosSinteticos = {
     "qtd_total_digitado": 0,
     "qtd_total_pago": 0,
@@ -114,23 +119,6 @@ export class DashboardCampanhaComponent implements OnDestroy {
   hoje: number = Date.now();
 
   ontem: Date = new Date();
-
-  users: { name: string, title: string }[] = [
-    { name: 'Carla Espinosa', title: 'Nurse' },
-    { name: 'Bob Kelso', title: 'Doctor of Medicine' },
-    { name: 'Janitor', title: 'Janitor' },
-    { name: 'Perry Cox', title: 'Doctor of Medicine' },
-    { name: 'Ben Sullivan', title: 'Carpenter and photographer' },
-  ];
-
-  controleDiario = {
-    "ano": 2019,
-    "dia": 3,
-    "mes": 0,
-    "qtd_contratos": 0,
-    "status": "",
-    "total_valor_elegivel": 0
-  };
 
   ngOnInit() {
     this.ontem.setDate(this.ontem.getDate() - 1);
@@ -397,7 +385,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
         "codigo_regional": this.codigos.codigo_regional,
         "codigo_comercial": this.codigos.codigo_comercial,
         "codigo_loja": this.codigos.codigo_loja,
-        "codigo_funcionario": this.codigos.codigo_funcionario
+        "codigo_funcionario": this.codigos.codigo_funcionario,
       }
     )
       .then((s) => {
@@ -414,6 +402,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
   }
 
   findContratos() {
+    this.datas = [];
     this.contratosPagos = [];
     this.contratosDigitados = [];
     this.indiceContratosDigitadosApiService.pagos({
@@ -431,6 +420,21 @@ export class DashboardCampanhaComponent implements OnDestroy {
           return String(o.status) === 'DIGITADAS';
         });
         this.gerarGrafico();
+      })
+      .catch((e) => {
+        console.log(e)
+      });
+    this.contratosDigitadosPagos = {
+      "codigo_campanha": 0,
+      "data": 0,
+    };
+
+    this.indiceContratosDigitadosApiService.pagos({
+      "codigo_campanha": this.filtro.campanha.codigo,
+      "data": ""
+    })
+      .then((s) => {
+        this.datas = s;
       })
       .catch((e) => {
         console.log(e)

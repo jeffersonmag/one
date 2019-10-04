@@ -177,6 +177,7 @@
 
 .txtTableCircle {
   font-size: 11px;
+  vertical-align: top;
 }
 
 .porcentagem {
@@ -192,4 +193,30 @@
   margin-right: -15px;
   margin-top: 3px;
   text-align: right;
+}
+
+.cardTrd {
+  height: 5.3rem;
+  width: 80rem;
+  margin-top: 5px;
+  margin-left: 30px;
+}
+
+.table3 {
+  align-content: bottom;
+  text-align: center;
+  margin-top: 15px;
+  float: center;
+  width: 100%;
+}
+
+.txtTable3 {
+  font-size: 11px;
+  width: 16.16%;
+  vertical-align: bottom;
+}
+
+.vl {
+  border-left: 1.5px solid rgb(138, 135, 135);
+  height: 30px;
 }
