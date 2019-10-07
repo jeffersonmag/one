@@ -2,7 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { registerLocaleData } from '@angular/common';
+import { registerLocaleData, Location } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import pt from '@angular/common/locales/pt';
 registerLocaleData(pt)
@@ -17,6 +17,7 @@ import {
   NbWindowModule,
   NbStepperModule,
   NbSelectModule,
+  NbProgressBarModule,
 } from '@nebular/theme';
 
 import { CoreModule } from './@core/core.module';
@@ -25,6 +26,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PipesModule } from './pipes/pipes.module';
 import { NgbModal, ModalDismissReasons, NgbModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
+import { NgIdleModule } from '@ng-idle/core';
 
 
 /**
@@ -34,7 +37,7 @@ import { NgbModal, ModalDismissReasons, NgbModule, NgbToastModule } from '@ng-bo
  */
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +61,10 @@ import { NgbModal, ModalDismissReasons, NgbModule, NgbToastModule } from '@ng-bo
     CoreModule.forRoot(),
     PipesModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    NgIdleKeepaliveModule.forRoot(),
+    NgIdleModule,
+    NbProgressBarModule
   ],
 
   providers: [

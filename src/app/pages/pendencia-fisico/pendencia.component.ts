@@ -140,7 +140,9 @@ export class PendenciaComponent implements OnInit {
       "codigo_regional": Number(this.codigoRegional),
       "codigo_loja": Number(this.codigoLoja),
       "codigo_funcionario": Number(this.codigoFuncionario),
-      "numero_bordero": Number(this.codigoBordero)
+      "status_farol": this.codigoTipoPendencia,
+      "codigo_canal_vendas": Number(this.codigoCanalVendas),
+      "numero_bordero": Number(this.codigoBordero),
     }
     ).then((s) => {
       this.pendenciaSintetico = s.status_time_line;
@@ -182,7 +184,9 @@ export class PendenciaComponent implements OnInit {
       "codigo_regional": Number(this.codigoRegional),
       "codigo_loja": Number(this.codigoLoja),
       "codigo_funcionario": Number(this.codigoFuncionario),
-      "numero_bordero": Number(this.codigoBordero)
+      "status_farol": this.codigoTipoPendencia,
+      "codigo_canal_vendas": Number(this.codigoCanalVendas),
+      "numero_bordero": Number(this.codigoBordero),
     }
     ).then((s) => {
       this.pendenciaSintetico = s.status_time_line;
@@ -234,8 +238,10 @@ export class PendenciaComponent implements OnInit {
       "codigo_regional": Number(this.codigoRegional),
       "codigo_loja": Number(this.codigoLoja),
       "codigo_funcionario": Number(this.codigoFuncionario),
+      "status_farol": this.codigoTipoPendencia,
+      "codigo_canal_vendas": Number(this.codigoCanalVendas),
+      "numero_bordero": Number(this.codigoBordero),
       "status_time_line": codigo_status_time_line.codigo_status_time_line,
-      "numero_bordero": Number(this.codigoBordero)
     })
       .then((s) => {
         this.pendencia = s.dados;
@@ -277,8 +283,10 @@ export class PendenciaComponent implements OnInit {
       "codigo_regional": Number(this.codigoRegional),
       "codigo_loja": Number(this.codigoLoja),
       "codigo_funcionario": Number(this.codigoFuncionario),
-      "status_time_line": codigo_status_time_line,
-      "numero_bordero": Number(this.codigoBordero)
+      "status_farol": this.codigoTipoPendencia,
+      "codigo_canal_vendas": Number(this.codigoCanalVendas),
+      "numero_bordero": Number(this.codigoBordero),
+      "status_time_line": codigo_status_time_line.codigo_status_time_line,
     })
       .then((s) => {
         this.pendencia = s.dados;
@@ -400,16 +408,7 @@ export class PendenciaComponent implements OnInit {
       alert('Informe a quantidade de contratos para prosseguir');
     } else {
       this.pendenciaFisicoApiService.gerarBordero({
-        "data_de": "",
-        "data_ate": "",
-        "criterio_de_data": "",
-        "codigo_matriz": Number(this.codigoLojaMatriz),
-        "codigo_comercial": Number(this.codigoComercial),
-        "codigo_regional": Number(this.codigoRegional),
-        "codigo_loja": Number(this.codigoLoja),
-        "codigo_funcionario": Number(this.codigoFuncionario),
         "qtd_contratos_conferencia": this.numero_contratos,
-        "numero_bordero": Number(this.codigoBordero)
       })
         .then((s) => {
           this.close();
@@ -538,15 +537,15 @@ export class PendenciaComponent implements OnInit {
     }
   }
 
-  private _filterTipoPendencia(value: number, nome?: string, limpar?: boolean): any {
-    if (limpar && value == 0) {
+  private _filterTipoPendencia(value: string, nome?: string, limpar?: boolean): any {
+    if (limpar && value == "") {
       this.ativaBotaoTipoPendencia = false;
       this.codigoTipoPendencia = "";
       this.atualizaContador(this.ativaBotaoTipoPendencia);
     } else {
-      const filterValue = value;
+      let filterValuePen: string = value;
       this.ativaBotaoTipoPendencia = true;
-      this.codigoTipoPendencia = String(filterValue);
+      this.codigoTipoPendencia = filterValuePen;
       if (nome == 'E') {
         nome = 'PRIMEIRA ENTREGA';
       }
@@ -555,8 +554,8 @@ export class PendenciaComponent implements OnInit {
       }
       this.nomeTipoPendencia = nome;
       //this.atualizaContador(this.ativaBotaoFuncionario);
-      let TipoPendenciaFiltrados = this.tipoPendencia.filter(valortipoPendencia => valortipoPendencia.codigo_status_farol == filterValue);
-      let pendenciaFiltrados = this.pendencia.filter(valorContratos => valorContratos.status_farol == filterValue);
+      let TipoPendenciaFiltrados = this.tipoPendencia.filter(valortipoPendencia => valortipoPendencia.codigo_status_farol == filterValuePen);
+      let pendenciaFiltrados = this.pendencia.filter(valorContratos => valorContratos.status_farol == filterValuePen);
       this.tipoPendencia = TipoPendenciaFiltrados;
       this.pendencia = pendenciaFiltrados;
       this.habilitaFiltrosSecundarios(this.tipoPendencia);
@@ -578,7 +577,9 @@ export class PendenciaComponent implements OnInit {
           var num = agrupamento[0].filtro_avancado.canal_vendas[_i];
           if (num.codigo != null) {
             let valor = this.canalVendas.filter(valorCanalVendas => valorCanalVendas.codigo_canal_vendas == num.codigo)
-            canalVendasFiltrados.push(valor[0]);
+            if (valor.length != 0) {
+              canalVendasFiltrados.push(valor[0]);
+            }
           }
         }
         this.canalVendas = [];
@@ -590,7 +591,9 @@ export class PendenciaComponent implements OnInit {
           var num = agrupamento[0].filtro_avancado.comercial[_i];
           if (num.codigo != null) {
             let valor = this.comercial.filter(valorComercial => valorComercial.codigo_comercial == num.codigo)
-            comerciaisFiltrados.push(valor[0]);
+            if (valor.length != 0) {
+              comerciaisFiltrados.push(valor[0]);
+            }
           }
         }
         this.comercial = [];
@@ -602,7 +605,9 @@ export class PendenciaComponent implements OnInit {
           var num = agrupamento[0].filtro_avancado.regional[_i];
           if (num.codigo != null) {
             let valor = this.regional.filter(valorRegional => valorRegional.codigo_regional == num.codigo);
-            regionaisFiltrados.push(valor[0]);
+            if (valor.length != 0) {
+              regionaisFiltrados.push(valor[0]);
+            }
           }
         }
         this.regional = [];
@@ -614,7 +619,9 @@ export class PendenciaComponent implements OnInit {
           var num = agrupamento[0].filtro_avancado.loja[_i];
           if (num.codigo != null) {
             let valor = this.loja.filter(valorLoja => valorLoja.codigo_loja == num.codigo);
-            lojasFiltrados.push(valor[0]);
+            if (valor.length != 0) {
+              lojasFiltrados.push(valor[0]);
+            }
           }
         }
         this.loja = [];
@@ -626,7 +633,9 @@ export class PendenciaComponent implements OnInit {
           var num = agrupamento[0].filtro_avancado.loja_matriz[_i];
           if (num.codigo != null) {
             let valor = this.matriz.filter(valorLojaMatriz => valorLojaMatriz.codigo_loja_matriz == num.codigo);
-            lojasMatrizFiltrados.push(valor[0]);
+            if (valor.length != 0) {
+              lojasMatrizFiltrados.push(valor[0]);
+            }
           }
         }
         this.matriz = [];
@@ -638,7 +647,9 @@ export class PendenciaComponent implements OnInit {
           var num = agrupamento[0].filtro_avancado.funcionario[_i];
           if (num.codigo != null) {
             let valor = this.funcionario.filter(valorFuncionario => valorFuncionario.codigo_funcionario == num.codigo);
-            funcionariosFiltrados.push(valor[0]);
+            if (valor.length != 0) {
+              funcionariosFiltrados.push(valor[0]);
+            }
           }
         }
         this.funcionario = [];
@@ -647,10 +658,12 @@ export class PendenciaComponent implements OnInit {
 
       if (agrupamento[0].filtro_avancado.status_farol.lenght != 0) {
         for (var _i = 0; _i < agrupamento[0].filtro_avancado.status_farol.length; _i++) {
-          var num = agrupamento[0].filtro_avancado.status_farol[_i];
-          if (num.codigo != null) {
-            let valor = this.tipoPendencia.filter(valortipoPendencia => valortipoPendencia.codigo_funcionario == num.codigo);
-            pendenciaFiltrados.push(valor[0]);
+          let codStatus = agrupamento[0].filtro_avancado.status_farol[_i];
+          if (codStatus.nome != null) {
+            let valor = this.tipoPendencia.filter(valortipoPendencia => valortipoPendencia.codigo_status_farol == codStatus.nome);
+            if (valor.length != 0) {
+              pendenciaFiltrados.push(valor[0]);
+            }
           }
         }
         this.tipoPendencia = [];

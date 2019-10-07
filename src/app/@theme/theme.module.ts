@@ -28,6 +28,7 @@ import { CORPORATE_THEME } from './styles/theme.corporate';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { DARK_THEME } from './styles/theme.dark';
 import { DEFAULT_THEME } from './styles/theme.default';
+import { ProgressBarModalComponent } from './components/header/progressbar-modal.component';
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -52,19 +53,21 @@ const COMPONENTS = [
   OneColumnLayoutComponent,
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
+  ProgressBarModalComponent
 ];
 const PIPES = [
   CapitalizePipe,
   PluralPipe,
   RoundPipe,
   TimingPipe,
-  NumberWithCommasPipe,
+  NumberWithCommasPipe
 ];
 
 @NgModule({
   imports: [CommonModule, ...NB_MODULES],
   exports: [CommonModule, ...PIPES, ...COMPONENTS],
   declarations: [...COMPONENTS, ...PIPES],
+  entryComponents: [ProgressBarModalComponent]
 })
 export class ThemeModule {
   static forRoot(): ModuleWithProviders {

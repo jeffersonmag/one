@@ -214,7 +214,7 @@
             Filtros Pendência de Físico
             <nb-icon icon="chevron-left-outline" pack="eva" class="flip-icon" (click)="revelar()"></nb-icon>
           </nb-card-header>
-          <nb-card-body>
+          <nb-card-body [nbSpinner]="pendencia.length < 1 && pararSpinner" nbSpinnerStatus="success">
             <div class="container">
               <div class="row">
                 <div class="col" *ngIf="canalVendas.length != 0">

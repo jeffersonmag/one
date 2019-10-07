@@ -23,13 +23,13 @@ button[nbTreeGridRowToggle] {
   }
 }
 
-.size-fonte{
+.size-fonte {
   font-size: 11px;
   text-align: left;
   vertical-align: top
 }
 
-.size-fonte-center{
+.size-fonte-center {
   font-size: 11px;
   text-align: center;
   vertical-align: top
@@ -40,13 +40,13 @@ button[nbTreeGridRowToggle] {
   margin: 0 0.5rem;
 }
 
-.fonte-card{
+.fonte-card {
   color: #fff;
   font-size: 12px;
   text-align: left;
 }
 
-.fonte-card-num{
+.fonte-card-num {
   color: #fff;
   font-size: 9px;
   text-align: right;
@@ -61,6 +61,7 @@ button[nbTreeGridRowToggle] {
 .search-label {
   display: block;
 }
+
 .search-input {
   margin-bottom: 1rem;
 }
@@ -73,7 +74,7 @@ button[nbTreeGridRowToggle] {
   font-size: 10px;
 }
 
-.headerTable{
+.headerTable {
   font-size: 14px;
 }
 
@@ -94,7 +95,7 @@ button[nbTreeGridRowToggle] {
 }
 
 .fas {
-  color:black;
+  color: black;
   margin-bottom: 1.5px;
 }
 
@@ -111,9 +112,9 @@ button[nbTreeGridRowToggle] {
   tr {
     border-bottom: 0px solid #ccc;
 
-  .active {
-    background: #007bff94;
-  }
+    .active {
+      background: #007bff94;
+    }
 
 
   }
@@ -131,6 +132,7 @@ button[nbTreeGridRowToggle] {
 
 
 @media screen and (min-width: 400px) {
+
   .nb-column-name,
   .nb-column-size {
     width: 50%;
@@ -138,6 +140,7 @@ button[nbTreeGridRowToggle] {
 }
 
 @media screen and (min-width: 500px) {
+
   .nb-column-name,
   .nb-column-size,
   .nb-column-kind {
@@ -146,10 +149,11 @@ button[nbTreeGridRowToggle] {
 }
 
 .tooltip {
-  z-index: 1151,!important;
+  z-index: 1151,  !important;
 }
 
 .maxContent {
+  min-height: 170px;
   max-height: 400px;
   overflow: auto;
 }
@@ -158,6 +162,7 @@ button[nbTreeGridRowToggle] {
   .nb-column-name {
     width: 31%;
   }
+
   .nb-column-size,
   .nb-column-kind,
   .nb-column-items {

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { SessionService } from '../services/session.service';
 import { MENU_ITEMS } from './pages-menu';
 
+
 @Component({
   selector: 'ngx-pages',
   styleUrls: ['pages.component.scss'],
@@ -16,13 +17,12 @@ import { MENU_ITEMS } from './pages-menu';
 })
 export class PagesComponent implements OnInit {
 
-  menu = MENU_ITEMS;
+  menu = MENU_ITEMS; 
 
   constructor(
     private router: Router,
     private sessionService: SessionService,
-  ) { }
-
+  ) {  }  
 
   ngOnInit() {
     const token = this.sessionService.get('token');
