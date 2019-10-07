@@ -22,10 +22,18 @@
 
 .toggle-icon {
   position: absolute;
+  float:left;
+  margin-left: 5px;
+  margin-top: 3px;
+  cursor: pointer;
+}
+
+.toggle-icon2 {
+  position: absolute;
   top: 1rem;
-  right: 1.25rem;
-  @include nb-rtl(right, auto);
-  @include nb-rtl(left, 1.25rem);
+  left: 1.25rem;
+  @include nb-rtl(left, auto);
+  @include nb-rtl(right, 1.25rem);
   cursor: pointer;
 }
 
@@ -169,6 +177,7 @@
 
 .txtTableCircle {
   font-size: 11px;
+  vertical-align: top;
 }
 
 .porcentagem {
@@ -185,3 +194,50 @@
   margin-top: 3px;
   text-align: right;
 }
+
+.cardTrd {
+  height: 5.3rem;
+  width: 80rem;
+  margin-top: 5px;
+  margin-left: 30px;
+}
+
+.table3 {
+  align-content: bottom;
+  text-align: center;
+  margin-top: 15px;
+  float: center;
+  width: 100%;
+}
+
+.txtTable3 {
+  font-size: 11px;
+  width: 16.16%;
+  vertical-align: bottom;
+}
+
+.vl {
+  border-left: 1.5px solid rgb(138, 135, 135);
+  height: 30px;
+}
+
+.cardGraph {
+  width: 100%;
+  margin-left: 30px;
+}
+
+.containerList {
+  width: 300px;
+  max-height: 100px;
+  overflow-y: auto;
+  font-size: 13px;
+  align-content: center;
+  text-align: left;
+}
+
+.txtList {
+  font-size: 11px;
+  height: 100;
+}
+
+
