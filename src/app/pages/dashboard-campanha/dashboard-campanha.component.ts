@@ -116,7 +116,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
   option: any = {};
   themeSubscription: any;
 
-  hoje: number = Date.now();
+  hoje: number = moment(Date.now());
 
   ontem: Date = new Date();
 
@@ -426,12 +426,12 @@ export class DashboardCampanhaComponent implements OnDestroy {
       });
     this.contratosDigitadosPagos = {
       "codigo_campanha": 0,
-      "data": 0,
+      "data": "0",
     };
 
     this.indiceContratosDigitadosApiService.pagos({
       "codigo_campanha": this.filtro.campanha.codigo,
-      "data": ""
+      "data": "",
     })
       .then((s) => {
         this.datas = s;

@@ -220,3 +220,24 @@
   border-left: 1.5px solid rgb(138, 135, 135);
   height: 30px;
 }
+
+.cardGraph {
+  width: 100%;
+  margin-left: 30px;
+}
+
+.containerList {
+  width: 300px;
+  max-height: 100px;
+  overflow-y: auto;
+  font-size: 13px;
+  align-content: center;
+  text-align: left;
+}
+
+.txtList {
+  font-size: 11px;
+  height: 100;
+}
+
+

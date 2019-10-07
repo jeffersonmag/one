@@ -10,9 +10,9 @@
       </nb-card-header>
       <div *ngIf="revealed.campanhas">
         <table class="tabela">
-          <nb-list>
-            <nb-list-item *ngFor="let i of campanhasPerfil" (click)="atualizarFiltro(i)">
-              <div>
+          <nb-list class="listagem">
+            <nb-list-item class="txtList" *ngFor="let i of campanhasPerfil" (click)="atualizarFiltro(i)">
+              <div class="containerList">
                 <span nbTooltip="Nome da Campanha"> {{i.nome_campanha}} </span>
                 <span nbTooltip="Código da Campanha"> - [{{i.codigo_campanha}}] <br> </span>
                 <span nbTooltip="Data Inicial da Campanha"> De {{i.data_inicio_campanha | moment: 'DD/MM/YYYY'}}</span>
@@ -29,7 +29,7 @@
             <div class="container">
               <table class="tabela2">
                 <tr>
-                  <td class="mes-setado2">{{ hoje | date:'MMMM' | uppercase }}</td>
+                  <td class="mes-setado2">{{ hoje | moment: 'YYYY/MM/DD'}}</td>
                 </tr>
                 <tr>
                   <td class="ano-setado2">{{ hoje | date:'yyyy' }}</td>
@@ -214,6 +214,22 @@
             <div class="porcentagem">{{i.percentual_atingido_produto_corban || 0}}%</div>
           </nb-card-body>
         </nb-card>
+
+        <div class="col-md-12 col-sm-12 col-lg-12 row justify-content-between">
+          <div class="container">
+            <nb-card accent="danger" class="cardGraph">
+              <nb-card-header style="text-align: center;">Gráfico
+                <nb-icon *ngIf="revealed.chart" class="toggle-icon" icon="chevron-up-outline" pack="eva"
+                  (click)="toggleView('chart')"></nb-icon>
+                <nb-icon *ngIf="!revealed.chart" class="toggle-icon" icon="chevron-down-outline" pack="eva"
+                  (click)="toggleView('chart')"> </nb-icon>
+              </nb-card-header>
+              <nb-card-body *ngIf="revealed.chart">
+                <div echarts [options]="chartOptions" class="echart"></div>
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </div>
 
       </div>
     </nb-card>
