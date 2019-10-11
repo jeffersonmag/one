@@ -839,6 +839,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var _core_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../@core/utils */ "./src/app/@core/utils/index.ts");
 /* harmony import */ var _services_session_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/session.service */ "./src/app/services/session.service.ts");
+/* harmony import */ var _ng_idle_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ng-idle/core */ "./node_modules/@ng-idle/core/fesm5/ng-idle-core.js");
+/* harmony import */ var _ng_idle_keepalive__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ng-idle/keepalive */ "./node_modules/@ng-idle/keepalive/fesm5/ng-idle-keepalive.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _progressbar_modal_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./progressbar-modal.component */ "./src/app/@theme/components/header/progressbar-modal.component.ts");
+
+
+
+
+
 
 
 
@@ -848,7 +858,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var HeaderComponent = /** @class */ (function () {
-    function HeaderComponent(sessionService, sidebarService, menuService, router, themeService, layoutService, breakpointService) {
+    function HeaderComponent(sessionService, sidebarService, menuService, router, themeService, layoutService, breakpointService, idle, keepalive, location, ngbModal) {
+        var _this = this;
         this.sessionService = sessionService;
         this.sidebarService = sidebarService;
         this.menuService = menuService;
@@ -856,6 +867,9 @@ var HeaderComponent = /** @class */ (function () {
         this.themeService = themeService;
         this.layoutService = layoutService;
         this.breakpointService = breakpointService;
+        this.idle = idle;
+        this.keepalive = keepalive;
+        this.ngbModal = ngbModal;
         this.destroy$ = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
         this.userPictureOnly = false;
         this.themes = [
@@ -870,7 +884,95 @@ var HeaderComponent = /** @class */ (function () {
         ];
         this.currentTheme = 'default';
         this.userMenu = [{ title: 'Sair' }];
+        this.idleState = 'NOT_STARTED';
+        this.timedOut = false;
+        this.lastPing = null;
+        // sets an idle timeout of 15 minutes.
+        idle.setIdle(10 * 60);
+        // sets a timeout period of 5 minutes.
+        idle.setTimeout(60);
+        // sets the interrupts like Keydown, scroll, mouse wheel, mouse down, and etc
+        //idle.setInterrupts([
+        //  new EventTargetInterruptSource(
+        //    this.element.nativeElement, 'keydown DOMMouseScroll mousewheel mousedown touchstart touchmove scroll')]);
+        idle.setInterrupts(_ng_idle_core__WEBPACK_IMPORTED_MODULE_8__["DEFAULT_INTERRUPTSOURCES"]);
+        this.onIdleEnd$ = idle.onIdleEnd.subscribe(function () {
+            _this.idleState = 'NO_LONGER_IDLE';
+        });
+        this.idleOnTimeout$ = this.idle.onTimeout.subscribe(function () {
+            _this.idleState = 'TIMED_OUT';
+            _this.timedOut = true;
+            _this.closeProgressForm();
+        });
+        this.onIdleStart$ = idle.onIdleStart.subscribe(function () {
+            _this.idleState = 'IDLE_START', _this.openProgressForm(1);
+        });
+        //this.onTimeoutWarning$ = 
+        idle.onTimeoutWarning.subscribe(function (countdown) {
+            _this.idleState = 'IDLE_TIME_IN_PROGRESS';
+            _this.progressBarPopup.componentInstance.count = (Math.floor((countdown - 1) / 60) + 1);
+            _this.progressBarPopup.componentInstance.progressCount = _this.reverseNumber(countdown);
+            _this.progressBarPopup.componentInstance.countMinutes = (Math.floor(countdown / 60));
+            _this.progressBarPopup.componentInstance.countSeconds = countdown % 60;
+        });
+        // sets the ping interval to 15 seconds
+        keepalive.interval(15);
+        /**
+         *  // Keepalive can ping request to an HTTP location to keep server session alive
+         * keepalive.request('<String URL>' or HTTP Request);
+         * // Keepalive ping response can be read using below option
+         * keepalive.onPing.subscribe(response => {
+         * // Redirect user to logout screen stating session is timeout out if if response.status != 200
+         * });
+         */
+        this.reset();
     }
+    //ngOnDestroy() {
+    //  this.resetTimeOut();
+    //}
+    HeaderComponent.prototype.reverseNumber = function (countdown) {
+        return (300 - (countdown - 1));
+    };
+    HeaderComponent.prototype.reset = function () {
+        this.idle.watch();
+        this.idleState = 'Started.';
+        this.timedOut = false;
+    };
+    HeaderComponent.prototype.openProgressForm = function (count) {
+        var _this = this;
+        this.progressBarPopup = this.ngbModal.open(_progressbar_modal_component__WEBPACK_IMPORTED_MODULE_12__["ProgressBarModalComponent"], {
+            backdrop: 'static',
+            keyboard: false
+        });
+        this.progressBarPopup.componentInstance.count = count;
+        this.progressBarPopup.result.then(function (result) {
+            if (result !== '' && 'logout' === result) {
+                _this.logout();
+            }
+            else if ('continue' === result) {
+                _this.reset();
+            }
+            else { }
+        });
+    };
+    HeaderComponent.prototype.logout = function () {
+        this.resetTimeOut();
+        sessionStorage.setItem('sessionExpired', 'true');
+        this.sair();
+    };
+    HeaderComponent.prototype.closeProgressForm = function () {
+        this.progressBarPopup.close();
+        sessionStorage.setItem('sessionExpired', 'true');
+        this.sair();
+    };
+    HeaderComponent.prototype.resetTimeOut = function () {
+        this.idle.stop();
+        this.idleOnTimeout$.unsubscribe();
+        this.onIdleStart$.unsubscribe();
+        this.onIdleEnd$.unsubscribe();
+        this.onTimeoutWarning$.unsubscribe();
+        //this.sair();
+    };
     HeaderComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.currentTheme = this.themeService.currentTheme;
@@ -938,9 +1040,62 @@ var HeaderComponent = /** @class */ (function () {
             _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"],
             _nebular_theme__WEBPACK_IMPORTED_MODULE_3__["NbThemeService"],
             _core_utils__WEBPACK_IMPORTED_MODULE_6__["LayoutService"],
-            _nebular_theme__WEBPACK_IMPORTED_MODULE_3__["NbMediaBreakpointsService"]])
+            _nebular_theme__WEBPACK_IMPORTED_MODULE_3__["NbMediaBreakpointsService"],
+            _ng_idle_core__WEBPACK_IMPORTED_MODULE_8__["Idle"], _ng_idle_keepalive__WEBPACK_IMPORTED_MODULE_9__["Keepalive"], _angular_common__WEBPACK_IMPORTED_MODULE_10__["Location"], _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_11__["NgbModal"]])
     ], HeaderComponent);
     return HeaderComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/@theme/components/header/progressbar-modal.component.ts":
+/*!*************************************************************************!*\
+  !*** ./src/app/@theme/components/header/progressbar-modal.component.ts ***!
+  \*************************************************************************/
+/*! exports provided: ProgressBarModalComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProgressBarModalComponent", function() { return ProgressBarModalComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+
+
+
+var ProgressBarModalComponent = /** @class */ (function () {
+    function ProgressBarModalComponent(activeModal) {
+        this.activeModal = activeModal;
+    }
+    ProgressBarModalComponent.prototype.continue = function () {
+        this.activeModal.close('continue');
+    };
+    ProgressBarModalComponent.prototype.logout = function () {
+        this.activeModal.close('logout');
+    };
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Number)
+    ], ProgressBarModalComponent.prototype, "countMinutes", void 0);
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Number)
+    ], ProgressBarModalComponent.prototype, "countSeconds", void 0);
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Number)
+    ], ProgressBarModalComponent.prototype, "progressCount", void 0);
+    ProgressBarModalComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'progressbar-modal-comp',
+            template: "\n    <div id=\"ac90819em1\" class=\"modal-header\">\n      <h4 id=\"ac90819h41\" class=\"modal-title\">A sess\u00E3o ser\u00E1 encerrada</h4>\n    </div>\n    <div id=\"ac90819di1\" class=\"modal-body\">\n      O tempo limite ser\u00E1 atingido em {{(countMinutes !== 0 ? + countMinutes+' Minutos'+(countMinutes > 1 ? 's ' : ' ') : '') + countSeconds+' Segundos'}}\n      <!--<p>\n        <nb-progress-bar type=\"danger\" [value]=\"progressCount\" animate=\"false\" id=\"ac90819ou1\"\n                         class=\"progress-striped active\">\n        </nb-progress-bar>\n      </p>-->\n    </div>\n    <div id=\"ac90819di2\" class=\"modal-footer\">\n      <button type=\"button\" id=\"ac90819bu1\" class=\"btn btn-primary\" (click)=\"continue()\">Permanecer na sess\u00E3o</button>\n      <button type=\"button\" id=\"ac90819bu2\" class=\"btn btn-primary\" (click)=\"logout()\">Fazer Logoff</button>\n    </div>\n  "
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_2__["NgbActiveModal"]])
+    ], ProgressBarModalComponent);
+    return ProgressBarModalComponent;
 }());
 
 
@@ -2596,6 +2751,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _styles_theme_cosmic__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./styles/theme.cosmic */ "./src/app/@theme/styles/theme.cosmic.ts");
 /* harmony import */ var _styles_theme_dark__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./styles/theme.dark */ "./src/app/@theme/styles/theme.dark.ts");
 /* harmony import */ var _styles_theme_default__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./styles/theme.default */ "./src/app/@theme/styles/theme.default.ts");
+/* harmony import */ var _components_header_progressbar_modal_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/header/progressbar-modal.component */ "./src/app/@theme/components/header/progressbar-modal.component.ts");
+
 
 
 
@@ -2632,13 +2789,14 @@ var COMPONENTS = [
     _layouts__WEBPACK_IMPORTED_MODULE_7__["OneColumnLayoutComponent"],
     _layouts__WEBPACK_IMPORTED_MODULE_7__["ThreeColumnsLayoutComponent"],
     _layouts__WEBPACK_IMPORTED_MODULE_7__["TwoColumnsLayoutComponent"],
+    _components_header_progressbar_modal_component__WEBPACK_IMPORTED_MODULE_13__["ProgressBarModalComponent"]
 ];
 var PIPES = [
     _pipes__WEBPACK_IMPORTED_MODULE_8__["CapitalizePipe"],
     _pipes__WEBPACK_IMPORTED_MODULE_8__["PluralPipe"],
     _pipes__WEBPACK_IMPORTED_MODULE_8__["RoundPipe"],
     _pipes__WEBPACK_IMPORTED_MODULE_8__["TimingPipe"],
-    _pipes__WEBPACK_IMPORTED_MODULE_8__["NumberWithCommasPipe"],
+    _pipes__WEBPACK_IMPORTED_MODULE_8__["NumberWithCommasPipe"]
 ];
 var ThemeModule = /** @class */ (function () {
     function ThemeModule() {
@@ -2658,6 +2816,7 @@ var ThemeModule = /** @class */ (function () {
             imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]].concat(NB_MODULES),
             exports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]].concat(PIPES, COMPONENTS),
             declarations: COMPONENTS.concat(PIPES),
+            entryComponents: [_components_header_progressbar_modal_component__WEBPACK_IMPORTED_MODULE_13__["ProgressBarModalComponent"]]
         })
     ], ThemeModule);
     return ThemeModule;
@@ -2781,6 +2940,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
 /* harmony import */ var _pipes_pipes_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./pipes/pipes.module */ "./src/app/pipes/pipes.module.ts");
 /* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _ng_idle_keepalive__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ng-idle/keepalive */ "./node_modules/@ng-idle/keepalive/fesm5/ng-idle-keepalive.js");
+/* harmony import */ var _ng_idle_core__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @ng-idle/core */ "./node_modules/@ng-idle/core/fesm5/ng-idle-core.js");
 
 
 
@@ -2790,6 +2951,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 Object(_angular_common__WEBPACK_IMPORTED_MODULE_5__["registerLocaleData"])(_angular_common_locales_pt__WEBPACK_IMPORTED_MODULE_7___default.a);
+
+
 
 
 
@@ -2808,7 +2971,7 @@ var AppModule = /** @class */ (function () {
     AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
             declarations: [
-                _app_component__WEBPACK_IMPORTED_MODULE_12__["AppComponent"],
+                _app_component__WEBPACK_IMPORTED_MODULE_12__["AppComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__["BrowserModule"],
@@ -2832,7 +2995,10 @@ var AppModule = /** @class */ (function () {
                 _core_core_module__WEBPACK_IMPORTED_MODULE_9__["CoreModule"].forRoot(),
                 _pipes_pipes_module__WEBPACK_IMPORTED_MODULE_13__["PipesModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClientModule"],
-                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__["NgbModule"]
+                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_14__["NgbModule"],
+                _ng_idle_keepalive__WEBPACK_IMPORTED_MODULE_15__["NgIdleKeepaliveModule"].forRoot(),
+                _ng_idle_core__WEBPACK_IMPORTED_MODULE_16__["NgIdleModule"],
+                _nebular_theme__WEBPACK_IMPORTED_MODULE_8__["NbProgressBarModule"]
             ],
             providers: [
                 {
