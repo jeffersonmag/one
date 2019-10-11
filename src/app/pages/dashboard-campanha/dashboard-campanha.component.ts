@@ -1,14 +1,15 @@
-import { Component, OnDestroy, Inject, Injectable, LOCALE_ID, Pipe, PipeTransform, Input } from '@angular/core';
+import { Component, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { number_format, str_pad } from 'locutus/php/strings/';
 import _ from 'lodash';
 import * as moment from 'moment';
-import { takeWhile, delay } from 'rxjs/operators';
+import { takeWhile } from 'rxjs/operators';
 import { CampanhasApiService } from '../../api/campanhas';
 import { DiasUteisPeriodoApiService } from '../../api/dias-uteis-periodo';
 import { IndiceContratosDigitadosApiService } from '../../api/indice-contratos-digitados';
 import { TicketMedioApiService } from '../../api/ticket-medio';
-import { NgCircleProgressModule } from 'ng-circle-progress';
+import { NbPopoverDirective } from '@nebular/theme';
+
 
 interface CardSettings {
   title: string;
@@ -23,6 +24,9 @@ interface CardSettings {
 })
 export class DashboardCampanhaComponent implements OnDestroy {
 
+  @ViewChild(NbPopoverDirective, { static: false }) popover: NbPopoverDirective;
+  @ViewChild('list', { read: TemplateRef, static: false }) templateList: TemplateRef<any>;
+
   private alive = true;
 
   solarValue: number;
@@ -30,6 +34,9 @@ export class DashboardCampanhaComponent implements OnDestroy {
   statusCards: string;
 
   commonStatusCardsSet: CardSettings[] = [];
+
+  nomeCampanhaSelecionado: string;
+  periodoCampanhaSelecionado: string;
 
   statusCardsByThemes: {
     default: CardSettings[];
@@ -56,11 +63,8 @@ export class DashboardCampanhaComponent implements OnDestroy {
   campanhasPerfil = [];
   contratosPagos = [];
   contratosDigitados = [];
-  datas = [];
-  contratosDigitadosPagos = {
-    "codigo_campanha": 0,
-    "data": 0,
-  };
+  datasHoje = [];
+  datasOntem = [];
   contratosPagosSinteticos = {
     "qtd_total_digitado": 0,
     "qtd_total_pago": 0,
@@ -103,6 +107,69 @@ export class DashboardCampanhaComponent implements OnDestroy {
 
   perfilAtivo = 5;
 
+  mes = [
+    {
+      id: 1,
+      label: 'Jan',
+      mesExtenso: 'Janeiro'
+    },
+    {
+      id: 2,
+      label: 'Fev',
+      mesExtenso: 'Fevereiro'
+    },
+    {
+      id: 3,
+      label: 'Mar',
+      mesExtenso: 'Março'
+    },
+    {
+      id: 4,
+      label: 'Abr',
+      mesExtenso: 'Abril'
+    },
+    {
+      id: 5,
+      label: 'Mai',
+      mesExtenso: 'Maio'
+    },
+    {
+      id: 6,
+      label: 'Jun',
+      mesExtenso: 'Junho'
+    },
+    {
+      id: 7,
+      label: 'Jul',
+      mesExtenso: 'Julho'
+    },
+    {
+      id: 8,
+      label: 'Ago',
+      mesExtenso: 'Agosto'
+    },
+    {
+      id: 9,
+      label: 'Set',
+      mesExtenso: 'Setembro'
+    },
+    {
+      id: 10,
+      label: 'Out',
+      mesExtenso: 'Outubro'
+    },
+    {
+      id: 11,
+      label: 'Nov',
+      mesExtenso: 'Novembro'
+    },
+    {
+      id: 12,
+      label: 'Dez',
+      mesExtenso: 'Dezembro'
+    }
+  ];
+
   revealed = {
     campanhas: false,
     chart: true,
@@ -112,13 +179,16 @@ export class DashboardCampanhaComponent implements OnDestroy {
 
   valor = 100.00;
 
-
   option: any = {};
   themeSubscription: any;
 
-  hoje: number = moment(Date.now());
+  hoje: any = moment(Date.now());
+  ontem: any = new Date();
 
-  ontem: Date = new Date();
+  dataAtual = new Date(this.hoje);
+  anoVigente = this.dataAtual.getFullYear();
+  mesVigente = this.dataAtual.getMonth() + 1;
+
 
   ngOnInit() {
     this.ontem.setDate(this.ontem.getDate() - 1);
@@ -174,8 +244,6 @@ export class DashboardCampanhaComponent implements OnDestroy {
     codigo_loja: "",
     codigo_funcionario: ""
   }
-
-
 
   constructor(
     private themeService: NbThemeService,
@@ -402,7 +470,8 @@ export class DashboardCampanhaComponent implements OnDestroy {
   }
 
   findContratos() {
-    this.datas = [];
+    this.datasHoje = [];
+    this.datasOntem = [];
     this.contratosPagos = [];
     this.contratosDigitados = [];
     this.indiceContratosDigitadosApiService.pagos({
@@ -410,9 +479,11 @@ export class DashboardCampanhaComponent implements OnDestroy {
       "codigo_regional": this.codigos.codigo_regional,
       "codigo_comercial": this.codigos.codigo_comercial,
       "codigo_loja": this.codigos.codigo_loja,
-      "codigo_funcionario": this.codigos.codigo_funcionario
+      "codigo_funcionario": this.codigos.codigo_funcionario,
+      "data": ""
     })
       .then((s) => {
+
         this.contratosPagos = _.filter(s, (o: any) => {
           return String(o.status) === 'PAGAS';
         });
@@ -420,21 +491,33 @@ export class DashboardCampanhaComponent implements OnDestroy {
           return String(o.status) === 'DIGITADAS';
         });
         this.gerarGrafico();
-      })
-      .catch((e) => {
-        console.log(e)
-      });
-    this.contratosDigitadosPagos = {
-      "codigo_campanha": 0,
-      "data": "0",
-    };
 
-    this.indiceContratosDigitadosApiService.pagos({
-      "codigo_campanha": this.filtro.campanha.codigo,
-      "data": "",
-    })
-      .then((s) => {
-        this.datas = s;
+        if (this.contratosPagos[0].mes == this.mesVigente) {
+          this.indiceContratosDigitadosApiService.pagos({
+            "codigo_campanha": this.filtro.campanha.codigo,
+            "data": this.hoje,
+          })
+            .then((c) => {
+              this.datasHoje = c;
+            })
+            .catch((e) => {
+              console.log(e)
+            });
+
+          this.indiceContratosDigitadosApiService.pagos({
+            "codigo_campanha": this.filtro.campanha.codigo,
+            "data": this.ontem,
+          })
+            .then((d) => {
+              this.datasOntem = d;
+            })
+            .catch((e) => {
+              console.log(e)
+            });
+        } else {
+          this.datasOntem = [];
+          this.datasHoje = [];
+        }
       })
       .catch((e) => {
         console.log(e)
@@ -459,7 +542,6 @@ export class DashboardCampanhaComponent implements OnDestroy {
         for (let i of s) {
           this.contratosPagosSinteticos = i;
         }
-
       })
       .catch((e) => {
         console.log(e)
@@ -535,6 +617,15 @@ export class DashboardCampanhaComponent implements OnDestroy {
 
   atualizarFiltro(item) {
     this.filtro.campanha.codigo = item.codigo_campanha;
+    this.nomeCampanhaSelecionado = item.nome_campanha;
+
+    let dataInicioCampanhaApi = moment(String(item.data_inicio_campanha).substring(0, 10)).format('YYYY-MM-DD');
+    let dataInicioCampanhaFormat = moment(dataInicioCampanhaApi).format('DD/MM/YYYY');
+
+    let dataFimCampanhaApi = moment(String(item.data_fim_campanha).substring(0, 10)).format('YYYY-MM-DD');
+    let dataFimCampanhaFormat = moment(dataFimCampanhaApi).format('DD/MM/YYYY');
+
+    this.periodoCampanhaSelecionado = "De " + String(dataInicioCampanhaFormat) + " Até " + String(dataFimCampanhaFormat);
     this.campanhaSelecionada = item;
     this.findContratos();
     this.findDiasUteis();
@@ -628,7 +719,11 @@ export class DashboardCampanhaComponent implements OnDestroy {
     if (l.length === 2) {
       this[l[0]][l[1]] = t;
     }
+  }
 
+  changeComponent(component) {
+    this.popover.content = component;
+    this.popover.rebuild();
   }
 
 }

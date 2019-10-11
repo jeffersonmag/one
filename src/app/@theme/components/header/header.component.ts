@@ -59,7 +59,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private idle: Idle, private keepalive: Keepalive, location: Location, private ngbModal: NgbModal
   ) {
     // sets an idle timeout of 15 minutes.
-    idle.setIdle(5);
+    idle.setIdle(10 * 60);
     // sets a timeout period of 5 minutes.
     idle.setTimeout(60);
     // sets the interrupts like Keydown, scroll, mouse wheel, mouse down, and etc

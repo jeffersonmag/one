@@ -1,200 +1,556 @@
 <div class="row">
     <!--<div class="col-md-12 col-lg-20 col-xxxl-10">-->
     <div class="col-12">
-        <nb-card [nbSpinner]="propostasInconsistencias.length < 1 && pararSpinner" nbSpinnerStatus="danger">
-            <nb-card-header>Esteira de Produção</nb-card-header>
-            <nb-card-body>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm" *ngFor="let valor of indicadores">
-                            <nb-alert class="form_cad" [size]="large"
-                                (click)="filtroFindPropostasInconsistentes(valor.codigo_status_agrupado_inconsistencia)"
-                                status="{{valor.cor}}">
-                                <span class="fonte-card">{{ valor.status_agrupado_inconsistencia }}</span>
-                                <span
-                                    class="fonte-card-num">{{  valor.qtd_total_de_propostas_inconsistentes_status  }}/{{  qtd_total_de_propostas_inconsistentes  }}
-                                </span>
-                            </nb-alert>
-                            <!--<nb-flip-card [flipped]="flipped">
-                        <nb-card-front>
-                            <nb-card status="danger" size="tiny">
-                                <nb-card-body>
-                                    <h4 class="fonte-card">{{ valor.status_agrupado_inconsistencia }}</h4><br>
-                                    <h4 class="fonte-card-num">{{  valor.qtd_total_de_propostas_inconsistentes_status  }}/{{  qtd_total_de_propostas_inconsistentes  }}</h4>
-                                </nb-card-body>
-                            </nb-card>
-                        </nb-card-front>
-                        <nb-card-back>
-                            <nb-card status="success">
-                                <nb-card-header>{{ valor.status_agrupado_inconsistencia }}</nb-card-header>
-                                <nb-card-body>
-                                    {{  valor.qtd_total_de_propostas_inconsistentes_status  }}/{{  qtd_total_de_propostas_inconsistentes  }}
-                                </nb-card-body>
-                            </nb-card>
-                        </nb-card-back>
-                    </nb-flip-card>-->
+        <nb-flip-card [showToggleButton]="false" [flipped]="flipped">
+            <nb-card-front>
+                <nb-card [nbSpinner]="propostasInconsistencias.length < 1 && pararSpinner" nbSpinnerStatus="danger">
+                    <nb-card-header>
+                        Esteira de Produção
+                        <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Filtros">
+                            <nb-icon icon="funnel-outline" pack="eva" class="flip-icon" (click)="revelar()"></nb-icon>
+                        </button>
+                    </nb-card-header>
+                    <nb-card-body>
+                        <div class="row">
+                            <div *ngIf="ativaBotaocanalVendas">
+                                <button nbButton shape="round" size="small" status="primary"
+                                    nbTooltip="Limpar Filtro de Proposta" (click)="_filtercanalVendas(0, '', true)">
+                                    CANAL VENDAS: {{nomeCanalVendas}} &times;
+                                </button>
+                            </div>
+                            <div *ngIf="ativaBotaoRegional">
+                                <button nbButton shape="round" size="small" status="primary"
+                                    nbTooltip="Limpar Filtro de Proposta" (click)="_filterRegional(0, '', true)">
+                                    REGIONAL: {{nomeRegional}} &times;
+                                </button>
+                            </div>
+                            <div *ngIf="ativaBotaoComercial">
+                                <button nbButton shape="round" size="small" status="primary"
+                                    nbTooltip="Limpar Filtro de Proposta" (click)="_filterComercial(0, '', true)">
+                                    COMERCIAL: {{nomeComercial}} &times;
+                                </button>
+                            </div>
+                            <div *ngIf="ativaBotaoLojaMatriz">
+                                <button nbButton shape="round" size="small" status="primary"
+                                    nbTooltip="Limpar Filtro de Proposta" (click)="_filterLojaMatriz(0, '', true)">
+                                    MATRIZ: {{nomeLojaMatriz}} &times;
+                                </button>
+                            </div>
+                            <div *ngIf="ativaBotaoLoja">
+                                <button nbButton shape="round" size="small" status="primary"
+                                    nbTooltip="Limpar Filtro de Proposta" (click)="_filterLoja(0, '', true)">
+                                    LOJA: {{nomeLoja}} &times;
+                                </button>
+                            </div>
+                            <div *ngIf="ativaBotaoFuncionario">
+                                <button nbButton shape="round" size="small" status="primary"
+                                    nbTooltip="Limpar Filtro de Proposta" (click)="_filterFuncionario(0, '', true)">
+                                    PROMOTOR: {{nomeFuncionario}} &times;
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-                <div *ngIf="habilitaLimparFiltro">
-                    <button nbButton shape="round" size="small" status="danger" nbTooltip="Limpar Filtro de Proposta"
-                        (click)="findPropostasInconsistentes()">
-                        <i class="fa fa-trash color"></i>
-                    </button>
-                </div>
-
-                <!--<div class="infinite-cards row">
-                    <div class="col-md-12">
-                        <nb-card accent="info" [nbSpinner]="propostasInconsistencias.length < 1"
-                            nbSpinnerStatus="danger">
-                            <nb-card-header>Propostas Inconsistentes Analítico</nb-card-header>
-                            <div class="maxContent">
-                                <nb-card-body>-->
-                <!--<div class="table-responsive">-->
-
-
-                <table class="tabela" equalColumnsWidth>
-                    <thead>
-                        <tr>
-                            <th class="textRight">Proposta <nb-search placeholder="Pesquisar"
-                                    hint="Insira o número da proposta e pressione enter para pesquisar" show="true"
-                                    type="rotate-layout"></nb-search>
-                            </th>
-                            <th class="textRight">Parceiro</th>
-                            <th class="textRight">Cliente</th>
-                            <th class="textRight">Data</th>
-                            <th class="textRight">Órgão</th>
-                            <th class="textRight">Status</th>
-                            <th class="textRight">Valor</th>
-                            <th class="textRight">Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody *ngIf="propostasInconsistencias.length != 0 && pararSpinner" style="height: 600px; overflow-y: scroll">
-                        <tr *ngFor="let i of propostasInconsistencias | slice: pageSize | slice: 0:itemsPerPage">
-                            <td><button nbButton [size]="small" status="success" hero
-                                    (click)="copyToClipboard(i.proposta)"
-                                    nbTooltip="Clique para copiar">{{ i.proposta }}</button>
-                            </td>
-                            <td class="size-fonte">
-                                <i class="fa fa-address-card color"></i>
-                                {{ i.nome_agente }}<br>
-                                <i class="fa fa-university color"></i> {{ i.nome_fantasia }}<br>
-                                <i class="fa fa fa-user color"></i> {{ i.nome_regional }}
-                            </td>
-                            <td class="size-fonte">
-                                <i class="fa fa-id-badge color"></i> {{ i.nome_cliente_ }}
-                                <button nbButton status="success" ghost [size]="tiny"
-                                    (click)="baseHistorica(baseModal, i.cpf_cliente, i.nome_cliente_)"
-                                    nbTooltip="Histórico de contratos do cliente" nbTooltipStatus="success">
-                                    <i class="fa fa-archive"></i>
-                                </button>
-                                <ng-template #baseModal let-c="close" let-d="dismiss">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" aria-label="Close"
-                                            (click)="d('Cross click')">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <base-historica></base-historica>
-                                </ng-template>
-                                <br>
-                                <i class="fa fa-id-card color"></i> {{ i.cpf_cliente }}<br>
-                                <i class="fa fa-phone color"></i> {{ i.telefone_cliente }}
-                            </td>
-                            <td class="size-fonte">
-                                <span nbTooltip="Data de Digitação">
-                                    <i
-                                        class="fa fa-calendar-check color"></i>{{ i.data_entrada_operacao | moment: 'DD/MM/YYYY' }}</span><br>
-                                <span nbTooltip="Data de Status">
-                                    <i
-                                        class="fa fa-calendar-minus color"></i>{{ i.data_status | moment: 'DD/MM/YYYY' }}</span>
-                            </td>
-                            <td class="size-fonte">
-                                {{ i.nome_convenio }}<br>
-                                {{ i.tipo_operacao }}<br>
-                                {{ i.produto_corban }}<br>
-                                {{ i.nome_instituicao }}
-                            </td>
-                            <td class="size-fonte-right">
-                                <button nbButton status="info" outline [size]="tiny"
-                                    nbTooltip="Quantidade de dias parado em Inconsistências">
-                                    {{ i.qtd_dias_parada_em_inconsistencia }}
-                                </button>
-                                <button nbButton [size]="tiny" status="{{ i.cor }}"
-                                    nbTooltip="{{  i.status_agrupado_inconsistencia_  }}">
-                                    {{ i.status_agrupado_inconsistencia_ | slice:0:1 }}
-                                </button><br>
-                                <div *ngFor="let inconsistencia of i.inconsistencias">
-                                    <div *ngIf="inconsistencia.codigo_tipo_inconsistencia == 1"
-                                        nbTooltip="{{ inconsistencia.descricao_inconsistencia }}">
-                                        <button nbButton status="success" outline [size]="tiny">
-                                            {{ inconsistencia.codigo_inconsistencia }}
-                                        </button>
-                                    </div>
-                                    <div *ngIf="inconsistencia.codigo_tipo_inconsistencia == 2"
-                                        nbTooltip="{{ inconsistencia.descricao_inconsistencia }}">
-                                        <button nbButton disabled [size]="tiny">
-                                            <div class="text-hint">{{ inconsistencia.codigo_inconsistencia }}</div>
-                                        </button>
-                                    </div>
+                        <br>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm" *ngFor="let valor of indicadores">
+                                    <nb-alert class="form_cad" [size]="large"
+                                        (click)="filtroFindPropostasInconsistentes(valor.codigo_status_agrupado_inconsistencia)"
+                                        status="{{valor.cor}}">
+                                        <span class="fonte-card">{{ valor.status_agrupado_inconsistencia }}</span>
+                                        <span
+                                            class="fonte-card-num">{{  valor.qtd_total_de_propostas_inconsistentes_status  }}/{{  qtd_total_de_propostas_inconsistentes  }}
+                                        </span>
+                                    </nb-alert>
                                 </div>
-                            </td>
-                            <td class="size-fonte-right">
-                                <span nbTooltip="Valor do contrato">
-                                    <i class="fa fa-line-chart color"></i>
-                                    {{ i.valor_contrato | number:'.2-2':'pt' }}</span><br>
-                                <span nbTooltip="Base Cálculo">
-                                    <i class="fa fa-usd color"></i>
-                                    {{ i.base_calculo | number:'.2-2':'pt' }}</span>
-                            </td>
-                            <td class="size-fonte">
-                                <div class="row">
-                                    <div class="col-xl">
-                                        <button nbButton status="info" [size]="small" ghost
-                                            (click)="redirecionaBmgConsig()"
-                                            nbTooltip="Ir para o sistema da insituição">
-                                            <i class="fa fa-eye color"></i>
+                            </div>
+                        </div>
+
+                        <div *ngIf="habilitaLimparFiltro">
+                            <button nbButton shape="round" size="small" status="danger"
+                                nbTooltip="Limpar Filtro de Proposta" (click)="findPropostasInconsistentes()">
+                                <i class="fa fa-trash color"></i>
+                            </button>
+                        </div>
+
+                        <table class="tabela" equalColumnsWidth>
+                            <thead>
+                                <tr>
+                                    <th class="textRight">Proposta <nb-search placeholder="Pesquisar"
+                                            hint="Insira o número da proposta e pressione enter para pesquisar"
+                                            show="true" type="rotate-layout"></nb-search>
+                                    </th>
+                                    <th class="textRight">Parceiro</th>
+                                    <th class="textRight">Cliente</th>
+                                    <th class="textRight">Data</th>
+                                    <th class="textRight">Órgão</th>
+                                    <th class="textRight">Status</th>
+                                    <th class="textRight">Valor</th>
+                                    <th class="textRight">Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="propostasInconsistencias.length != 0 && pararSpinner"
+                                style="height: 600px; overflow-y: scroll">
+                                <tr
+                                    *ngFor="let i of propostasInconsistencias | slice: pageSize | slice: 0:itemsPerPage">
+                                    <td><button nbButton [size]="small" status="success" hero
+                                            (click)="copyToClipboard(i.proposta)"
+                                            nbTooltip="Clique para copiar">{{ i.proposta }}</button>
+                                    </td>
+                                    <td class="size-fonte">
+                                        <i class="fa fa-address-card color"></i>
+                                        {{ i.nome_agente }}<br>
+                                        <i class="fa fa-university color"></i> {{ i.nome_fantasia }}<br>
+                                        <i class="fa fa fa-user color"></i> {{ i.nome_regional }}
+                                    </td>
+                                    <td class="size-fonte">
+                                        <i class="fa fa-id-badge color"></i> {{ i.nome_cliente_ }}
+                                        <button nbButton status="success" ghost [size]="tiny"
+                                            (click)="baseHistorica(baseModal, i.cpf_cliente, i.nome_cliente_)"
+                                            nbTooltip="Histórico de contratos do cliente" nbTooltipStatus="success">
+                                            <i class="fa fa-archive"></i>
                                         </button>
-                                    </div>
-                                    <div class="col-xl">
-                                        <button nbButton status="success" [size]="large"
-                                            (click)="marcarResolvida(content, i.proposta, i.codigo_status_agrupado_inconsistencia_)"
-                                            ghost nbTooltip="Resolver inconsistência no One">
-                                            <i class="fa fa-check color"></i>
-                                        </button>
-                                        <ng-template #content let-c="close" let-d="dismiss">
+                                        <ng-template #baseModal let-c="close" let-d="dismiss">
                                             <div class="modal-header">
-                                                <span>Confirmação de resolução</span>
                                                 <button type="button" class="close" aria-label="Close"
                                                     (click)="d('Cross click')">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <solucao-inconsistencias [cValue]="this.c">
-                                            </solucao-inconsistencias>
+                                            <base-historica></base-historica>
                                         </ng-template>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tbody *ngIf="propostasInconsistencias.length == 0 && !pararSpinner">
-                        <tr>
-                            <td colspan="8"> NENHUMA PROPOSTA ENCONTRADA </td>
-                        </tr>
-                    </tbody>
-                </table><br><br>
-                <ngb-pagination [collectionSize]="propostasInconsistencias.length" #numPages [maxSize]="15"
-                    [pageSize]="itemsPerPage" [(page)]="currentPage" (pageChange)="onPageChange(currentPage)">
-                </ngb-pagination>
-                <!--</div>-->
-                <!--</nb-card-body>
+                                        <br>
+                                        <i class="fa fa-id-card color"></i> {{ i.cpf_cliente }}<br>
+                                        <i class="fa fa-phone color"></i> {{ i.telefone_cliente }}
+                                    </td>
+                                    <td class="size-fonte">
+                                        <span nbTooltip="Data de Digitação">
+                                            <i
+                                                class="fa fa-calendar-check color"></i>{{ i.data_entrada_operacao | moment: 'DD/MM/YYYY' }}</span><br>
+                                        <span nbTooltip="Data de Status">
+                                            <i
+                                                class="fa fa-calendar-minus color"></i>{{ i.data_status | moment: 'DD/MM/YYYY' }}</span>
+                                    </td>
+                                    <td class="size-fonte">
+                                        {{ i.nome_convenio }}<br>
+                                        {{ i.tipo_operacao }}<br>
+                                        {{ i.produto_corban }}<br>
+                                        {{ i.nome_instituicao }}
+                                    </td>
+                                    <td class="size-fonte-right">
+                                        <button nbButton status="info" outline [size]="tiny"
+                                            nbTooltip="Quantidade de dias parado em Inconsistências">
+                                            {{ i.qtd_dias_parada_em_inconsistencia }}
+                                        </button>
+                                        <button nbButton [size]="tiny" status="{{ i.cor }}"
+                                            nbTooltip="{{  i.status_agrupado_inconsistencia_  }}">
+                                            {{ i.status_agrupado_inconsistencia_ | slice:0:1 }}
+                                        </button><br>
+                                        <div *ngFor="let inconsistencia of i.inconsistencias">
+                                            <div *ngIf="inconsistencia.codigo_tipo_inconsistencia == 1"
+                                                nbTooltip="{{ inconsistencia.descricao_inconsistencia }}">
+                                                <button nbButton status="success" outline [size]="tiny">
+                                                    {{ inconsistencia.codigo_inconsistencia }}
+                                                </button>
+                                            </div>
+                                            <div *ngIf="inconsistencia.codigo_tipo_inconsistencia == 2"
+                                                nbTooltip="{{ inconsistencia.descricao_inconsistencia }}">
+                                                <button nbButton disabled [size]="tiny">
+                                                    <div class="text-hint">{{ inconsistencia.codigo_inconsistencia }}
+                                                    </div>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="size-fonte-right">
+                                        <span nbTooltip="Valor do contrato">
+                                            <i class="fa fa-line-chart color"></i>
+                                            {{ i.valor_contrato | number:'.2-2':'pt' }}</span><br>
+                                        <span nbTooltip="Base Cálculo">
+                                            <i class="fa fa-usd color"></i>
+                                            {{ i.base_calculo | number:'.2-2':'pt' }}</span>
+                                    </td>
+                                    <td class="size-fonte">
+                                        <div class="row">
+                                            <div class="col-xl">
+                                                <button nbButton status="info" [size]="small" ghost
+                                                    (click)="redirecionaBmgConsig()"
+                                                    nbTooltip="Ir para o sistema da insituição">
+                                                    <i class="fa fa-eye color"></i>
+                                                </button>
+                                            </div>
+                                            <div class="col-xl">
+                                                <button nbButton status="success" [size]="large"
+                                                    (click)="marcarResolvida(content, i.proposta, i.codigo_status_agrupado_inconsistencia_)"
+                                                    ghost nbTooltip="Resolver inconsistência no One">
+                                                    <i class="fa fa-check color"></i>
+                                                </button>
+                                                <ng-template #content let-c="close" let-d="dismiss">
+                                                    <div class="modal-header">
+                                                        <span>Confirmação de resolução</span>
+                                                        <button type="button" class="close" aria-label="Close"
+                                                            (click)="d('Cross click')">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <solucao-inconsistencias [cValue]="this.c">
+                                                    </solucao-inconsistencias>
+                                                </ng-template>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody *ngIf="propostasInconsistencias.length == 0 && !pararSpinner">
+                                <tr>
+                                    <td colspan="8"> NENHUMA PROPOSTA ENCONTRADA </td>
+                                </tr>
+                            </tbody>
+                        </table><br><br>
+                        <ngb-pagination [collectionSize]="propostasInconsistencias.length" #numPages [maxSize]="15"
+                            [pageSize]="itemsPerPage" [(page)]="currentPage" (pageChange)="onPageChange(currentPage)">
+                        </ngb-pagination>
+                        <!--</div>-->
+                        <!--</nb-card-body>
                             </div>
                         </nb-card>
                     </div>
                 </div>-->
-            </nb-card-body>
-        </nb-card>
+                    </nb-card-body>
+                </nb-card>
+            </nb-card-front>
+            <nb-card-back>
+                <nb-card>
+                    <nb-card-header>
+                        Filtros Esteira de Produção
+                        <nb-icon icon="chevron-left-outline" pack="eva" class="flip-icon" (click)="revelar()"></nb-icon>
+                    </nb-card-header>
+                    <nb-card-body [nbSpinner]="propostasInconsistencias.length < 1 && pararSpinner"
+                        nbSpinnerStatus="success">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col" *ngIf="canalVendas.length != 0">
+                                    <nb-card accent="primary" status="primary" class="solar-card">
+                                        <nb-card-header>Canal de vendas
+                                            <nb-icon *ngIf="revealed.canalVendas" class="toggle-icon"
+                                                icon="chevron-up-outline" pack="eva"
+                                                (click)="toggleView('canalVendas')"></nb-icon>
+                                            <nb-icon *ngIf="!revealed.canalVendas" class="toggle-icon"
+                                                icon="chevron-down-outline" pack="eva"
+                                                (click)="toggleView('canalVendas')"> </nb-icon>
+                                        </nb-card-header>
+                                        <div *ngIf="revealed.canalVendas">
+                                            <nb-card-body>
+                                                <div class="info" style="text-align: center;">
+                                                    <div style="padding-top: 15px;">
+                                                        <div class="container">
+                                                            <table class="tabela" equalColumnsWidth>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="text-left"></th>
+                                                                        <th class="text-left">Nome Canal Vendas</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr *ngFor="let i of canalVendas">
+                                                                        <td class="size-fonte">
+                                                                            <button nbButton status="success" ghost
+                                                                                [size]="tiny" nbTooltip="Acionar Filtro"
+                                                                                (click)="_filtercanalVendas(i.codigo_canal_vendas, i.nome_canal_vendas, false)"
+                                                                                nbTooltipStatus="success">
+                                                                                <i class="fa fa-chevron-up color"></i>
+                                                                            </button>
+                                                                        </td>
+                                                                        <td class="size-fonte">{{i.nome_canal_vendas}}
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </nb-card-body>
+                                        </div>
+                                    </nb-card>
+                                </div>
+
+
+                                <div class="col" *ngIf="regional.length != 0">
+                                    <nb-card accent="primary" status="primary" class="solar-card">
+                                        <nb-card-header>Regional
+                                            <nb-icon *ngIf="revealed.regional" class="toggle-icon"
+                                                icon="chevron-up-outline" pack="eva" (click)="toggleView('regional')">
+                                            </nb-icon>
+                                            <nb-icon *ngIf="!revealed.regional" class="toggle-icon"
+                                                icon="chevron-down-outline" pack="eva" (click)="toggleView('regional')">
+                                            </nb-icon>
+                                        </nb-card-header>
+                                        <div class="maxContent" *ngIf="revealed.regional">
+                                            <nb-card-body>
+                                                <div class="info" style="text-align: center;">
+                                                    <div style="padding-top: 15px;">
+                                                        <div class="container">
+                                                            <table class="tabela" equalColumnsWidth>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="text-left"></th>
+                                                                        <th class="text-left">Nome Regional</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr *ngFor="let i of regional">
+                                                                        <td class="size-fonte">
+                                                                            <button nbButton status="success" ghost
+                                                                                [size]="tiny" nbTooltip="Acionar Filtro"
+                                                                                (click)="_filterRegional(i.codigo_regional, i.nome_regional, false)"
+                                                                                nbTooltipStatus="success">
+                                                                                <i class="fa fa-chevron-up color"></i>
+                                                                            </button>
+                                                                        </td>
+                                                                        <td class="size-fonte">{{i.nome_regional}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </nb-card-body>
+                                        </div>
+                                    </nb-card>
+                                </div>
+
+                                <div class="col" *ngIf="comercial.length != 0">
+                                    <nb-card accent="primary" status="primary" class="solar-card">
+                                        <nb-card-header>
+                                            Comercial
+                                            <nb-icon *ngIf="revealed.comercial" class="toggle-icon"
+                                                icon="chevron-up-outline" pack="eva" (click)="toggleView('comercial')">
+                                            </nb-icon>
+                                            <nb-icon *ngIf="!revealed.comercial" class="toggle-icon"
+                                                icon="chevron-down-outline" pack="eva"
+                                                (click)="toggleView('comercial')"> </nb-icon>
+                                        </nb-card-header>
+                                        <div class="maxContent" *ngIf="revealed.comercial">
+                                            <nb-card-body>
+                                                <div class="info" style="text-align: center;">
+                                                    <div style="padding-top: 15px;">
+                                                        <div class="container">
+                                                            <table class="tabela" equalColumnsWidth>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="text-left"></th>
+                                                                        <th class="text-left">Nome comercial</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr *ngFor="let i of comercial">
+                                                                        <td class="size-fonte">
+                                                                            <button nbButton status="success" ghost
+                                                                                [size]="tiny" nbTooltip="Acionar Filtro"
+                                                                                (click)="_filterComercial(i.codigo_comercial, i.nome_comercial, false)"
+                                                                                nbTooltipStatus="success">
+                                                                                <i class="fa fa-chevron-up color"></i>
+                                                                            </button>
+                                                                        </td>
+                                                                        <td class="size-fonte">{{i.nome_comercial}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </nb-card-body>
+                                        </div>
+                                    </nb-card>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col" *ngIf="matriz.length != 0">
+                                    <nb-card accent="primary" status="primary" class="solar-card">
+                                        <nb-card-header>Loja Matriz
+                                            <nb-icon *ngIf="revealed.lojaMatriz" class="toggle-icon"
+                                                icon="chevron-up-outline" pack="eva" (click)="toggleView('lojaMatriz')">
+                                            </nb-icon>
+                                            <nb-icon *ngIf="!revealed.lojaMatriz" class="toggle-icon"
+                                                icon="chevron-down-outline" pack="eva"
+                                                (click)="toggleView('lojaMatriz')"> </nb-icon>
+                                        </nb-card-header>
+                                        <div class="maxContent" *ngIf="revealed.lojaMatriz">
+                                            <nb-card-body>
+                                                <div class="info" style="text-align: center;">
+                                                    <div style="padding-top: 15px;">
+                                                        <div class="container">
+                                                            <table class="tabela" equalColumnsWidth>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="text-left"></th>
+                                                                        <th class="text-left">Nome Loja Matriz</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr *ngFor="let i of matriz">
+                                                                        <td class="size-fonte">
+                                                                            <button nbButton status="success" ghost
+                                                                                [size]="tiny" nbTooltip="Acionar Filtro"
+                                                                                (click)="_filterLojaMatriz(i.codigo_loja_matriz, i.nome_loja_matriz, false)"
+                                                                                nbTooltipStatus="success">
+                                                                                <i class="fa fa-chevron-up color"></i>
+                                                                            </button>
+                                                                        </td>
+                                                                        <td class="size-fonte">{{i.nome_loja_matriz}}
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </nb-card-body>
+                                        </div>
+                                    </nb-card>
+                                </div>
+
+                                <div class="col" *ngIf="loja.length != 0">
+                                    <nb-card accent="primary" status="primary" class="solar-card">
+                                        <nb-card-header>Loja
+                                            <nb-icon *ngIf="revealed.loja" class="toggle-icon" icon="chevron-up-outline"
+                                                pack="eva" (click)="toggleView('loja')"></nb-icon>
+                                            <nb-icon *ngIf="!revealed.loja" class="toggle-icon"
+                                                icon="chevron-down-outline" pack="eva" (click)="toggleView('loja')">
+                                            </nb-icon>
+                                        </nb-card-header>
+                                        <div class="maxContent" *ngIf="revealed.loja">
+                                            <nb-card-body>
+                                                <div class="info" style="text-align: center;">
+                                                    <div style="padding-top: 15px;">
+                                                        <div class="container">
+                                                            <table class="tabela" equalColumnsWidth>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="text-left"></th>
+                                                                        <th class="text-left">Nome Loja</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr *ngFor="let i of loja">
+                                                                        <td class="size-fonte">
+                                                                            <button nbButton status="success" ghost
+                                                                                [size]="tiny" nbTooltip="Acionar Filtro"
+                                                                                (click)="_filterLoja(i.codigo_loja, i.nome_loja, false)"
+                                                                                nbTooltipStatus="success">
+                                                                                <i class="fa fa-chevron-up color"></i>
+                                                                            </button>
+                                                                        </td>
+                                                                        <td class="size-fonte">{{i.nome_loja}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </nb-card-body>
+                                        </div>
+                                    </nb-card>
+                                </div>
+
+
+                                <div class="col" *ngIf="funcionario.length != 0">
+                                    <nb-card accent="primary" status="primary" class="solar-card">
+                                        <nb-card-header>Promotor
+                                            <nb-icon *ngIf="revealed.funcionario" class="toggle-icon"
+                                                icon="chevron-up-outline" pack="eva"
+                                                (click)="toggleView('funcionario')"></nb-icon>
+                                            <nb-icon *ngIf="!revealed.funcionario" class="toggle-icon"
+                                                icon="chevron-down-outline" pack="eva"
+                                                (click)="toggleView('funcionario')"> </nb-icon>
+                                        </nb-card-header>
+                                        <div class="maxContent" *ngIf="revealed.funcionario">
+                                            <nb-card-body>
+                                                <div class="info" style="text-align: center;">
+                                                    <div style="padding-top: 15px;">
+                                                        <div class="container">
+                                                            <table class="tabela" equalColumnsWidth>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="text-left"></th>
+                                                                        <th class="text-left">Nome Promotor</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr *ngFor="let i of funcionario">
+                                                                        <td class="size-fonte">
+                                                                            <button nbButton status="success" ghost
+                                                                                [size]="tiny" nbTooltip="Acionar Filtro"
+                                                                                (click)="_filterFuncionario(i.codigo_funcionario, i.nome_funcionario, false)"
+                                                                                nbTooltipStatus="success">
+                                                                                <i class="fa fa-chevron-up color"></i>
+                                                                            </button>
+                                                                        </td>
+                                                                        <td class="size-fonte">{{i.nome_funcionario}}
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </nb-card-body>
+                                        </div>
+                                    </nb-card>
+                                </div>
+                            </div>
+                        </div>
+                    </nb-card-body>
+                    <!--<nb-card-footer>
+                        <div class="col" *ngIf="tipoPendencia.length != 0">
+                                    <nb-card accent="primary" status="primary" class="solar-card">
+                                        <nb-card-header>Tipo de Pendência
+                                            <nb-icon *ngIf="revealed.tipoPendencia" class="toggle-icon"
+                                                icon="chevron-up-outline" pack="eva"
+                                                (click)="toggleView('tipoPendencia')"></nb-icon>
+                                            <nb-icon *ngIf="!revealed.tipoPendencia" class="toggle-icon"
+                                                icon="chevron-down-outline" pack="eva"
+                                                (click)="toggleView('tipoPendencia')"> </nb-icon>
+                                        </nb-card-header>
+                                        <div *ngIf="revealed.tipoPendencia">
+                                            <nb-card-body>
+                                                <div class="info" style="text-align: center;">
+                                                    <div style="padding-top: 15px;">
+                                                        <div class="container">
+                                                            <table class="tabela" equalColumnsWidth>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="text-left"></th>                                                                        
+                                                                        <th class="text-left">Status Farol</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr *ngFor="let i of tipoPendencia">
+                                                                        <td class="size-fonte">
+                                                                            <button nbButton status="success" ghost
+                                                                                [size]="tiny" nbTooltip="Acionar Filtro"
+                                                                                (click)="_filterTipoPendencia(i.codigo_status_farol, i.nome_status_farol, false)"
+                                                                                nbTooltipStatus="success">
+                                                                                <i class="fa fa-chevron-up color"></i>
+                                                                            </button>
+                                                                        </td>                                                                        
+                                                                        <td *ngIf="i.nome_status_farol == 'E'"
+                                                                            class="size-fonte">PRIMEIRA ENTREGA</td>
+                                                                        <td *ngIf="i.nome_status_farol == 'R'"
+                                                                            class="size-fonte">REABERTURA</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </nb-card-body>
+                                        </div>
+                                    </nb-card>
+                                </div>
+                    </nb-card-footer>-->
+                </nb-card>
+            </nb-card-back>
+        </nb-flip-card>
     </div>
 </div>

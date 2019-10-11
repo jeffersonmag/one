@@ -17,17 +17,15 @@ import { MENU_ITEMS } from './pages-menu';
 })
 export class PagesComponent implements OnInit {
 
-  menu = MENU_ITEMS; 
+  menu = MENU_ITEMS;
 
   constructor(
     private router: Router,
     private sessionService: SessionService,
-  ) {  }  
+  ) { }
 
   ngOnInit() {
     const token = this.sessionService.get('token');
-    //console.log('meu token');
-    //console.log(token);
     if (!token) {
       this.router.navigate(['/']);
     }

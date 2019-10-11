@@ -286,7 +286,7 @@ export class PendenciaComponent implements OnInit {
       "status_farol": this.codigoTipoPendencia,
       "codigo_canal_vendas": Number(this.codigoCanalVendas),
       "numero_bordero": Number(this.codigoBordero),
-      "status_time_line": codigo_status_time_line.codigo_status_time_line,
+      "status_time_line": Number(this.codigo_status_time_line),
     })
       .then((s) => {
         this.pendencia = s.dados;

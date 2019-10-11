@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbMenuModule, NbStepperModule, NbProgressBarModule } from '@nebular/theme';
+import { NbMenuModule, NbStepperModule, NbProgressBarModule, NbPopoverComponent, NbPopoverModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { DashboardModule } from './dashboard/dashboard.module';
@@ -20,10 +20,12 @@ import { NgIdleModule } from '@ng-idle/core';
     PendenciaModule,
     EsteiraProducaoModule,
     NbStepperModule,
+    NbPopoverModule,
     DashboardCampanhaModule,
     NgIdleKeepaliveModule.forRoot(),
     NgIdleModule,
-    NbProgressBarModule
+    NbProgressBarModule,
+
   ],
   declarations: [
     PagesComponent

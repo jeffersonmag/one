@@ -13,6 +13,7 @@ import {
   NbTabsetModule,
   NbUserModule,
   NbTooltipModule,
+  NbPopoverModule,
 } from '@nebular/theme';
 import { NgxEchartsModule } from 'ngx-echarts';
 
@@ -42,7 +43,8 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
     NbProgressBarModule,
     RoundProgressModule,
     NbTooltipModule,
-    NbListModule
+    NbListModule,
+    NbPopoverModule
   ],
   declarations: [
     DashboardCampanhaComponent,

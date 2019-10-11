@@ -22,7 +22,7 @@
 
 .toggle-icon {
   position: absolute;
-  float:left;
+  float: left;
   margin-left: 5px;
   margin-top: 3px;
   cursor: pointer;
@@ -66,9 +66,31 @@
 }
 
 .values {
-  font-size: 15px;
+  font-size: 30px;
   text-align: right;
   padding-bottom: 5px;
+  font-weight: bold;
+}
+
+.simpleCard1 {
+  text-align: center;
+  margin-top: 4px;
+  margin-bottom: -2px;
+  font-size: 9px;
+}
+
+.valuesCard1 {
+  font-size: 17px;
+  text-align: right;
+  padding-bottom: -3px;
+  font-weight: bold;
+}
+
+.valuesCard1Bottom {
+  font-size: 17px;
+  text-align: center;
+  padding-bottom: -2px;
+  font-weight: bold;
 }
 
 .tabela {
@@ -83,7 +105,7 @@
 }
 
 .mes-setado2 {
-  font-size: 20px;
+  font-size: 30px;
   line-height: 100%;
   align-content: right;
   text-align: right;
@@ -110,10 +132,10 @@
 }
 
 .cardFirst {
-  height: 12rem;
-  width: 13rem;
+  height: 22rem;
+  width: 18rem;
   margin-top: 20px;
-  margin-left: 30px;
+  margin-left: 26px;
 }
 
 .cardBody {
@@ -211,8 +233,15 @@
 }
 
 .txtTable3 {
-  font-size: 11px;
+  font-size: 9px;
   width: 16.16%;
+  vertical-align: bottom;
+}
+
+.txtTable2 {
+  font-size: 12px;
+  width: 16.16%;
+  font-weight: bold;
   vertical-align: bottom;
 }
 
@@ -239,5 +268,3 @@
   font-size: 11px;
   height: 100;
 }
-
-

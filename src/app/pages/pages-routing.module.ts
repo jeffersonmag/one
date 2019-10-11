@@ -11,10 +11,10 @@ const routes: Routes = [{
   path: '',
   component: PagesComponent,
   children: [
-    {
+    /*{
       path: 'dashboard',
       component: DashboardComponent,
-    },
+    },*/
 
     {
       path: 'dashboard-campanha',
@@ -70,11 +70,11 @@ const routes: Routes = [{
         .then(m => m.TablesModule),
     },
 
-    {
+    /*{
       path: '',
       redirectTo: 'dashboard',
       pathMatch: 'full',
-    },
+    },*/
 
     {
       path: '',

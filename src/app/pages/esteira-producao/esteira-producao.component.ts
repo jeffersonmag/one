@@ -47,6 +47,39 @@ export class EsteiraProducaoComponent implements OnInit {
   mensagem: string = 'Ação realizada com sucesso!';
   pararSpinner: boolean = true;
 
+  revealed = {
+    regional: false,
+    comercial: false,
+    funcionario: false,
+    loja: false,
+    lojaMatriz: false,
+    canalVendas: false,
+    tipoPendencia: false,
+  }
+
+  ativaBotaoComercial = false;
+  ativaBotaoRegional = false;
+  ativaBotaoLoja = false;
+  ativaBotaoLojaMatriz = false;
+  ativaBotaoFuncionario = false;
+  ativaBotaocanalVendas = false;
+  ativaBotaoBordero = false;
+
+  codigoComercial = '';
+  codigoRegional = '';
+  codigoLoja = '';
+  codigoLojaMatriz = '';
+  codigoFuncionario = '';
+  codigoCanalVendas = '';
+  codigoBordero = '';
+  digitoBordero = '';
+  nomeComercial = '';
+  nomeRegional = '';
+  nomeLoja = '';
+  nomeFuncionario = '';
+  nomeLojaMatriz = '';
+  nomeCanalVendas = '';
+
   private alive = true;
   flipped = false;
   on = false;
@@ -101,6 +134,14 @@ export class EsteiraProducaoComponent implements OnInit {
   habilitaLimparFiltro: boolean = false;
   propostasInconsistencias = [];
   propostasInconsistenciasC = [];
+  comercial = [];
+  regional = [];
+  funcionario = [];
+  loja = [];
+  matriz = [];
+  canalVendas = [];
+
+
   filtropropostasInconsistencias: any;
   indicadores = [];
   indicadoresC = [];
@@ -191,15 +232,21 @@ export class EsteiraProducaoComponent implements OnInit {
     this.pararSpinner = true;
     this.EsteiraProducaoApiService.propostasInconsistentes(
       {
-        "codigo_regional": "",
-        "codigo_comercial": "",
-        "codigo_loja": "",
-        "codigo_matriz": "",
-        "cpf_funcionario": "",
-        "cpf_cliente": ""
+        "codigo_regional": this.codigoRegional,
+        "codigo_comercial": this.codigoComercial,
+        "codigo_loja": this.codigoLoja,
+        "codigo_matriz": this.codigoLojaMatriz,
+        "cpf_funcionario": this.codigoFuncionario,
+        "cpf_cliente": "",
       }
     ).then((s) => {
-      this.propostasInconsistencias = s;
+      this.propostasInconsistencias = s.dados;
+      this.comercial = s.agrupado_comercial;
+      this.regional = s.agrupado_regional;
+      this.funcionario = s.agrupado_funcionario;
+      this.loja = s.agrupado_loja;
+      this.matriz = s.agrupado_loja_matriz;
+      this.canalVendas = s.agrupado_canal_vendas;
       if (this.propostasInconsistencias.length == 0) {
         this.pararSpinner = false;
       }
@@ -208,6 +255,10 @@ export class EsteiraProducaoComponent implements OnInit {
       .catch((e) => {
         console.log(e)
       });
+  }
+
+  toggleView(acao) {
+    this.revealed[acao] = !this.revealed[acao];
   }
 
   setColors() {
@@ -299,19 +350,30 @@ export class EsteiraProducaoComponent implements OnInit {
   filtroFindPropostasInconsistentes(codigo_status_agrupado_inconsistencia) {
     this.propostasInconsistencias = [];
     this.on = !this.on
-    if (this.on) {
+    if (this.on || this.ativaBotaoFuncionario ||
+      this.ativaBotaoComercial ||
+      this.ativaBotaoRegional ||
+      this.ativaBotaocanalVendas ||
+      this.ativaBotaoLoja ||
+      this.ativaBotaoLojaMatriz) {
       this.EsteiraProducaoApiService.propostasInconsistentes(
         {
-          "codigo_regional": "",
-          "codigo_comercial": "",
-          "codigo_loja": "",
-          "codigo_matriz": "",
-          "cpf_funcionario": "",
+          "codigo_regional": this.codigoRegional,
+          "codigo_comercial": this.codigoComercial,
+          "codigo_loja": this.codigoLoja,
+          "codigo_matriz": this.codigoLojaMatriz,
+          "cpf_funcionario": this.codigoFuncionario,
           "cpf_cliente": "",
           "codigo_status_agrupado_inconsistencia": codigo_status_agrupado_inconsistencia
         }
       ).then((s) => {
-        this.propostasInconsistencias = s;
+        this.propostasInconsistencias = s.dados;
+        this.comercial = s.agrupado_comercial;
+        this.regional = s.agrupado_regional;
+        this.funcionario = s.agrupado_funcionario;
+        this.loja = s.agrupado_loja;
+        this.matriz = s.agrupado_loja_matriz;
+        this.canalVendas = s.agrupado_canal_vendas;
         this.setColorsDisabled(this.on, codigo_status_agrupado_inconsistencia);
       })
         .catch((e) => {
@@ -326,19 +388,24 @@ export class EsteiraProducaoComponent implements OnInit {
   filtroFindPropostasInconsistentesSearch(proposta) {
     this.EsteiraProducaoApiService.propostasInconsistentes(
       {
-        "codigo_regional": "",
-        "codigo_comercial": "",
-        "codigo_loja": "",
-        "codigo_matriz": "",
-        "cpf_funcionario": "",
+        "codigo_regional": this.codigoRegional,
+        "codigo_comercial": this.codigoComercial,
+        "codigo_loja": this.codigoLoja,
+        "codigo_matriz": this.codigoLojaMatriz,
+        "cpf_funcionario": this.codigoFuncionario,
         "cpf_cliente": "",
-        "codigo_status_agrupado_inconsistencia": "",
         "proposta": proposta
       }
     ).then((s) => {
       if (s.length > 0) {
         this.propostasInconsistencias = [];
-        this.propostasInconsistencias = s;
+        this.propostasInconsistencias = s.dados;
+        this.comercial = s.agrupado_comercial;
+        this.regional = s.agrupado_regional;
+        this.funcionario = s.agrupado_funcionario;
+        this.loja = s.agrupado_loja;
+        this.matriz = s.agrupado_loja_matriz;
+        this.canalVendas = s.agrupado_canal_vendas;
         this.habilitaLimparFiltro = true;
         this.findIndicadores();
         this.setColors();
@@ -423,6 +490,234 @@ export class EsteiraProducaoComponent implements OnInit {
       `${titleContent}`,
       config);
   }
+
+  revelar() {
+    this.flipped = !this.flipped;
+    /*if (!this.flipped &&
+      (this.ativaBotaoFuncionario ||
+        this.ativaBotaoComercial ||
+        this.ativaBotaoRegional ||
+        this.ativaBotaoTipoPendencia ||
+        this.ativaBotaocanalVendas ||
+        this.ativaBotaoLoja ||
+        this.ativaBotaoLojaMatriz)) {
+      this.atualizaContador(true);
+    }*/
+  }
+
+  private _filterRegional(value: number, nome?: string, limpar?: boolean): any {
+    if (limpar && value == 0) {
+      this.ativaBotaoRegional = false;
+      this.codigoRegional = "";
+      //this.atualizaContador(this.ativaBotaoRegional);
+      this.findIndicadores();
+    } else {
+      this.ativaBotaoRegional = true;
+      const filterValue = value;
+      this.nomeRegional = nome;
+      this.codigoRegional = String(filterValue);
+      //this.atualizaContador(this.ativaBotaoRegional)
+      let regionaisFiltrados = this.regional.filter(valorRegional => valorRegional.codigo_regional == filterValue);
+      let propostasInconsistenciasFiltrados = this.propostasInconsistencias.filter(valorContratos => valorContratos.codigo_regional == filterValue);
+      this.regional = regionaisFiltrados;
+      this.propostasInconsistencias = propostasInconsistenciasFiltrados;
+      this.habilitaFiltrosSecundarios(this.regional);
+    }
+  }
+
+  private _filterComercial(value: number, nome?: string, limpar?: boolean): any {
+    if (limpar && value == 0) {
+      this.ativaBotaoComercial = false;
+      this.codigoComercial = "";
+      //this.atualizaContador(this.ativaBotaoComercial);
+      this.findIndicadores();
+    } else {
+      const filterValue = value;
+      this.ativaBotaoComercial = true;
+      this.codigoComercial = String(filterValue);
+      this.nomeComercial = nome;
+      //this.atualizaContador(this.ativaBotaoComercial)
+      let comerciaisFiltrados = this.comercial.filter(valorComercial => valorComercial.codigo_comercial == filterValue);
+      let propostasInconsistenciasFiltrados = this.propostasInconsistencias.filter(valorContratos => valorContratos.codigo_comercial == filterValue);
+      this.comercial = comerciaisFiltrados;
+      this.propostasInconsistencias = propostasInconsistenciasFiltrados;
+      this.habilitaFiltrosSecundarios(this.comercial);
+    }
+  }
+
+  private _filterLoja(value: number, nome?: string, limpar?: boolean): any {
+    if (limpar && value == 0) {
+      this.ativaBotaoLoja = false;
+      this.codigoLoja = "";
+      //this.atualizaContador(this.ativaBotaoLoja);
+      this.findIndicadores();
+    } else {
+      const filterValue = value;
+      this.codigoLoja = String(filterValue);
+      this.nomeLoja = nome;
+      this.ativaBotaoLoja = true;
+      //this.atualizaContador(this.ativaBotaoLoja);
+      let lojasFiltrados = this.loja.filter(valorLoja => valorLoja.codigo_loja == filterValue);
+      let propostasInconsistenciasFiltrados = this.propostasInconsistencias.filter(valorContratos => valorContratos.chave_loja == filterValue);
+      this.loja = lojasFiltrados;
+      this.propostasInconsistencias = propostasInconsistenciasFiltrados;
+      this.habilitaFiltrosSecundarios(this.loja);
+    }
+  }
+
+  private _filterLojaMatriz(value: number, nome?: string, limpar?: boolean): any {
+    if (limpar && value == 0) {
+      this.ativaBotaoLojaMatriz = false;
+      this.codigoLojaMatriz = "";
+      //this.atualizaContador(this.ativaBotaoLoja);
+      this.findIndicadores();
+    } else {
+      const filterValue = value;
+      this.codigoLojaMatriz = String(filterValue);
+      this.nomeLojaMatriz = nome;
+      this.ativaBotaoLojaMatriz = true;
+      //this.atualizaContador(this.ativaBotaoLoja);
+      let lojasMatrizFiltrados = this.matriz.filter(valorLojaMatriz => valorLojaMatriz.codigo_loja_matriz == filterValue);
+      let propostasInconsistenciasFiltrados = this.propostasInconsistencias.filter(valorContratos => valorContratos.codigo_matriz == filterValue);
+      this.matriz = lojasMatrizFiltrados;
+      this.propostasInconsistencias = propostasInconsistenciasFiltrados;
+      this.habilitaFiltrosSecundarios(this.matriz);
+    }
+  }
+
+  private _filterFuncionario(value: number, nome?: string, limpar?: boolean): any {
+    if (limpar && value == 0) {
+      this.ativaBotaoFuncionario = false;
+      this.codigoFuncionario = "";
+      //this.atualizaContador(this.ativaBotaoFuncionario);
+      this.findIndicadores();
+    } else {
+      const filterValue = value;
+      this.ativaBotaoFuncionario = true;
+      this.codigoFuncionario = String(filterValue);
+      this.nomeFuncionario = nome;
+      //this.atualizaContador(this.ativaBotaoFuncionario);
+      let funcionariosFiltrados = this.funcionario.filter(valorFuncionario => valorFuncionario.codigo_funcionario == filterValue);
+      let propostasInconsistenciasFiltrados = this.propostasInconsistencias.filter(valorContratos => valorContratos.codigo_funcionario == filterValue);
+      this.funcionario = funcionariosFiltrados;
+      this.propostasInconsistencias = propostasInconsistenciasFiltrados;
+      this.habilitaFiltrosSecundarios(this.funcionario);
+    }
+  }
+
+  private _filtercanalVendas(value: number, nome?: string, limpar?: boolean): any {
+    if (limpar && value == 0) {
+      this.ativaBotaocanalVendas = false;
+      this.codigoCanalVendas = "";
+      this.findIndicadores();
+    } else {
+      const filterValue = value;
+      this.ativaBotaocanalVendas = true;
+      this.codigoCanalVendas = String(filterValue);
+      this.nomeCanalVendas = nome;
+      //this.atualizaContador(this.ativaBotaoFuncionario);
+      let canalVendasFiltrados = this.canalVendas.filter(valorCanalVendas => valorCanalVendas.codigo_canal_vendas == filterValue);
+      let propostasInconsistenciasFiltrados = this.propostasInconsistencias.filter(valorContratos => valorContratos.codigo_canal_vendas == filterValue);
+      this.canalVendas = canalVendasFiltrados;
+      this.propostasInconsistencias = propostasInconsistenciasFiltrados;
+      this.habilitaFiltrosSecundarios(this.canalVendas);
+    }
+  }
+
+  habilitaFiltrosSecundarios(agrupamento) {
+    let canalVendasFiltrados = [];
+    let regionaisFiltrados = [];
+    let comerciaisFiltrados = [];
+    let lojasMatrizFiltrados = [];
+    let lojasFiltrados = [];
+    let funcionariosFiltrados = [];
+    if (agrupamento[0].filtro_avancado.lenght != 0) {
+      if (agrupamento[0].filtro_avancado.canal_vendas.lenght != 0) {
+        for (var _i = 0; _i < agrupamento[0].filtro_avancado.canal_vendas.length; _i++) {
+          var num = agrupamento[0].filtro_avancado.canal_vendas[_i];
+          if (num.codigo != null) {
+            let valor = this.canalVendas.filter(valorCanalVendas => valorCanalVendas.codigo_canal_vendas == num.codigo)
+            if (valor.length != 0) {
+              canalVendasFiltrados.push(valor[0]);
+            }
+          }
+        }
+        this.canalVendas = [];
+        this.canalVendas = canalVendasFiltrados;
+      }
+
+      if (agrupamento[0].filtro_avancado.comercial.lenght != 0) {
+        for (var _i = 0; _i < agrupamento[0].filtro_avancado.comercial.length; _i++) {
+          var num = agrupamento[0].filtro_avancado.comercial[_i];
+          if (num.codigo != null) {
+            let valor = this.comercial.filter(valorComercial => valorComercial.codigo_comercial == num.codigo)
+            if (valor.length != 0) {
+              comerciaisFiltrados.push(valor[0]);
+            }
+          }
+        }
+        this.comercial = [];
+        this.comercial = comerciaisFiltrados;
+      }
+
+      if (agrupamento[0].filtro_avancado.regional.lenght != 0) {
+        for (var _i = 0; _i < agrupamento[0].filtro_avancado.regional.length; _i++) {
+          var num = agrupamento[0].filtro_avancado.regional[_i];
+          if (num.codigo != null) {
+            let valor = this.regional.filter(valorRegional => valorRegional.codigo_regional == num.codigo);
+            if (valor.length != 0) {
+              regionaisFiltrados.push(valor[0]);
+            }
+          }
+        }
+        this.regional = [];
+        this.regional = regionaisFiltrados;
+      }
+
+      if (agrupamento[0].filtro_avancado.loja.lenght != 0) {
+        for (var _i = 0; _i < agrupamento[0].filtro_avancado.loja.length; _i++) {
+          var num = agrupamento[0].filtro_avancado.loja[_i];
+          if (num.codigo != null) {
+            let valor = this.loja.filter(valorLoja => valorLoja.codigo_loja == num.codigo);
+            if (valor.length != 0) {
+              lojasFiltrados.push(valor[0]);
+            }
+          }
+        }
+        this.loja = [];
+        this.loja = lojasFiltrados;
+      }
+
+      if (agrupamento[0].filtro_avancado.loja_matriz.lenght != 0) {
+        for (var _i = 0; _i < agrupamento[0].filtro_avancado.loja_matriz.length; _i++) {
+          var num = agrupamento[0].filtro_avancado.loja_matriz[_i];
+          if (num.codigo != null) {
+            let valor = this.matriz.filter(valorLojaMatriz => valorLojaMatriz.codigo_loja_matriz == num.codigo);
+            if (valor.length != 0) {
+              lojasMatrizFiltrados.push(valor[0]);
+            }
+          }
+        }
+        this.matriz = [];
+        this.matriz = lojasMatrizFiltrados;
+      }
+
+      if (agrupamento[0].filtro_avancado.funcionario.lenght != 0) {
+        for (var _i = 0; _i < agrupamento[0].filtro_avancado.funcionario.length; _i++) {
+          var num = agrupamento[0].filtro_avancado.funcionario[_i];
+          if (num.codigo != null) {
+            let valor = this.funcionario.filter(valorFuncionario => valorFuncionario.codigo_funcionario == num.codigo);
+            if (valor.length != 0) {
+              funcionariosFiltrados.push(valor[0]);
+            }
+          }
+        }
+        this.funcionario = [];
+        this.funcionario = funcionariosFiltrados;
+      }
+    }
+  }
+
 
   ngOnInit() {
     registerLocaleData(pt);
