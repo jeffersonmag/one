@@ -9,6 +9,7 @@ import { DiasUteisPeriodoApiService } from '../../api/dias-uteis-periodo';
 import { IndiceContratosDigitadosApiService } from '../../api/indice-contratos-digitados';
 import { TicketMedioApiService } from '../../api/ticket-medio';
 import { NbPopoverDirective } from '@nebular/theme';
+import { LocalDataSource } from 'ng2-smart-table';
 
 
 interface CardSettings {
@@ -57,6 +58,98 @@ export class DashboardCampanhaComponent implements OnDestroy {
     }
   }
 
+  settings = {
+    hideSubHeader: true,
+    //filter: false,    
+    prop: {
+      filter: false
+    },
+    /*add: {
+      addButtonContent: '<i class="nb-plus"></i>',
+      createButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+    },
+    edit: {
+      editButtonContent: '<i class="nb-edit"></i>',
+      saveButtonContent: '<i class="nb-checkmark"></i>',
+      cancelButtonContent: '<i class="nb-close"></i>',
+    },
+    delete: {
+      deleteButtonContent: '<i class="nb-trash"></i>',
+      confirmDelete: true,
+    },*/
+    actions: {
+      add: false,
+      edit: false,
+      delete: false
+    },
+    attr: {
+      class: 'table table-bordered'
+    },
+    columns: {
+      nome_agrupamento: {
+        title: 'Loja / Promotor',
+        type: 'string',
+        filter: false
+      },
+      meta_total_campanha: {
+        title: 'Meta Total',
+        type: 'number',
+        filter: false
+      },
+      atingimento_total_campanha: {
+        title: 'Atingido',
+        type: 'number',
+        filter: false
+      },
+      perc_atingimento_total_campanha: {
+        title: '% Atingido',
+        type: 'number',
+        filter: false
+      },
+      ticket_medio_campanha: {
+        title: 'Ticket Médio',
+        type: 'number',
+        filter: false
+      },
+      meta_diaria_campanha: {
+        title: 'Meta Diária',
+        type: 'number',
+        filter: false
+      },
+      meta_recalculada: {
+        title: 'Meta Recalculada',
+        type: 'number',
+        filter: false
+      },
+      projecao_total_campanha: {
+        title: 'Total campanha projetado',
+        type: 'number',
+        filter: false
+      },
+      total_hc_participantes: {
+        title: 'HC',
+        type: 'number',
+        filter: false
+      },
+    }
+  }
+
+  dadosCampanhaMetasSmartTable = [
+    {
+      "nome_agrupamento": "",
+      "meta_total_campanha": 0,
+      "atingimento_total_campanha": 0,
+      "perc_atingimento_total_campanha": 0,
+      "ticket_medio_campanha": 0,
+      "meta_diaria_campanha": 0,
+      "meta_recalculada": 0,
+      "projecao_total_campanha": 0,
+      "total_hc_participantes": 0
+    }
+  ]
+  source: LocalDataSource = new LocalDataSource();
+
   chartOptions: any = {};
 
   campanhaSelecionada: any;
@@ -80,7 +173,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
   porcentagemMetas = 0;
   dadosCampanhaMetas = [];
 
-  dadosProdutoCorbanCampanha = {};
+  dadosProdutoCorbanCampanha = [];
   dadosCampanhaMetasLoad = true;
   perfis = [
     {
@@ -176,7 +269,6 @@ export class DashboardCampanhaComponent implements OnDestroy {
     metasCampanhas: true,
     produtoxsxCorbans: true
   }
-
   valor = 100.00;
 
   option: any = {};
@@ -251,7 +343,8 @@ export class DashboardCampanhaComponent implements OnDestroy {
     private campanhasApiService: CampanhasApiService,
     private diasUteisPeriodoApiService: DiasUteisPeriodoApiService,
     private ticketMedioApiService: TicketMedioApiService,
-    private indiceContratosDigitadosApiService: IndiceContratosDigitadosApiService
+    private indiceContratosDigitadosApiService: IndiceContratosDigitadosApiService,
+    //private service: SmartTableData    
   ) {
 
     this.themeService.getJsTheme()
@@ -445,7 +538,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
   findCampanhaMeta(visao = 5) {
     this.dadosCampanhaMetasLoad = true;
     this.dadosCampanhaMetas = [];
-    this.dadosProdutoCorbanCampanha = {};
+    this.dadosProdutoCorbanCampanha = [];
     this.campanhasApiService.metas(
       {
         "codigo_campanha": this.filtro.campanha.codigo,
@@ -458,6 +551,19 @@ export class DashboardCampanhaComponent implements OnDestroy {
     )
       .then((s) => {
         this.dadosCampanhaMetas = s;
+        this.dadosCampanhaMetasSmartTable = [
+          {
+            "nome_agrupamento": this.dadosCampanhaMetas[0].nome_agrupamento,
+            "meta_total_campanha": number_format(this.dadosCampanhaMetas[0].meta_total_campanha, 2, ',', '.'),
+            "atingimento_total_campanha": number_format(this.dadosCampanhaMetas[0].atingimento_total_campanha, 2, ',', '.'),
+            "perc_atingimento_total_campanha": number_format((this.dadosCampanhaMetas[0].atingimento_total_campanha / this.dadosCampanhaMetas[0].meta_total_campanha) * 100, 2, ',', '.'),
+            "ticket_medio_campanha": number_format(this.dadosCampanhaMetas[0].ticket_medio_campanha, 2, ',', '.'),
+            "meta_diaria_campanha": number_format((this.dadosCampanhaMetas[0].meta_total_campanha / this.campanhaDias), 2, ',', '.'),
+            "meta_recalculada": number_format(((this.dadosCampanhaMetas[0].meta_total_campanha - this.dadosCampanhaMetas[0].atingimento_total_campanha) / this.campanhaPendencias), 2, ',', '.'),
+            "projecao_total_campanha": number_format(this.dadosCampanhaMetas[0].projecao_total_campanha, 2, ',', '.'),
+            "total_hc_participantes": this.dadosCampanhaMetas[0].total_hc_participantes
+          }
+        ];
         this.dadosCampanhaMetasLoad = false;
         if (this.dadosCampanhaMetas) {
           this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas[0]);

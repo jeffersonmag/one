@@ -11,7 +11,7 @@
                             <th class="textRight">Data</th>
                             <th class="textRight">Proposta</th>
                             <th class="textRight">Status</th>
-                            <th class="textRight">Órgão</th>
+                            <th class="textRight">Convênio</th>
                             <th class="textRight">Tipo Operação</th>
                             <th class="textRight">Loja</th>
                             <th class="textRight">Valor</th>
@@ -26,15 +26,15 @@
                             <td class="size-fonte">{{ i.proposta }}</td>
                             <td class="size-fonte">{{ i.status_agrupado }}</td>
                             <td class="size-fonte">
-                                {{ i.instituicao }}<br>
-                                {{ i.convenio }}
+                                {{ i.convenio }}<br>
+                                {{ i.instituicao }}
                             </td>
                             <td class="size-fonte">
                                 {{ i.tipo_operacao }}<br>
                                 {{ i.produto_corban }}
                             </td>
                             <td class="size-fonte">{{ i.nome_fantasia }}</td>
-                            <td class="size-fonte">
+                            <td class="size-fonte-right">
                                 {{ i.valor_contrato | number:'.2-2':'es' }}<br>
                                 {{ i.base_calculo | number:'.2-2':'es' }}
                             </td>

@@ -25,6 +25,8 @@
             <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Filtros" (click)="revelar()">
               <nb-icon icon="funnel-outline" pack="eva" class="flip-icon"></nb-icon>
             </button>
+            <nb-search placeholder="Pesquisar" hint="Insira o número da proposta e pressione enter para pesquisar"
+              show="true" type="modal-drop" tag="pendencia"></nb-search>
           </nb-card-header>
           <nb-card-body>
             <div class="row">
@@ -76,6 +78,12 @@
                   NÚMERO BORDERÔ: {{codigoBordero}}{{digitoBordero}} &times;
                 </button>
               </div>
+              <div *ngIf="habilitaLimparFiltro">
+                <button nbButton shape="round" size="small" status="danger" nbTooltip="Limpar Filtro de Proposta"
+                  (click)="findPendenciaSintetico()">
+                  <i class="fa fa-trash color"></i>
+                </button>
+              </div>
             </div>
             <br>
             <nb-tabset class="size-fonte" fullWidth (changeTab)="findPendencia($event)">
@@ -93,10 +101,12 @@
                         <th class="text-left">Convênio</th>
                         <th class="text-left">Data</th>
                         <th class="text-left">Dias Pendentes</th>
-                        <th *ngIf="p.codigo_status_time_line == 0 || p.codigo_status_time_line == 1" class="text-left">
+                        <th
+                          *ngIf="p.codigo_status_time_line == 0 || p.codigo_status_time_line == 1 || p.codigo_status_time_line == 6"
+                          class="text-left">
                           Ação
                         </th>
-                        <th *ngIf="p.codigo_status_time_line > 1" class="text-left">
+                        <th *ngIf="p.codigo_status_time_line > 1 && p.codigo_status_time_line != 6" class="text-left">
                           Borderô
                         </th>
                       </tr>
@@ -134,13 +144,14 @@
                           <button nbButton status="info" *ngIf="i.dias_pendentes > 30" status="danger" outline
                             [size]="tiny" nbTooltip="Quantidade de dias pendentes">{{i.dias_pendentes}}</button>
                           <div *ngFor="let ocorrencia of i.pendencias_reabertura">
-                            <button *ngIf="ocorrencia != null" nbButton status="info" status="info" [size]="tiny"
+                            <button *ngIf="ocorrencia != null && ocorrencia != ''" nbButton status="info" status="info" [size]="tiny"
                               nbTooltip="{{ocorrencia.ocorrencia}}" nbTooltipStatus="info">Ocorrências</button>
                           </div>
                         </td>
                         <td class="size-fonte">
-                          <button *ngIf="p.codigo_status_time_line == 0" nbButton status="success" [size]="medium"
-                            outline (click)="enviarPreBordero(i.pk)" nbTooltip="Enviar proposta para Pré Borderô">
+                          <button *ngIf="p.codigo_status_time_line == 0 || p.codigo_status_time_line == 6" nbButton
+                            status="success" [size]="medium" outline (click)="enviarPreBordero(i.pk)"
+                            nbTooltip="Enviar proposta para Pré Borderô">
                             <i class="fa fa-share color"></i>
                           </button>
                           <button *ngIf="p.codigo_status_time_line == 1" nbButton status="danger" [size]="medium"

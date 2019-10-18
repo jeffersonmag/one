@@ -10,6 +10,7 @@ import { PagesComponent } from './pages.component';
 import { EsteiraProducaoModule } from './esteira-producao/esteira-producao.module';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { NgIdleModule } from '@ng-idle/core';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 @NgModule({
   imports: [
@@ -25,7 +26,7 @@ import { NgIdleModule } from '@ng-idle/core';
     NgIdleKeepaliveModule.forRoot(),
     NgIdleModule,
     NbProgressBarModule,
-
+    Ng2SmartTableModule
   ],
   declarations: [
     PagesComponent

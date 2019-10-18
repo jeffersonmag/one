@@ -80,7 +80,7 @@ import { StatusCardComponent } from './status-card/status-card.component';
     NbSearchModule
   ],
   entryComponents: [BaseHistoricaComponent],
-  providers : [CustomModalOptions, NgbActiveModal]
+  providers: [CustomModalOptions, NgbActiveModal]
 })
 export class EsteiraProducaoModule { }
 

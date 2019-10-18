@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import pt from '@angular/common/locales/pt';
 import { NbSortDirection, NbTreeGridDataSource, NbGlobalPhysicalPosition, NbSearchService, NbToastrService, NbComponentStatus, NbGlobalPosition } from '@nebular/theme';
@@ -8,6 +8,7 @@ import { EsteiraProducaoApiService } from '../../api/esteira-producao';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import _ from 'lodash';
 import 'style-loader!angular2-toaster/toaster.css';
+import { Subscription } from 'rxjs';
 
 interface CardSettings {
   title: string;
@@ -30,9 +31,9 @@ export class CustomModalOptions {
   providers: [CustomModalOptions]
 })
 
-export class EsteiraProducaoComponent implements OnInit {
+export class EsteiraProducaoComponent implements OnInit, OnDestroy {
 
-  @Output() childIsOpen = new EventEmitter<boolean>();
+  //@Output() childIsOpen = new EventEmitter<boolean>();
   closeResult: string;
   modalReference: NgbModalRef;
 
@@ -141,13 +142,13 @@ export class EsteiraProducaoComponent implements OnInit {
   matriz = [];
   canalVendas = [];
 
-
   filtropropostasInconsistencias: any;
   indicadores = [];
   indicadoresC = [];
   drillDown = [];
   qtd_total_de_propostas_inconsistentes: number;
 
+  subscriptionEsteira : Subscription;
 
   constructor(
     private themeService: NbThemeService,
@@ -162,11 +163,11 @@ export class EsteiraProducaoComponent implements OnInit {
         this.statusCards = this.statusCardsByThemes[theme.name];
       });
 
-    this.searchService.onSearchSubmit()
+    this.subscriptionEsteira = this.searchService.onSearchSubmit()
       .subscribe((data: any) => {
         this.value = data.term;
         this.filtroFindPropostasInconsistentesSearch(this.value);
-      })
+      });
 
     this.findIndicadores();
     this.findPropostasInconsistentes();
@@ -177,11 +178,12 @@ export class EsteiraProducaoComponent implements OnInit {
     this.indicadoresC = [];
     this.EsteiraProducaoApiService.indicadores(
       {
-        "codigo_regional": "",
-        "codigo_comercial": "",
-        "codigo_loja": "",
-        "codigo_matriz": "",
-        "cpf_funcionario": "",
+
+        "codigo_regional": this.codigoRegional,
+        "codigo_comercial": this.codigoComercial,
+        "codigo_loja": this.codigoLoja,
+        "codigo_matriz": this.codigoLojaMatriz,
+        "cpf_funcionario": this.codigoFuncionario,
         "cpf_cliente": ""
       }
     ).then((s) => {
@@ -342,6 +344,7 @@ export class EsteiraProducaoComponent implements OnInit {
       }
       this.indicadores = this.indicadoresC;
       this.setColors();
+      on = false;
     } else {
       this.setColors();
     }
@@ -386,7 +389,19 @@ export class EsteiraProducaoComponent implements OnInit {
   }
 
   filtroFindPropostasInconsistentesSearch(proposta) {
-    this.EsteiraProducaoApiService.propostasInconsistentes(
+    if (proposta != 0) {
+      let pendenciaFiltrados = this.propostasInconsistencias.filter(valorContratos => valorContratos.proposta == proposta);
+      if (pendenciaFiltrados.length == 0) {
+        this.makeToast('warning', 'Filtro Vazio', 'Sem propostas para serem exibidas');
+        this.habilitaLimparFiltro = false;
+        this.findIndicadores();
+        this.findPropostasInconsistentes();
+      } else {
+        this.propostasInconsistencias = pendenciaFiltrados;
+        this.habilitaLimparFiltro = true;
+      }
+    }
+    /*this.EsteiraProducaoApiService.propostasInconsistentes(
       {
         "codigo_regional": this.codigoRegional,
         "codigo_comercial": this.codigoComercial,
@@ -422,7 +437,7 @@ export class EsteiraProducaoComponent implements OnInit {
         this.mensagem = 'Essa proposta não foi encontrada!';
         this.makeToast(this.status, this.titulo, this.mensagem);
         console.log(e)
-      });
+      });*/
   }
 
   copyToClipboard(item) {
@@ -511,12 +526,14 @@ export class EsteiraProducaoComponent implements OnInit {
       this.codigoRegional = "";
       //this.atualizaContador(this.ativaBotaoRegional);
       this.findIndicadores();
+      this.findPropostasInconsistentes();
     } else {
       this.ativaBotaoRegional = true;
       const filterValue = value;
       this.nomeRegional = nome;
       this.codigoRegional = String(filterValue);
       //this.atualizaContador(this.ativaBotaoRegional)
+      this.findIndicadores();
       let regionaisFiltrados = this.regional.filter(valorRegional => valorRegional.codigo_regional == filterValue);
       let propostasInconsistenciasFiltrados = this.propostasInconsistencias.filter(valorContratos => valorContratos.codigo_regional == filterValue);
       this.regional = regionaisFiltrados;
@@ -531,12 +548,14 @@ export class EsteiraProducaoComponent implements OnInit {
       this.codigoComercial = "";
       //this.atualizaContador(this.ativaBotaoComercial);
       this.findIndicadores();
+      this.findPropostasInconsistentes();
     } else {
       const filterValue = value;
       this.ativaBotaoComercial = true;
       this.codigoComercial = String(filterValue);
       this.nomeComercial = nome;
       //this.atualizaContador(this.ativaBotaoComercial)
+      this.findIndicadores();
       let comerciaisFiltrados = this.comercial.filter(valorComercial => valorComercial.codigo_comercial == filterValue);
       let propostasInconsistenciasFiltrados = this.propostasInconsistencias.filter(valorContratos => valorContratos.codigo_comercial == filterValue);
       this.comercial = comerciaisFiltrados;
@@ -551,12 +570,14 @@ export class EsteiraProducaoComponent implements OnInit {
       this.codigoLoja = "";
       //this.atualizaContador(this.ativaBotaoLoja);
       this.findIndicadores();
+      this.findPropostasInconsistentes();
     } else {
       const filterValue = value;
       this.codigoLoja = String(filterValue);
       this.nomeLoja = nome;
       this.ativaBotaoLoja = true;
       //this.atualizaContador(this.ativaBotaoLoja);
+      this.findIndicadores();
       let lojasFiltrados = this.loja.filter(valorLoja => valorLoja.codigo_loja == filterValue);
       let propostasInconsistenciasFiltrados = this.propostasInconsistencias.filter(valorContratos => valorContratos.chave_loja == filterValue);
       this.loja = lojasFiltrados;
@@ -571,12 +592,14 @@ export class EsteiraProducaoComponent implements OnInit {
       this.codigoLojaMatriz = "";
       //this.atualizaContador(this.ativaBotaoLoja);
       this.findIndicadores();
+      this.findPropostasInconsistentes();
     } else {
       const filterValue = value;
       this.codigoLojaMatriz = String(filterValue);
       this.nomeLojaMatriz = nome;
       this.ativaBotaoLojaMatriz = true;
       //this.atualizaContador(this.ativaBotaoLoja);
+      this.findIndicadores();
       let lojasMatrizFiltrados = this.matriz.filter(valorLojaMatriz => valorLojaMatriz.codigo_loja_matriz == filterValue);
       let propostasInconsistenciasFiltrados = this.propostasInconsistencias.filter(valorContratos => valorContratos.codigo_matriz == filterValue);
       this.matriz = lojasMatrizFiltrados;
@@ -591,12 +614,14 @@ export class EsteiraProducaoComponent implements OnInit {
       this.codigoFuncionario = "";
       //this.atualizaContador(this.ativaBotaoFuncionario);
       this.findIndicadores();
+      this.findPropostasInconsistentes();
     } else {
       const filterValue = value;
       this.ativaBotaoFuncionario = true;
       this.codigoFuncionario = String(filterValue);
       this.nomeFuncionario = nome;
       //this.atualizaContador(this.ativaBotaoFuncionario);
+      this.findIndicadores();
       let funcionariosFiltrados = this.funcionario.filter(valorFuncionario => valorFuncionario.codigo_funcionario == filterValue);
       let propostasInconsistenciasFiltrados = this.propostasInconsistencias.filter(valorContratos => valorContratos.codigo_funcionario == filterValue);
       this.funcionario = funcionariosFiltrados;
@@ -610,12 +635,14 @@ export class EsteiraProducaoComponent implements OnInit {
       this.ativaBotaocanalVendas = false;
       this.codigoCanalVendas = "";
       this.findIndicadores();
+      this.findPropostasInconsistentes();
     } else {
       const filterValue = value;
       this.ativaBotaocanalVendas = true;
       this.codigoCanalVendas = String(filterValue);
       this.nomeCanalVendas = nome;
       //this.atualizaContador(this.ativaBotaoFuncionario);
+      this.findIndicadores();
       let canalVendasFiltrados = this.canalVendas.filter(valorCanalVendas => valorCanalVendas.codigo_canal_vendas == filterValue);
       let propostasInconsistenciasFiltrados = this.propostasInconsistencias.filter(valorContratos => valorContratos.codigo_canal_vendas == filterValue);
       this.canalVendas = canalVendasFiltrados;
@@ -721,5 +748,9 @@ export class EsteiraProducaoComponent implements OnInit {
 
   ngOnInit() {
     registerLocaleData(pt);
+  }
+
+  ngOnDestroy() {
+    this.subscriptionEsteira.unsubscribe();
   }
 }

@@ -16,6 +16,7 @@ import {
   NbUserModule,
   NbStepperModule,
   NbDialogModule,
+  NbSearchModule,
 
 } from '@nebular/theme';
 import { NgxEchartsModule } from 'ngx-echarts';
@@ -59,7 +60,8 @@ import { ListagemBorderoComponent } from './listagem-bordero/listagem-bordero.co
     PlatformModule,
     MatChipsModule,
     MatIconModule,
-    NgbModule
+    NgbModule,
+    NbSearchModule
   ],
   declarations: [
     PendenciaComponent,

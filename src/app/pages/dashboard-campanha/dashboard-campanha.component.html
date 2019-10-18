@@ -1,11 +1,11 @@
 <div class="infinite-cards row">
   <div class="col-md-12">
-    <nb-card *ngIf= "dadosCampanhaMetas.length < 1 && !dadosCampanhaMetasLoad" [nbSpinner]="dadosCampanhaMetas.length < 1 && dadosCampanhaMetasLoad" nbSpinnerStatus="warning">
-        <nb-card-body>Não existem campanhas associadas</nb-card-body>
+    <nb-card [nbSpinner]="dadosCampanhaMetas.length == 0 && dadosCampanhaMetasLoad" nbSpinnerStatus="warning">
+      <nb-card-body *ngIf="dadosCampanhaMetas.length == 0 && !dadosCampanhaMetasLoad">Não existem campanhas associadas
+      </nb-card-body>
     </nb-card>
-    <nb-card *ngIf= "dadosCampanhaMetas.length > 1 && !dadosCampanhaMetasLoad" [nbSpinner]="dadosCampanhaMetas.length < 1 && dadosCampanhaMetasLoad" nbSpinnerStatus="success">
-
-      <nb-card-header>
+    <nb-card [nbSpinner]="dadosCampanhaMetas.length < 1 && dadosCampanhaMetasLoad" nbSpinnerStatus="success">
+      <nb-card-header *ngIf="dadosCampanhaMetas.length > 0 && !dadosCampanhaMetasLoad">
         Dashboard de Campanhas
         <!--<nb-icon status="info" *ngIf="revealed.campanhas" class="toggle-icon" icon="chevron-up-outline" pack="eva"
           (click)="toggleView('campanhas')"></nb-icon>-->
@@ -34,145 +34,10 @@
         </div>
       </nb-card-header>
 
-      <div class="col-md-12 col-lg-12 col-lg-12 row">
-        <!----------------------CARD 01 --------------------->
-        <nb-card accent="info" class="cardFirst">
-          <nb-card-header>
-            <span class="txtTable2">{{nomeCampanhaSelecionado}}</span><br>
-            <span class="txtTable3">Período: {{periodoCampanhaSelecionado}}</span>
-          </nb-card-header>
-          <nb-card-body class="cardBody">
-            <div><br>
-              <div class="simple">Meta Total: </div>
-              <div class="valuesCard1">{{dadosCampanhaMetas[0].meta_total_campanha | number:'.':'pt'}}</div>
-              <div class="simple">Realizado: </div>
-              <div class="valuesCard1">{{dadosCampanhaMetas[0].atingimento_total_campanha | number:'.':'pt'}}</div>
-            </div><br>
-            <span
-              nbTooltip="Valor de porcentagem: {{((dadosCampanhaMetas[0].atingimento_total_campanha/dadosCampanhaMetas[0].meta_total_campanha)*100).toFixed(2)}} %">
-              <nb-progress-bar size="tiny" status="info"
-                value="{{((dadosCampanhaMetas[0].atingimento_total_campanha/dadosCampanhaMetas[0].meta_total_campanha)*100).toFixed(2)}}"
-                [displayValue]="true">
-              </nb-progress-bar>
-            </span>
-            <div class="row">
-              <div class="col">
-                <div class="simpleCard1">Meta Diária: </div>
-                <div class="valuesCard1Bottom">{{ dadosCampanhaMetas[0].meta_diaria_campanha | number:'.':'pt' }}</div>
-              </div>
-              <div class="col">
-                <div class="simpleCard1">Meta Diária Recalculada: </div>
-                <div class="valuesCard1Bottom">--</div>
-              </div>
-            </div>
-            <div *ngIf="dadosCampanhaMetas[0].nivel_atingimento_campanha != null" class="row">
-              <div class="col">
-                <div class="simpleCard1">Nível Campanha: </div>
-                <div class="valuesCard1Bottom">
-                  {{ dadosCampanhaMetas[0].nivel_atingimento_campanha }}</div>
-              </div>
-            </div>
-          </nb-card-body>
-        </nb-card>
-
-        <!----------------------CARD 02 --------------------->
-        <nb-card *ngIf="datasOntem.length != 0" accent="info" class="cardFirst">
-          <nb-card-body class="cardBody">
-            <div class="container">
-              <table class="tabela">
-                <tr>
-                  <td rowspan="2" class="dia-setado">{{ datasOntem[0].dia }}</td>
-                  <td class="mes-setado">{{ mes[datasOntem[0].mes-1].label | uppercase}}</td>
-                </tr>
-                <tr>
-                  <td class="ano-setado">{{ datasOntem[0].ano}}</td>
-                </tr>
-              </table>
-            </div>
-            <div class="info"></div>
-            <div><br>
-              <div class="simple">Digitado: </div>
-              <div class="values">{{datasOntem[0].total_valor_elegivel | number:'.':'pt'}}
-              </div>
-              <div class="simple">Pago: </div>
-              <div class="values">{{datasOntem[1].total_valor_elegivel | number:'.':'pt'}}</div>
-            </div><br><br>
-            <span
-              nbTooltip="Valor de porcentagem: {{((datasOntem[1].total_valor_elegivel.toFixed(2)/datasOntem[0].total_valor_elegivel.toFixed(2))*100).toFixed(2)}} %">
-              <nb-progress-bar size="tiny" status="info"
-                value="{{((datasOntem[1].total_valor_elegivel.toFixed(2)/datasOntem[0].total_valor_elegivel.toFixed(2))*100).toFixed(2)}}"
-                [displayValue]="true"></nb-progress-bar>
-            </span>
-          </nb-card-body>
-        </nb-card>
-
-        <!----------------------CARD 03 --------------------->
-        <nb-card *ngIf="datasHoje.length != 0" accent="info" class="cardFirst">
-          <nb-card-body class="cardBody">
-            <div class="container">
-              <table class="tabela">
-                <tr>
-                  <td rowspan="2" class="dia-setado">{{datasHoje[0].dia}}</td>
-                  <td class="mes-setado">{{ mes[datasHoje[0].mes-1].label | uppercase  }}</td>
-                </tr>
-                <tr>
-                  <td class="ano-setado">{{ datasHoje[0].ano }}</td>
-                </tr>
-              </table>
-            </div>
-            <div class="info"></div>
-            <div><br>
-              <div class="simple">Digitado: </div>
-              <div class="values">{{datasHoje[0].total_valor_elegivel | number:'.':'pt'}}</div>
-              <div class="simple">Pago: </div>
-              <div class="values">{{datasHoje[1].total_valor_elegivel | number:'.':'pt'}}</div>
-            </div><br><br>
-            <span
-              nbTooltip="Valor de porcentagem: {{((datasHoje[1].total_valor_elegivel.toFixed(2)/datasHoje[0].total_valor_elegivel.toFixed(2))*100).toFixed(2)}}%">
-              <nb-progress-bar size="tiny" status="info"
-                value="{{((datasHoje[1].total_valor_elegivel.toFixed(2)/datasHoje[0].total_valor_elegivel.toFixed(2))*100).toFixed(2)}}"
-                [displayValue]="true"></nb-progress-bar>
-            </span>
-          </nb-card-body>
-        </nb-card>
-
-        <!----------------------CARD 04 --------------------->
-        <nb-card accent="info" class="cardFirst">
-          <nb-card-body class="cardBody">
-            <div class="container">
-              <table class="tabela2">
-                <tr>
-                  <td class="mes-setado2">
-                    {{ mes[contratosPagosSinteticos.mes_campanha_inicial-1].mesExtenso | uppercase }}
-                    <span></span></td>
-                </tr>
-                <tr>
-                  <td class="ano-setado2">{{ contratosPagosSinteticos.ano_campanha_inicial }}</td>
-                </tr>
-              </table>
-            </div>
-            <div class="info2"></div>
-            <div><br>
-              <div class="simple">Digitado</div>
-              <div class="values">{{contratosPagosSinteticos?.valor_elegivel_total_digitado | number:'.':'pt'}}</div>
-              <div class="simple">Pago</div>
-              <div class="values">{{contratosPagosSinteticos?.valor_elegivel_total_pago | number:'.':'pt'}}</div>
-            </div><br><br>
-            <span
-              nbTooltip="Valor de porcentagem: {{contratosPagosSinteticos?.relacao_valor_digitado_pago.toFixed(2)}}%">
-              <nb-progress-bar size="tiny" status="info"
-                [value]="contratosPagosSinteticos?.relacao_valor_digitado_pago.toFixed(2)" [displayValue]="true">
-              </nb-progress-bar>
-            </span>
-          </nb-card-body>
-        </nb-card>
-      </div>
-
       <div class="col-md-12 col-sm-12 col-lg-12 row justify-content-between">
         <nb-card accent="info" class="cardTrd">
           <nb-card-body class="cardBody">
             <div class="container">
-
               <table class="table3">
                 <tr>
                   <td class="txtTable3" style="width: 16.66%;">INÍCIO</td>
@@ -205,11 +70,11 @@
                   </td>
                   <div class="vl"></div>
                   <td style="width: 16.66%;">
-                    <h6>{{dadosProdutoCorbanCampanha?.ticket_medio_campanha.toFixed(2)}}</h6>
+                    <h6>{{dadosProdutoCorbanCampanha.ticket_medio_campanha.toFixed(2)}}</h6>
                   </td>
                   <div class="vl"></div>
                   <td style="width: 16.66%;">
-                    <h6>{{dadosProdutoCorbanCampanha?.total_hc_participantes}}</h6>
+                    <h6>{{dadosProdutoCorbanCampanha.total_hc_participantes}}</h6>
                   </td>
                 </tr>
               </table>
@@ -219,54 +84,344 @@
         </nb-card>
       </div>
 
-      <div class="col-md-12 col-sm-12 col-lg-12 row justify-content-between">
-        <nb-card accent="danger" class="cardSnd" *ngFor="let i of dadosProdutoCorbanCampanha.produto_corban_campanha">
-          <nb-card-body class="cardBody2">
-            <div class="produtoCorban">{{i.nome_produto_corban}}</div>
-            <div class="container">
-            </div>
+      <div class="col-md-12 col-lg-12 col-lg-12 row justify-content-between">
+        <!----------------------CARD 01 --------------------->
+        <nb-card *ngIf="dadosCampanhaMetas.length != 0" accent="success" class="cardFirst">
+          <nb-card-header>
+            <span class="txtTable2">{{nomeCampanhaSelecionado}}</span><br>
+            <span class="txtTable3">Período: {{periodoCampanhaSelecionado}}</span>
+          </nb-card-header>
+          <nb-card-body class="cardBody">
             <table class="tabelaCircle">
               <tr>
                 <td rowspan="4">
-                  <span nbTooltip="Valor de porcentagem: {{i.percentual_atingido_produto_corban}}%">
-                    <round-progress current="{{i.percentual_atingido_produto_corban}}" [animation]="'easeInOutQuart'"
-                      [max]="100.00" background="white" [clockwise]="true" [semicircle]="false" color="#C0C0C0"
-                      [radius]="40" [stroke]="10" [rounded]="false">
+                  <span
+                    nbTooltip="Valor de porcentagem: {{((dadosCampanhaMetas[0].atingimento_total_campanha/dadosCampanhaMetas[0].meta_total_campanha)*100).toFixed(2)}} %">
+                    <round-progress
+                      current="{{((dadosCampanhaMetas[0].atingimento_total_campanha/dadosCampanhaMetas[0].meta_total_campanha)*100).toFixed(2)}}"
+                      [animation]="'easeInOutQuart'" [max]="100.00" background="gray" [clockwise]="true"
+                      [semicircle]="false" color="#00d68f" [radius]="40" [stroke]="10" [rounded]="false">
                     </round-progress>
+                    <!--<nb-progress-bar size="tiny" status="info"
+                        value="{{((dadosCampanhaMetas[0].atingimento_total_campanha/dadosCampanhaMetas[0].meta_total_campanha)*100).toFixed(2)}}"
+                        [displayValue]="true">
+                        </nb-progress-bar>-->
                   </span>
                 </td>
-                <td class="txtTableCircle">Meta</td>
+                <td class="txtTableCircle">
+                  <div class="simple">Meta Total: </div>
+                </td>
               </tr>
               <tr>
-                <td> {{i.meta_producao_produto_corban | number}} </td>
+                <td>
+                  <div class="valuesCard1">{{dadosCampanhaMetas[0].meta_total_campanha | number:'.':'pt'}}</div>
+                </td>
               </tr>
               <tr>
-                <td class="txtTableCircle">Realizado</td>
+                <td class="txtTableCircle">
+                  <div class="simple">Realizado: </div>
+                </td>
               </tr>
               <tr>
-                <td> {{i.valor_atingido_meta_producao_produto_corban | number}}</td>
+                <td>
+                  <div class="valuesCard1">{{dadosCampanhaMetas[0].atingimento_total_campanha | number:'.':'pt'}}</div>
+                </td>
               </tr>
             </table>
-            <div class="porcentagem">{{i.percentual_atingido_produto_corban || 0}}%</div>
+            <div class="porcentagem">
+              {{((dadosCampanhaMetas[0].atingimento_total_campanha/dadosCampanhaMetas[0].meta_total_campanha)*100).toFixed(2)}}%
+            </div><br><br>
+
+            <div class="row">
+              <div class="col">
+                <div class="simpleCard1">Meta Diária: </div>
+                <div class="valuesCard1Bottom">{{ dadosCampanhaMetas[0].meta_diaria_campanha | number:'.':'pt' }}</div>
+              </div>
+              <div class="col">
+                <div class="simpleCard1">Meta Diária Recalculada: </div>
+                <div class="valuesCard1Bottom">--</div>
+              </div>
+            </div>
+            <div *ngIf="dadosCampanhaMetas[0].nivel_atingimento_campanha != null" class="row">
+              <div class="col">
+                <div class="simpleCard1">Nível Campanha: </div>
+                <div class="valuesCard1Bottom">
+                  {{ dadosCampanhaMetas[0].nivel_atingimento_campanha }}</div>
+              </div>
+            </div>
           </nb-card-body>
         </nb-card>
 
-        <div class="col-md-12 col-sm-12 col-lg-12 row justify-content-between">
-          <div class="container">
-            <nb-card accent="danger" class="cardGraph">
-              <nb-card-header style="text-align: center;">Gráfico
-                <nb-icon *ngIf="revealed.chart" class="toggle-icon" icon="chevron-up-outline" pack="eva"
-                  (click)="toggleView('chart')"></nb-icon>
-                <nb-icon *ngIf="!revealed.chart" class="toggle-icon" icon="chevron-down-outline" pack="eva"
-                  (click)="toggleView('chart')"> </nb-icon>
-              </nb-card-header>
-              <nb-card-body *ngIf="revealed.chart">
-                <div echarts [options]="chartOptions" class="echart"></div>
-              </nb-card-body>
-            </nb-card>
-          </div>
+        <!----------------------CARD 02 --------------------->
+        <nb-card *ngIf="datasOntem.length != 0" accent="primary" class="cardFirst">
+          <nb-card-header>
+            <div class="container">
+              <table class="tabela">
+                <tr>
+                  <td rowspan="2" class="dia-setado">{{ datasOntem[0].dia }}</td>
+                  <td class="mes-setado">{{ mes[datasOntem[0].mes-1].label | uppercase}}</td>
+                </tr>
+                <tr>
+                  <td class="ano-setado">{{ datasOntem[0].ano}}</td>
+                </tr>
+              </table>
+            </div>
+          </nb-card-header>
+          <!--<div class="info"></div>-->
+          <nb-card-body class="cardBody">
+            <br>
+            <table class="tabelaCircle">
+              <tr>
+                <td rowspan="4">
+                  <span
+                    nbTooltip="Valor de porcentagem: {{((datasOntem[1].total_valor_elegivel.toFixed(2)/datasOntem[0].total_valor_elegivel.toFixed(2))*100).toFixed(2)}} %">
+                    <round-progress
+                      current="{{((datasOntem[1].total_valor_elegivel.toFixed(2)/datasOntem[0].total_valor_elegivel.toFixed(2))*100).toFixed(2)}}"
+                      [animation]="'easeInOutQuart'" [max]="100.00" background="gray" [clockwise]="true"
+                      [semicircle]="false" color="#3366ff" [radius]="40" [stroke]="10" [rounded]="false">
+                    </round-progress>
+                  </span>
+                </td>
+                <td class="txtTableCircle">
+                  <div class="simple">Digitado: </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="values">{{datasOntem[0].total_valor_elegivel | number:'.':'pt'}}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="txtTableCircle">
+                  <div class="simple">Pago: </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="values">{{datasOntem[1].total_valor_elegivel | number:'.':'pt'}}</div>
+                </td>
+              </tr>
+            </table>
+            <div class="porcentagem">
+              {{((datasOntem[1].total_valor_elegivel.toFixed(2)/datasOntem[0].total_valor_elegivel.toFixed(2))*100).toFixed(2)}}%
+            </div><br>
+            <!--<div><br>
+              <div class="simple">Digitado: </div>
+              <div class="values">{{datasOntem[0].total_valor_elegivel | number:'.':'pt'}}
+              </div>
+              <div class="simple">Pago: </div>
+              <div class="values">{{datasOntem[1].total_valor_elegivel | number:'.':'pt'}}</div>
+            </div><br><br>
+            <span
+              nbTooltip="Valor de porcentagem: {{((datasOntem[1].total_valor_elegivel.toFixed(2)/datasOntem[0].total_valor_elegivel.toFixed(2))*100).toFixed(2)}} %">
+              <nb-progress-bar size="tiny" status="info"
+                value="{{((datasOntem[1].total_valor_elegivel.toFixed(2)/datasOntem[0].total_valor_elegivel.toFixed(2))*100).toFixed(2)}}"
+                [displayValue]="true"></nb-progress-bar>
+            </span>-->
+          </nb-card-body>
+        </nb-card>
+
+        <!----------------------CARD 03 --------------------->
+        <nb-card *ngIf="datasHoje.length != 0" accent="primary" class="cardFirst">
+          <nb-card-header>
+            <div class="container">
+              <table class="tabela">
+                <tr>
+                  <td rowspan="2" class="dia-setado">{{datasHoje[0].dia}}</td>
+                  <td class="mes-setado">{{ mes[datasHoje[0].mes-1].label | uppercase  }}</td>
+                </tr>
+                <tr>
+                  <td class="ano-setado">{{ datasHoje[0].ano }}</td>
+                </tr>
+              </table>
+            </div>
+          </nb-card-header>
+          <nb-card-body class="cardBody">
+            <br>
+            <!--<div class="info"></div>-->
+            <table class="tabelaCircle">
+              <tr>
+                <td rowspan="4">
+                  <span
+                    nbTooltip="Valor de porcentagem: {{((datasHoje[1].total_valor_elegivel.toFixed(2)/datasHoje[0].total_valor_elegivel.toFixed(2))*100).toFixed(2)}} %">
+                    <round-progress
+                      current="{{((datasHoje[1].total_valor_elegivel.toFixed(2)/datasHoje[0].total_valor_elegivel.toFixed(2))*100).toFixed(2)}}"
+                      [animation]="'easeInOutQuart'" [max]="100.00" background="gray" [clockwise]="true"
+                      [semicircle]="false" color="#3366ff" [radius]="40" [stroke]="10" [rounded]="false">
+                    </round-progress>
+                  </span>
+                </td>
+                <td class="txtTableCircle">
+                  <div class="simple">Digitado: </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="values">{{datasHoje[0].total_valor_elegivel | number:'.':'pt'}}</div>
+                </td>
+              </tr>
+              <tr>
+                <td class="txtTableCircle">
+                  <div class="simple">Pago: </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="values">{{datasHoje[1].total_valor_elegivel | number:'.':'pt'}}</div>
+                </td>
+              </tr>
+            </table>
+            <div class="porcentagem">
+              {{((datasHoje[1].total_valor_elegivel.toFixed(2)/datasHoje[0].total_valor_elegivel.toFixed(2))*100).toFixed(2)}}%
+            </div><br>
+            <!--<div><br>
+              <div class="simple">Digitado: </div>
+              <div class="values">{{datasHoje[0].total_valor_elegivel | number:'.':'pt'}}</div>
+              <div class="simple">Pago: </div>
+              <div class="values">{{datasHoje[1].total_valor_elegivel | number:'.':'pt'}}</div>
+            </div><br><br>
+            <span
+              nbTooltip="Valor de porcentagem: {{((datasHoje[1].total_valor_elegivel.toFixed(2)/datasHoje[0].total_valor_elegivel.toFixed(2))*100).toFixed(2)}}%">
+              <nb-progress-bar size="tiny" status="info"
+                value="{{((datasHoje[1].total_valor_elegivel.toFixed(2)/datasHoje[0].total_valor_elegivel.toFixed(2))*100).toFixed(2)}}"
+                [displayValue]="true"></nb-progress-bar>
+            </span>-->
+          </nb-card-body>
+        </nb-card>
+
+        <!----------------------CARD 04 --------------------->
+        <nb-card *ngIf="contratosPagosSinteticos.length != 0" accent="warning" class="cardFirst">
+          <nb-card-header>
+            <div class="container">
+              <table class="tabela2">
+                <tr>
+                  <td class="mes-setado2">
+                    {{ mes[contratosPagosSinteticos.mes_campanha_inicial-1].mesExtenso | uppercase }}
+                    <span></span></td>
+                </tr>
+                <tr>
+                  <td class="ano-setado2">{{ contratosPagosSinteticos.ano_campanha_inicial }}</td>
+                </tr>
+              </table>
+            </div>
+          </nb-card-header>
+          <nb-card-body class="cardBody">
+            <br>
+            <!--<div class="info2"></div>-->
+            <table class="tabelaCircle">
+              <tr>
+                <td rowspan="4">
+                  <span
+                    nbTooltip="Valor de porcentagem: {{contratosPagosSinteticos.relacao_valor_digitado_pago.toFixed(2)}} %">
+                    <round-progress current="{{contratosPagosSinteticos.relacao_valor_digitado_pago.toFixed(2)}}"
+                      [animation]="'easeInOutQuart'" [max]="100.00" background="gray" [clockwise]="true"
+                      [semicircle]="false" color="#fa0" [radius]="40" [stroke]="10" [rounded]="false">
+                    </round-progress>
+                  </span>
+                </td>
+                <td class="txtTableCircle">
+                  <div class="simple">Digitado: </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="values">{{contratosPagosSinteticos.valor_elegivel_total_digitado | number:'.':'pt'}}
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="txtTableCircle">
+                  <div class="simple">Pago: </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="values">{{contratosPagosSinteticos.valor_elegivel_total_pago | number:'.':'pt'}}</div>
+                </td>
+              </tr>
+            </table>
+            <div class="porcentagem">
+              {{contratosPagosSinteticos.relacao_valor_digitado_pago.toFixed(2)}}%
+            </div><br>
+            <!--<div><br>
+              <div class="simple">Digitado: </div>
+              <div class="values">{{contratosPagosSinteticos?.valor_elegivel_total_digitado | number:'.':'pt'}}</div>
+              <div class="simple">Pago: </div>
+              <div class="values">{{contratosPagosSinteticos?.valor_elegivel_total_pago | number:'.':'pt'}}</div>
+            </div><br><br>
+            <span
+              nbTooltip="Valor de porcentagem: {{contratosPagosSinteticos?.relacao_valor_digitado_pago.toFixed(2)}}%">
+              <nb-progress-bar size="tiny" status="info"
+                [value]="contratosPagosSinteticos?.relacao_valor_digitado_pago.toFixed(2)" [displayValue]="true">
+              </nb-progress-bar>
+            </span>-->
+          </nb-card-body>
+        </nb-card>
+      </div>
+
+      <div class="col-md-12 col-sm-12 col-lg-12 row justify-content-between">
+        <div *ngFor="let i of dadosProdutoCorbanCampanha.produto_corban_campanha">
+          <nb-card *ngIf="i.length != 0" accent="danger" class="cardSnd">
+            <nb-card-header>
+              <div class="produtoCorban">{{i.nome_produto_corban}}</div>
+            </nb-card-header>
+            <nb-card-body class="cardBody2">
+              <div class="container">
+              </div>
+              <table class="tabelaCircle">
+                <tr>
+                  <td rowspan="4">
+                    <span nbTooltip="Valor de porcentagem: {{i.percentual_atingido_produto_corban}}%">
+                      <round-progress current="{{i.percentual_atingido_produto_corban}}" [animation]="'easeInOutQuart'"
+                        [max]="100.00" background="gray" [clockwise]="true" [semicircle]="false" color="#ff3d71"
+                        [radius]="40" [stroke]="10" [rounded]="false">
+                      </round-progress>
+                    </span>
+                  </td>
+                  <td class="txtTableCircle">Meta</td>
+                </tr>
+                <tr>
+                  <td class="numCards"> {{i.meta_producao_produto_corban | number}} </td>
+                </tr>
+                <tr>
+                  <td class="txtTableCircle">Realizado</td>
+                </tr>
+                <tr>
+                  <td class="numCards"> {{i.valor_atingido_meta_producao_produto_corban | number}}<br>
+                    <span class="txtTableCircle">Nível</span><br>
+                    <span class="numCards"
+                      *ngIf="i.nivel_atingimento_produto_corban != null">{{i.nivel_atingimento_produto_corban}}</span>
+                    <span class="numCards" *ngIf="i.nivel_atingimento_produto_corban == null">-</span>
+                  </td>
+                </tr>
+              </table>
+              <div class="porcentagemCard">{{i.percentual_atingido_produto_corban.toFixed(2) || 0}}%</div>
+            </nb-card-body>
+          </nb-card>
         </div>
 
+        <div class="container">
+          <nb-card>
+            <nb-card-body>
+              <ng2-smart-table [settings]="settings" [source]="dadosCampanhaMetasSmartTable">
+              </ng2-smart-table>
+            </nb-card-body>
+          </nb-card>
+        </div>
+
+        <div class="cardGraph">
+          <nb-card accent="info" class="cardGraph">
+            <nb-card-header style="text-align: center;">Gráfico
+              <nb-icon *ngIf="revealed.chart" class="toggle-icon" icon="chevron-up-outline" pack="eva"
+                (click)="toggleView('chart')"></nb-icon>
+              <nb-icon *ngIf="!revealed.chart" class="toggle-icon" icon="chevron-down-outline" pack="eva"
+                (click)="toggleView('chart')"> </nb-icon>
+            </nb-card-header>
+            <nb-card-body *ngIf="revealed.chart">
+              <div echarts [options]="chartOptions" class="echart"></div>
+            </nb-card-body>
+          </nb-card>
+        </div>
       </div>
     </nb-card>
   </div>

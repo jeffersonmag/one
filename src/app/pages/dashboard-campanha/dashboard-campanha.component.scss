@@ -63,10 +63,11 @@
   margin-top: 4px;
   margin-bottom: -2px;
   font-size: 11px;
+  color: gray;
 }
 
 .values {
-  font-size: 30px;
+  font-size: 26px;
   text-align: right;
   padding-bottom: 5px;
   font-weight: bold;
@@ -77,6 +78,7 @@
   margin-top: 4px;
   margin-bottom: -2px;
   font-size: 9px;
+  color: gray;
 }
 
 .valuesCard1 {
@@ -94,18 +96,22 @@
 }
 
 .tabela {
-  margin-top: 10px;
+  margin-top: 1px;
   margin-bottom: -10px;
   margin-left: 10px;
 }
 
+.numCards {
+  font-weight: 600;
+}
+
 .info {
-  border-top: 1px solid #000000;
+  border-top: 1px solid #726c6c;
   margin-top: 10.5px;
 }
 
 .mes-setado2 {
-  font-size: 30px;
+  font-size: 32px;
   line-height: 100%;
   align-content: right;
   text-align: right;
@@ -121,7 +127,7 @@
 }
 
 .tabela2 {
-  margin-top: 28px;
+  margin-top: 1px;
   margin-bottom: -10px;
   margin-left: 30px;
 }
@@ -132,10 +138,10 @@
 }
 
 .cardFirst {
-  height: 22rem;
+  height: 18rem;
   width: 18rem;
   margin-top: 20px;
-  margin-left: 26px;
+  margin-left: 5px;
 }
 
 .cardBody {
@@ -145,9 +151,9 @@
 
 
 .cardSnd {
-  height: 7.5rem;
-  width: 16rem;
-  margin-left: 30px;
+  height: 13rem;
+  width: 17rem;
+  margin-left: 10px;
 }
 
 .cardBody2 {
@@ -203,9 +209,22 @@
 }
 
 .porcentagem {
-  margin-top: -55px;
+  margin-top: -61px;
   margin-left: 25.0px;
   font-size: 11px;
+  text-align: left;
+  width: 70px;
+}
+
+:host /deep/ ng2-smart-table { 
+  font-size: 16px; 
+  font-weight: bold;
+}
+
+.porcentagemCard {
+  margin-top: -73px;
+  margin-left: 25.0px;
+  font-size: 10px;
   text-align: left;
   width: 70px;
 }
@@ -219,9 +238,14 @@
 
 .cardTrd {
   height: 5.3rem;
-  width: 80rem;
-  margin-top: 5px;
-  margin-left: 30px;
+  width: 100%;
+  margin-top: 2px;
+  margin-left: 10px;
+}
+
+.cardGraph {
+  width: 100%;
+  margin-left: 10px;
 }
 
 .table3 {
@@ -248,12 +272,10 @@
 .vl {
   border-left: 1.5px solid rgb(138, 135, 135);
   height: 30px;
+  opacity: 0.2;
 }
 
-.cardGraph {
-  width: 100%;
-  margin-left: 30px;
-}
+
 
 .containerList {
   width: 300px;

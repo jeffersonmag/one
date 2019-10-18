@@ -18,6 +18,7 @@ import {
   NbStepperModule,
   NbSelectModule,
   NbProgressBarModule,
+  NbTreeGridModule,
 } from '@nebular/theme';
 
 import { CoreModule } from './@core/core.module';
@@ -28,6 +29,8 @@ import { PipesModule } from './pipes/pipes.module';
 import { NgbModal, ModalDismissReasons, NgbModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { NgIdleModule } from '@ng-idle/core';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { SmartTableData } from './@core/data/smart-table';
 
 
 /**
@@ -64,7 +67,9 @@ import { NgIdleModule } from '@ng-idle/core';
     NgbModule,
     NgIdleKeepaliveModule.forRoot(),
     NgIdleModule,
-    NbProgressBarModule
+    NbProgressBarModule,
+    Ng2SmartTableModule,
+    NbTreeGridModule
   ],
 
   providers: [

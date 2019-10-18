@@ -3,14 +3,16 @@
     <div class="col-12">
         <nb-flip-card [showToggleButton]="false" [flipped]="flipped">
             <nb-card-front>
-                <nb-card [nbSpinner]="propostasInconsistencias.length < 1 && pararSpinner" nbSpinnerStatus="danger">
+                <nb-card *ngIf="propostasInconsistencias.length == 0 && !pararSpinner">Nenhuma informação encontrada
+                </nb-card>
+                <nb-card [nbSpinner]="propostasInconsistencias.length == 0 && pararSpinner" nbSpinnerStatus="danger">
                     <nb-card-header>
                         Esteira de Produção
                         <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Filtros">
                             <nb-icon icon="funnel-outline" pack="eva" class="flip-icon" (click)="revelar()"></nb-icon>
                         </button>
                     </nb-card-header>
-                    <nb-card-body>
+                    <nb-card-body *ngIf="propostasInconsistencias.length != 0 && pararSpinner">
                         <div class="row">
                             <div *ngIf="ativaBotaocanalVendas">
                                 <button nbButton shape="round" size="small" status="primary"
@@ -71,13 +73,12 @@
                                 <i class="fa fa-trash color"></i>
                             </button>
                         </div>
-
                         <table class="tabela" equalColumnsWidth>
                             <thead>
                                 <tr>
                                     <th class="textRight">Proposta <nb-search placeholder="Pesquisar"
                                             hint="Insira o número da proposta e pressione enter para pesquisar"
-                                            show="true" type="rotate-layout"></nb-search>
+                                            show="true" type="modal-drop" tag="esteira"></nb-search>
                                     </th>
                                     <th class="textRight">Parceiro</th>
                                     <th class="textRight">Cliente</th>

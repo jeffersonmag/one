@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { NbThemeService, NbSortDirection, NbTreeGridDataSource, NbComponentStatus, NbGlobalPhysicalPosition, NbToastrService, } from '@nebular/theme';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { NbThemeService, NbSortDirection, NbTreeGridDataSource, NbComponentStatus, NbGlobalPhysicalPosition, NbToastrService, NbSearchService, } from '@nebular/theme';
 import _ from 'lodash';
 import { takeWhile } from 'rxjs/operators';
 import { PendenciaFisicoApiService } from '../../api/pendencia-fisico';
 import { FormGroup } from '@angular/forms';
 import { NgbModal, NgbModalRef, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
 
 interface CardSettings {
   title: string;
@@ -12,9 +13,9 @@ interface CardSettings {
   type: string;
 }
 
-export interface Fruit {
-  name: string;
-}
+//export interface Fruit {
+//  name: string;
+//}
 
 @Component({
   selector: 'ngx-pendencia',
@@ -22,7 +23,7 @@ export interface Fruit {
   templateUrl: './pendencia.component.html',
   preserveWhitespaces: true,
 })
-export class PendenciaComponent implements OnInit {
+export class PendenciaComponent implements OnInit, OnDestroy {
 
   private alive = true;
   flipped: boolean = false;
@@ -66,6 +67,7 @@ export class PendenciaComponent implements OnInit {
   ativaBotaocanalVendas = false;
   ativaBotaoTipoPendencia = false;
   ativaBotaoBordero = false;
+  habilitaLimparFiltro = false;
 
   codigoComercial = '';
   codigoRegional = '';
@@ -113,11 +115,14 @@ export class PendenciaComponent implements OnInit {
   activeTab: boolean;
   dadosPendenciasLoad = true;
   dadosPendencias = [];
+  value = '';
+  subscription: Subscription;
 
   constructor(
     private themeService: NbThemeService,
     private pendenciaFisicoApiService: PendenciaFisicoApiService,
     private modalService: NgbModal,
+    private searchServicePendencia: NbSearchService,
     private toastrService: NbToastrService
   ) {
     this.themeService.getJsTheme()
@@ -125,7 +130,28 @@ export class PendenciaComponent implements OnInit {
       .subscribe(theme => {
         this.statusCards = this.statusCardsByThemes[theme.name];
       });
+
+    this.subscription = this.searchServicePendencia.onSearchSubmit()
+      .subscribe((data: any) => {
+        this.value = data.term;
+        this.filtroFindContratosSearch(this.value);
+      });
+
     this.findPendenciaSintetico();
+  }
+
+  filtroFindContratosSearch(proposta) {
+    if (proposta != 0) {
+      let pendenciaFiltrados = this.pendencia.filter(valorContratos => valorContratos.proposta == proposta);
+      if (pendenciaFiltrados.length == 0) {
+        this.makeToast('warning', 'Filtro Vazio', 'Sem propostas para serem exibidas');
+        this.habilitaLimparFiltro = false;
+        this.findPendenciaSintetico();
+      } else {
+        this.pendencia = pendenciaFiltrados;
+        this.habilitaLimparFiltro = true;
+      }
+    }
   }
 
   atualizaContador(vazio: boolean) {
@@ -173,6 +199,7 @@ export class PendenciaComponent implements OnInit {
   }
 
   findPendenciaSintetico() {
+    this.habilitaLimparFiltro = false;
     this.pendenciaSintetico = [];
     this.pendenciaSinteticoTemp = [];
     this.pendenciaFisicoApiService.pendenciasSintetico({
@@ -696,4 +723,9 @@ export class PendenciaComponent implements OnInit {
   }
 
   ngOnInit() { }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
 }
