@@ -24,8 +24,9 @@ export class UsuarioApiService {
       });
       response
         .then((s) => {
-          this.sessionService.set('user', s);
-          this.sessionService.set('token', s.token);
+          this.sessionService.set('user', s) ;
+          this.sessionService.set('token', s.token) ;  
+          this.sessionService.set('codigo_perfil_atuacao', s.codigo_perfil_atuacao) ;    
           resolve(s);
         })
         .catch((e) => {

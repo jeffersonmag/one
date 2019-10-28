@@ -27,15 +27,27 @@ export class ListagemBorderoComponent implements OnInit {
       });
   }
 
-  imprimirBordero(bordero) {
-    this.pendenciaApiService.imprimirBordero(null, bordero).then((s) => {
-      this.options.close();
-    })
-      .catch((e) => {
-        let erro = e.error.message;
-        this.options.makeToast('danger', 'Erro', erro);
-        console.log(e)
-      });
+  imprimirBordero(bordero, especie) {
+    if (especie == "REMESSA") {
+      this.pendenciaApiService.imprimirBorderoRemessa(null, bordero).then((s) => {
+        this.options.close();
+      })
+        .catch((e) => {
+          let erro = e.error.message;
+          this.options.makeToast('danger', 'Erro', erro);
+          console.log(e)
+        });
+    }
+    if (especie == "REGULARIZACAO") {
+      this.pendenciaApiService.imprimirBorderoRegularizacao(null, bordero).then((s) => {
+        this.options.close();
+      })
+        .catch((e) => {
+          let erro = e.error.message;
+          this.options.makeToast('danger', 'Erro', erro);
+          console.log(e)
+        });
+    }
   }
 
   filtrarBordero(bordero, digito) {
@@ -44,7 +56,6 @@ export class ListagemBorderoComponent implements OnInit {
   }
 
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }

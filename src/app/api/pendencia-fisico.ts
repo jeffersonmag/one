@@ -29,14 +29,18 @@ export class PendenciaFisicoApiService {
   }
 
   gerarBordero(dados) {
-    return this.requestService.putDownload(`${environment.urlApi}/pendencia-fisico-contrato-gerar-bordero`, dados, true);
+    return this.requestService.put(`${environment.urlApi}/pendencia-fisico-contrato-gerar-bordero`, dados, true);
   }
 
   listarBordero(dados) {
     return this.requestService.get(`${environment.urlApi}/lista-bordero-envio-fisico`, dados, true);
   }
 
-  imprimirBordero(dados, bordero: string) {
+  imprimirBorderoRemessa(dados, bordero: string) {
     return this.requestService.getDownload(`${environment.urlApi}/imprime-bordero-remessa/` + bordero, dados, true);
+  }
+
+  imprimirBorderoRegularizacao(dados, bordero: string) {
+    return this.requestService.getDownload(`${environment.urlApi}/imprime-bordero-regularizacao/` + bordero, dados, true);
   }
 }

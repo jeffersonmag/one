@@ -109,6 +109,8 @@ export class PendenciaComponent implements OnInit, OnDestroy {
   regional = [];
   canalVendas = [];
   tipoPendencia = [];
+  bordero = [];
+  lista_tipo_bordero = [];
 
   limparFiltros: boolean = false;
   pararSpinner: boolean = true;
@@ -157,19 +159,20 @@ export class PendenciaComponent implements OnInit, OnDestroy {
   atualizaContador(vazio: boolean) {
     this.pendenciaSintetico = [];
     this.pendenciaSinteticoTemp = [];
-    this.pendenciaFisicoApiService.pendenciasSintetico({
-      "data_de": "",
-      "data_ate": "",
-      "criterio_de_data": "",
-      "codigo_matriz": Number(this.codigoLojaMatriz),
-      "codigo_comercial": Number(this.codigoComercial),
-      "codigo_regional": Number(this.codigoRegional),
-      "codigo_loja": Number(this.codigoLoja),
-      "codigo_funcionario": Number(this.codigoFuncionario),
-      "status_farol": this.codigoTipoPendencia,
-      "codigo_canal_vendas": Number(this.codigoCanalVendas),
-      "numero_bordero": Number(this.codigoBordero),
-    }
+    this.pendenciaFisicoApiService.pendenciasSintetico(
+      {
+        "data_de": "",
+        "data_ate": "",
+        "criterio_de_data": "",
+        "codigo_matriz": Number(this.codigoLojaMatriz),
+        "codigo_comercial": Number(this.codigoComercial),
+        "codigo_regional": Number(this.codigoRegional),
+        "codigo_loja": Number(this.codigoLoja),
+        "codigo_funcionario": Number(this.codigoFuncionario),
+        "status_farol": this.codigoTipoPendencia,
+        "codigo_canal_vendas": Number(this.codigoCanalVendas),
+        "numero_bordero": Number(this.codigoBordero),
+      }
     ).then((s) => {
       this.pendenciaSintetico = s.status_time_line;
       for (let i of this.pendenciaSintetico) {
@@ -373,7 +376,8 @@ export class PendenciaComponent implements OnInit, OnDestroy {
 
   enviarPreBordero(pk_contrato) {
     this.pendenciaFisicoApiService.enviarPreBordero({
-      "pk_contrato": pk_contrato
+      "pk_contrato": pk_contrato,
+      "id_tipo_bordero": this.codigo_status_time_line
     })
       .then((s) => {
         this.makeToast('success', 'Sucesso', 'Proposta inserida no Pré Borderô');
@@ -431,14 +435,41 @@ export class PendenciaComponent implements OnInit, OnDestroy {
   }
 
   gerarEnvioBordero() {
+    this.bordero = [];
+    this.lista_tipo_bordero = [];
     if (this.numero_contratos == 0) {
-      alert('Informe a quantidade de contratos para prosseguir');
+      alert('Informe a quantidade de contratos para prosseguir!');
     } else {
       this.pendenciaFisicoApiService.gerarBordero({
         "qtd_contratos_conferencia": this.numero_contratos,
       })
         .then((s) => {
+          this.bordero = s;
+          this.lista_tipo_bordero = s.lista_tipo_bordero;
+          if (this.lista_tipo_bordero[0].tipo == "REMESSA") {
+            this.imprimirBorderoRemessa(s.codigo_bordero);
+            //setTimeout(() => {
+            if (this.lista_tipo_bordero[1].tipo == "REMESSA") {
+              this.imprimirBorderoRemessa(s.codigo_bordero);
+            };
+            if (this.lista_tipo_bordero[1].tipo == "REGULARIZACAO") {
+              this.imprimirBorderoRegularizacao(s.codigo_bordero);
+            };
+            //}, 2000);
+          };
+          if (this.lista_tipo_bordero[0].tipo == "REGULARIZACAO") {
+            this.imprimirBorderoRegularizacao(s.codigo_bordero);
+            //setTimeout(() => {
+            if (this.lista_tipo_bordero[1].tipo == "REMESSA") {
+              this.imprimirBorderoRemessa(s.codigo_bordero);
+            };
+            if (this.lista_tipo_bordero[1].tipo == "REGULARIZACAO") {
+              this.imprimirBorderoRegularizacao(s.codigo_bordero);
+            };
+            //}, 5000);
+          };
           this.close();
+          this.findPendenciaSintetico();
         })
         .catch((e) => {
           this.close();
@@ -447,6 +478,28 @@ export class PendenciaComponent implements OnInit, OnDestroy {
           this.makeToast('danger', 'Erro', erro);
         });
     }
+  }
+
+  imprimirBorderoRemessa(bordero) {
+    this.pendenciaFisicoApiService.imprimirBorderoRemessa(null, bordero).then((s) => {
+      //this.makeToast('success', 'Sucesso!', 'Borderô de Remessa gerado com sucesso!');
+    })
+      .catch((e) => {
+        let erro = e.error.message;
+        this.makeToast('danger', 'Erro', erro);
+        console.log(e)
+      });
+  }
+
+  imprimirBorderoRegularizacao(bordero) {
+    this.pendenciaFisicoApiService.imprimirBorderoRegularizacao(null, bordero).then((s) => {
+      //this.makeToast('success', 'Sucesso!', 'Borderô de Regularização gerado com sucesso!');
+    })
+      .catch((e) => {
+        let erro = e.error.message;
+        this.makeToast('danger', 'Erro', erro);
+        console.log(e)
+      });
   }
 
 

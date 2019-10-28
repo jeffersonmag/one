@@ -1,292 +1,285 @@
 @import '../../@theme/styles/themes';
 @import '~bootstrap/scss/mixins/breakpoints';
 @import '~@nebular/theme/styles/global/breakpoints';
-
 @include nb-install-component() {
-  .solar-card nb-card-header {
-    border: none;
-    padding-bottom: 0;
-  }
-
-  @include media-breakpoint-down(sm) {
-    ngx-traffic {
-      display: none;
+    .solar-card nb-card-header {
+        border: none;
+        padding-bottom: 0;
     }
-  }
+    @include media-breakpoint-down(sm) {
+        ngx-traffic {
+            display: none;
+        }
+    }
 }
 
 .maxContent {
-  max-height: 500px;
-  overflow: auto;
+    max-height: 250px;
+    overflow: auto;
 }
 
 .toggle-icon {
-  position: absolute;
-  float: left;
-  margin-left: 5px;
-  margin-top: 3px;
-  cursor: pointer;
+    position: absolute;
+    float: left;
+    margin-left: 5px;
+    margin-top: 3px;
+    cursor: pointer;
 }
 
 .toggle-icon2 {
-  position: absolute;
-  top: 1rem;
-  left: 1.25rem;
-  @include nb-rtl(left, auto);
-  @include nb-rtl(right, 1.25rem);
-  cursor: pointer;
+    position: absolute;
+    top: 1rem;
+    left: 1.25rem;
+    @include nb-rtl(left, auto);
+    @include nb-rtl(right, 1.25rem);
+    cursor: pointer;
 }
 
 .mes-setado {
-  letter-spacing: 13px;
-  font-size: 25px;
-  line-height: 100%;
-  vertical-align: bottom;
+    letter-spacing: 13px;
+    font-size: 25px;
+    line-height: 100%;
+    vertical-align: bottom;
 }
 
 .ano-setado {
-  letter-spacing: 10px;
-  font-size: 20px;
-  line-height: 100%;
-  vertical-align: top;
-  align-content: center;
-  text-align: center;
+    letter-spacing: 10px;
+    font-size: 20px;
+    line-height: 100%;
+    vertical-align: top;
+    align-content: center;
+    text-align: center;
 }
 
 .dia-setado {
-  font-size: 60px;
-  line-height: 100%;
+    font-size: 60px;
+    line-height: 100%;
 }
 
 .simple {
-  text-align: right;
-  margin-top: 4px;
-  margin-bottom: -2px;
-  font-size: 11px;
-  color: gray;
+    text-align: right;
+    margin-top: 4px;
+    margin-bottom: -2px;
+    font-size: 11px;
+    color: gray;
 }
 
 .values {
-  font-size: 26px;
-  text-align: right;
-  padding-bottom: 5px;
-  font-weight: bold;
+    font-size: 26px;
+    text-align: right;
+    padding-bottom: 5px;
+    font-weight: bold;
 }
 
 .simpleCard1 {
-  text-align: center;
-  margin-top: 4px;
-  margin-bottom: -2px;
-  font-size: 9px;
-  color: gray;
+    text-align: center;
+    margin-top: 4px;
+    margin-bottom: -2px;
+    font-size: 9px;
+    color: gray;
 }
 
 .valuesCard1 {
-  font-size: 17px;
-  text-align: right;
-  padding-bottom: -3px;
-  font-weight: bold;
+    font-size: 17px;
+    text-align: right;
+    padding-bottom: -3px;
+    font-weight: bold;
 }
 
 .valuesCard1Bottom {
-  font-size: 17px;
-  text-align: center;
-  padding-bottom: -2px;
-  font-weight: bold;
+    font-size: 17px;
+    text-align: center;
+    padding-bottom: -2px;
+    font-weight: bold;
 }
 
 .tabela {
-  margin-top: 1px;
-  margin-bottom: -10px;
-  margin-left: 10px;
+    margin-top: 1px;
+    margin-bottom: -10px;
+    margin-left: 10px;
 }
 
 .numCards {
-  font-weight: 600;
+    font-weight: 600;
 }
 
 .info {
-  border-top: 1px solid #726c6c;
-  margin-top: 10.5px;
+    border-top: 1px solid #726c6c;
+    margin-top: 10.5px;
 }
 
 .mes-setado2 {
-  font-size: 32px;
-  line-height: 100%;
-  align-content: right;
-  text-align: right;
+    font-size: 32px;
+    line-height: 100%;
+    align-content: right;
+    text-align: right;
 }
 
 .ano-setado2 {
-  font-size: 20px;
-  letter-spacing: 5px;
-  line-height: 100%;
-  padding-left: 10px;
-  align-content: center;
-  text-align: center;
+    font-size: 20px;
+    letter-spacing: 5px;
+    line-height: 100%;
+    padding-left: 10px;
+    align-content: center;
+    text-align: center;
 }
 
 .tabela2 {
-  margin-top: 1px;
-  margin-bottom: -10px;
-  margin-left: 30px;
+    margin-top: 1px;
+    margin-bottom: -10px;
+    margin-left: 30px;
 }
 
 .info2 {
-  border-top: 1px solid #000000;
-  margin-top: 10.5px;
+    border-top: 1px solid #000000;
+    margin-top: 10.5px;
 }
 
 .cardFirst {
-  height: 18rem;
-  width: 18rem;
-  margin-top: 20px;
-  margin-left: 5px;
+    height: 18rem;
+    width: 18rem;
+    margin-top: 20px;
+    margin-left: 5px;
 }
 
 .cardBody {
-  margin-top: -20px;
-  margin-bottom: -10px;
+    margin-top: -20px;
+    margin-bottom: -10px;
 }
 
-
 .cardSnd {
-  height: 13rem;
-  width: 17rem;
-  margin-left: 10px;
+    height: 13rem;
+    width: 17rem;
+    margin-left: 10px;
 }
 
 .cardBody2 {
-  margin-top: -20px;
+    margin-top: -20px;
 }
 
-
 .simple2 {
-  text-align: right;
-  font-size: 11px;
-  margin-top: -20px;
+    text-align: right;
+    font-size: 11px;
+    margin-top: -20px;
 }
 
 .values2 {
-  font-size: 15px;
-  text-align: right;
-  margin-top: 20px;
+    font-size: 15px;
+    text-align: right;
+    margin-top: 20px;
 }
 
 .tabela3 {
-  margin-bottom: -17px;
-  margin-left: 100px;
-  align-content: right;
-  margin-top: -1px;
+    margin-bottom: -17px;
+    margin-left: 100px;
+    align-content: right;
+    margin-top: -1px;
 }
 
 .simple4 {
-  text-align: right;
-  align-content: right;
-  font-size: 11px;
-  margin-top: -20px;
-  margin-left: 30px;
+    text-align: right;
+    align-content: right;
+    font-size: 11px;
+    margin-top: -20px;
+    margin-left: 30px;
 }
 
 .values2 {
-  font-size: 13;
-  text-align: right;
-  margin-top: 20px;
-  align-content: right;
-  margin-left: 20px;
+    font-size: 13;
+    text-align: right;
+    margin-top: 20px;
+    align-content: right;
+    margin-left: 20px;
 }
 
 .tabelaCircle {
-  width: 100%;
-  align-content: right;
-  text-align: right;
-
+    width: 100%;
+    align-content: right;
+    text-align: right;
 }
 
 .txtTableCircle {
-  font-size: 11px;
-  vertical-align: top;
+    font-size: 11px;
+    vertical-align: top;
 }
 
 .porcentagem {
-  margin-top: -61px;
-  margin-left: 25.0px;
-  font-size: 11px;
-  text-align: left;
-  width: 70px;
+    margin-top: -61px;
+    margin-left: 25.0px;
+    font-size: 11px;
+    text-align: left;
+    width: 70px;
 }
 
-:host /deep/ ng2-smart-table { 
-  font-size: 16px; 
-  font-weight: bold;
+:host /deep/ ng2-smart-table {
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .porcentagemCard {
-  margin-top: -73px;
-  margin-left: 25.0px;
-  font-size: 10px;
-  text-align: left;
-  width: 70px;
+    margin-top: -73px;
+    margin-left: 25.0px;
+    font-size: 10px;
+    text-align: left;
+    width: 70px;
 }
 
 .produtoCorban {
-  font-size: 11px;
-  margin-right: -15px;
-  margin-top: 3px;
-  text-align: right;
+    font-size: 11px;
+    margin-right: -15px;
+    margin-top: 3px;
+    text-align: right;
 }
 
 .cardTrd {
-  height: 5.3rem;
-  width: 100%;
-  margin-top: 2px;
-  margin-left: 10px;
+    height: 5.3rem;
+    width: 100%;
+    margin-top: 2px;
+    margin-left: 10px;
 }
 
 .cardGraph {
-  width: 100%;
-  margin-left: 10px;
+    width: 100%;
+    margin-left: 10px;
 }
 
 .table3 {
-  align-content: bottom;
-  text-align: center;
-  margin-top: 15px;
-  float: center;
-  width: 100%;
+    align-content: bottom;
+    text-align: center;
+    margin-top: 15px;
+    float: center;
+    width: 100%;
 }
 
 .txtTable3 {
-  font-size: 9px;
-  width: 16.16%;
-  vertical-align: bottom;
+    font-size: 9px;
+    width: 16.16%;
+    vertical-align: bottom;
 }
 
 .txtTable2 {
-  font-size: 12px;
-  width: 16.16%;
-  font-weight: bold;
-  vertical-align: bottom;
+    font-size: 12px;
+    width: 16.16%;
+    font-weight: bold;
+    vertical-align: bottom;
 }
 
 .vl {
-  border-left: 1.5px solid rgb(138, 135, 135);
-  height: 30px;
-  opacity: 0.2;
+    border-left: 1.5px solid rgb(138, 135, 135);
+    height: 30px;
+    opacity: 0.2;
 }
 
-
-
 .containerList {
-  width: 300px;
-  max-height: 100px;
-  overflow-y: auto;
-  font-size: 13px;
-  align-content: center;
-  text-align: left;
+    width: 300px;
+    max-height: 100px;
+    overflow-y: auto;
+    font-size: 13px;
+    align-content: center;
+    text-align: left;
 }
 
 .txtList {
-  font-size: 11px;
-  height: 100;
+    font-size: 11px;
+    height: 100;
 }

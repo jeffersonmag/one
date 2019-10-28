@@ -13,14 +13,11 @@
                 <tbody>
                     <tr *ngFor="let i of listaBordero">
                         <td class="size-fonte">
-                            <button nbButton status="info" status="info" [size]="small"
-                                (click)="filtrarBordero(i.codigo_bordero, i.digito_verificador_bordero)"
-                                title="Filtrar contratos do Borderô">
+                            <button nbButton status="info" status="info" [size]="small" (click)="filtrarBordero(i.codigo_bordero, i.digito_verificador_bordero)" title="Filtrar contratos do Borderô">
                                 {{i.codigo_bordero}}{{i.digito_verificador_bordero}}
                             </button><br>
                             <span title="Tipo do Borderô">{{i.especie_bordero}}</span><br>
-                            <span *ngIf="i.data_emissao_bordero != null"
-                                title="Data do Borderô">{{i.data_emissao_bordero | moment: 'DD/MM/YYYY'}}</span><br>
+                            <span *ngIf="i.data_emissao_bordero != null" title="Data do Borderô">{{i.data_emissao_bordero | moment: 'DD/MM/YYYY'}}</span><br>
                             <span title="Número de autorização de remessa (correios)">{{i.autorizacao_postagem}}</span>
                         </td>
                         <td class="size-fonte">
@@ -30,24 +27,17 @@
                             <span title="Nome Regional">{{i.nome_regional}}</span>
                         </td>
                         <td class="size-fonte">
-                            <span *ngIf="i.usuario_recepcao_bordero == null"
-                                title="Usuário Recepção do Borderô">-</span><br>
+                            <span *ngIf="i.usuario_recepcao_bordero == null" title="Usuário Recepção do Borderô">-</span><br>
                             <span *ngIf="i.data_recepcao_bordero == null" title="Data Recepção do Borderô">-</span>
-                            <span *ngIf="i.usuario_recepcao_bordero != null"
-                                title="Usuário Recepção do Borderô">{{i.usuario_recepcao_bordero}}</span><br>
-                            <span *ngIf="i.data_recepcao_bordero != null"
-                                title="Data Recepção do Borderô">{{i.data_recepcao_bordero | moment: 'DD/MM/YYYY'}}</span>
+                            <span *ngIf="i.usuario_recepcao_bordero != null" title="Usuário Recepção do Borderô">{{i.usuario_recepcao_bordero}}</span><br>
+                            <span *ngIf="i.data_recepcao_bordero != null" title="Data Recepção do Borderô">{{i.data_recepcao_bordero | moment: 'DD/MM/YYYY'}}</span>
                         </td>
                         <td class="size-fonte">
                             <div class="container">
-                                <button nbButton
-                                    *ngIf="i.qtd_contratos_enviados_bordero != i.qtd_contratos_recepcionados_bordero && i.data_recepcao_bordero != null"
-                                    status="danger" status="danger" ghost [size]="large"
-                                    title="Alerta: Quantidade de contratos enviados diferente da quantidade de recebidos.">
+                                <button nbButton *ngIf="i.qtd_contratos_enviados_bordero != i.qtd_contratos_recepcionados_bordero && i.data_recepcao_bordero != null" status="danger" status="danger" ghost [size]="large" title="Alerta: Quantidade de contratos enviados diferente da quantidade de recebidos.">
                                     <nb-icon icon="alert-triangle-outline" pack="eva"></nb-icon>
                                 </button>
-                                <button nbButton status="info" status="info" ghost [size]="large"
-                                    (click)="imprimirBordero(i.codigo_bordero)" title="Gerar PDF e imprimir Borderô">
+                                <button nbButton status="info" status="info" ghost [size]="large" (click)="imprimirBordero(i.codigo_bordero, i.especie_bordero)" title="Gerar PDF e imprimir Borderô">
                                     <nb-icon icon="printer-outline" pack="eva"></nb-icon>
                                 </button>
                             </div>
