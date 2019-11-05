@@ -1,7 +1,8 @@
 <div class="infinite-cards row">
     <div class="col-md-12">
         <nb-card [nbSpinner]="dadosCampanhaMetas.length == 0 && dadosCampanhaMetasLoad" nbSpinnerStatus="warning">
-            <nb-card-body *ngIf="dadosCampanhaMetas.length == 0 && !dadosCampanhaMetasLoad">Não existem campanhas associadas
+            <nb-card-body *ngIf="dadosCampanhaMetas.length == 0 && !dadosCampanhaMetasLoad">Não existem campanhas
+                associadas
             </nb-card-body>
         </nb-card>
         <nb-card [nbSpinner]="dadosCampanhaMetas.length < 1 && dadosCampanhaMetasLoad" nbSpinnerStatus="success">
@@ -19,7 +20,8 @@
                         <nb-card class="margin-bottom-0">
                             <nb-card-header>Campanhas</nb-card-header>
                             <nb-list class="maxContent">
-                                <nb-list-item class="txtList" *ngFor="let i of campanhasPerfil" (click)="atualizarFiltro(i)">
+                                <nb-list-item class="txtList" *ngFor="let i of campanhasPerfil"
+                                    (click)="atualizarFiltro(i)">
                                     <div class="containerList">
                                         <span nbTooltip="Nome da Campanha"> {{i.nome_campanha}} </span>
                                         <span nbTooltip="Código da Campanha"> - [{{i.codigo_campanha}}] <br> </span>
@@ -96,7 +98,8 @@
                         <table class="tabelaCircle">
                             <tr>
                                 <td rowspan="4">
-                                    <span nbTooltip="Valor de porcentagem: {{((dadosCampanhaMetas[0].atingimento_total_campanha/dadosCampanhaMetas[0].meta_total_campanha)*100).toFixed(2)}} %">
+                                    <span
+                                        nbTooltip="Valor de porcentagem: {{((dadosCampanhaMetas[0].atingimento_total_campanha/dadosCampanhaMetas[0].meta_total_campanha)*100).toFixed(2)}} %">
                                         <round-progress
                                             current="{{((dadosCampanhaMetas[0].atingimento_total_campanha/dadosCampanhaMetas[0].meta_total_campanha)*100).toFixed(2)}}"
                                             [animation]="'easeInOutQuart'" [max]="100.00" background="gray"
@@ -144,7 +147,7 @@
                             <div class="col">
                                 <div class="simpleCard1">Meta Diária Recalculada: </div>
                                 <div class="valuesCard1Bottom">
-                                    {{ ((dadosCampanhaMetas[0].meta_total_campanha - dadosCampanhaMetas[0].atingimento_total_campanha) / this.campanhaPendencias) }}
+                                    {{ ((dadosCampanhaMetas[0].meta_total_campanha - dadosCampanhaMetas[0].atingimento_total_campanha) / this.campanhaPendencias).toFixed(2) }}
                                 </div>
                             </div>
                         </div>
@@ -179,7 +182,8 @@
                         <table class="tabelaCircle">
                             <tr>
                                 <td rowspan="4">
-                                    <span nbTooltip="Valor de porcentagem: {{((datasOntem[1].total_valor_elegivel.toFixed(2)/datasOntem[0].total_valor_elegivel.toFixed(2))*100).toFixed(2)}} %">
+                                    <span
+                                        nbTooltip="Valor de porcentagem: {{((datasOntem[1].total_valor_elegivel.toFixed(2)/datasOntem[0].total_valor_elegivel.toFixed(2))*100).toFixed(2)}} %">
                                         <round-progress
                                             current="{{((datasOntem[1].total_valor_elegivel.toFixed(2)/datasOntem[0].total_valor_elegivel.toFixed(2))*100).toFixed(2)}}"
                                             [animation]="'easeInOutQuart'" [max]="100.00" background="gray"
@@ -248,7 +252,8 @@
                         <table class="tabelaCircle">
                             <tr>
                                 <td rowspan="4">
-                                    <span nbTooltip="Valor de porcentagem: {{((datasHoje[1].total_valor_elegivel.toFixed(2)/datasHoje[0].total_valor_elegivel.toFixed(2))*100).toFixed(2)}} %">
+                                    <span
+                                        nbTooltip="Valor de porcentagem: {{((datasHoje[1].total_valor_elegivel.toFixed(2)/datasHoje[0].total_valor_elegivel.toFixed(2))*100).toFixed(2)}} %">
                                         <round-progress
                                             current="{{((datasHoje[1].total_valor_elegivel.toFixed(2)/datasHoje[0].total_valor_elegivel.toFixed(2))*100).toFixed(2)}}"
                                             [animation]="'easeInOutQuart'" [max]="100.00" background="gray"
@@ -317,7 +322,8 @@
                         <table class="tabelaCircle">
                             <tr>
                                 <td rowspan="4">
-                                    <span nbTooltip="Valor de porcentagem: {{contratosPagosSinteticos.relacao_valor_digitado_pago.toFixed(2)}} %">
+                                    <span
+                                        nbTooltip="Valor de porcentagem: {{contratosPagosSinteticos.relacao_valor_digitado_pago.toFixed(2)}} %">
                                         <round-progress
                                             current="{{contratosPagosSinteticos.relacao_valor_digitado_pago.toFixed(2)}}"
                                             [animation]="'easeInOutQuart'" [max]="100.00" background="gray"
@@ -352,35 +358,25 @@
                         <div class="porcentagem">
                             {{contratosPagosSinteticos.relacao_valor_digitado_pago.toFixed(2)}}%
                         </div><br>
-                        <!--<div><br>
-              <div class="simple">Digitado: </div>
-              <div class="values">{{contratosPagosSinteticos?.valor_elegivel_total_digitado | number:'.':'pt'}}</div>
-              <div class="simple">Pago: </div>
-              <div class="values">{{contratosPagosSinteticos?.valor_elegivel_total_pago | number:'.':'pt'}}</div>
-            </div><br><br>
-            <span
-              nbTooltip="Valor de porcentagem: {{contratosPagosSinteticos?.relacao_valor_digitado_pago.toFixed(2)}}%">
-              <nb-progress-bar size="tiny" status="info"
-                [value]="contratosPagosSinteticos?.relacao_valor_digitado_pago.toFixed(2)" [displayValue]="true">
-              </nb-progress-bar>
-            </span>-->
                     </nb-card-body>
                 </nb-card>
             </div>
 
             <div class="col-md-12 col-sm-12 col-lg-12 row justify-content-between">
+                <!--<div class="col-md-12 col-sm-12 col-lg-12 row justify-content-between">-->
                 <div *ngFor="let i of dadosProdutoCorbanCampanha.produto_corban_campanha">
                     <nb-card *ngIf="i.length != 0" accent="danger" class="cardSnd">
                         <nb-card-header>
                             <div class="produtoCorban">{{i.nome_produto_corban}}</div>
                         </nb-card-header>
                         <nb-card-body class="cardBody2">
-                            <div class="container">
-                            </div>
+                            <!--<div class="container">
+                            </div>-->
                             <table class="tabelaCircle">
                                 <tr>
-                                    <td rowspan="4">
-                                        <span nbTooltip="Valor de porcentagem: {{i.percentual_atingido_produto_corban}}%">
+                                    <td rowspan="5">
+                                        <span
+                                            nbTooltip="Valor de porcentagem: {{i.percentual_atingido_produto_corban}}%">
                                             <round-progress current="{{i.percentual_atingido_produto_corban}}"
                                                 [animation]="'easeInOutQuart'" [max]="100.00" background="gray"
                                                 [clockwise]="true" [semicircle]="false" color="#ff3d71" [radius]="40"
@@ -399,8 +395,10 @@
                                 <tr>
                                     <td class="numCards"> {{i.valor_atingido_meta_producao_produto_corban | number}}<br>
                                         <span class="txtTableCircle">Nível</span><br>
-                                        <span class="numCards" *ngIf="i.nivel_atingimento_produto_corban != null">{{i.nivel_atingimento_produto_corban}}</span>
-                                        <span class="numCards" *ngIf="i.nivel_atingimento_produto_corban == null">-</span>
+                                        <span class="numCards"
+                                            *ngIf="i.nivel_atingimento_produto_corban != null">{{i.nivel_atingimento_produto_corban}}</span>
+                                        <span class="numCards"
+                                            *ngIf="i.nivel_atingimento_produto_corban == null">-</span>
                                     </td>
                                 </tr>
                             </table>
@@ -409,34 +407,62 @@
                     </nb-card>
                 </div>
 
-                <nb-tabset class="size-fonte" fullWidth (changeTab)="filtraCampanhaPerfilSmartTable($event)">
+                <nb-tabset [nbSpinner]="dadosCampanhaMetasSmartTable.length == 0 && dadosCampanhaMetasLoad"
+                    nbSpinnerStatus="info" class="size-fonte" fullWidth
+                    (changeTab)="filtraCampanhaPerfilSmartTable($event)">
                     <nb-tab [tabTitle]="'LOJAS'" [active]="true" badgeStatus="info">
                         <div class="container">
                             <nb-card>
                                 <nb-card-body>
-                                    <ng2-smart-table [settings]="settings" [source]="source">
+                                    <ng2-smart-table [settings]="settingsLojas" [source]="source">
                                     </ng2-smart-table>
                                 </nb-card-body>
                             </nb-card>
                         </div>
                     </nb-tab>
-                    <nb-tab [tabTitle]="'PROMOTORES'" [active]="true" badgeStatus="warning">
+                    <nb-tab [tabTitle]="'PROMOTORES'" [active]="false" badgeStatus="warning">
                         <div class="container">
                             <nb-card>
                                 <nb-card-body>
-                                    <ng2-smart-table [settings]="settings" [source]="source">
+                                    <ng2-smart-table [settings]="settingsPromotores" [source]="source">
                                     </ng2-smart-table>
                                 </nb-card-body>
                             </nb-card>
                         </div>
                     </nb-tab>
-                </nb-tabset>
+                </nb-tabset><br>
+
+                <!--<table>
+
+                    <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+                    <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+
+                    <ng-container [nbTreeGridColumnDef]="customColumn">
+                        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(customColumn)" *nbTreeGridHeaderCellDef>
+                            {{customColumn}}
+                        </th>
+                        <td nbTreeGridCell *nbTreeGridCellDef="let row">
+                        <ngx-fs-icon [kind]="row.data.kind" [expanded]="row.expanded"></ngx-fs-icon>
+                        {{row.data[customColumn]}}
+                      </td>
+                    </ng-container>
+
+                    <ng-container *ngFor="let column of defaultColumns; let index = index" [nbTreeGridColumnDef]="column" [showOn]="getShowOn(index)">
+                        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
+                            {{column}}
+                        </th>
+                        <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || '-'}}</td>
+                    </ng-container>
+
+                </table>-->
 
                 <div class="cardGraph">
                     <nb-card accent="info" class="cardGraph">
                         <nb-card-header style="text-align: center;">Gráfico
-                            <nb-icon *ngIf="revealed.chart" class="toggle-icon" icon="chevron-up-outline" pack="eva" (click)="toggleView('chart')"></nb-icon>
-                            <nb-icon *ngIf="!revealed.chart" class="toggle-icon" icon="chevron-down-outline" pack="eva" (click)="toggleView('chart')"> </nb-icon>
+                            <nb-icon *ngIf="revealed.chart" class="toggle-icon" icon="chevron-up-outline" pack="eva"
+                                (click)="toggleView('chart')"></nb-icon>
+                            <nb-icon *ngIf="!revealed.chart" class="toggle-icon" icon="chevron-down-outline" pack="eva"
+                                (click)="toggleView('chart')"> </nb-icon>
                         </nb-card-header>
                         <nb-card-body *ngIf="revealed.chart">
                             <div echarts [options]="chartOptions" class="echart"></div>

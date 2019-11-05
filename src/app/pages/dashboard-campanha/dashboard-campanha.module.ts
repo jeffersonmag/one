@@ -48,7 +48,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     NbListModule,
     NbPopoverModule,
     Ng2SmartTableModule,
-    NbTreeGridModule
+    NbTreeGridModule,
   ],
   declarations: [
     DashboardCampanhaComponent,

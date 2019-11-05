@@ -1,5 +1,5 @@
 import { Component, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
-import { NbThemeService } from '@nebular/theme';
+import { NbThemeService, NbTreeGridDataSourceBuilder, NbTreeGridDataSource } from '@nebular/theme';
 import { number_format, str_pad } from 'locutus/php/strings/';
 import _ from 'lodash';
 import * as moment from 'moment';
@@ -10,12 +10,22 @@ import { IndiceContratosDigitadosApiService } from '../../api/indice-contratos-d
 import { TicketMedioApiService } from '../../api/ticket-medio';
 import { NbPopoverDirective } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
+import { NbSortDirection, NbSortRequest } from '@nebular/theme';
 
 
 interface CardSettings {
   title: string;
   iconClass: string;
   type: string;
+}
+
+interface TreeNode<T> {
+  data: T;
+}
+
+interface FSEntry {
+  nome_agrupamento: string;
+  meta_total_campanha: number;
 }
 
 @Component({
@@ -58,37 +68,90 @@ export class DashboardCampanhaComponent implements OnDestroy {
     }
   }
 
-  settings = {
+  settingsLojas = {
     hideSubHeader: true,
-    //filter: false,    
     prop: {
       filter: false
     },
-    /*add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
-    },*/
     actions: {
       add: false,
       edit: false,
       delete: false
     },
+    columns: {
+      nome_agrupamento: {
+        title: 'Lojas',
+        type: 'string',
+        filter: false
+      },
+      meta_total_campanha: {
+        title: 'Meta Total',
+        type: 'number',
+        filter: false
+      },
+      atingimento_total_campanha: {
+        title: 'Atingido',
+        type: 'number',
+        filter: false
+      },
+      perc_atingimento_total_campanha: {
+        title: '% Atingido',
+        type: 'number',
+        filter: false
+      },
+      ticket_medio_campanha: {
+        title: 'Ticket Médio',
+        type: 'number',
+        filter: false
+      },
+      meta_diaria_campanha: {
+        title: 'Meta Diária',
+        type: 'number',
+        filter: false
+      },
+      meta_recalculada: {
+        title: 'Meta Recalculada',
+        type: 'number',
+        filter: false
+      },
+      projecao_total_campanha: {
+        title: 'Total campanha projetado',
+        type: 'number',
+        filter: false
+      },
+      total_hc_participantes: {
+        title: 'HC',
+        type: 'number',
+        filter: false
+      },
+    },
+    defaultStyle: true,
     attr: {
-      class: 'table table-bordered'
+      class: 'table table-bordered' // this is custom table scss or css class for table
+    }
+  };
+
+  sortColumn: string;
+  sortDirection: NbSortDirection = NbSortDirection.NONE;
+
+  customColumn = 'Lojas';
+  defaultColumns = ['Nome agrupamento'];
+
+  allColumns = [this.customColumn, ...this.defaultColumns];
+
+  settingsPromotores = {
+    hideSubHeader: true,  
+    prop: {
+      filter: false
+    },
+    actions: {
+      add: false,
+      edit: false,
+      delete: false
     },
     columns: {
       nome_agrupamento: {
-        title: 'Loja / Promotor',
+        title: 'Promotores',
         type: 'string',
         filter: false
       },
@@ -133,11 +196,12 @@ export class DashboardCampanhaComponent implements OnDestroy {
         filter: false
       },
     }
-  }
+  };
 
   dadosCampanhaMetasSmartTable = [];
 
   source: LocalDataSource = new LocalDataSource();
+  dataSource: NbTreeGridDataSource<FSEntry>;
 
   chartOptions: any = {};
 
@@ -339,7 +403,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
 
   constructor(
     private themeService: NbThemeService,
-    private theme: NbThemeService,
+    private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>,
     private campanhasApiService: CampanhasApiService,
     private diasUteisPeriodoApiService: DiasUteisPeriodoApiService,
     private ticketMedioApiService: TicketMedioApiService,
@@ -353,6 +417,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
         this.statusCards = this.statusCardsByThemes[theme.name];
       });
     this.source.load(this.dadosCampanhaMetasSmartTable);
+    //this.dataSource = this.dataSourceBuilder.create(this.dadosCampanhaMetasSmartTable);
     this.findCampanha();
   }
 
@@ -553,21 +618,21 @@ export class DashboardCampanhaComponent implements OnDestroy {
     )
       .then((s) => {
         this.dadosCampanhaMetas = s;
-        for (let i of this.dadosCampanhaMetas) {
+        /*for (let i of this.dadosCampanhaMetas) {
           this.dadosCampanhaMetasSmartTable.push(
             {
               nome_agrupamento: i.nome_agrupamento,
-              meta_total_campanha: number_format(i.meta_total_campanha, 2, ',', '.'),
-              atingimento_total_campanha: number_format(i.atingimento_total_campanha, 2, ',', '.'),
-              perc_atingimento_total_campanha: number_format((i.atingimento_total_campanha / i.meta_total_campanha) * 100, 2, ',', '.'),
-              ticket_medio_campanha: number_format(i.ticket_medio_campanha, 2, ',', '.'),
-              meta_diaria_campanha: number_format((i.meta_total_campanha / this.campanhaDias), 2, ',', '.'),
-              meta_recalculada: number_format(((i.meta_total_campanha - i.atingimento_total_campanha) / this.campanhaPendencias), 2, ',', '.'),
-              projecao_total_campanha: number_format(i.projecao_total_campanha, 2, ',', '.'),
+              meta_total_campanha: parseFloat(i.meta_total_campanha),
+              atingimento_total_campanha: parseFloat(i.atingimento_total_campanha),
+              perc_atingimento_total_campanha: (((i.atingimento_total_campanha).toFixed(2) / (i.meta_total_campanha).toFixed(2)) * 100).toFixed(2),
+              ticket_medio_campanha: parseFloat(i.ticket_medio_campanha),
+              meta_diaria_campanha: (parseFloat(i.meta_total_campanha) / this.campanhaDias).toFixed(0),
+              meta_recalculada: ((i.meta_total_campanha).toFixed(2) - (i.atingimento_total_campanha).toFixed(2) / this.campanhaPendencias).toFixed(0),
+              projecao_total_campanha: parseFloat(i.projecao_total_campanha).toFixed(0),
               total_hc_participantes: i.total_hc_participantes
             });
         }
-        this.source.load(this.dadosCampanhaMetasSmartTable);
+        this.source.load(this.dadosCampanhaMetasSmartTable);*/
         this.dadosCampanhaMetasLoad = false;
         if (this.dadosCampanhaMetas) {
           this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas[0]);
@@ -577,7 +642,85 @@ export class DashboardCampanhaComponent implements OnDestroy {
         console.log(e);
         this.dadosCampanhaMetasLoad = false;
       });
+  };
+
+  findCampanhaMetaSmartTable(visao) {
+    this.dadosCampanhaMetasLoad = true;
+    //this.dadosCampanhaMetas = [];
+    //this.dadosProdutoCorbanCampanha = [];
+    this.dadosCampanhaMetasSmartTable = [];
+    let datasourcesmart : TreeNode<FSEntry>[];
+    this.campanhasApiService.metas(
+      {
+        "codigo_campanha": this.filtro.campanha.codigo,
+        "visao": visao,
+        "codigo_regional": this.codigos.codigo_regional,
+        "codigo_comercial": this.codigos.codigo_comercial,
+        "codigo_loja": this.codigos.codigo_loja,
+        "codigo_funcionario": this.codigos.codigo_funcionario,
+      }
+    )
+      .then((s) => {
+        //this.dadosCampanhaMetas = s;
+        //let datasourcesmart;
+        for (let i of s) {
+          this.dadosCampanhaMetasSmartTable.push(
+            {
+              nome_agrupamento: i.nome_agrupamento,
+              meta_total_campanha: parseFloat(i.meta_total_campanha),
+              atingimento_total_campanha: parseFloat(i.atingimento_total_campanha),
+              perc_atingimento_total_campanha: (((i.atingimento_total_campanha).toFixed(2) / (i.meta_total_campanha).toFixed(2)) * 100).toFixed(2),
+              ticket_medio_campanha: parseFloat(i.ticket_medio_campanha),
+              meta_diaria_campanha: (parseFloat(i.meta_total_campanha) / this.campanhaDias).toFixed(0),
+              meta_recalculada: ((i.meta_total_campanha).toFixed(2) - (i.atingimento_total_campanha).toFixed(2) / this.campanhaPendencias).toFixed(0),
+              projecao_total_campanha: parseFloat(i.projecao_total_campanha).toFixed(0),
+              total_hc_participantes: i.total_hc_participantes
+            });
+
+            datasourcesmart = [          
+            {  data: {
+                nome_agrupamento: i.nome_agrupamento,
+                meta_total_campanha: parseFloat(i.meta_total_campanha)
+                //atingimento_total_campanha: parseFloat(i.atingimento_total_campanha),
+                //perc_atingimento_total_campanha: (((i.atingimento_total_campanha).toFixed(2) / (i.meta_total_campanha).toFixed(2)) * 100).toFixed(2),
+                //ticket_medio_campanha: parseFloat(i.ticket_medio_campanha),
+                //meta_diaria_campanha: (parseFloat(i.meta_total_campanha) / this.campanhaDias).toFixed(0),
+                //meta_recalculada: ((i.meta_total_campanha).toFixed(2) - (i.atingimento_total_campanha).toFixed(2) / this.campanhaPendencias).toFixed(0),
+                //projecao_total_campanha: parseFloat(i.projecao_total_campanha).toFixed(0),
+                //total_hc_participantes: i.total_hc_participantes
+              }
+            }];
+        }
+        this.dataSource = this.dataSourceBuilder.create(datasourcesmart);
+        this.source.load(this.dadosCampanhaMetasSmartTable);
+        this.dadosCampanhaMetasLoad = false;
+        //if (this.dadosCampanhaMetas) {
+        //  this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas[0]);
+        //}
+      })
+      .catch((e) => {
+        console.log(e);
+        this.dadosCampanhaMetasLoad = false;
+      });
   }
+
+  updateSort(sortRequest: NbSortRequest): void {
+    this.sortColumn = sortRequest.column;
+    this.sortDirection = sortRequest.direction;
+  };
+
+  getSortDirection(column: string): NbSortDirection {
+    if (this.sortColumn === column) {
+      return this.sortDirection;
+    }
+    return NbSortDirection.NONE;
+  };
+
+  getShowOn(index: number) {
+    const minWithForMultipleColumns = 400;
+    const nextColumnStep = 100;
+    return minWithForMultipleColumns + (nextColumnStep * index);
+  };
 
   findContratos() {
     this.datasHoje = [];
@@ -756,7 +899,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
       return String(o.label) === String(event.tabTitle);
     })
     this.perfilAtivo = find.id;
-    this.findCampanhaMeta(find.id);
+    this.findCampanhaMetaSmartTable(find.id);
   }
 
   findDadosProdutoCorbanCampanhaFiltro(item) {

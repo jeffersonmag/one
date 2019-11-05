@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbMenuModule, NbStepperModule, NbProgressBarModule, NbPopoverComponent, NbPopoverModule } from '@nebular/theme';
+import { NbMenuModule, NbStepperModule, NbProgressBarModule, NbPopoverComponent, NbPopoverModule, NbTreeGridModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { DashboardModule } from './dashboard/dashboard.module';
@@ -26,7 +26,8 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     NgIdleKeepaliveModule.forRoot(),
     NgIdleModule,
     NbProgressBarModule,
-    Ng2SmartTableModule
+    Ng2SmartTableModule,
+    NbTreeGridModule,    
   ],
   declarations: [
     PagesComponent

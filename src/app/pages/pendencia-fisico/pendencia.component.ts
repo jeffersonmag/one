@@ -47,9 +47,11 @@ export class PendenciaComponent implements OnInit, OnDestroy {
     lojaMatriz: false,
     canalVendas: false,
     tipoPendencia: false,
+    instituicao: false,
     pendencias: true,
     pendenciaFisico: true
   }
+  
 
   statusCardsByThemes: {
     default: CardSettings[];
@@ -61,6 +63,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
 
   ativaBotaoComercial = false;
   ativaBotaoRegional = false;
+  ativaBotaoInstituicao = false;
   ativaBotaoLoja = false;
   ativaBotaoLojaMatriz = false;
   ativaBotaoFuncionario = false;
@@ -77,6 +80,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
   codigoCanalVendas = '';
   codigoTipoPendencia = '';
   codigoBordero = '';
+  codigoInstituicao = '';
   digitoBordero = '';
   nomeComercial = '';
   nomeRegional = '';
@@ -85,12 +89,14 @@ export class PendenciaComponent implements OnInit, OnDestroy {
   nomeLojaMatriz = '';
   nomeCanalVendas = '';
   nomeTipoPendencia = '';
+  nomeInstituicao = '';
 
   currentPage = 1;
   itemsPerPage = 20;
   pageSize: number;
   valorAtual: any;
   numero_contratos: number = 0;
+  
   customColumn = 'name';
   defaultColumns = ['size', 'kind', 'items'];
   allColumns = [this.customColumn, ...this.defaultColumns];
@@ -103,6 +109,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
   pendenciaSinteticoTemp = [];
 
   funcionario = [];
+  instituicao = [];
   loja = [];
   matriz = [];
   comercial = [];
@@ -117,7 +124,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
   activeTab: boolean;
   dadosPendenciasLoad = true;
   dadosPendencias = [];
-  value = '';
+  valueProposta = '';
   subscription: Subscription;
 
   constructor(
@@ -135,8 +142,8 @@ export class PendenciaComponent implements OnInit, OnDestroy {
 
     this.subscription = this.searchServicePendencia.onSearchSubmit()
       .subscribe((data: any) => {
-        this.value = data.term;
-        this.filtroFindContratosSearch(this.value);
+        this.valueProposta = data.term;
+        this.filtroFindContratosSearch(this.valueProposta);
       });
 
     this.findPendenciaSintetico();
@@ -146,9 +153,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
     if (proposta != 0) {
       let pendenciaFiltrados = this.pendencia.filter(valorContratos => valorContratos.proposta == proposta);
       if (pendenciaFiltrados.length == 0) {
-        this.makeToast('warning', 'Filtro Vazio', 'Sem propostas para serem exibidas');
-        this.habilitaLimparFiltro = false;
-        this.findPendenciaSintetico();
+        this.findPendenciaSinteticoPesquisaProposta();
       } else {
         this.pendencia = pendenciaFiltrados;
         this.habilitaLimparFiltro = true;
@@ -165,6 +170,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
         "data_ate": "",
         "criterio_de_data": "",
         "codigo_matriz": Number(this.codigoLojaMatriz),
+        "codigo_instituicao": Number(this.codigoInstituicao),
         "codigo_comercial": Number(this.codigoComercial),
         "codigo_regional": Number(this.codigoRegional),
         "codigo_loja": Number(this.codigoLoja),
@@ -172,6 +178,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
         "status_farol": this.codigoTipoPendencia,
         "codigo_canal_vendas": Number(this.codigoCanalVendas),
         "numero_bordero": Number(this.codigoBordero),
+        "proposta": Number(this.valueProposta)
       }
     ).then((s) => {
       this.pendenciaSintetico = s.status_time_line;
@@ -210,13 +217,14 @@ export class PendenciaComponent implements OnInit, OnDestroy {
       "data_ate": "",
       "criterio_de_data": "",
       "codigo_matriz": Number(this.codigoLojaMatriz),
+      "codigo_instituicao": Number(this.codigoInstituicao),
       "codigo_comercial": Number(this.codigoComercial),
       "codigo_regional": Number(this.codigoRegional),
       "codigo_loja": Number(this.codigoLoja),
       "codigo_funcionario": Number(this.codigoFuncionario),
       "status_farol": this.codigoTipoPendencia,
       "codigo_canal_vendas": Number(this.codigoCanalVendas),
-      "numero_bordero": Number(this.codigoBordero),
+      "numero_bordero": Number(this.codigoBordero)
     }
     ).then((s) => {
       this.pendenciaSintetico = s.status_time_line;
@@ -239,7 +247,106 @@ export class PendenciaComponent implements OnInit, OnDestroy {
       .catch((e) => {
         console.log(e);
       });
-  }
+  };
+
+  findPendenciaSinteticoPesquisaProposta() {
+    this.habilitaLimparFiltro = false;
+    this.pendenciaSintetico = [];
+    this.pendenciaSinteticoTemp = [];
+    this.pendenciaFisicoApiService.pendenciasSintetico({
+      "data_de": "",
+      "data_ate": "",
+      "criterio_de_data": "",
+      "codigo_matriz": Number(this.codigoLojaMatriz),
+      "codigo_instituicao": Number(this.codigoInstituicao),
+      "codigo_comercial": Number(this.codigoComercial),
+      "codigo_regional": Number(this.codigoRegional),
+      "codigo_loja": Number(this.codigoLoja),
+      "codigo_funcionario": Number(this.codigoFuncionario),
+      "status_farol": this.codigoTipoPendencia,
+      "codigo_canal_vendas": Number(this.codigoCanalVendas),
+      "numero_bordero": Number(this.codigoBordero),
+      "proposta": Number(this.valueProposta)
+    }
+    ).then((s) => {
+      this.pendenciaSintetico = s.status_time_line;
+      for (let i of this.pendenciaSintetico) {
+        if (i.codigo_status_time_line == 0) {
+          this.pendenciaSinteticoTemp.push(i = {
+            ...i,
+            "ativo": true
+          })
+        } else {
+          this.pendenciaSinteticoTemp.push(i = {
+            ...i,
+            "ativo": true
+          })
+        }
+      }
+      this.pendenciaSintetico = this.pendenciaSinteticoTemp;
+      this.findPendenciaPesquisaProposta();
+    })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+
+  findPendenciaPesquisaProposta() {
+    this.limparFiltros = false;
+    this.pendencia = [];
+    this.comercial = [];
+    this.regional = [];
+    this.funcionario = [];
+    this.canalVendas = [];
+    this.instituicao = [];
+    this.tipoPendencia = [];
+    this.loja = [];
+    this.matriz = [];
+    this.pararSpinner = true;
+    //this.codigo_status_time_line = codigo_status_time_line;
+    this.pendenciaFisicoApiService.pendencias({
+      "data_de": "",
+      "data_ate": "",
+      "criterio_de_data": "",
+      "codigo_matriz": Number(this.codigoLojaMatriz),
+      "codigo_instituicao": Number(this.codigoInstituicao),
+      "codigo_comercial": Number(this.codigoComercial),
+      "codigo_regional": Number(this.codigoRegional),
+      "codigo_loja": Number(this.codigoLoja),
+      "codigo_funcionario": Number(this.codigoFuncionario),
+      "status_farol": this.codigoTipoPendencia,
+      "codigo_canal_vendas": Number(this.codigoCanalVendas),
+      "numero_bordero": Number(this.codigoBordero),
+      "proposta": Number(this.valueProposta)
+    })
+      .then((s) => {
+        this.pendencia = s.dados;
+        this.comercial = s.agrupado_comercial;
+        this.regional = s.agrupado_regional;
+        this.funcionario = s.agrupado_funcionario;
+        this.loja = s.agrupado_loja;
+        this.matriz = s.agrupado_loja_matriz;
+        this.instituicao = s.agrupado_instituicao;
+        this.canalVendas = s.agrupado_canal_vendas;
+        this.tipoPendencia = s.agrupado_status_farol;
+        if (this.pendencia.length == 0) {
+          this.pararSpinner = false;
+          this.makeToast('warning', 'Filtro Vazio', 'Sem propostas para serem exibidas');
+          this.habilitaLimparFiltro = false;
+          this.findPendenciaSintetico();
+        } else {
+          this.habilitaLimparFiltro = true;
+        }
+      })
+      .catch((e) => {
+        this.makeToast('danger', 'Erro', e.error.message);
+        this.habilitaLimparFiltro = false;
+        this.pararSpinner = false;
+        this.findPendenciaSintetico();
+        console.log(e);
+      });
+  };
 
   findPendencia(event) {
     this.limparFiltros = false;
@@ -265,6 +372,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
       "criterio_de_data": "",
       "codigo_matriz": Number(this.codigoLojaMatriz),
       "codigo_comercial": Number(this.codigoComercial),
+      "codigo_instituicao": Number(this.codigoInstituicao),
       "codigo_regional": Number(this.codigoRegional),
       "codigo_loja": Number(this.codigoLoja),
       "codigo_funcionario": Number(this.codigoFuncionario),
@@ -280,6 +388,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
         this.funcionario = s.agrupado_funcionario;
         this.loja = s.agrupado_loja;
         this.matriz = s.agrupado_loja_matriz;
+        this.instituicao = s.agrupado_instituicao;
         this.canalVendas = s.agrupado_canal_vendas;
         this.tipoPendencia = s.agrupado_status_farol;
         if (this.pendencia.length == 0) {
@@ -309,6 +418,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
       "data_ate": "",
       "criterio_de_data": "",
       "codigo_matriz": Number(this.codigoLojaMatriz),
+      "codigo_instituicao": Number(this.codigoInstituicao),
       "codigo_comercial": Number(this.codigoComercial),
       "codigo_regional": Number(this.codigoRegional),
       "codigo_loja": Number(this.codigoLoja),
@@ -325,6 +435,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
         this.funcionario = s.agrupado_funcionario;
         this.loja = s.agrupado_loja;
         this.matriz = s.agrupado_loja_matriz;
+        this.instituicao = s.agrupado_instituicao;
         this.canalVendas = s.agrupado_canal_vendas;
         this.tipoPendencia = s.agrupado_status_farol;
         if (this.pendencia.length == 0) {
@@ -335,6 +446,8 @@ export class PendenciaComponent implements OnInit, OnDestroy {
         console.log(e);
       });
   }
+
+
 
   toggleView(acao) {
     this.revealed[acao] = !this.revealed[acao];
@@ -522,6 +635,24 @@ export class PendenciaComponent implements OnInit, OnDestroy {
     }
   }
 
+  private _filterInstituicao(value: number, nome?: string, limpar?: boolean): any {
+    if (limpar && value == 0) {
+      this.ativaBotaoInstituicao = false;
+      this.codigoInstituicao = "";
+      this.atualizaContador(this.ativaBotaoInstituicao)
+    } else {
+      this.ativaBotaoInstituicao = true;
+      const filterValue = value;
+      this.nomeInstituicao = nome;
+      this.codigoInstituicao = String(filterValue);
+      let instituicaoFiltrados = this.instituicao.filter(valorInstituicao => valorInstituicao.codigo_instituicao == filterValue);
+      let pendenciaFiltrados = this.pendencia.filter(valorContratos => valorContratos.codigo_instituicao == filterValue);
+      this.instituicao = instituicaoFiltrados;
+      this.pendencia = pendenciaFiltrados;
+      this.habilitaFiltrosSecundarios(this.instituicao);
+    }
+  }
+
   private _filterComercial(value: number, nome?: string, limpar?: boolean): any {
     if (limpar && value == 0) {
       this.ativaBotaoComercial = false;
@@ -650,6 +781,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
     let lojasMatrizFiltrados = [];
     let lojasFiltrados = [];
     let funcionariosFiltrados = [];
+    let instituicaoFiltrados = [];
     if (agrupamento[0].filtro_avancado.lenght != 0) {
 
       if (agrupamento[0].filtro_avancado.canal_vendas.lenght != 0) {
@@ -664,6 +796,20 @@ export class PendenciaComponent implements OnInit, OnDestroy {
         }
         this.canalVendas = [];
         this.canalVendas = canalVendasFiltrados;
+      }
+
+      if (agrupamento[0].filtro_avancado.instituicao.lenght != 0) {
+        for (var _i = 0; _i < agrupamento[0].filtro_avancado.instituicao.length; _i++) {
+          var num = agrupamento[0].filtro_avancado.instituicao[_i];
+          if (num.codigo != null) {
+            let valor = this.instituicao.filter(valorInstituicao => valorInstituicao.codigo_instituicao == num.codigo)
+            if (valor.length != 0) {
+              instituicaoFiltrados.push(valor[0]);
+            }
+          }
+        }
+        this.instituicao = [];
+        this.instituicao = instituicaoFiltrados;
       }
 
       if (agrupamento[0].filtro_avancado.comercial.lenght != 0) {

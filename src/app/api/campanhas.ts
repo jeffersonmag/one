@@ -16,7 +16,7 @@ export class CampanhasApiService {
     return this.requestService.get(`${environment.urlApi}/campanhas-perfil`, dados, true);
   }
 
-  metas(dados = {}) {
+  metas(dados) {
     return this.requestService.post(`${environment.urlApi}/metas-campanha-perfil`, dados, true);
   }
 
