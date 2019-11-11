@@ -165,7 +165,6 @@
                   <th style="width: 15%" class="">Nível</th>
                   <th style="width: 10%" class="textRight">Meta total</th>
                   <th style="width: 10%" class="textRight">Atingimento</th>
-
                   <th style="width: 10%" class="textRight">Meta diária</th>
                   <th style="width: 10%" class="textRight">Projeção</th>
                   <th style="width: 10%" class="textRight">Ticket médio</th>
@@ -184,7 +183,6 @@
                     <td style="width: 15%" class="">{{i.nivel_atingimento_campanha}}</td>
                     <td style="width: 10%" class="textRight">{{i.meta_total_campanha | moeda}}</td>
                     <td style="width: 10%" class="textRight">{{i.atingimento_total_campanha | moeda}}</td>
-
                     <td style="width: 10%" class="textRight">{{i.meta_diaria_campanha | moeda}}</td>
                     <td style="width: 10%" class="textRight">{{i.projecao_total_campanha | moeda}}</td>
                     <td style="width: 10%" class="textRight">{{i.ticket_medio_campanha | moeda}}</td>
@@ -243,6 +241,28 @@
             </tbody>
           </table>
         </div>
+        <!--<table>
+          <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+          <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+
+          <ng-container [nbTreeGridColumnDef]="customColumn">
+              <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(customColumn)" *nbTreeGridHeaderCellDef>
+                  {{customColumn}}
+              </th>
+              <td nbTreeGridCell *nbTreeGridCellDef="let row">
+              <ngx-fs-icon [kind]="row.data.kind" [expanded]="row.expanded"></ngx-fs-icon>
+              {{row.data[customColumn]}}
+            </td>
+          </ng-container>
+
+          <ng-container *ngFor="let column of defaultColumns; let index = index" [nbTreeGridColumnDef]="column" [showOn]="getShowOn(index)">
+              <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>
+                  {{column}}
+              </th>
+              <td nbTreeGridCell *nbTreeGridCellDef="let row">{{row.data[column] || '-'}}</td>
+          </ng-container>
+
+      </table>-->
       </nb-card-body>
     </nb-card>
   </div>

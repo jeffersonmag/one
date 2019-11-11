@@ -10,7 +10,16 @@
     "url": "https://github.com/akveo/ngx-admin/issues"
   },
   "browser": {
-    "crypto": false
+    "fs": false,
+		"path": false,
+		"os": false,
+		"crypto": false,
+		"stream": false,
+		"http": false,
+		"tls": false,
+		"zlib": false,
+		"https": false,
+		"net": false
   },
   "scripts": {
     "ng": "ng",

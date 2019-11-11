@@ -26,6 +26,12 @@
                                     REGIONAL: {{nomeRegional}} &times;
                                 </button>
                             </div>
+                            <div *ngIf="ativaBotaoInstituicao">
+                                <button nbButton shape="round" size="small" status="primary"
+                                    nbTooltip="Limpar Filtro de Proposta" (click)="_filterInstituicao(0, '', true)">
+                                    INSTITUIÇÃO: {{nomeInstituicao}} &times;
+                                </button>
+                            </div>
                             <div *ngIf="ativaBotaoComercial">
                                 <button nbButton shape="round" size="small" status="primary"
                                     nbTooltip="Limpar Filtro de Proposta" (click)="_filterComercial(0, '', true)">
@@ -308,6 +314,56 @@
                                                                             </button>
                                                                         </td>
                                                                         <td class="size-fonte">{{i.nome_regional}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </nb-card-body>
+                                        </div>
+                                    </nb-card>
+                                </div>
+
+                                <!--CARD INSTITUICAO-->
+                                <div class="col" *ngIf="instituicao.length != 0">
+                                    <nb-card accent="primary" status="primary" class="solar-card">
+                                        <nb-card-header>Instituição
+                                            <nb-icon *ngIf="revealed.instituicao" class="toggle-icon"
+                                                icon="chevron-up-outline" pack="eva"
+                                                (click)="toggleView('instituicao')">
+                                            </nb-icon>
+                                            <nb-icon *ngIf="!revealed.instituicao" class="toggle-icon"
+                                                icon="chevron-down-outline" pack="eva"
+                                                (click)="toggleView('instituicao')">
+                                            </nb-icon>
+                                        </nb-card-header>
+                                        <div class="maxContent" *ngIf="revealed.instituicao">
+                                            <nb-card-body>
+                                                <div class="info" style="text-align: center;">
+                                                    <div style="padding-top: 15px;">
+                                                        <div class="container">
+                                                            <table class="tabela" equalColumnsWidth>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="text-left"></th>
+                                                                        <!--<th class="text-left">Código</th>-->
+                                                                        <th class="text-left">Nome Instituição</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr *ngFor="let i of instituicao">
+                                                                        <td class="size-fonte">
+                                                                            <button nbButton status="success" ghost
+                                                                                [size]="tiny" nbTooltip="Acionar Filtro"
+                                                                                (click)="_filterInstituicao(i.codigo_instituicao, i.nome_instituicao, false)"
+                                                                                nbTooltipStatus="success">
+                                                                                <i class="fa fa-chevron-up color"></i>
+                                                                            </button>
+                                                                        </td>
+                                                                        <!--<td class="size-fonte">{{i.codigo_regional}}</td>-->
+                                                                        <td class="size-fonte">{{i.nome_instituicao}}
+                                                                        </td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
