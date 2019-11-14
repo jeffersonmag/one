@@ -40,6 +40,20 @@
       </nb-card-body>
       <nb-card-body *ngIf="dadosCampanhaMetas.length > 0 && dadosCampanhaMetasLoadCampanhas">
         <!--</nb-card-header>-->
+        <div class="row">
+          <div *ngIf="ativaBotaoLojaTableSmart">
+            <button nbButton shape="round" size="small" status="info" nbTooltip="Limpar Filtros aplicados"
+              (click)="clickSmartTableLimpar(2)">
+              LOJAS: {{nomeLojaSelecionada}} &times;
+            </button>
+          </div>
+          <div *ngIf="ativaBotaoPromotoresTableSmart">
+            <button nbButton shape="round" size="small" status="info" nbTooltip="Limpar Filtros aplicados"
+              (click)="clickSmartTableLimpar(1)">
+              PROMOTORES: {{nomePromotorSelecionado}} &times;
+            </button>
+          </div>
+        </div><br>
         <div class="col-md-12 col-sm-12 col-lg-12 row justify-content-between">
           <nb-card accent="info" class="cardTrd">
             <nb-card-body class="cardBody">
@@ -421,7 +435,7 @@
               <nb-card>
                 <nb-card-body>
                   <ng2-smart-table [settings]="settingsLojas" [source]="source"
-                    (userRowSelect)="clickSmartTable($event)">
+                    (userRowSelect)="clickSmartTableLojas($event)">
                   </ng2-smart-table>
                 </nb-card-body>
               </nb-card>
@@ -432,7 +446,7 @@
               <nb-card>
                 <nb-card-body>
                   <ng2-smart-table [settings]="settingsPromotores" [source]="source"
-                    (userRowSelect)="filtraCampanhaPerfilSmartTable($event)">
+                    (userRowSelect)="clickSmartTablePromotores($event)">
                   </ng2-smart-table>
                 </nb-card-body>
               </nb-card>

@@ -60,75 +60,75 @@ export class DashboardCampanhaComponent implements OnDestroy {
   filtro = {
     campanha: {
       label: 'Campanha',
-      codigo: 0
+      codigo: 0,
     },
     produto: {
       label: 'Produto',
-      codigo: 0
-    }
-  }
+      codigo: 0,
+    },
+  };
 
   settingsLojas = {
     hideSubHeader: true,
     prop: {
-      filter: false
+      filter: false,
     },
     actions: {
       add: false,
       edit: false,
-      delete: false
+      delete: false,
     },
     columns: {
       nome_agrupamento: {
         title: 'Lojas',
         type: 'string',
-        filter: false
+        filter: false,
       },
       meta_total_campanha: {
         title: 'Meta Total',
         type: 'number',
-        filter: false
+        filter: false,
       },
       atingimento_total_campanha: {
         title: 'Atingido',
         type: 'number',
-        filter: false
+        filter: false,
       },
       perc_atingimento_total_campanha: {
         title: '% Atingido',
         type: 'number',
-        filter: false
+        filter: false,
       },
       ticket_medio_campanha: {
         title: 'Ticket Médio',
         type: 'number',
-        filter: false
+        filter: false,
       },
       meta_diaria_campanha: {
         title: 'Meta Diária',
         type: 'number',
-        filter: false
+        filter: false,
       },
       meta_recalculada: {
         title: 'Meta Recalculada',
         type: 'number',
-        filter: false
+        filter: false,
       },
       projecao_total_campanha: {
         title: 'Total campanha projetado',
         type: 'number',
-        filter: false
+        filter: false,
       },
       total_hc_participantes: {
         title: 'HC',
         type: 'number',
-        filter: false
+        filter: false,
       },
     },
     defaultStyle: true,
     attr: {
-      class: 'table table-bordered' // this is custom table scss or css class for table
-    }
+      class: 'table table-bordered', // this is custom table scss or css class for table
+    },
   };
 
   sortColumn: string;
@@ -142,60 +142,60 @@ export class DashboardCampanhaComponent implements OnDestroy {
   settingsPromotores = {
     hideSubHeader: true,
     prop: {
-      filter: false
+      filter: false,
     },
     actions: {
       add: false,
       edit: false,
-      delete: false
+      delete: false,
     },
     columns: {
       nome_agrupamento: {
         title: 'Promotores',
         type: 'string',
-        filter: false
+        filter: false,
       },
       meta_total_campanha: {
         title: 'Meta Total',
         type: 'number',
-        filter: false
+        filter: false,
       },
       atingimento_total_campanha: {
         title: 'Atingido',
         type: 'number',
-        filter: false
+        filter: false,
       },
       perc_atingimento_total_campanha: {
         title: '% Atingido',
         type: 'number',
-        filter: false
+        filter: false,
       },
       ticket_medio_campanha: {
         title: 'Ticket Médio',
         type: 'number',
-        filter: false
+        filter: false,
       },
       meta_diaria_campanha: {
         title: 'Meta Diária',
         type: 'number',
-        filter: false
+        filter: false,
       },
       meta_recalculada: {
         title: 'Meta Recalculada',
         type: 'number',
-        filter: false
+        filter: false,
       },
       projecao_total_campanha: {
         title: 'Total campanha projetado',
         type: 'number',
-        filter: false
+        filter: false,
       },
       total_hc_participantes: {
         title: 'HC',
         type: 'number',
-        filter: false
+        filter: false,
       },
-    }
+    },
   };
 
   dadosCampanhaMetasSmartTable = [];
@@ -232,35 +232,35 @@ export class DashboardCampanhaComponent implements OnDestroy {
   perfis = [
     {
       id: 5,
-      label: 'Diretor'
+      label: 'Diretor',
     },
     {
       id: 4,
-      label: 'Regional'
+      label: 'Regional',
     },
     {
       id: 3,
-      label: 'Comercial'
+      label: 'Comercial',
     },
     {
       id: 2,
-      label: 'Loja'
+      label: 'Loja',
     },
     {
       id: 1,
-      label: 'Promotor'
-    }
+      label: 'Promotor',
+    },
   ];
 
   perfisCampanha = [
     {
       id: 2,
-      label: 'LOJAS'
+      label: 'LOJAS',
     },
     {
       id: 1,
-      label: 'PROMOTORES'
-    }
+      label: 'PROMOTORES',
+    },
   ];
 
   perfilAtivo = window.sessionStorage.codigo_perfil_atuacao;
@@ -269,17 +269,17 @@ export class DashboardCampanhaComponent implements OnDestroy {
     {
       id: 1,
       label: 'Jan',
-      mesExtenso: 'Janeiro'
+      mesExtenso: 'Janeiro',
     },
     {
       id: 2,
       label: 'Fev',
-      mesExtenso: 'Fevereiro'
+      mesExtenso: 'Fevereiro',
     },
     {
       id: 3,
       label: 'Mar',
-      mesExtenso: 'Março'
+      mesExtenso: 'Março',
     },
     {
       id: 4,
@@ -289,50 +289,50 @@ export class DashboardCampanhaComponent implements OnDestroy {
     {
       id: 5,
       label: 'Mai',
-      mesExtenso: 'Maio'
+      mesExtenso: 'Maio',
     },
     {
       id: 6,
       label: 'Jun',
-      mesExtenso: 'Junho'
+      mesExtenso: 'Junho',
     },
     {
       id: 7,
       label: 'Jul',
-      mesExtenso: 'Julho'
+      mesExtenso: 'Julho',
     },
     {
       id: 8,
       label: 'Ago',
-      mesExtenso: 'Agosto'
+      mesExtenso: 'Agosto',
     },
     {
       id: 9,
       label: 'Set',
-      mesExtenso: 'Setembro'
+      mesExtenso: 'Setembro',
     },
     {
       id: 10,
       label: 'Out',
-      mesExtenso: 'Outubro'
+      mesExtenso: 'Outubro',
     },
     {
       id: 11,
       label: 'Nov',
-      mesExtenso: 'Novembro'
+      mesExtenso: 'Novembro',
     },
     {
       id: 12,
       label: 'Dez',
-      mesExtenso: 'Dezembro'
-    }
+      mesExtenso: 'Dezembro',
+    },
   ];
 
   revealed = {
     campanhas: false,
     chart: true,
     metasCampanhas: true,
-    produtoxsxCorbans: true
+    produtoxsxCorbans: true,
   };
 
   valor = 100.00;
@@ -347,6 +347,12 @@ export class DashboardCampanhaComponent implements OnDestroy {
   anoVigente = this.dataAtual.getFullYear();
   mesVigente = this.dataAtual.getMonth() + 1;
 
+  ativaBotaoLojaTableSmart = false;
+  ativaBotaoPromotoresTableSmart = false;
+  nomeLojaSelecionada = '';
+  nomePromotorSelecionado = '';
+
+  // tslint:disable-next-line: use-lifecycle-interface
   ngOnInit() {
     this.ontem.setDate(this.ontem.getDate() - 1);
   }
@@ -356,7 +362,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
       codigo_campanha: 'asc',
       nome_campanha: 'asc',
       data_inicio_campanha: 'asc',
-      data_fim_campanha: 'asc'
+      data_fim_campanha: 'asc',
     },
     metas: {
       nome_agrupamento: 'asc',
@@ -366,7 +372,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
       meta_diaria_campanha: 'asc',
       projecao_total_campanha: 'asc',
       ticket_medio_campanha: 'asc',
-      total_hc_participantes: 'asc'
+      total_hc_participantes: 'asc',
     },
     produtos: {
       nome_produto_corban: 'asc',
@@ -375,7 +381,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
       projecao_produto_corban: 'asc',
       meta_diaria_produto_corban: 'asc',
       ticket_medio_produto_corban: 'asc',
-      percentual_atingido_produto_corban: 'asc'
+      percentual_atingido_produto_corban: 'asc',
     }
   }
 
@@ -392,19 +398,18 @@ export class DashboardCampanhaComponent implements OnDestroy {
     "qtd_realizado_seguro": 0,
     "qtd_total_contratos_campanha": 0,
     "ticket_medio_produto_corban": 0,
-    "valor_atingido_meta_producao_produto_corban": 0
-  }
+    "valor_atingido_meta_producao_produto_corban": 0,
+  };
 
   codigos = {
-    codigo_regional: "",
-    codigo_comercial: "",
-    codigo_loja: "",
-    codigo_funcionario: ""
-  }
+    codigo_regional: '',
+    codigo_comercial: '',
+    codigo_loja: '',
+    codigo_funcionario: '',
+  };
 
   constructor(
     private themeService: NbThemeService,
-    private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>,
     private campanhasApiService: CampanhasApiService,
     private diasUteisPeriodoApiService: DiasUteisPeriodoApiService,
     private ticketMedioApiService: TicketMedioApiService,
@@ -416,8 +421,9 @@ export class DashboardCampanhaComponent implements OnDestroy {
       .subscribe(theme => {
         this.statusCards = this.statusCardsByThemes[theme.name];
       });
-    //this.source.load(this.dadosCampanhaMetasSmartTable);
-    //this.dataSource = this.dataSourceBuilder.create(this.dadosCampanhaMetasSmartTable);
+    // tslint:disable-next-line: comment-format
+    // this.source.load(this.dadosCampanhaMetasSmartTable);
+    // this.dataSource = this.dataSourceBuilder.create(this.dadosCampanhaMetasSmartTable);
     this.findCampanha();
   }
 
@@ -436,7 +442,8 @@ export class DashboardCampanhaComponent implements OnDestroy {
       }
       for (let i of this.contratosDigitados) {
         let find = datas.find((val: any) => {
-          return String(`${i.ano}-${str_pad(i.mes, 2, 0, 'STR_PAD_LEFT')}-${str_pad(i.dia, 2, 0, 'STR_PAD_LEFT')}`) === String(val);
+          return String(
+            `${i.ano}-${str_pad(i.mes, 2, 0, 'STR_PAD_LEFT')}-${str_pad(i.dia, 2, 0, 'STR_PAD_LEFT')}`) === String(val);
         });
         if (!find) {
           datas.push(`${i.ano}-${str_pad(i.mes, 2, 0, 'STR_PAD_LEFT')}-${str_pad(i.dia, 2, 0, 'STR_PAD_LEFT')}`);
@@ -445,7 +452,8 @@ export class DashboardCampanhaComponent implements OnDestroy {
 
       for (let i of datas) {
         let find = _.find(this.contratosDigitados, (o: any) => {
-          return String(i) === String(`${o.ano}-${str_pad(o.mes, 2, 0, 'STR_PAD_LEFT')}-${str_pad(o.dia, 2, 0, 'STR_PAD_LEFT')}`)
+          return String(i) === String(
+            `${o.ano}-${str_pad(o.mes, 2, 0, 'STR_PAD_LEFT')}-${str_pad(o.dia, 2, 0, 'STR_PAD_LEFT')}`);
         });
         if (!find) {
           digitados.push(0);
@@ -453,7 +461,8 @@ export class DashboardCampanhaComponent implements OnDestroy {
           digitados.push(find.total_valor_elegivel);
         }
         find = _.find(this.contratosPagos, (o: any) => {
-          return String(i) === String(`${o.ano}-${str_pad(o.mes, 2, 0, 'STR_PAD_LEFT')}-${str_pad(o.dia, 2, 0, 'STR_PAD_LEFT')}`)
+          return String(i) === String(
+            `${o.ano}-${str_pad(o.mes, 2, 0, 'STR_PAD_LEFT')}-${str_pad(o.dia, 2, 0, 'STR_PAD_LEFT')}`)
         });
         if (!find) {
           pagos.push(0);
@@ -468,7 +477,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
 
       for (let i in datas) {
         datas[i] = moment(datas[i]).format('DD/MM');
-      }
+      };
 
       this.chartOptions = {
         backgroundColor: echarts.bg,
@@ -510,7 +519,9 @@ export class DashboardCampanhaComponent implements OnDestroy {
               label: {
                 formatter: params => {
                   return (
-                    'Valores ' + params.value + (params.seriesData.length ? ' ： ' + 'R$ ' + number_format(params.seriesData[0].data, 2, ',', '.') : '')
+                    'Valores ' + params.value +
+                    (params.seriesData.length ? ' ： ' + 'R$ ' +
+                      number_format(params.seriesData[0].data, 2, ',', '.') : '')
                   );
                 },
               },
@@ -537,7 +548,9 @@ export class DashboardCampanhaComponent implements OnDestroy {
               label: {
                 formatter: params => {
                   return (
-                    'Valores ' + params.value + (params.seriesData.length ? ' ： ' + 'R$ ' + number_format(params.seriesData[0].data, 2, ',', '.') : '')
+                    'Valores ' + params.value +
+                    (params.seriesData.length ? ' ： ' + 'R$ ' +
+                      number_format(params.seriesData[0].data, 2, ',', '.') : '')
                   );
                 },
               },
@@ -596,7 +609,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
     this.campanhasApiService.perfil()
       .then((s) => {
         this.campanhasPerfil = s;
-        if (this.campanhasPerfil.length == 0){
+        if (this.campanhasPerfil.length === 0) {
           this.dadosCampanhaMetasLoadCampanhas = false;
           this.dadosCampanhaMetasLoad = false;
         } else {
@@ -626,7 +639,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
     )
       .then((s) => {
         this.dadosCampanhaMetas = s;
-        if (this.dadosCampanhaMetas.length == 0){
+        if (this.dadosCampanhaMetas.length == 0) {
           this.dadosCampanhaMetasLoad = false;
         } else {
           this.dadosCampanhaMetasLoad = false;
@@ -637,14 +650,14 @@ export class DashboardCampanhaComponent implements OnDestroy {
         console.log(e);
         this.dadosCampanhaMetasLoad = false;
       });
-  };
+  }
 
   findCampanhaMetaSmartTable(visao) {
     this.dadosCampanhaMetasLoad = true;
     //this.dadosCampanhaMetas = [];
     //this.dadosProdutoCorbanCampanha = [];
     this.dadosCampanhaMetasSmartTable = [];
-    let datasourcesmart : TreeNode<FSEntry>[];
+    let datasourcesmart: TreeNode<FSEntry>[];
     this.campanhasApiService.metas(
       {
         "codigo_campanha": this.filtro.campanha.codigo,
@@ -659,22 +672,24 @@ export class DashboardCampanhaComponent implements OnDestroy {
         for (let i of s) {
           this.dadosCampanhaMetasSmartTable.push(
             {
+              codigo_agrupamento: i.codigo_agrupamento,
               nome_agrupamento: i.nome_agrupamento,
               meta_total_campanha: parseFloat(i.meta_total_campanha),
               atingimento_total_campanha: parseFloat(i.atingimento_total_campanha),
-              perc_atingimento_total_campanha: (((i.atingimento_total_campanha).toFixed(2) / (i.meta_total_campanha).toFixed(2)) * 100).toFixed(2),
+              perc_atingimento_total_campanha:
+                (((i.atingimento_total_campanha).toFixed(2) / (i.meta_total_campanha).toFixed(2)) * 100).toFixed(2),
               ticket_medio_campanha: parseFloat(i.ticket_medio_campanha),
               meta_diaria_campanha: (parseFloat(i.meta_total_campanha) / this.campanhaDias).toFixed(0),
               meta_recalculada:
-              ((i.meta_total_campanha).toFixed(2) - (i.atingimento_total_campanha).toFixed(2) / this.campanhaPendencias)
-              .toFixed(0),
+                ((i.meta_total_campanha).toFixed(2) - (i.atingimento_total_campanha).toFixed(2) / this.campanhaPendencias)
+                  .toFixed(0),
               projecao_total_campanha: parseFloat(i.projecao_total_campanha).toFixed(0),
               total_hc_participantes: i.total_hc_participantes,
             });
         }
         this.source.load(this.dadosCampanhaMetasSmartTable);
         this.dadosCampanhaMetasLoad = false;
-        if (this.dadosCampanhaMetas.length != 0) {
+        if (this.dadosCampanhaMetas.length !== 0) {
           this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas[0]);
         }
       })
@@ -687,20 +702,20 @@ export class DashboardCampanhaComponent implements OnDestroy {
   updateSort(sortRequest: NbSortRequest): void {
     this.sortColumn = sortRequest.column;
     this.sortDirection = sortRequest.direction;
-  };
+  }
 
   getSortDirection(column: string): NbSortDirection {
     if (this.sortColumn === column) {
       return this.sortDirection;
     }
     return NbSortDirection.NONE;
-  };
+  }
 
   getShowOn(index: number) {
     const minWithForMultipleColumns = 400;
     const nextColumnStep = 100;
     return minWithForMultipleColumns + (nextColumnStep * index);
-  };
+  }
 
   findContratos() {
     this.datasHoje = [];
@@ -734,7 +749,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
               this.datasHoje = c;
             })
             .catch((e) => {
-              console.log(e)
+              console.log(e);
             });
 
           this.indiceContratosDigitadosApiService.pagos({
@@ -745,7 +760,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
               this.datasOntem = d;
             })
             .catch((e) => {
-              console.log(e)
+              console.log(e);
             });
         } else {
           this.datasOntem = [];
@@ -753,7 +768,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
         }
       })
       .catch((e) => {
-        console.log(e)
+        console.log(e);
       });
 
     this.contratosPagosSinteticos = {
@@ -772,12 +787,12 @@ export class DashboardCampanhaComponent implements OnDestroy {
       "codigo_funcionario": this.codigos.codigo_funcionario
     })
       .then((s) => {
-        for (let i of s) {
+        for (const i of s) {
           this.contratosPagosSinteticos = i;
         }
       })
       .catch((e) => {
-        console.log(e)
+        console.log(e);
       });
   }
 
@@ -796,7 +811,6 @@ export class DashboardCampanhaComponent implements OnDestroy {
       })
     this.diasUteisPeriodoApiService.periodo(
       {
-        //"data_inicial": this.campanhaSelecionada.data_inicio_pendencia_fisico,
         "data_inicial": moment().format('YYYY-MM-DD'),
         "data_final": this.campanhaSelecionada.data_fim_pendencia_fisico
       }
@@ -806,7 +820,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
       })
       .catch((e) => {
         console.log(e);
-      })
+      });
   }
 
   findTickets() {
@@ -823,7 +837,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
         this.ticketPerfil = s.ticket_medio_perfil;
       })
       .catch((e) => {
-        console.log(e)
+        console.log(e);
       });
     this.ticketMedioApiService.global({
       "codigo_campanha": this.filtro.campanha.codigo,
@@ -836,20 +850,20 @@ export class DashboardCampanhaComponent implements OnDestroy {
         this.ticketGlobal = s.ticket_medio_global;
       })
       .catch((e) => {
-        console.log(e)
+        console.log(e);
       });
   }
 
-  atualizarFiltro2(item) {
+  /*atualizarFiltro2(item) {
     this.codigos.codigo_regional = '';
     this.codigos.codigo_comercial = '';
     this.codigos.codigo_loja = '';
     this.codigos.codigo_funcionario = '';
     this.atualizarFiltro(item);
-  }
+  }*/
 
   atualizarFiltro(item) {
-    if (item.codigo_campanha != 0){
+    if (item.codigo_campanha !== 0) {
       this.filtro.campanha.codigo = item.codigo_campanha;
       this.nomeCampanhaSelecionado = item.nome_campanha;
 
@@ -859,7 +873,8 @@ export class DashboardCampanhaComponent implements OnDestroy {
       let dataFimCampanhaApi = moment(String(item.data_fim_campanha).substring(0, 10)).format('YYYY-MM-DD');
       let dataFimCampanhaFormat = moment(dataFimCampanhaApi).format('DD/MM/YYYY');
 
-      this.periodoCampanhaSelecionado = "De " + String(dataInicioCampanhaFormat) + " Até " + String(dataFimCampanhaFormat);
+      // tslint:disable-next-line: max-line-length
+      this.periodoCampanhaSelecionado = 'De ' + String(dataInicioCampanhaFormat) + ' Até ' + String(dataFimCampanhaFormat);
       this.campanhaSelecionada = item;
       this.findContratos();
       this.findDiasUteis();
@@ -870,47 +885,99 @@ export class DashboardCampanhaComponent implements OnDestroy {
 
   filtraCampanhaPerfil(event) {
     this.findDiasUteis();
-    let find = _.find(this.perfis, (o: any) => {
+    const find = _.find(this.perfis, (o: any) => {
       return String(o.label) === String(event.tabTitle);
-    })
+    });
     this.perfilAtivo = find.id;
     this.findCampanhaMeta(find.id);
+    this.perfilAtivo = window.sessionStorage.codigo_perfil_atuacao;
   }
 
   filtraCampanhaPerfilSmartTable(event) {
-    let find = _.find(this.perfisCampanha, (o: any) => {
+    const find = _.find(this.perfisCampanha, (o: any) => {
       return String(o.label) === String(event.tabTitle);
-    })
+    });
     this.perfilAtivo = find.id;
     this.findCampanhaMetaSmartTable(find.id);
+    this.perfilAtivo = window.sessionStorage.codigo_perfil_atuacao;
   }
 
-  clickSmartTable(event) {
-    console.log(event)
+  clickSmartTableLojas(event) {
+    const codigoAgrupamento = _.find(this.dadosCampanhaMetasSmartTable, (o: any) => {
+      return String(o.nome_agrupamento) === String(event.data.nome_agrupamento);
+    });
+    this.nomeLojaSelecionada = codigoAgrupamento.nome_agrupamento;
+    this.ativaBotaoLojaTableSmart = true;
+    this.findDadosProdutoCorbanCampanhaFiltro(codigoAgrupamento, 2);
   }
 
-  findDadosProdutoCorbanCampanhaFiltro(item) {
+  clickSmartTablePromotores(event) {
+    const codigoAgrupamento = _.find(this.dadosCampanhaMetasSmartTable, (o: any) => {
+      return String(o.nome_agrupamento) === String(event.data.nome_agrupamento);
+    });
+    this.nomePromotorSelecionado = codigoAgrupamento.nome_agrupamento;
+    this.ativaBotaoPromotoresTableSmart = true;
+    this.findDadosProdutoCorbanCampanhaFiltro(codigoAgrupamento, 1);
+  }
+
+  clickSmartTableLimpar(filtro) {
+    /*const codigoAgrupamento = _.find(this.dadosCampanhaMetasSmartTable, (o: any) => {
+      return String(o.nome_agrupamento) === String(event.data.nome_agrupamento);
+    });*/
+    //this.findDadosProdutoCorbanCampanhaFiltro(filtro, 1);
+    if (filtro === 1) {
+      this.nomePromotorSelecionado = '';
+      this.ativaBotaoPromotoresTableSmart = false;
+      this.codigos.codigo_funcionario = '';
+      if (this.ativaBotaoLojaTableSmart) {
+        this.findContratos();
+        this.findTickets();
+        this.findCampanhaMeta(2);
+      } else {
+        this.findContratos();
+        this.findTickets();
+        this.findCampanhaMeta(this.perfilAtivo);
+      }
+    }
+
+    if (filtro === 2) {
+      this.nomeLojaSelecionada = '';
+      this.ativaBotaoLojaTableSmart = false;
+      this.codigos.codigo_loja = '';
+      if (this.ativaBotaoPromotoresTableSmart) {
+        this.findContratos();
+        this.findTickets();
+        this.findCampanhaMeta(1);
+      } else {
+        this.findContratos();
+        this.findTickets();
+        this.findCampanhaMeta(this.perfilAtivo);
+      }
+    }
+  }
+
+  findDadosProdutoCorbanCampanhaFiltro(item, visao) {
     this.dadosProdutoCorbanCampanha = item;
 
-    if (this.perfilAtivo === 4) {
+    if (visao === 4) {
       this.codigos.codigo_regional = String(item.codigo_agrupamento);
     }
 
-    if (this.perfilAtivo === 3) {
+    if (visao === 3) {
       this.codigos.codigo_comercial = String(item.codigo_agrupamento);
     }
 
-    if (this.perfilAtivo === 2) {
+    if (visao === 2) {
       this.codigos.codigo_loja = String(item.codigo_agrupamento);
     }
 
-    if (this.perfilAtivo === 1) {
+    if (visao === 1) {
       this.codigos.codigo_funcionario = String(item.codigo_agrupamento);
     }
 
     this.findContratos();
     this.findTickets();
-    this.findCampanhaMeta(this.perfilAtivo);
+    this.findCampanhaMeta(visao);
   }
 
   findDadosProdutoCorbanCampanha(item) {
@@ -973,5 +1040,4 @@ export class DashboardCampanhaComponent implements OnDestroy {
     this.popover.content = component;
     this.popover.rebuild();
   }
-
 }

@@ -570,8 +570,9 @@ export class EsteiraProducaoComponent implements OnInit, OnDestroy {
       const filterValue = value;
       this.nomeInstituicao = nome;
       this.codigoInstituicao = String(filterValue);
+      this.findIndicadores();
       let instituicaoFiltrados = this.instituicao.filter(valorInstituicao => valorInstituicao.codigo_instituicao == filterValue);
-      let propostasInconsistenciasFiltrados = this.propostasInconsistencias.filter(valorContratos => valorContratos.codigo_comercial == filterValue);
+      let propostasInconsistenciasFiltrados = this.propostasInconsistencias.filter(valorContratos => valorContratos.codigo_instituicao == filterValue);
       this.instituicao = instituicaoFiltrados;
       this.propostasInconsistencias = propostasInconsistenciasFiltrados;
       this.habilitaFiltrosSecundarios(this.instituicao);
