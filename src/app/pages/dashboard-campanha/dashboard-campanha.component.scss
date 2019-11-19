@@ -437,3 +437,9 @@
 :host /deep/ ng2-smart-table table tr th a {
   font-weight: bold;
 }
+
+:host /deep/ ng2-smart-table tbody>tr>td {
+  font-size: .875em;
+  padding: .375em .75em;
+  text-align: right;
+}
