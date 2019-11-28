@@ -1,0 +1,209 @@
+<div class="buttons-row">
+  <button *ngIf="criacaoUsuario" class="buttons-row" nbButton shape="round" size="small" status="success"
+    nbTooltip="Salvar" (click)="salvarDadosUsuario(form)">
+    <i class="fa fa-check color"></i>
+    <div class="espacamento">Salvar</div>
+  </button>
+  <button *ngIf="edicaoUsuario" class="buttons-row" nbButton shape="round" size="small" status="success"
+    nbTooltip="Salvar" (click)="editarDadosUsuario(form)">
+    <i class="fa fa-check color"></i>
+    <div class="espacamento">Salvar</div>
+  </button>
+  <button class="buttons-row" nbButton shape="round" size="small" status="danger" nbTooltip="Cancelar"
+    (click)="Close()">
+    <i class="fa fa-times color"></i>
+    <div class="espacamento">Cancelar</div>
+  </button>
+</div>
+<form #form="ngForm" class="formulario" [formGroup]="formulario">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputNome" class="label col-sm-3 col-form-label">Nome Fantasia</label>
+        <div class="col-sm-9">
+          <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputNome" formControlName="nome"
+            placeholder="Nome Fantasia" tabindex="1">
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputCpf" class="label col-sm-3 col-form-label">CPF</label>
+        <div class="col-sm-9">
+          <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCpf" formControlName="cpf"
+            placeholder="CPF" tabindex="3">
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputCodigo" class="label col-sm-3 col-form-label">Código</label>
+        <div class="col-sm-9">
+          <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCodigo"
+            formControlName="codigo" placeholder="Código" tabindex="2">
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputDataCadastro" class="label col-sm-3 col-form-label">Data Cadastro</label>
+        <div class="col-sm-9">
+          <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputDataCadastro"
+            formControlName="data_cadastro" placeholder="Data Cadastro" tabindex="4">
+        </div>
+      </div>
+    </div>
+  </div>
+  <nb-tabset class="size-fonte" fullWidth>
+    <nb-tab [tabTitle]="'GERAL'" [active]="true" badgeStatus="info" tabindex="5">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputEndereco" class="label col-sm-3 col-form-label">Endereço</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputEndereco"
+                formControlName="endereco" placeholder="Endereço" tabindex="6">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputTelefone1" class="label col-sm-3 col-form-label">Telefone 1</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputTelefone1"
+                formControlName="telefone1" placeholder="Telefone 1" tabindex="13">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputnumero" class="label col-sm-3 col-form-label">Número</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputnumero"
+                formControlName="numero" placeholder="Número" tabindex="7">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputTelefone2" class="label col-sm-3 col-form-label">Telefone 2</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputTelefone2"
+                formControlName="telefone2" placeholder="Telefone 2" tabindex="14">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputcomplemento" class="label col-sm-3 col-form-label">Complemento</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputcomplemento"
+                formControlName="complemento" placeholder="Complemento" tabindex="8">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputCelular" class="label col-sm-3 col-form-label">Celular</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCelular"
+                formControlName="celular" placeholder="Celular" tabindex="15">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputbairro" class="label col-sm-3 col-form-label">Bairro</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputbairro"
+                formControlName="bairro" placeholder="Bairro" tabindex="9">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputrecado" class="label col-sm-3 col-form-label">Recado</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputrecado"
+                formControlName="recado" placeholder="Recado" tabindex="16">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputcidade" class="label col-sm-3 col-form-label">Cidade</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputcidade"
+                formControlName="cidade" placeholder="Cidade" tabindex="10">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputUF" class="label col-sm-3 col-form-label">UF</label>
+            <div class="col-sm-9">
+              <!--<ng-select selected="1" id="inputUF" [items]="estados" [size]="tiny" tabindex="11">-->
+              <!--<ng-select class="custom" id="inputUF" placeholder="UF" [items]="estados" tabindex="11"></ng-select>-->
+              <nb-select size='tiny' placeholder='UF'>{{estados}}</nb-select>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputdata_fundacao" class="label col-sm-3 col-form-label">Data de Fundação</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputdata_fundacao"
+                formControlName="data_fundacao" placeholder="Data de Fundação" tabindex="17">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputcep" class="label col-sm-3 col-form-label">CEP</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputcep"
+                formControlName="cep" placeholder="CEP" tabindex="12">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputnome_mae" class="label col-sm-3 col-form-label">Nome da mãe</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputnome_mae"
+                formControlName="nome_mae" placeholder="Nome da mãe" tabindex="18">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputnome_pai" class="label col-sm-3 col-form-label">Nome do Pai</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputnome_pai"
+                formControlName="nome_pai" placeholder="Nome do Pai" tabindex="19">
+            </div>
+          </div>
+        </div>
+      </div>
+    </nb-tab>
+    <nb-tab [tabTitle]="'DOCUMENTAÇÕES'" [active]="false" badgeStatus="info"></nb-tab>
+    <nb-tab [tabTitle]="'ANOTAÇÕES'" [active]="false" badgeStatus="info"></nb-tab>
+    <nb-tab [tabTitle]="'ANEXOS'" [active]="false" badgeStatus="info"></nb-tab>
+  </nb-tabset>
+</form>

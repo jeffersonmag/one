@@ -12,7 +12,7 @@ export class DiasUteisPeriodoApiService {
     private requestService: RequestService,
   ) { }
 
-  periodo(dados = {}) {
+  periodo(dados) {
     return this.requestService.post(`${environment.urlApi}/dias-uteis-periodo`, dados, true);
   }
 

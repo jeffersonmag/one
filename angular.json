@@ -164,6 +164,128 @@
           }
         }
       }
+    },
+    "cadastros": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/cadastros",
+      "sourceRoot": "projects/cadastros/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/cadastros",
+            "index": "projects/cadastros/src/index.html",
+            "main": "projects/cadastros/src/main.ts",
+            "polyfills": "projects/cadastros/src/polyfills.ts",
+            "tsConfig": "projects/cadastros/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "projects/cadastros/src/favicon.ico",
+              "projects/cadastros/src/assets"
+            ],
+            "styles": [
+              "projects/cadastros/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/cadastros/src/environments/environment.ts",
+                  "with": "projects/cadastros/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "cadastros:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "cadastros:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "cadastros:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/cadastros/src/test.ts",
+            "polyfills": "projects/cadastros/src/polyfills.ts",
+            "tsConfig": "projects/cadastros/tsconfig.spec.json",
+            "karmaConfig": "projects/cadastros/karma.conf.js",
+            "assets": [
+              "projects/cadastros/src/favicon.ico",
+              "projects/cadastros/src/assets"
+            ],
+            "styles": [
+              "projects/cadastros/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/cadastros/tsconfig.app.json",
+              "projects/cadastros/tsconfig.spec.json",
+              "projects/cadastros/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/cadastros/e2e/protractor.conf.js",
+            "devServerTarget": "cadastros:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "cadastros:serve:production"
+            }
+          }
+        }
+      }
     }
   },
   "defaultProject": "ngx-admin-demo",

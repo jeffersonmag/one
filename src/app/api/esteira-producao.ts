@@ -8,7 +8,7 @@ import { RequestService } from '../services/request.service';
 })
 export class EsteiraProducaoApiService {
 
-  cpf:string;
+  cpf: string;
 
   constructor(
     private requestService: RequestService,

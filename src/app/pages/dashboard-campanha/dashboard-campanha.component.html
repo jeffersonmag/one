@@ -50,7 +50,13 @@
           <div *ngIf="ativaBotaoPromotoresTableSmart">
             <button nbButton shape="round" size="small" status="info" nbTooltip="Limpar Filtros aplicados"
               (click)="clickSmartTableLimpar(1)">
-              PROMOTORES: {{nomePromotorSelecionado}} &times;
+              CONSULTORES: {{nomePromotorSelecionado}} &times;
+            </button>
+          </div>
+          <div *ngIf="ativaBotaoRegionaisTableSmart">
+            <button nbButton shape="round" size="small" status="info" nbTooltip="Limpar Filtros aplicados"
+              (click)="clickSmartTableLimpar(4)">
+              REGIONAIS: {{nomeRegionalSelecionado}} &times;
             </button>
           </div>
         </div><br>
@@ -382,15 +388,12 @@
 
         <!--CARDS ROSA-->
         <div class="col-md-12 col-sm-12 col-lg-12 row justify-content-between">
-          <!--<div class="col-md-12 col-sm-12 col-lg-12 row justify-content-between">-->
           <div *ngFor="let i of dadosProdutoCorbanCampanha.produto_corban_campanha">
             <nb-card *ngIf="i.length != 0" accent="danger" class="cardSnd">
               <nb-card-header>
                 <div class="produtoCorban">{{i.nome_produto_corban}}</div>
               </nb-card-header>
               <nb-card-body class="cardBody2">
-                <!--<div class="container">
-                            </div>-->
                 <table class="tabelaCircle">
                   <tr>
                     <td rowspan="5">
@@ -434,20 +437,181 @@
             <div class="container">
               <nb-card>
                 <nb-card-body>
-                  <ng2-smart-table [settings]="settingsLojas" [source]="source"
+
+                  <!--<ng2-smart-table [settings]="settingsLojas" [source]="source"
                     (userRowSelect)="clickSmartTableLojas($event)">
-                  </ng2-smart-table>
+                  </ng2-smart-table>-->
+
+                  <table class="tabela" equalColumnsWidth>
+                    <thead>
+                      <tr>
+                        <th (click)="sort('nome')" class="size-fonte-left">Lojas
+                          <span *ngIf="key =='nome'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('meta_total_campanha')" class="size-fonte-right">Meta Total
+                          <span *ngIf="key =='meta_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('atingimento_total_campanha')" class="size-fonte-right">Atingido
+                          <span *ngIf="key =='atingimento_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('perc_atingimento_total_campanha')" class="size-fonte-right">% Atingido
+                          <span *ngIf="key =='perc_atingimento_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('ticket_medio_campanha')" class="size-fonte-right">Ticket Médio
+                          <span *ngIf="key =='ticket_medio_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('meta_diaria_campanha')" class="size-fonte-right">Meta Diária
+                          <span *ngIf="key =='meta_diaria_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('meta_recalculada')" class="size-fonte-right">Meta Recalculada
+                          <span *ngIf="key =='meta_recalculada'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('projecao_total_campanha')" class="size-fonte-right">Total campanha projetado
+                          <span *ngIf="key =='projecao_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('total_hc_participantes')" class="size-fonte-right">HC
+                          <span *ngIf="key =='total_hc_participantes'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="dadosCampanhaMetasSmartTable.length != 0" style="height: 600px; overflow-y: scroll">
+                      <tr *ngFor="let i of dadosCampanhaMetasSmartTable | orderBy:key:reverse;"
+                        (click)="clickSmartTableLojas(i)">
+                        <td class="size-fonte-left-body">{{i.nome_agrupamento}}</td>
+                        <td class="size-fonte-right-body">{{i.meta_total_campanha}}</td>
+                        <td class="size-fonte-right-body">{{i.atingimento_total_campanha}}</td>
+                        <td class="size-fonte-right-body">{{i.perc_atingimento_total_campanha}}</td>
+                        <td class="size-fonte-right-body">{{i.ticket_medio_campanha}}</td>
+                        <td class="size-fonte-right-body">{{i.meta_diaria_campanha}}</td>
+                        <td class="size-fonte-right-body">{{i.meta_recalculada}}</td>
+                        <td class="size-fonte-right-body">{{i.projecao_total_campanha}}</td>
+                        <td class="size-fonte-right-body">{{i.total_hc_participantes}}</td>
+                      </tr>
+                    </tbody>
+                  </table><br>
+                  <!--<div>{{ { prop: { list: [5, 3, 1001, 104785,  4, 1, 2] } } | orderBy: 'prop.list' | json }}</div>-->
                 </nb-card-body>
               </nb-card>
             </div>
           </nb-tab>
-          <nb-tab [tabTitle]="'PROMOTORES'" [active]="false" badgeStatus="warning">
+
+          <nb-tab [tabTitle]="'REGIONAIS'" [active]="true" badgeStatus="info">
             <div class="container">
               <nb-card>
                 <nb-card-body>
-                  <ng2-smart-table [settings]="settingsPromotores" [source]="source"
+
+                  <!--<ng2-smart-table [settings]="settingsLojas" [source]="source"
+                    (userRowSelect)="clickSmartTableLojas($event)">
+                  </ng2-smart-table>-->
+
+                  <table class="tabela" equalColumnsWidth>
+                    <thead>
+                      <tr>
+                        <th (click)="sort('nome')" class="size-fonte-left">Regionais
+                          <span *ngIf="key =='nome'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('meta_total_campanha')" class="size-fonte-right">Meta Total
+                          <span *ngIf="key =='meta_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('atingimento_total_campanha')" class="size-fonte-right">Atingido
+                          <span *ngIf="key =='atingimento_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('perc_atingimento_total_campanha')" class="size-fonte-right">% Atingido
+                          <span *ngIf="key =='perc_atingimento_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('ticket_medio_campanha')" class="size-fonte-right">Ticket Médio
+                          <span *ngIf="key =='ticket_medio_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('meta_diaria_campanha')" class="size-fonte-right">Meta Diária
+                          <span *ngIf="key =='meta_diaria_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('meta_recalculada')" class="size-fonte-right">Meta Recalculada
+                          <span *ngIf="key =='meta_recalculada'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('projecao_total_campanha')" class="size-fonte-right">Total campanha projetado
+                          <span *ngIf="key =='projecao_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('total_hc_participantes')" class="size-fonte-right">HC
+                          <span *ngIf="key =='total_hc_participantes'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="dadosCampanhaMetasSmartTable.length != 0" style="height: 600px; overflow-y: scroll">
+                      <tr *ngFor="let i of dadosCampanhaMetasSmartTable | orderBy:key:reverse;"
+                        (click)="clickSmartTableRegionais(i)">
+                        <td class="size-fonte-left-body">{{i.nome_agrupamento}}</td>
+                        <td class="size-fonte-right-body">{{i.meta_total_campanha}}</td>
+                        <td class="size-fonte-right-body">{{i.atingimento_total_campanha}}</td>
+                        <td class="size-fonte-right-body">{{i.perc_atingimento_total_campanha}}</td>
+                        <td class="size-fonte-right-body">{{i.ticket_medio_campanha}}</td>
+                        <td class="size-fonte-right-body">{{i.meta_diaria_campanha}}</td>
+                        <td class="size-fonte-right-body">{{i.meta_recalculada}}</td>
+                        <td class="size-fonte-right-body">{{i.projecao_total_campanha}}</td>
+                        <td class="size-fonte-right-body">{{i.total_hc_participantes}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </nb-tab>
+
+          <nb-tab [tabTitle]="'CONSULTORES'" [active]="false" badgeStatus="warning">
+            <div class="container">
+              <nb-card>
+                <nb-card-body>
+
+                  <!--<ng2-smart-table [settings]="settingsPromotores" [source]="source"
                     (userRowSelect)="clickSmartTablePromotores($event)">
-                  </ng2-smart-table>
+                  </ng2-smart-table>-->
+
+                  <table class="tabela" equalColumnsWidth>
+                    <thead>
+                      <tr>
+                        <th (click)="sort('nome')" class="size-fonte-left">Consultores
+                          <span *ngIf="key =='nome'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('meta_total_campanha')" class="size-fonte-right">Meta Total
+                          <span *ngIf="key =='meta_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('atingimento_total_campanha')" class="size-fonte-right">Atingido
+                          <span *ngIf="key =='atingimento_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('perc_atingimento_total_campanha')" class="size-fonte-right">% Atingido
+                          <span *ngIf="key =='perc_atingimento_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('ticket_medio_campanha')" class="size-fonte-right">Ticket Médio
+                          <span *ngIf="key =='ticket_medio_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('meta_diaria_campanha')" class="size-fonte-right">Meta Diária
+                          <span *ngIf="key =='meta_diaria_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('meta_recalculada')" class="size-fonte-right">Meta Recalculada
+                          <span *ngIf="key =='meta_recalculada'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('projecao_total_campanha')" class="size-fonte-right">Total campanha projetado
+                          <span *ngIf="key =='projecao_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                        <th (click)="sort('total_hc_participantes')" class="size-fonte-right">HC
+                          <span *ngIf="key =='total_hc_participantes'">{{reverse ? '▵' : '▿'}}</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="dadosCampanhaMetasSmartTable.length != 0" style="height: 600px; overflow-y: scroll">
+                      <tr *ngFor="let i of dadosCampanhaMetasSmartTable | orderBy:key:reverse;"
+                        (click)="clickSmartTablePromotores(i)">
+                        <td class="size-fonte-left-body">{{i.nome_agrupamento}}</td>
+                        <td class="size-fonte-right-body">{{i.meta_total_campanha}}</td>
+                        <td class="size-fonte-right-body">{{i.atingimento_total_campanha}}</td>
+                        <td class="size-fonte-right-body">{{i.perc_atingimento_total_campanha}}</td>
+                        <td class="size-fonte-right-body">{{i.ticket_medio_campanha}}</td>
+                        <td class="size-fonte-right-body">{{i.meta_diaria_campanha}}</td>
+                        <td class="size-fonte-right-body">{{i.meta_recalculada}}</td>
+                        <td class="size-fonte-right-body">{{i.projecao_total_campanha}}</td>
+                        <td class="size-fonte-right-body">{{i.total_hc_participantes}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </nb-card-body>
               </nb-card>
             </div>
@@ -458,7 +622,7 @@
         <div class="col-md-12 col-lg-12 col-lg-12 row justify-content-between">
           <div class="cardGraph">
             <nb-card accent="info" class="cardGraph">
-              <nb-card-header style="text-align: center;">Gráfico
+              <nb-card-header style="text-align: center;">Relação de Contratos Digitados X Pagos
                 <nb-icon *ngIf="revealed.chart" class="toggle-icon" icon="chevron-up-outline" pack="eva"
                   (click)="toggleView('chart')"></nb-icon>
                 <nb-icon *ngIf="!revealed.chart" class="toggle-icon" icon="chevron-down-outline" pack="eva"

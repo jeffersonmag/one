@@ -83,6 +83,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
         title: 'Lojas',
         type: 'string',
         filter: false,
+        sortDirection: 'asc',
       },
       meta_total_campanha: {
         title: 'Meta Total',
@@ -137,6 +138,14 @@ export class DashboardCampanhaComponent implements OnDestroy {
   customColumn = 'Lojas';
   defaultColumns = ['Nome agrupamento'];
 
+
+  key: string = 'nome'; // Define um valor padrão, para quando inicializar o componente
+  reverse: boolean = false;
+  sort(key) {
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
+
   allColumns = [this.customColumn, ...this.defaultColumns];
 
   settingsPromotores = {
@@ -151,7 +160,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
     },
     columns: {
       nome_agrupamento: {
-        title: 'Promotores',
+        title: 'Consultores',
         type: 'string',
         filter: false,
       },
@@ -259,7 +268,11 @@ export class DashboardCampanhaComponent implements OnDestroy {
     },
     {
       id: 1,
-      label: 'PROMOTORES',
+      label: 'CONSULTORES',
+    },
+    {
+      id: 4,
+      label: 'REGIONAIS',
     },
   ];
 
@@ -349,8 +362,10 @@ export class DashboardCampanhaComponent implements OnDestroy {
 
   ativaBotaoLojaTableSmart = false;
   ativaBotaoPromotoresTableSmart = false;
+  ativaBotaoRegionaisTableSmart = false;
   nomeLojaSelecionada = '';
   nomePromotorSelecionado = '';
+  nomeRegionalSelecionado = '';
 
   // tslint:disable-next-line: use-lifecycle-interface
   ngOnInit() {
@@ -382,8 +397,8 @@ export class DashboardCampanhaComponent implements OnDestroy {
       meta_diaria_produto_corban: 'asc',
       ticket_medio_produto_corban: 'asc',
       percentual_atingido_produto_corban: 'asc',
-    }
-  }
+    },
+  };
 
   dadosProdutosCorban = {
     "codigo_produto_corban": 0,
@@ -462,7 +477,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
         }
         find = _.find(this.contratosPagos, (o: any) => {
           return String(i) === String(
-            `${o.ano}-${str_pad(o.mes, 2, 0, 'STR_PAD_LEFT')}-${str_pad(o.dia, 2, 0, 'STR_PAD_LEFT')}`)
+            `${o.ano}-${str_pad(o.mes, 2, 0, 'STR_PAD_LEFT')}-${str_pad(o.dia, 2, 0, 'STR_PAD_LEFT')}`);
         });
         if (!find) {
           pagos.push(0);
@@ -477,7 +492,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
 
       for (let i in datas) {
         datas[i] = moment(datas[i]).format('DD/MM');
-      };
+      }
 
       this.chartOptions = {
         backgroundColor: echarts.bg,
@@ -808,7 +823,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
       })
       .catch((e) => {
         console.log(e);
-      })
+      });
     this.diasUteisPeriodoApiService.periodo(
       {
         "data_inicial": moment().format('YYYY-MM-DD'),
@@ -903,21 +918,30 @@ export class DashboardCampanhaComponent implements OnDestroy {
   }
 
   clickSmartTableLojas(event) {
-    const codigoAgrupamento = _.find(this.dadosCampanhaMetasSmartTable, (o: any) => {
-      return String(o.nome_agrupamento) === String(event.data.nome_agrupamento);
-    });
-    this.nomeLojaSelecionada = codigoAgrupamento.nome_agrupamento;
+    //const codigoAgrupamento = _.find(this.dadosCampanhaMetasSmartTable, (o: any) => {
+    //  return String(o.nome_agrupamento) === String(event.data.nome_agrupamento);
+    //});
+    this.nomeLojaSelecionada = event.nome_agrupamento;
     this.ativaBotaoLojaTableSmart = true;
-    this.findDadosProdutoCorbanCampanhaFiltro(codigoAgrupamento, 2);
+    this.findDadosProdutoCorbanCampanhaFiltro(event.codigo_agrupamento, 2);
+  }
+
+  clickSmartTableRegionais(event) {
+    //const codigoAgrupamento = _.find(this.dadosCampanhaMetasSmartTable, (o: any) => {
+    //  return String(o.nome_agrupamento) === String(event.data.nome_agrupamento);
+    //});
+    this.nomeRegionalSelecionado = event.nome_agrupamento;
+    this.ativaBotaoRegionaisTableSmart = true;
+    this.findDadosProdutoCorbanCampanhaFiltro(event.codigo_agrupamento, 4);
   }
 
   clickSmartTablePromotores(event) {
-    const codigoAgrupamento = _.find(this.dadosCampanhaMetasSmartTable, (o: any) => {
-      return String(o.nome_agrupamento) === String(event.data.nome_agrupamento);
-    });
-    this.nomePromotorSelecionado = codigoAgrupamento.nome_agrupamento;
+    //const codigoAgrupamento = _.find(this.dadosCampanhaMetasSmartTable, (o: any) => {
+    //  return String(o.nome_agrupamento) === String(event.data.nome_agrupamento);
+    //});
+    this.nomePromotorSelecionado = event.nome_agrupamento;
     this.ativaBotaoPromotoresTableSmart = true;
-    this.findDadosProdutoCorbanCampanhaFiltro(codigoAgrupamento, 1);
+    this.findDadosProdutoCorbanCampanhaFiltro(event.codigo_agrupamento, 1);
   }
 
   clickSmartTableLimpar(filtro) {
@@ -954,25 +978,40 @@ export class DashboardCampanhaComponent implements OnDestroy {
         this.findCampanhaMeta(this.perfilAtivo);
       }
     }
+
+    if (filtro === 4) {
+      this.nomeRegionalSelecionado = '';
+      this.ativaBotaoRegionaisTableSmart = false;
+      this.codigos.codigo_regional = '';
+      if (this.ativaBotaoPromotoresTableSmart) {
+        this.findContratos();
+        this.findTickets();
+        this.findCampanhaMeta(4);
+      } else {
+        this.findContratos();
+        this.findTickets();
+        this.findCampanhaMeta(this.perfilAtivo);
+      }
+    }
   }
 
-  findDadosProdutoCorbanCampanhaFiltro(item, visao) {
-    this.dadosProdutoCorbanCampanha = item;
+  findDadosProdutoCorbanCampanhaFiltro(codigo_agrupamento, visao) {
+    this.dadosProdutoCorbanCampanha = codigo_agrupamento;
 
     if (visao === 4) {
-      this.codigos.codigo_regional = String(item.codigo_agrupamento);
+      this.codigos.codigo_regional = String(codigo_agrupamento);
     }
 
     if (visao === 3) {
-      this.codigos.codigo_comercial = String(item.codigo_agrupamento);
+      this.codigos.codigo_comercial = String(codigo_agrupamento);
     }
 
     if (visao === 2) {
-      this.codigos.codigo_loja = String(item.codigo_agrupamento);
+      this.codigos.codigo_loja = String(codigo_agrupamento);
     }
 
     if (visao === 1) {
-      this.codigos.codigo_funcionario = String(item.codigo_agrupamento);
+      this.codigos.codigo_funcionario = String(codigo_agrupamento);
     }
 
     this.findContratos();
@@ -981,7 +1020,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
   }
 
   findDadosProdutoCorbanCampanha(item) {
-    this.filtro.produto.codigo = item.codigo_agrupamento
+    this.filtro.produto.codigo = item.codigo_agrupamento;
     this.dadosProdutoCorbanCampanha = item;
     this.findTickets();
   }

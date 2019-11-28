@@ -1,7 +1,4 @@
 <div class="modal-body">
-    <!--<nb-card>
-        <nb-card-header>Confirmação de resolução</nb-card-header>
-        <nb-card-body>-->
     <div class="container">
         <div class="infinite-cards row">
             <div class="col-md-4" *ngFor="let acao of listaAcoes">
@@ -18,8 +15,6 @@
                 [(ngModel)]="acao_escolhida"></textarea>
         </div>
     </div>
-    <!--</nb-card-body>
-    </nb-card>-->
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="close()">Cancelar</button>

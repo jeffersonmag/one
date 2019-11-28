@@ -155,6 +155,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
       if (pendenciaFiltrados.length == 0) {
         this.findPendenciaSinteticoPesquisaProposta();
       } else {
+        this.findPendenciaSinteticoPesquisaProposta();
         this.pendencia = pendenciaFiltrados;
         this.habilitaLimparFiltro = true;
       }
@@ -209,6 +210,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
   }
 
   findPendenciaSintetico() {
+    this.valueProposta = '';
     this.habilitaLimparFiltro = false;
     this.pendenciaSintetico = [];
     this.pendenciaSinteticoTemp = [];
@@ -284,13 +286,14 @@ export class PendenciaComponent implements OnInit, OnDestroy {
         }
       }
       this.pendenciaSintetico = this.pendenciaSinteticoTemp;
-      this.findPendenciaPesquisaProposta();
+      if (this.valueProposta !== '') {
+        this.findPendenciaPesquisaProposta();
+      }
     })
       .catch((e) => {
         console.log(e);
       });
-  };
-
+  }
 
   findPendenciaPesquisaProposta() {
     this.limparFiltros = false;

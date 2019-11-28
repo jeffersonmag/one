@@ -24,9 +24,13 @@ export class UsuarioApiService {
       });
       response
         .then((s) => {
-          this.sessionService.set('user', s) ;
-          this.sessionService.set('token', s.token) ;  
-          this.sessionService.set('codigo_perfil_atuacao', s.codigo_perfil_atuacao) ;    
+          this.sessionService.set('user', s);
+          this.sessionService.set('token', s.token);
+          this.sessionService.set('codigo_perfil_atuacao', s.codigo_perfil_atuacao);
+          this.sessionService.set('permissao_dashboard_campanha', s.permissao_acesso.dashboard_campanha.acesso);
+          this.sessionService.set('permissao_pendencia_fisico', s.permissao_acesso.pendencia_fisico.acesso);
+          this.sessionService.set('permissao_esteira_producao', s.permissao_acesso.esteira_producao.acesso);
+          this.sessionService.set('permissao_cadastro_cliente', s.permissao_acesso.cadastro_cliente_teste_1.acesso);
           resolve(s);
         })
         .catch((e) => {

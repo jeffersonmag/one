@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   NbActionsModule,
   NbButtonModule,
@@ -15,16 +15,21 @@ import {
   NbTooltipModule,
   NbPopoverModule,
   NbTreeGridModule,
+  NbSearchModule,
+  NbInputModule,
+  NbDatepickerModule,
 } from '@nebular/theme';
 import { NgxEchartsModule } from 'ngx-echarts';
-
 import { ThemeModule } from '../../@theme/theme.module';
 import { PipesModule } from '../../pipes/pipes.module';
-import { DashboardCampanhaComponent } from './dashboard-campanha.component';
+import { CadastrosComponent } from './cadastros.component';
+import { ClientesComponent } from './clientes/clientes.component';
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
-import { NgCircleProgressModule } from 'ng-circle-progress';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { OrderModule } from 'ngx-order-pipe';
+import { StatusComponent } from './status/status.component';
+import { DadosCadastroComponent } from './clientes/dados-cadastro/dados-cadastro.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   imports: [
@@ -51,13 +56,20 @@ import { OrderModule } from 'ngx-order-pipe';
     Ng2SmartTableModule,
     NbTreeGridModule,
     OrderModule,
+    NbSearchModule,
+    NbInputModule,
+    NbDatepickerModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NbSelectModule,
+    NgSelectModule,
   ],
   declarations: [
-    DashboardCampanhaComponent,
+    CadastrosComponent,
+    ClientesComponent,
+    StatusComponent,
+    DadosCadastroComponent,
   ],
 })
-export class DashboardCampanhaModule { }
 
-export class PageModule { }
-
-export class AppModule { }
+export class CadastrosModule { }

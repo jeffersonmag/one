@@ -1,7 +1,10 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import pt from '@angular/common/locales/pt';
-import { NbSortDirection, NbTreeGridDataSource, NbGlobalPhysicalPosition, NbSearchService, NbToastrService, NbComponentStatus, NbGlobalPosition } from '@nebular/theme';
+import {
+  NbSortDirection, NbTreeGridDataSource, NbGlobalPhysicalPosition,
+  NbSearchService, NbToastrService, NbComponentStatus, NbGlobalPosition,
+} from '@nebular/theme';
 import { NbThemeService } from '@nebular/theme';
 import { takeWhile } from 'rxjs/operators';
 import { EsteiraProducaoApiService } from '../../api/esteira-producao';
@@ -33,7 +36,6 @@ export class CustomModalOptions {
 
 export class EsteiraProducaoComponent implements OnInit, OnDestroy {
 
-  //@Output() childIsOpen = new EventEmitter<boolean>();
   closeResult: string;
   modalReference: NgbModalRef;
 
@@ -153,7 +155,7 @@ export class EsteiraProducaoComponent implements OnInit, OnDestroy {
   drillDown = [];
   qtd_total_de_propostas_inconsistentes: number;
 
-  subscriptionEsteira : Subscription;
+  subscriptionEsteira: Subscription;
 
   constructor(
     private themeService: NbThemeService,
@@ -195,41 +197,41 @@ export class EsteiraProducaoComponent implements OnInit, OnDestroy {
       this.qtd_total_de_propostas_inconsistentes = s.qtd_total_de_propostas_inconsistentes;
       this.indicadores = s.status;
       for (let i of this.indicadores) {
-        if (i.prioridade == 1) {
+        if (i.prioridade === 1) {
           this.indicadoresC.push(i = {
             ...i,
-            "cor": this.Prioridade1Settings.type
+            "cor": this.Prioridade1Settings.type,
           })
         }
-        if (i.prioridade == 2) {
+        if (i.prioridade === 2) {
           this.indicadoresC.push(i = {
             ...i,
-            "cor": this.Prioridade2Settings.type
+            "cor": this.Prioridade2Settings.type,
           })
         }
-        if (i.prioridade == 3) {
+        if (i.prioridade === 3) {
           this.indicadoresC.push(i = {
             ...i,
-            "cor": this.Prioridade3Settings.type
+            "cor": this.Prioridade3Settings.type,
           })
         }
-        if (i.prioridade == 4) {
+        if (i.prioridade === 4) {
           this.indicadoresC.push(i = {
             ...i,
-            "cor": this.Prioridade4Settings.type
+            "cor": this.Prioridade4Settings.type,
           })
         }
-        if (i.prioridade == 5) {
+        if (i.prioridade === 5) {
           this.indicadoresC.push(i = {
             ...i,
-            "cor": this.Prioridade5Settings.type
+            "cor": this.Prioridade5Settings.type,
           })
         }
       }
       this.indicadores = this.indicadoresC;
     })
       .catch((e) => {
-        console.log(e)
+        console.log(e);
       });
   }
 
@@ -255,7 +257,7 @@ export class EsteiraProducaoComponent implements OnInit, OnDestroy {
       this.loja = s.agrupado_loja;
       this.matriz = s.agrupado_loja_matriz;
       this.canalVendas = s.agrupado_canal_vendas;
-      if (s.agrupado_instituicao != null){
+      if (s.agrupado_instituicao != null) {
         this.instituicao = s.agrupado_instituicao;
       } else {
         this.instituicao = [];
@@ -363,7 +365,7 @@ export class EsteiraProducaoComponent implements OnInit, OnDestroy {
 
   filtroFindPropostasInconsistentes(codigo_status_agrupado_inconsistencia) {
     this.propostasInconsistencias = [];
-    this.on = !this.on
+    this.on = !this.on;
     if (this.on || this.ativaBotaoFuncionario ||
       this.ativaBotaoComercial ||
       this.ativaBotaoRegional ||
@@ -389,7 +391,7 @@ export class EsteiraProducaoComponent implements OnInit, OnDestroy {
         this.loja = s.agrupado_loja;
         this.matriz = s.agrupado_loja_matriz;
         this.canalVendas = s.agrupado_canal_vendas;
-        if (s.agrupado_instituicao != null){
+        if (s.agrupado_instituicao != null) {
           this.instituicao = s.agrupado_instituicao;
         } else {
           this.instituicao = [];
@@ -397,7 +399,7 @@ export class EsteiraProducaoComponent implements OnInit, OnDestroy {
         this.setColorsDisabled(this.on, codigo_status_agrupado_inconsistencia);
       })
         .catch((e) => {
-          console.log(e)
+          console.log(e);
         });
     } else {
       this.findIndicadores();

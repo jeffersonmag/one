@@ -6,6 +6,18 @@ import { DashboardCampanhaComponent } from './dashboard-campanha/dashboard-campa
 import { PagesComponent } from './pages.component';
 import { PendenciaComponent } from './pendencia-fisico/pendencia.component';
 import { EsteiraProducaoComponent } from './esteira-producao/esteira-producao.component';
+import { ClientesComponent } from './cadastros/clientes/clientes.component';
+
+//define o a página inicial
+if (window.sessionStorage.permissao_dashboard_campanha) {
+  var home: string = 'dashboard-campanha';
+} else if (window.sessionStorage.permissao_pendencia_fisico) {
+  home = 'pendencia-fisico';
+} else if (window.sessionStorage.permissao_esteira_producao) {
+  home = 'esteira-producao';
+} else if (window.sessionStorage.permissao_cadastro_cliente) {
+  home = 'cadastros/clientes';
+};
 
 const routes: Routes = [{
   path: '',
@@ -30,11 +42,10 @@ const routes: Routes = [{
       component: EsteiraProducaoComponent,
     },
 
-    //{
-    //  path: 'esteira-producao',
-    //  loadChildren: () => import('./esteira-producao/esteira-producao.module')
-    //    .then(m => m.EsteiraProducaoModule),
-    //},
+    {
+      path: 'cadastros/clientes',
+      component: ClientesComponent,
+    },
     {
       path: 'layout',
       loadChildren: () => import('./layout/layout.module')
@@ -62,37 +73,16 @@ const routes: Routes = [{
       loadChildren: () => import('./charts/charts.module')
         .then(m => m.ChartsModule),
     },
-
     {
       path: 'tables',
       loadChildren: () => import('./tables/tables.module')
         .then(m => m.TablesModule),
     },
-
-    /*{
-      path: '',
-      redirectTo: 'dashboard',
-      pathMatch: 'full',
-    },*/
-
     {
       path: '',
-      redirectTo: 'dashboard-campanha',
+      redirectTo: home,
       pathMatch: 'full',
     },
-
-    {
-      path: '',
-      redirectTo: 'pendencia-fisico',
-      pathMatch: 'full',
-    },
-
-    {
-      path: '',
-      redirectTo: 'esteira-producao',
-      pathMatch: 'full',
-    },
-
   ],
 }];
 

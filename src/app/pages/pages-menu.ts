@@ -11,21 +11,38 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'Dashboard de Campanhas',
     icon: 'globe-2-outline',
     link: '/pages/dashboard-campanha',
-    home: true,
+    hidden: (window.sessionStorage.permissao_dashboard_campanha === 'false'),
+    home: (window.sessionStorage.permissao_dashboard_campanha === 'false'),
   },
 
   {
     title: 'Pendência de Físico',
     icon: 'browser',
     link: '/pages/pendencia-fisico',
-    home: false,
+    hidden: (window.sessionStorage.permissao_pendencia_fisico === 'false'),
+    home: (window.sessionStorage.permissao_pendencia_fisico === 'false'),
   },
 
   {
     title: 'Esteira de Produção',
     icon: 'flip-outline',
     link: '/pages/esteira-producao',
-    home: false,
+    hidden: (window.sessionStorage.permissao_esteira_producao === 'false'),
+    home: (window.sessionStorage.permissao_esteira_producao === 'false'),
   },
 
+  {
+    title: 'Cadastros',
+    icon: 'grid-outline',
+    children: [
+      {
+        title: 'Clientes',
+        link: '/pages/cadastros/clientes',
+        icon: 'people-outline',
+        home: false,
+        expanded: (window.sessionStorage.permissao_cadastro_cliente === 'false'),
+        hidden: (window.sessionStorage.permissao_cadastro_cliente === 'false'),
+      },
+    ],
+  },
 ];

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbMenuModule, NbStepperModule, NbProgressBarModule, NbPopoverComponent, NbPopoverModule, NbTreeGridModule } from '@nebular/theme';
+import { NbMenuModule, NbStepperModule, NbProgressBarModule, NbPopoverModule, NbTreeGridModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { DashboardModule } from './dashboard/dashboard.module';
@@ -11,6 +11,7 @@ import { EsteiraProducaoModule } from './esteira-producao/esteira-producao.modul
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { NgIdleModule } from '@ng-idle/core';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { CadastrosModule } from './cadastros/cadastros.module';
 
 @NgModule({
   imports: [
@@ -27,11 +28,12 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     NgIdleModule,
     NbProgressBarModule,
     Ng2SmartTableModule,
-    NbTreeGridModule,    
+    NbTreeGridModule,
+    CadastrosModule,
   ],
   declarations: [
-    PagesComponent
-  ]
+    PagesComponent,
+  ],
 })
 export class PagesModule {
 }

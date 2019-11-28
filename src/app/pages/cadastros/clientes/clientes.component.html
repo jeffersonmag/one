@@ -1,0 +1,81 @@
+<div class="infinite-cards row">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-header>
+        Cadastro de clientes
+        <div class="icons-right">
+          <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Modo Grade"
+            (click)="modoExibicao(0)">
+            <nb-icon icon="grid" pack="eva" class="flip-icon"></nb-icon>
+          </button>
+          <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Modo Lista"
+            (click)="modoExibicao(1)">
+            <nb-icon icon="menu-2" pack="eva" class="flip-icon"></nb-icon>
+          </button>
+          <nb-search placeholder="Pesquisar" hint="" show="true" type="column-curtain" tag="pendencia"></nb-search>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        <div *ngIf="ativaBotaoPesquisa">
+          <button nbButton shape="round" size="small" status="info" nbTooltip="Limpar Filtro da Pesquisa"
+            (click)="buscaUsuarios('')">
+            FILTRO: {{this.value}} &times;
+          </button>
+        </div><br>
+        <div class="buttons-row">
+          <button class="buttons-row" nbButton shape="round" size="small" status="primary"
+            (click)="cadastrarNovoUsuario(content)" nbTooltip="Cadastrar Usuário">
+            <i class="fa fa-plus color"></i>
+            <div class="espacamento">Criar</div>
+          </button>
+          <ng-template #content let-c="close" let-d="dismiss">
+            <div class="modal-header">
+              <span>Cadastro de Clientes</span>
+              <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <dados-cadastro></dados-cadastro>
+          </ng-template>
+          <button class="buttons-row" nbButton disabled shape="round" size="small" status="info">
+            Ações
+          </button>
+        </div><br>
+        <div *ngIf="modoLista">
+          <nb-list>
+            <nb-list-item *ngFor="let user of dadosClientes" (click)="editarUsuario(contentedit, user)">
+              {{ user.nome }}<br>
+              <div class="font-size-list">CPF: {{ user.cpf }}</div>
+            </nb-list-item>
+            <ng-template #contentedit let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <span>Editar Cadastro de Clientes</span>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <dados-cadastro></dados-cadastro>
+            </ng-template>
+          </nb-list>
+        </div>
+        <div class="row" *ngIf="modoGrade">
+          <div class="col-xxxl-3 col-md-4" *ngFor="let user of dadosClientes">
+            <status [title]="user.nome" [dados]="user.cpf" [type]="primary" (click)="editarUsuario(contentedit, user)"
+              nbTooltip="Editar Usuário">
+              <img class="container-image" src="assets/imgs/user-icon.png">
+            </status>
+            <ng-template #contentedit let-c="close" let-d="dismiss">
+              <div class="modal-header">
+                <span>Editar Cadastro de Clientes</span>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <dados-cadastro></dados-cadastro>
+            </ng-template>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

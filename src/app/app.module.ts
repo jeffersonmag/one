@@ -87,3 +87,8 @@ export class AppModule {
 }
 
 export class PageModule { }
+
+
+export class CadastroModule { }
+
+

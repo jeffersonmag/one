@@ -434,12 +434,69 @@
   height: 100;
 }
 
+thead > tr > th {
+  cursor: pointer;
+}
+
+.tabela {
+  width: 100%;
+
+  tr {
+    border: 1px solid #f7f7f7;
+    -webkit-background-clip: padding-box; /* for Safari */
+    background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
+    border-spacing: 0;
+    border-collapse: collapse;
+
+    th {
+      padding: 5px;
+      border-left: 0.1px solid #f7f7f7;
+      border-right: 0.1px solid #f7f7f7;
+      border-spacing: 0;
+      border-collapse: collapse;
+      //opacity: 0.6;
+    }
+    td {
+      padding: 5px;
+      border-left: 0.1px solid #f7f7f7;
+      border-right: 0.1px solid #f7f7f7;
+      border-spacing: 0;
+      border-collapse: collapse;
+      //opacity: 0.6;
+    }
+  }
+
+  .active {
+    background: #007bff94;
+  }
+}
+
+.size-fonte-right {
+  font-size: 15px;
+  text-align: right;
+}
+
+.size-fonte-left {
+  font-size: 15px;
+  text-align: left;
+}
+
+.size-fonte-right-body {
+  font-size: 13px;
+  text-align: right;
+}
+
+.size-fonte-left-body {
+  font-size: 13px;
+  text-align: left;
+}
+
 :host /deep/ ng2-smart-table table tr th a {
   font-weight: bold;
 }
 
-:host /deep/ ng2-smart-table tbody>tr>td {
-  font-size: .875em;
-  padding: .375em .75em;
+:host /deep/ ng2-smart-table tbody > tr > td {
+  font-size: 0.875em;
+  padding: 0.375em 0.75em;
   text-align: right;
 }
