@@ -25,6 +25,12 @@ export class ClientesComponent implements OnInit {
   mensagem: string = 'Ação realizada com sucesso!';
   pararSpinner: boolean = true;
 
+  permissoes: any = JSON.parse(window.sessionStorage.permissao_acesso);
+  permissaoDelete: boolean = this.permissoes.cadastro_cliente_teste_1.acl.D;
+  permissaoInsert: boolean = this.permissoes.cadastro_cliente_teste_1.acl.I;
+  permissaoSelect: boolean = this.permissoes.cadastro_cliente_teste_1.acl.S;
+  permissaoUpdate: boolean = this.permissoes.cadastro_cliente_teste_1.acl.U;
+
   value = '';
 
   criacaoUsuario: boolean = false;
@@ -113,6 +119,23 @@ export class ClientesComponent implements OnInit {
       .then((s) => {
         this.JoinAndClose();
         this.makeToast('success', 'Sucesso!', 'Dados do Cliente alterado com sucesso!');
+        this.buscaUsuarios(this.value);
+      })
+      .catch((e) => {
+        this.JoinAndClose();
+        this.makeToast('danger', 'Erro!', e.error.message);
+      });
+  }
+
+  excluirUsuarios(valor?) {
+    this.campanhasApiService.delClientes(
+      {
+        "cpf": valor.cpf,
+      },
+    )
+      .then((s) => {
+        this.JoinAndClose();
+        this.makeToast('success', 'Sucesso!', 'Dados do Cliente excluídos com sucesso!');
         this.buscaUsuarios(this.value);
       })
       .catch((e) => {

@@ -446,31 +446,35 @@
                     <thead>
                       <tr>
                         <th (click)="sort('nome')" class="size-fonte-left">Lojas
-                          <span *ngIf="key =='nome'">{{reverse ? '▵' : '▿'}}</span>
+                          <span class="cor-setinha" *ngIf="key =='nome'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('meta_total_campanha')" class="size-fonte-right">Meta Total
-                          <span *ngIf="key =='meta_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                          <span class="cor-setinha" *ngIf="key =='meta_total_campanha'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('atingimento_total_campanha')" class="size-fonte-right">Atingido
-                          <span *ngIf="key =='atingimento_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                          <span class="cor-setinha"
+                            *ngIf="key =='atingimento_total_campanha'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('perc_atingimento_total_campanha')" class="size-fonte-right">% Atingido
-                          <span *ngIf="key =='perc_atingimento_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                          <span class="cor-setinha"
+                            *ngIf="key =='perc_atingimento_total_campanha'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('ticket_medio_campanha')" class="size-fonte-right">Ticket Médio
-                          <span *ngIf="key =='ticket_medio_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                          <span class="cor-setinha" *ngIf="key =='ticket_medio_campanha'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('meta_diaria_campanha')" class="size-fonte-right">Meta Diária
-                          <span *ngIf="key =='meta_diaria_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                          <span class="cor-setinha" *ngIf="key =='meta_diaria_campanha'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('meta_recalculada')" class="size-fonte-right">Meta Recalculada
-                          <span *ngIf="key =='meta_recalculada'">{{reverse ? '▵' : '▿'}}</span>
+                          <span class="cor-setinha" *ngIf="key =='meta_recalculada'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('projecao_total_campanha')" class="size-fonte-right">Total campanha projetado
-                          <span *ngIf="key =='projecao_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                          <span class="cor-setinha"
+                            *ngIf="key =='projecao_total_campanha'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('total_hc_participantes')" class="size-fonte-right">HC
-                          <span *ngIf="key =='total_hc_participantes'">{{reverse ? '▵' : '▿'}}</span>
+                          <span class="cor-setinha"
+                            *ngIf="key =='total_hc_participantes'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                       </tr>
                     </thead>
@@ -499,46 +503,45 @@
             <div class="container">
               <nb-card>
                 <nb-card-body>
-
-                  <!--<ng2-smart-table [settings]="settingsLojas" [source]="source"
-                    (userRowSelect)="clickSmartTableLojas($event)">
-                  </ng2-smart-table>-->
-
                   <table class="tabela" equalColumnsWidth>
                     <thead>
                       <tr>
                         <th (click)="sort('nome')" class="size-fonte-left">Regionais
-                          <span *ngIf="key =='nome'">{{reverse ? '▵' : '▿'}}</span>
+                          <span class="cor-setinha" *ngIf="key =='nome'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('meta_total_campanha')" class="size-fonte-right">Meta Total
-                          <span *ngIf="key =='meta_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                          <span class="cor-setinha" *ngIf="key =='meta_total_campanha'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('atingimento_total_campanha')" class="size-fonte-right">Atingido
-                          <span *ngIf="key =='atingimento_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                          <span class="cor-setinha"
+                            *ngIf="key =='atingimento_total_campanha'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('perc_atingimento_total_campanha')" class="size-fonte-right">% Atingido
-                          <span *ngIf="key =='perc_atingimento_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                          <span class="cor-setinha"
+                            *ngIf="key =='perc_atingimento_total_campanha'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('ticket_medio_campanha')" class="size-fonte-right">Ticket Médio
-                          <span *ngIf="key =='ticket_medio_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                          <span class="cor-setinha" *ngIf="key =='ticket_medio_campanha'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('meta_diaria_campanha')" class="size-fonte-right">Meta Diária
-                          <span *ngIf="key =='meta_diaria_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                          <span class="cor-setinha" *ngIf="key =='meta_diaria_campanha'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('meta_recalculada')" class="size-fonte-right">Meta Recalculada
-                          <span *ngIf="key =='meta_recalculada'">{{reverse ? '▵' : '▿'}}</span>
+                          <span class="cor-setinha" *ngIf="key =='meta_recalculada'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('projecao_total_campanha')" class="size-fonte-right">Total campanha projetado
-                          <span *ngIf="key =='projecao_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                          <span class="cor-setinha"
+                            *ngIf="key =='projecao_total_campanha'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('total_hc_participantes')" class="size-fonte-right">HC
-                          <span *ngIf="key =='total_hc_participantes'">{{reverse ? '▵' : '▿'}}</span>
+                          <span class="cor-setinha"
+                            *ngIf="key =='total_hc_participantes'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                       </tr>
                     </thead>
                     <tbody *ngIf="dadosCampanhaMetasSmartTable.length != 0" style="height: 600px; overflow-y: scroll">
                       <tr *ngFor="let i of dadosCampanhaMetasSmartTable | orderBy:key:reverse;"
-                        (click)="clickSmartTableRegionais(i)">
+                        [ngClass]="{'active': true}" (click)="clickSmartTableRegionais(i)">
                         <td class="size-fonte-left-body">{{i.nome_agrupamento}}</td>
                         <td class="size-fonte-right-body">{{i.meta_total_campanha}}</td>
                         <td class="size-fonte-right-body">{{i.atingimento_total_campanha}}</td>
@@ -560,40 +563,35 @@
             <div class="container">
               <nb-card>
                 <nb-card-body>
-
-                  <!--<ng2-smart-table [settings]="settingsPromotores" [source]="source"
-                    (userRowSelect)="clickSmartTablePromotores($event)">
-                  </ng2-smart-table>-->
-
                   <table class="tabela" equalColumnsWidth>
                     <thead>
                       <tr>
                         <th (click)="sort('nome')" class="size-fonte-left">Consultores
-                          <span *ngIf="key =='nome'">{{reverse ? '▵' : '▿'}}</span>
+                          <span *ngIf="key =='nome'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('meta_total_campanha')" class="size-fonte-right">Meta Total
-                          <span *ngIf="key =='meta_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                          <span *ngIf="key =='meta_total_campanha'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('atingimento_total_campanha')" class="size-fonte-right">Atingido
-                          <span *ngIf="key =='atingimento_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                          <span *ngIf="key =='atingimento_total_campanha'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('perc_atingimento_total_campanha')" class="size-fonte-right">% Atingido
-                          <span *ngIf="key =='perc_atingimento_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                          <span *ngIf="key =='perc_atingimento_total_campanha'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('ticket_medio_campanha')" class="size-fonte-right">Ticket Médio
-                          <span *ngIf="key =='ticket_medio_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                          <span *ngIf="key =='ticket_medio_campanha'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('meta_diaria_campanha')" class="size-fonte-right">Meta Diária
-                          <span *ngIf="key =='meta_diaria_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                          <span *ngIf="key =='meta_diaria_campanha'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('meta_recalculada')" class="size-fonte-right">Meta Recalculada
-                          <span *ngIf="key =='meta_recalculada'">{{reverse ? '▵' : '▿'}}</span>
+                          <span *ngIf="key =='meta_recalculada'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('projecao_total_campanha')" class="size-fonte-right">Total campanha projetado
-                          <span *ngIf="key =='projecao_total_campanha'">{{reverse ? '▵' : '▿'}}</span>
+                          <span *ngIf="key =='projecao_total_campanha'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('total_hc_participantes')" class="size-fonte-right">HC
-                          <span *ngIf="key =='total_hc_participantes'">{{reverse ? '▵' : '▿'}}</span>
+                          <span *ngIf="key =='total_hc_participantes'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                       </tr>
                     </thead>

@@ -144,6 +144,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
   sort(key) {
     this.key = key;
     this.reverse = !this.reverse;
+    this.dadosCampanhaMetasSmartTable.sort(function (a, b) { return a.string(this.key) - b.string(this.key) });
   }
 
   allColumns = [this.customColumn, ...this.defaultColumns];

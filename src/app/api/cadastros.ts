@@ -9,6 +9,7 @@ import { RequestService } from '../services/request.service';
 export class CadastrosApiService {
 
   pesquisa: string = "";
+  cpf: string = "";
 
   constructor(
     private requestService: RequestService,
@@ -32,6 +33,12 @@ export class CadastrosApiService {
 
   putClientes(dados) { //Editar usuário
     return this.requestService.put(`${environment.urlApi}/cliente-teste-cadastro`,
+      dados, true);
+  }
+
+  delClientes(dados) { //Excluir usuário
+    this.cpf = dados.cpf;
+    return this.requestService.delete(`${environment.urlApi}/cliente-teste-cadastro?cpf=${this.cpf}`,
       dados, true);
   }
 }

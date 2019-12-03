@@ -12,7 +12,8 @@
             (click)="modoExibicao(1)">
             <nb-icon icon="menu-2" pack="eva" class="flip-icon"></nb-icon>
           </button>
-          <nb-search placeholder="Pesquisar" hint="" show="true" type="column-curtain" tag="pendencia"></nb-search>
+          <nb-search *ngIf="permissaoSelect" placeholder="Pesquisar" hint="" show="true" type="column-curtain"
+            tag="pendencia"></nb-search>
         </div>
       </nb-card-header>
       <nb-card-body>
@@ -23,10 +24,15 @@
           </button>
         </div><br>
         <div class="buttons-row">
-          <button class="buttons-row" nbButton shape="round" size="small" status="primary"
+          <button *ngIf="permissaoInsert" class="buttons-row" nbButton shape="round" size="small" status="primary"
             (click)="cadastrarNovoUsuario(content)" nbTooltip="Cadastrar Usuário">
             <i class="fa fa-plus color"></i>
             <div class="espacamento">Criar</div>
+          </button>
+          <button *ngIf="!permissaoInsert" disabled class="buttons-row" nbButton shape="round" size="small"
+            status="primary">
+            <i class="fa fa-plus color"></i>
+            <div class="espacamento" nbTooltip="Não existe permissão de cadastro para seu usuário.">Criar</div>
           </button>
           <ng-template #content let-c="close" let-d="dismiss">
             <div class="modal-header">
@@ -37,42 +43,83 @@
             </div>
             <dados-cadastro></dados-cadastro>
           </ng-template>
-          <button class="buttons-row" nbButton disabled shape="round" size="small" status="info">
+          <!--<button class="buttons-row" nbButton disabled shape="round" size="small" status="info">
             Ações
-          </button>
+          </button>-->
         </div><br>
-        <div *ngIf="modoLista">
-          <nb-list>
-            <nb-list-item *ngFor="let user of dadosClientes" (click)="editarUsuario(contentedit, user)">
-              {{ user.nome }}<br>
-              <div class="font-size-list">CPF: {{ user.cpf }}</div>
-            </nb-list-item>
-            <ng-template #contentedit let-c="close" let-d="dismiss">
-              <div class="modal-header">
-                <span>Editar Cadastro de Clientes</span>
-                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <dados-cadastro></dados-cadastro>
-            </ng-template>
-          </nb-list>
+
+        <div *ngIf="dadosClientes.length == 0 && permissaoSelect">
+          <nb-alert size="tiny" outline="primary">
+            Sem dados para serem exibidos.
+          </nb-alert> <br>
         </div>
-        <div class="row" *ngIf="modoGrade">
-          <div class="col-xxxl-3 col-md-4" *ngFor="let user of dadosClientes">
-            <status [title]="user.nome" [dados]="user.cpf" [type]="primary" (click)="editarUsuario(contentedit, user)"
-              nbTooltip="Editar Usuário">
-              <img class="container-image" src="assets/imgs/user-icon.png">
-            </status>
-            <ng-template #contentedit let-c="close" let-d="dismiss">
-              <div class="modal-header">
-                <span>Editar Cadastro de Clientes</span>
-                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-                  <span aria-hidden="true">&times;</span>
-                </button>
+        <div *ngIf="!permissaoSelect">
+          <nb-alert size="tiny" outline="primary">
+            Sem permissão para exibir dados.
+          </nb-alert> <br>
+        </div>
+        <div *ngIf="dadosClientes.length != 0 && permissaoSelect">
+          <div *ngIf="modoLista">
+            <nb-list *ngIf="permissaoUpdate">
+              <nb-list-item *ngFor="let user of dadosClientes" (click)="editarUsuario(contentedit, user)"
+                nbTooltip="Clique para editar o usuário.">
+                {{ user.nome }}<br>
+                <div class="font-size-list">CPF: {{ user.cpf }}</div>
+              </nb-list-item>
+
+              <ng-template #contentedit let-c="close" let-d="dismiss">
+                <div class="modal-header">
+                  <span>Editar Cadastro de Clientes</span>
+                  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <dados-cadastro></dados-cadastro>
+              </ng-template>
+            </nb-list>
+
+            <nb-list *ngIf="!permissaoUpdate">
+              <nb-list-item *ngFor="let user of dadosClientes" nbTooltip="Sem permissão para editar o usuário.">
+                {{ user.nome }}<br>
+                <div class="font-size-list">CPF: {{ user.cpf }}</div>
+              </nb-list-item>
+
+              <ng-template #contentedit let-c="close" let-d="dismiss">
+                <div class="modal-header">
+                  <span>Editar Cadastro de Clientes</span>
+                  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <dados-cadastro></dados-cadastro>
+              </ng-template>
+            </nb-list>
+          </div>
+
+          <div class="row" *ngIf="modoGrade">
+            <div class="col-xxxl-3 col-md-4" *ngFor="let user of dadosClientes">
+              <div *ngIf="permissaoUpdate">
+                <status [title]="user.nome" [dados]="user.cpf" [type]="primary"
+                  (click)="editarUsuario(contentedit, user)" nbTooltip="Editar Usuário">
+                  <img class="container-image" src="assets/imgs/user-icon.png">
+                </status>
               </div>
-              <dados-cadastro></dados-cadastro>
-            </ng-template>
+              <div *ngIf="!permissaoUpdate">
+                <status [title]="user.nome" [dados]="user.cpf" [type]="primary"
+                  nbTooltip="Sem permissão para editar usuário.">
+                  <img class="container-image" src="assets/imgs/user-icon.png">
+                </status>
+              </div>
+              <ng-template #contentedit let-c="close" let-d="dismiss">
+                <div class="modal-header">
+                  <span>Editar Cadastro de Clientes</span>
+                  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <dados-cadastro></dados-cadastro>
+              </ng-template>
+            </div>
           </div>
         </div>
       </nb-card-body>

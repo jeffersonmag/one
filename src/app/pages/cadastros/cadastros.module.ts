@@ -18,6 +18,7 @@ import {
   NbSearchModule,
   NbInputModule,
   NbDatepickerModule,
+  NbAlertModule,
 } from '@nebular/theme';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { ThemeModule } from '../../@theme/theme.module';
@@ -30,6 +31,8 @@ import { OrderModule } from 'ngx-order-pipe';
 import { StatusComponent } from './status/status.component';
 import { DadosCadastroComponent } from './clientes/dados-cadastro/dados-cadastro.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ControlMessagesComponent } from './control-messages.component';
+import { ParceiroNegocioComponent } from './parceiro-negocio/parceiro-negocio.component';
 
 @NgModule({
   imports: [
@@ -63,12 +66,15 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ReactiveFormsModule,
     NbSelectModule,
     NgSelectModule,
+    NbAlertModule,
   ],
   declarations: [
     CadastrosComponent,
     ClientesComponent,
     StatusComponent,
     DadosCadastroComponent,
+    ControlMessagesComponent,
+    ParceiroNegocioComponent,
   ],
 })
 

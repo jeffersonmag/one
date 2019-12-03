@@ -5,7 +5,9 @@
                 <nb-card>
                     <nb-card-header>
                         Pendência de Físico
-                        <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Listagem de Borderô" (click)="listarBordero(listaBorderoModal)" data-toggle="modal" data-target="#listaBorderoModal">
+                        <button nbButton status="info" status="info" ghost [size]="large"
+                            nbTooltip="Listagem de Borderô" (click)="listarBordero(listaBorderoModal)"
+                            data-toggle="modal" data-target="#listaBorderoModal">
                             <nb-icon icon="layers-outline" pack="eva" class="flip-icon"></nb-icon>
                         </button>
                         <ng-template #listaBorderoModal let-c="close" let-d="dismiss">
@@ -17,69 +19,84 @@
                             </div>
                             <listagem-bordero></listagem-bordero>
                         </ng-template>
-                        <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Filtros" (click)="revelar()">
+                        <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Filtros"
+                            (click)="revelar()">
                             <nb-icon icon="funnel-outline" pack="eva" class="flip-icon"></nb-icon>
                         </button>
-                        <nb-search placeholder="Pesquisar" hint="Insira o número da proposta e pressione enter para pesquisar" show="true" type="modal-drop" tag="pendencia"></nb-search>
+                        <nb-search placeholder="Pesquisar"
+                            hint="Insira o número da proposta e pressione enter para pesquisar" show="true"
+                            type="modal-drop" tag="pendencia"></nb-search>
                     </nb-card-header>
                     <nb-card-body>
                         <div class="row">
                             <div *ngIf="ativaBotaocanalVendas">
-                                <button nbButton shape="round" size="small" status="primary" nbTooltip="Limpar Filtro de Proposta" (click)="_filtercanalVendas(0, '', true)">
+                                <button nbButton shape="round" size="small" status="primary"
+                                    nbTooltip="Limpar Filtro de Proposta" (click)="_filtercanalVendas(0, '', true)">
                                     CANAL VENDAS: {{nomeCanalVendas}} &times;
                                 </button>
                             </div>
                             <div *ngIf="ativaBotaoTipoPendencia">
-                                <button nbButton shape="round" size="small" status="primary" nbTooltip="Limpar Filtro de Proposta" (click)="_filterTipoPendencia(0, '', true)">
+                                <button nbButton shape="round" size="small" status="primary"
+                                    nbTooltip="Limpar Filtro de Proposta" (click)="_filterTipoPendencia(0, '', true)">
                                     TIPO PENDÊNCIA: {{nomeTipoPendencia}} &times;
                                 </button>
                             </div>
                             <div *ngIf="ativaBotaoRegional">
-                                <button nbButton shape="round" size="small" status="primary" nbTooltip="Limpar Filtro de Proposta" (click)="_filterRegional(0, '', true)">
+                                <button nbButton shape="round" size="small" status="primary"
+                                    nbTooltip="Limpar Filtro de Proposta" (click)="_filterRegional(0, '', true)">
                                     REGIONAL: {{nomeRegional}} &times;
                                 </button>
                             </div>
                             <div *ngIf="ativaBotaoComercial">
-                                <button nbButton shape="round" size="small" status="primary" nbTooltip="Limpar Filtro de Proposta" (click)="_filterComercial(0, '', true)">
+                                <button nbButton shape="round" size="small" status="primary"
+                                    nbTooltip="Limpar Filtro de Proposta" (click)="_filterComercial(0, '', true)">
                                     COMERCIAL: {{nomeComercial}} &times;
                                 </button>
                             </div>
                             <div *ngIf="ativaBotaoInstituicao">
-                                <button nbButton shape="round" size="small" status="primary" nbTooltip="Limpar Filtro de Proposta" (click)="_filterInstituicao(0, '', true)">
+                                <button nbButton shape="round" size="small" status="primary"
+                                    nbTooltip="Limpar Filtro de Proposta" (click)="_filterInstituicao(0, '', true)">
                                     INSTITUIÇÃO: {{nomeInstituicao}} &times;
                                 </button>
                             </div>
                             <div *ngIf="ativaBotaoLojaMatriz">
-                                <button nbButton shape="round" size="small" status="primary" nbTooltip="Limpar Filtro de Proposta" (click)="_filterLojaMatriz(0, '', true)">
+                                <button nbButton shape="round" size="small" status="primary"
+                                    nbTooltip="Limpar Filtro de Proposta" (click)="_filterLojaMatriz(0, '', true)">
                                     MATRIZ: {{nomeLojaMatriz}} &times;
                                 </button>
                             </div>
                             <div *ngIf="ativaBotaoLoja">
-                                <button nbButton shape="round" size="small" status="primary" nbTooltip="Limpar Filtro de Proposta" (click)="_filterLoja(0, '', true)">
+                                <button nbButton shape="round" size="small" status="primary"
+                                    nbTooltip="Limpar Filtro de Proposta" (click)="_filterLoja(0, '', true)">
                                     LOJA: {{nomeLoja}} &times;
                                 </button>
                             </div>
                             <div *ngIf="ativaBotaoFuncionario">
-                                <button nbButton shape="round" size="small" status="primary" nbTooltip="Limpar Filtro de Proposta" (click)="_filterFuncionario(0, '', true)">
+                                <button nbButton shape="round" size="small" status="primary"
+                                    nbTooltip="Limpar Filtro de Proposta" (click)="_filterFuncionario(0, '', true)">
                                     PROMOTOR: {{nomeFuncionario}} &times;
                                 </button>
                             </div>
                             <div *ngIf="ativaBotaoBordero">
-                                <button nbButton shape="round" size="small" status="primary" nbTooltip="Limpar Filtro de Proposta" (click)="desabilitaFiltrosBordero()">
+                                <button nbButton shape="round" size="small" status="primary"
+                                    nbTooltip="Limpar Filtro de Proposta" (click)="desabilitaFiltrosBordero()">
                                     NÚMERO BORDERÔ: {{codigoBordero}}{{digitoBordero}} &times;
                                 </button>
                             </div>
                             <div *ngIf="habilitaLimparFiltro">
-                                <button nbButton shape="round" size="small" status="danger" nbTooltip="Limpar Filtro de Proposta" (click)="findPendenciaSintetico()">
+                                <button nbButton shape="round" size="small" status="danger"
+                                    nbTooltip="Limpar Filtro de Proposta" (click)="findPendenciaSintetico()">
                                     <i class="fa fa-trash color"></i>
                                 </button>
                             </div>
                         </div>
                         <br>
                         <nb-tabset class="size-fonte" fullWidth (changeTab)="findPendencia($event)">
-                            <nb-tab *ngFor="let p of pendenciaSintetico" [tabTitle]="p.status_time_line" [active]="p.ativo" badgeText="{{p.contador_contratos_time_line}}" badgeStatus="success">
+                            <nb-tab *ngFor="let p of pendenciaSintetico" [tabTitle]="p.status_time_line"
+                                [active]="p.ativo" badgeText="{{p.contador_contratos_time_line}}" badgeStatus="primary">
                                 <div class="container">
-                                    <table class="tabela" [nbSpinner]="pendencia.length < 1 && pararSpinner" nbSpinnerStatus="success" equalColumnsWidth>
+                                    <table class="tabela" [nbSpinner]="pendencia.length < 1 && pararSpinner"
+                                        nbSpinnerStatus="success" equalColumnsWidth>
                                         <thead>
                                             <tr>
                                                 <th class="text-left">Proposta</th>
@@ -89,10 +106,12 @@
                                                 <th class="text-left">Convênio</th>
                                                 <th class="text-left">Data</th>
                                                 <th class="text-left">Dias Pendentes</th>
-                                                <th *ngIf="p.codigo_status_time_line == 0 || p.codigo_status_time_line == 1 || p.codigo_status_time_line == 6" class="text-left">
+                                                <th *ngIf="p.codigo_status_time_line == 0 || p.codigo_status_time_line == 1 || p.codigo_status_time_line == 6"
+                                                    class="text-left">
                                                     Ação
                                                 </th>
-                                                <th *ngIf="p.codigo_status_time_line > 1 && p.codigo_status_time_line != 6" class="text-left">
+                                                <th *ngIf="p.codigo_status_time_line > 1 && p.codigo_status_time_line != 6"
+                                                    class="text-left">
                                                     Borderô
                                                 </th>
                                             </tr>
@@ -115,33 +134,53 @@
                                                     <span nbTooltip="Nome Instituição">{{i.nome_instituicao}}</span>
                                                 </td>
                                                 <td class="size-fonte">
-                                                    <span nbTooltip="Data Entrada Operação">{{i.data_entrada_operacao | moment: 'DD/MM/YYYY'}}</span><br>
-                                                    <span nbTooltip="Data Status">{{i.data_status | moment: 'DD/MM/YYYY'}}</span>
+                                                    <span
+                                                        nbTooltip="Data Entrada Operação">{{i.data_entrada_operacao | moment: 'DD/MM/YYYY'}}</span><br>
+                                                    <span
+                                                        nbTooltip="Data Status">{{i.data_status | moment: 'DD/MM/YYYY'}}</span>
                                                 </td>
                                                 <td class="size-fonte-center">
-                                                    <button nbButton status="info" *ngIf="i.dias_pendentes <= 7" status="info" ghost [size]="tiny" nbTooltip="Quantidade de dias pendentes">{{i.dias_pendentes}}</button>
-                                                    <button nbButton status="info" *ngIf="i.dias_pendentes > 7 && i.dias_pendentes <= 15" status="success" outline [size]="tiny" nbTooltip="Quantidade de dias pendentes">{{i.dias_pendentes}}</button>
-                                                    <button nbButton status="info" *ngIf="i.dias_pendentes > 15 && i.dias_pendentes <= 30" status="warning" outline [size]="tiny" nbTooltip="Quantidade de dias pendentes">{{i.dias_pendentes}}</button>
-                                                    <button nbButton status="info" *ngIf="i.dias_pendentes > 30" status="danger" outline [size]="tiny" nbTooltip="Quantidade de dias pendentes">{{i.dias_pendentes}}</button>
+                                                    <button nbButton status="info" *ngIf="i.dias_pendentes <= 7"
+                                                        status="info" ghost [size]="tiny"
+                                                        nbTooltip="Quantidade de dias pendentes">{{i.dias_pendentes}}</button>
+                                                    <button nbButton status="info"
+                                                        *ngIf="i.dias_pendentes > 7 && i.dias_pendentes <= 15"
+                                                        status="success" outline [size]="tiny"
+                                                        nbTooltip="Quantidade de dias pendentes">{{i.dias_pendentes}}</button>
+                                                    <button nbButton status="info"
+                                                        *ngIf="i.dias_pendentes > 15 && i.dias_pendentes <= 30"
+                                                        status="warning" outline [size]="tiny"
+                                                        nbTooltip="Quantidade de dias pendentes">{{i.dias_pendentes}}</button>
+                                                    <button nbButton status="info" *ngIf="i.dias_pendentes > 30"
+                                                        status="danger" outline [size]="tiny"
+                                                        nbTooltip="Quantidade de dias pendentes">{{i.dias_pendentes}}</button>
                                                     <div *ngFor="let ocorrencia of i.pendencias_reabertura">
-                                                        <button *ngIf="ocorrencia != null && ocorrencia != ''" nbButton status="info" status="info" [size]="tiny" nbTooltip="{{ocorrencia.ocorrencia}}" nbTooltipStatus="info">Ocorrências</button>
+                                                        <button *ngIf="ocorrencia != null && ocorrencia != ''" nbButton
+                                                            status="info" status="info" [size]="tiny"
+                                                            nbTooltip="{{ocorrencia.ocorrencia}}"
+                                                            nbTooltipStatus="info">Ocorrências</button>
                                                     </div>
                                                 </td>
                                                 <td class="size-fonte">
-                                                    <button *ngIf="p.codigo_status_time_line == 0 || p.codigo_status_time_line == 6" nbButton status="success" [size]="medium" outline (click)="enviarPreBordero(i.pk)" nbTooltip="Enviar proposta para Pré Borderô">
+                                                    <button
+                                                        *ngIf="p.codigo_status_time_line == 0 || p.codigo_status_time_line == 6"
+                                                        nbButton status="success" [size]="medium" outline
+                                                        (click)="enviarPreBordero(i.pk)"
+                                                        nbTooltip="Enviar proposta para Pré Borderô">
                                                         <i class="fa fa-share color"></i>
                                                     </button>
-                                                    <button *ngIf="p.codigo_status_time_line == 1" nbButton status="danger" [size]="medium" outline (click)="retirarPreBordero(i.pk)" nbTooltip="Retirar proposta do Pré Borderô">
+                                                    <button *ngIf="p.codigo_status_time_line == 1" nbButton
+                                                        status="danger" [size]="medium" outline
+                                                        (click)="retirarPreBordero(i.pk)"
+                                                        nbTooltip="Retirar proposta do Pré Borderô">
                                                         <i class="fa fa-reply color"></i>
                                                     </button>
                                                     <div class="container" *ngIf="p.codigo_status_time_line > 1">
-                                                        <button *ngIf="i.codigo_bordero != null" nbButton status="info" [size]="medium" outline nbTooltip="Número do Borderô">
+                                                        <button *ngIf="i.codigo_bordero != null" nbButton status="info"
+                                                            [size]="medium" outline nbTooltip="Número do Borderô">
                                                             {{i.codigo_bordero}}{{i.codigo_bordero_dv}}<br>
                                                             {{i.tipo_bordero}}
                                                         </button><br>
-                                                        <!--<button *ngIf="i.tipo_bordero != null" nbButton status="warning" [size]="medium" outline nbTooltip="Tipo do Borderô">
-                              {{i.tipo_bordero}}
-                            </button>-->
                                                     </div>
                                                 </td>
                                             </tr>
@@ -153,14 +192,17 @@
                                         </tbody>
                                     </table>
                                 </div><br>
-                                <button *ngIf="p.codigo_status_time_line == 1 && pendencia.length != 0" class=btnGerar nbButton status="success" size="medium" hero (click)="confirmarBordero(geraBordero)" nbTooltip="Clique para gerar borderô">Gerar Borderô
+                                <button *ngIf="p.codigo_status_time_line == 1 && pendencia.length != 0" class=btnGerar
+                                    nbButton status="success" size="medium" hero (click)="confirmarBordero(geraBordero)"
+                                    nbTooltip="Clique para gerar borderô">Gerar Borderô
                                 </button>
                                 <ng-template #geraBordero let-c="close" let-d="dismiss">
                                     <div class="modal-header">
                                         <span>Confirme a quantidade de contratos
                                             <button nbButton type="button" status="primary" [size]="tiny" outline>
                                                 {{p.contador_contratos_time_line}}</button></span>
-                                        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                                        <button type="button" class="close" aria-label="Close"
+                                            (click)="d('Cross click')">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
@@ -168,19 +210,25 @@
                                         <div class="row">
                                             <div class="col-md-12 col-lg-20 col-xxxl-10">
                                                 <nb-card>
-                                                    <input type="number" nbInput [(ngModel)]="numero_contratos" fullWidth fieldSize="large" shape="round" placeholder="Quantidade de contratos">
+                                                    <input type="number" nbInput [(ngModel)]="numero_contratos"
+                                                        fullWidth fieldSize="large" shape="round"
+                                                        placeholder="Quantidade de contratos">
                                                 </nb-card>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-dark" (click)="close()">Cancelar</button>
-                                        <button type="button" ngbAutofocus class="btn btn-danger" (click)="gerarEnvioBordero()">Confirmar</button>
+                                        <button type="button" class="btn btn-outline-dark"
+                                            (click)="close()">Cancelar</button>
+                                        <button type="button" ngbAutofocus class="btn btn-danger"
+                                            (click)="gerarEnvioBordero()">Confirmar</button>
                                     </div>
                                 </ng-template>
                                 <div class="row justify-content-center">
                                     <td class="size-font">
-                                        <ngb-pagination class="pagination" [collectionSize]="pendencia.length" #numPages [maxSize]="15" [pageSize]="itemsPerPage" [(page)]="currentPage" (pageChange)="onPageChange(currentPage)">
+                                        <ngb-pagination class="pagination" [collectionSize]="pendencia.length" #numPages
+                                            [maxSize]="15" [pageSize]="itemsPerPage" [(page)]="currentPage"
+                                            (pageChange)="onPageChange(currentPage)">
                                         </ngb-pagination>
                                     </td>
                                 </div>
@@ -201,8 +249,12 @@
                                 <div class="col" *ngIf="canalVendas.length != 0">
                                     <nb-card accent="primary" status="primary" class="solar-card">
                                         <nb-card-header>Canal de vendas
-                                            <nb-icon *ngIf="revealed.canalVendas" class="toggle-icon" icon="chevron-up-outline" pack="eva" (click)="toggleView('canalVendas')"></nb-icon>
-                                            <nb-icon *ngIf="!revealed.canalVendas" class="toggle-icon" icon="chevron-down-outline" pack="eva" (click)="toggleView('canalVendas')"> </nb-icon>
+                                            <nb-icon *ngIf="revealed.canalVendas" class="toggle-icon"
+                                                icon="chevron-up-outline" pack="eva"
+                                                (click)="toggleView('canalVendas')"></nb-icon>
+                                            <nb-icon *ngIf="!revealed.canalVendas" class="toggle-icon"
+                                                icon="chevron-down-outline" pack="eva"
+                                                (click)="toggleView('canalVendas')"> </nb-icon>
                                         </nb-card-header>
                                         <div *ngIf="revealed.canalVendas">
                                             <nb-card-body>
@@ -220,7 +272,10 @@
                                                                 <tbody>
                                                                     <tr *ngFor="let i of canalVendas">
                                                                         <td class="size-fonte">
-                                                                            <button nbButton status="success" ghost [size]="tiny" nbTooltip="Acionar Filtro" (click)="_filtercanalVendas(i.codigo_canal_vendas, i.nome_canal_vendas, false)" nbTooltipStatus="success">
+                                                                            <button nbButton status="success" ghost
+                                                                                [size]="tiny" nbTooltip="Acionar Filtro"
+                                                                                (click)="_filtercanalVendas(i.codigo_canal_vendas, i.nome_canal_vendas, false)"
+                                                                                nbTooltipStatus="success">
                                                                                 <i class="fa fa-chevron-up color"></i>
                                                                             </button>
                                                                         </td>
@@ -242,8 +297,12 @@
                                 <div class="col" *ngIf="tipoPendencia.length != 0">
                                     <nb-card accent="primary" status="primary" class="solar-card">
                                         <nb-card-header>Tipo de Pendência
-                                            <nb-icon *ngIf="revealed.tipoPendencia" class="toggle-icon" icon="chevron-up-outline" pack="eva" (click)="toggleView('tipoPendencia')"></nb-icon>
-                                            <nb-icon *ngIf="!revealed.tipoPendencia" class="toggle-icon" icon="chevron-down-outline" pack="eva" (click)="toggleView('tipoPendencia')"> </nb-icon>
+                                            <nb-icon *ngIf="revealed.tipoPendencia" class="toggle-icon"
+                                                icon="chevron-up-outline" pack="eva"
+                                                (click)="toggleView('tipoPendencia')"></nb-icon>
+                                            <nb-icon *ngIf="!revealed.tipoPendencia" class="toggle-icon"
+                                                icon="chevron-down-outline" pack="eva"
+                                                (click)="toggleView('tipoPendencia')"> </nb-icon>
                                         </nb-card-header>
                                         <div *ngIf="revealed.tipoPendencia">
                                             <nb-card-body>
@@ -261,13 +320,18 @@
                                                                 <tbody>
                                                                     <tr *ngFor="let i of tipoPendencia">
                                                                         <td class="size-fonte">
-                                                                            <button nbButton status="success" ghost [size]="tiny" nbTooltip="Acionar Filtro" (click)="_filterTipoPendencia(i.codigo_status_farol, i.nome_status_farol, false)" nbTooltipStatus="success">
+                                                                            <button nbButton status="success" ghost
+                                                                                [size]="tiny" nbTooltip="Acionar Filtro"
+                                                                                (click)="_filterTipoPendencia(i.codigo_status_farol, i.nome_status_farol, false)"
+                                                                                nbTooltipStatus="success">
                                                                                 <i class="fa fa-chevron-up color"></i>
                                                                             </button>
                                                                         </td>
                                                                         <!--<td class="size-fonte">{{i.codigo_status_farol}}</td>-->
-                                                                        <td *ngIf="i.nome_status_farol == 'E'" class="size-fonte">PRIMEIRA ENTREGA</td>
-                                                                        <td *ngIf="i.nome_status_farol == 'R'" class="size-fonte">REABERTURA</td>
+                                                                        <td *ngIf="i.nome_status_farol == 'E'"
+                                                                            class="size-fonte">PRIMEIRA ENTREGA</td>
+                                                                        <td *ngIf="i.nome_status_farol == 'R'"
+                                                                            class="size-fonte">REABERTURA</td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -283,9 +347,11 @@
                                 <div class="col" *ngIf="regional.length != 0">
                                     <nb-card accent="primary" status="primary" class="solar-card">
                                         <nb-card-header>Regional
-                                            <nb-icon *ngIf="revealed.regional" class="toggle-icon" icon="chevron-up-outline" pack="eva" (click)="toggleView('regional')">
+                                            <nb-icon *ngIf="revealed.regional" class="toggle-icon"
+                                                icon="chevron-up-outline" pack="eva" (click)="toggleView('regional')">
                                             </nb-icon>
-                                            <nb-icon *ngIf="!revealed.regional" class="toggle-icon" icon="chevron-down-outline" pack="eva" (click)="toggleView('regional')">
+                                            <nb-icon *ngIf="!revealed.regional" class="toggle-icon"
+                                                icon="chevron-down-outline" pack="eva" (click)="toggleView('regional')">
                                             </nb-icon>
                                         </nb-card-header>
                                         <div class="maxContent" *ngIf="revealed.regional">
@@ -304,7 +370,10 @@
                                                                 <tbody>
                                                                     <tr *ngFor="let i of regional">
                                                                         <td class="size-fonte">
-                                                                            <button nbButton status="success" ghost [size]="tiny" nbTooltip="Acionar Filtro" (click)="_filterRegional(i.codigo_regional, i.nome_regional, false)" nbTooltipStatus="success">
+                                                                            <button nbButton status="success" ghost
+                                                                                [size]="tiny" nbTooltip="Acionar Filtro"
+                                                                                (click)="_filterRegional(i.codigo_regional, i.nome_regional, false)"
+                                                                                nbTooltipStatus="success">
                                                                                 <i class="fa fa-chevron-up color"></i>
                                                                             </button>
                                                                         </td>
@@ -325,9 +394,13 @@
                                 <div class="col" *ngIf="instituicao.length != 0">
                                     <nb-card accent="primary" status="primary" class="solar-card">
                                         <nb-card-header>Instituição
-                                            <nb-icon *ngIf="revealed.instituicao" class="toggle-icon" icon="chevron-up-outline" pack="eva" (click)="toggleView('instituicao')">
+                                            <nb-icon *ngIf="revealed.instituicao" class="toggle-icon"
+                                                icon="chevron-up-outline" pack="eva"
+                                                (click)="toggleView('instituicao')">
                                             </nb-icon>
-                                            <nb-icon *ngIf="!revealed.instituicao" class="toggle-icon" icon="chevron-down-outline" pack="eva" (click)="toggleView('instituicao')">
+                                            <nb-icon *ngIf="!revealed.instituicao" class="toggle-icon"
+                                                icon="chevron-down-outline" pack="eva"
+                                                (click)="toggleView('instituicao')">
                                             </nb-icon>
                                         </nb-card-header>
                                         <div class="maxContent" *ngIf="revealed.instituicao">
@@ -346,7 +419,10 @@
                                                                 <tbody>
                                                                     <tr *ngFor="let i of instituicao">
                                                                         <td class="size-fonte">
-                                                                            <button nbButton status="success" ghost [size]="tiny" nbTooltip="Acionar Filtro" (click)="_filterInstituicao(i.codigo_instituicao, i.nome_instituicao, false)" nbTooltipStatus="success">
+                                                                            <button nbButton status="success" ghost
+                                                                                [size]="tiny" nbTooltip="Acionar Filtro"
+                                                                                (click)="_filterInstituicao(i.codigo_instituicao, i.nome_instituicao, false)"
+                                                                                nbTooltipStatus="success">
                                                                                 <i class="fa fa-chevron-up color"></i>
                                                                             </button>
                                                                         </td>
@@ -369,9 +445,12 @@
                                     <nb-card accent="primary" status="primary" class="solar-card">
                                         <nb-card-header>
                                             Comercial
-                                            <nb-icon *ngIf="revealed.comercial" class="toggle-icon" icon="chevron-up-outline" pack="eva" (click)="toggleView('comercial')">
+                                            <nb-icon *ngIf="revealed.comercial" class="toggle-icon"
+                                                icon="chevron-up-outline" pack="eva" (click)="toggleView('comercial')">
                                             </nb-icon>
-                                            <nb-icon *ngIf="!revealed.comercial" class="toggle-icon" icon="chevron-down-outline" pack="eva" (click)="toggleView('comercial')"> </nb-icon>
+                                            <nb-icon *ngIf="!revealed.comercial" class="toggle-icon"
+                                                icon="chevron-down-outline" pack="eva"
+                                                (click)="toggleView('comercial')"> </nb-icon>
                                         </nb-card-header>
                                         <div class="maxContent" *ngIf="revealed.comercial">
                                             <nb-card-body>
@@ -389,7 +468,10 @@
                                                                 <tbody>
                                                                     <tr *ngFor="let i of comercial">
                                                                         <td class="size-fonte">
-                                                                            <button nbButton status="success" ghost [size]="tiny" nbTooltip="Acionar Filtro" (click)="_filterComercial(i.codigo_comercial, i.nome_comercial, false)" nbTooltipStatus="success">
+                                                                            <button nbButton status="success" ghost
+                                                                                [size]="tiny" nbTooltip="Acionar Filtro"
+                                                                                (click)="_filterComercial(i.codigo_comercial, i.nome_comercial, false)"
+                                                                                nbTooltipStatus="success">
                                                                                 <i class="fa fa-chevron-up color"></i>
                                                                             </button>
                                                                         </td>
@@ -412,9 +494,12 @@
                                 <div class="col" *ngIf="matriz.length != 0">
                                     <nb-card accent="primary" status="primary" class="solar-card">
                                         <nb-card-header>Loja Matriz
-                                            <nb-icon *ngIf="revealed.lojaMatriz" class="toggle-icon" icon="chevron-up-outline" pack="eva" (click)="toggleView('lojaMatriz')">
+                                            <nb-icon *ngIf="revealed.lojaMatriz" class="toggle-icon"
+                                                icon="chevron-up-outline" pack="eva" (click)="toggleView('lojaMatriz')">
                                             </nb-icon>
-                                            <nb-icon *ngIf="!revealed.lojaMatriz" class="toggle-icon" icon="chevron-down-outline" pack="eva" (click)="toggleView('lojaMatriz')"> </nb-icon>
+                                            <nb-icon *ngIf="!revealed.lojaMatriz" class="toggle-icon"
+                                                icon="chevron-down-outline" pack="eva"
+                                                (click)="toggleView('lojaMatriz')"> </nb-icon>
                                         </nb-card-header>
                                         <div class="maxContent" *ngIf="revealed.lojaMatriz">
                                             <nb-card-body>
@@ -432,7 +517,10 @@
                                                                 <tbody>
                                                                     <tr *ngFor="let i of matriz">
                                                                         <td class="size-fonte">
-                                                                            <button nbButton status="success" ghost [size]="tiny" nbTooltip="Acionar Filtro" (click)="_filterLojaMatriz(i.codigo_loja_matriz, i.nome_loja_matriz, false)" nbTooltipStatus="success">
+                                                                            <button nbButton status="success" ghost
+                                                                                [size]="tiny" nbTooltip="Acionar Filtro"
+                                                                                (click)="_filterLojaMatriz(i.codigo_loja_matriz, i.nome_loja_matriz, false)"
+                                                                                nbTooltipStatus="success">
                                                                                 <i class="fa fa-chevron-up color"></i>
                                                                             </button>
                                                                         </td>
@@ -454,8 +542,10 @@
                                 <div class="col" *ngIf="loja.length != 0">
                                     <nb-card accent="primary" status="primary" class="solar-card">
                                         <nb-card-header>Loja
-                                            <nb-icon *ngIf="revealed.loja" class="toggle-icon" icon="chevron-up-outline" pack="eva" (click)="toggleView('loja')"></nb-icon>
-                                            <nb-icon *ngIf="!revealed.loja" class="toggle-icon" icon="chevron-down-outline" pack="eva" (click)="toggleView('loja')">
+                                            <nb-icon *ngIf="revealed.loja" class="toggle-icon" icon="chevron-up-outline"
+                                                pack="eva" (click)="toggleView('loja')"></nb-icon>
+                                            <nb-icon *ngIf="!revealed.loja" class="toggle-icon"
+                                                icon="chevron-down-outline" pack="eva" (click)="toggleView('loja')">
                                             </nb-icon>
                                         </nb-card-header>
                                         <div class="maxContent" *ngIf="revealed.loja">
@@ -474,7 +564,10 @@
                                                                 <tbody>
                                                                     <tr *ngFor="let i of loja">
                                                                         <td class="size-fonte">
-                                                                            <button nbButton status="success" ghost [size]="tiny" nbTooltip="Acionar Filtro" (click)="_filterLoja(i.codigo_loja, i.nome_loja, false)" nbTooltipStatus="success">
+                                                                            <button nbButton status="success" ghost
+                                                                                [size]="tiny" nbTooltip="Acionar Filtro"
+                                                                                (click)="_filterLoja(i.codigo_loja, i.nome_loja, false)"
+                                                                                nbTooltipStatus="success">
                                                                                 <i class="fa fa-chevron-up color"></i>
                                                                             </button>
                                                                         </td>
@@ -496,8 +589,12 @@
                                 <div class="col" *ngIf="funcionario.length != 0">
                                     <nb-card accent="primary" status="primary" class="solar-card">
                                         <nb-card-header>Promotor
-                                            <nb-icon *ngIf="revealed.funcionario" class="toggle-icon" icon="chevron-up-outline" pack="eva" (click)="toggleView('funcionario')"></nb-icon>
-                                            <nb-icon *ngIf="!revealed.funcionario" class="toggle-icon" icon="chevron-down-outline" pack="eva" (click)="toggleView('funcionario')"> </nb-icon>
+                                            <nb-icon *ngIf="revealed.funcionario" class="toggle-icon"
+                                                icon="chevron-up-outline" pack="eva"
+                                                (click)="toggleView('funcionario')"></nb-icon>
+                                            <nb-icon *ngIf="!revealed.funcionario" class="toggle-icon"
+                                                icon="chevron-down-outline" pack="eva"
+                                                (click)="toggleView('funcionario')"> </nb-icon>
                                         </nb-card-header>
                                         <div class="maxContent" *ngIf="revealed.funcionario">
                                             <nb-card-body>
@@ -515,7 +612,10 @@
                                                                 <tbody>
                                                                     <tr *ngFor="let i of funcionario">
                                                                         <td class="size-fonte">
-                                                                            <button nbButton status="success" ghost [size]="tiny" nbTooltip="Acionar Filtro" (click)="_filterFuncionario(i.codigo_funcionario, i.nome_funcionario, false)" nbTooltipStatus="success">
+                                                                            <button nbButton status="success" ghost
+                                                                                [size]="tiny" nbTooltip="Acionar Filtro"
+                                                                                (click)="_filterFuncionario(i.codigo_funcionario, i.nome_funcionario, false)"
+                                                                                nbTooltipStatus="success">
                                                                                 <i class="fa fa-chevron-up color"></i>
                                                                             </button>
                                                                         </td>
