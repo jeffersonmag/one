@@ -36,12 +36,28 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'grid-outline',
     children: [
       {
+        title: 'Bancos',
+        link: '/pages/cadastros/bancos',
+        icon: 'percent-outline',
+        home: false,
+        expanded: (window.sessionStorage.permissao_cadastro_bancos === 'false'),
+        hidden: (window.sessionStorage.permissao_cadastro_bancos === 'false'),
+      },
+      {
         title: 'Clientes',
         link: '/pages/cadastros/clientes',
         icon: 'people-outline',
         home: false,
         expanded: (window.sessionStorage.permissao_cadastro_cliente === 'false'),
         hidden: (window.sessionStorage.permissao_cadastro_cliente === 'false'),
+      },
+      {
+        title: 'Parceiros de Negócio',
+        link: '/pages/cadastros/parceiro-negocio',
+        icon: 'briefcase-outline',
+        home: false,
+        expanded: (window.sessionStorage.permissao_cadastro_parceiro_negocio === 'false'),
+        hidden: (window.sessionStorage.permissao_cadastro_parceiro_negocio === 'false'),
       },
     ],
   },

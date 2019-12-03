@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DadosCadastroComponent } from './dados-cadastro.component';
+import { DadosCadastroBancosComponent } from './dados-cadastro-bancos.component';
 
 describe('DadosCadastroComponent', () => {
-  let component: DadosCadastroComponent;
-  let fixture: ComponentFixture<DadosCadastroComponent>;
+  let component: DadosCadastroBancosComponent;
+  let fixture: ComponentFixture<DadosCadastroBancosComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DadosCadastroComponent ]
+      declarations: [ DadosCadastroBancosComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DadosCadastroComponent);
+    fixture = TestBed.createComponent(DadosCadastroBancosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

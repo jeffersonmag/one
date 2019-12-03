@@ -69,7 +69,7 @@ import { SmartTableData } from './@core/data/smart-table';
     NgIdleModule,
     NbProgressBarModule,
     Ng2SmartTableModule,
-    NbTreeGridModule
+    NbTreeGridModule,
   ],
 
   providers: [

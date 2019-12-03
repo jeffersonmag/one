@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { CadastrosApiService } from '../../../api/cadastros';
+import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
-  NbSearchService, NbToastrService, NbGlobalPosition,
-  NbGlobalPhysicalPosition, NbComponentStatus,
+  NbGlobalPosition, NbGlobalPhysicalPosition,
+  NbComponentStatus, NbSearchService, NbToastrService,
 } from '@nebular/theme';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { CadastrosApiService } from '../../../api/cadastros';
 
 @Component({
-  selector: 'ngx-parceiro-negocio',
-  templateUrl: './parceiro-negocio.component.html',
-  styleUrls: ['./parceiro-negocio.component.scss'],
+  selector: 'ngx-bancos',
+  templateUrl: './bancos.component.html',
+  styleUrls: ['./bancos.component.scss']
 })
-export class ParceiroNegocioComponent implements OnInit {
+export class BancosComponent implements OnInit {
 
   modalReference: NgbModalRef;
   index = 1;
@@ -26,10 +26,10 @@ export class ParceiroNegocioComponent implements OnInit {
   pararSpinner: boolean = true;
 
   permissoes: any = JSON.parse(window.sessionStorage.permissao_acesso);
-  permissaoDelete: boolean = this.permissoes.cadastro_pn.acl.D;
-  permissaoInsert: boolean = this.permissoes.cadastro_pn.acl.I;
-  permissaoSelect: boolean = this.permissoes.cadastro_pn.acl.S;
-  permissaoUpdate: boolean = this.permissoes.cadastro_pn.acl.U;
+  permissaoDelete: boolean = this.permissoes.cadastro_bancos.acl.D;
+  permissaoInsert: boolean = this.permissoes.cadastro_bancos.acl.I;
+  permissaoSelect: boolean = this.permissoes.cadastro_bancos.acl.S;
+  permissaoUpdate: boolean = this.permissoes.cadastro_bancos.acl.U;
 
   value = '';
 
@@ -73,11 +73,11 @@ export class ParceiroNegocioComponent implements OnInit {
   }
 
   buscaUsuarios(valor?: string) {
-    if (valor === '') {
+    if (valor == '') {
       this.value = '';
       this.ativaBotaoPesquisa = false;
     }
-    this.campanhasApiService.getParceiroNegocios(
+    this.campanhasApiService.getBancos(
       {
         "pesquisa": valor,
       },
@@ -92,7 +92,7 @@ export class ParceiroNegocioComponent implements OnInit {
   }
 
   insereUsuarios(valor?) {
-    this.campanhasApiService.postParceiroNegocios(
+    this.campanhasApiService.postBancos(
       {
         "cpf": valor.cpf,
         "nome": valor.nome,
@@ -100,7 +100,7 @@ export class ParceiroNegocioComponent implements OnInit {
     )
       .then((s) => {
         this.JoinAndClose();
-        this.makeToast('success', 'Sucesso!', 'Cliente inserido com sucesso!');
+        this.makeToast('success', 'Sucesso!', 'Banco inserido com sucesso!');
         this.buscaUsuarios(this.value);
       })
       .catch((e) => {
@@ -110,7 +110,7 @@ export class ParceiroNegocioComponent implements OnInit {
   }
 
   alteraUsuarios(valor?) {
-    this.campanhasApiService.putParceiroNegocios(
+    this.campanhasApiService.putBancos(
       {
         "cpf": valor.cpf,
         "nome": valor.nome,
@@ -118,7 +118,7 @@ export class ParceiroNegocioComponent implements OnInit {
     )
       .then((s) => {
         this.JoinAndClose();
-        this.makeToast('success', 'Sucesso!', 'Dados do Cliente alterado com sucesso!');
+        this.makeToast('success', 'Sucesso!', 'Dados do banco alterado com sucesso!');
         this.buscaUsuarios(this.value);
       })
       .catch((e) => {
@@ -128,14 +128,14 @@ export class ParceiroNegocioComponent implements OnInit {
   }
 
   excluirUsuarios(valor?) {
-    this.campanhasApiService.delParceiroNegocios(
+    this.campanhasApiService.delBancos(
       {
         "cpf": valor.cpf,
       },
     )
       .then((s) => {
         this.JoinAndClose();
-        this.makeToast('success', 'Sucesso!', 'Dados do Cliente excluídos com sucesso!');
+        this.makeToast('success', 'Sucesso!', 'Dados do banco excluídos com sucesso!');
         this.buscaUsuarios(this.value);
       })
       .catch((e) => {

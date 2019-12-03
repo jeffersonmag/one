@@ -15,6 +15,8 @@ export class CadastrosApiService {
     private requestService: RequestService,
   ) { }
 
+  ///CADASTRO CLIENTES
+
   getClientes(dados) {
     this.pesquisa = dados.pesquisa;
     if (this.pesquisa == "") {
@@ -39,6 +41,64 @@ export class CadastrosApiService {
   delClientes(dados) { //Excluir usuário
     this.cpf = dados.cpf;
     return this.requestService.delete(`${environment.urlApi}/cliente-teste-cadastro?cpf=${this.cpf}`,
+      dados, true);
+  }
+
+  ///CADASTRO PARCEIRO NEGOCIOS
+
+  getParceiroNegocios(dados) {
+    this.pesquisa = dados.pesquisa;
+    if (this.pesquisa == "") {
+      return this.requestService.get(`${environment.urlApi}/cadastro-pn`,
+        null, true);
+    } else {
+      return this.requestService.get(`${environment.urlApi}/cadastro-pn?pesquisa=${this.pesquisa}`,
+        null, true);
+    }
+  }
+
+  postParceiroNegocios(dados) { //Criar Parceiro negocio
+    return this.requestService.post(`${environment.urlApi}/cadastro-pn`,
+      dados, true);
+  }
+
+  putParceiroNegocios(dados) { //Editar Parceiro negocio
+    return this.requestService.put(`${environment.urlApi}/cadastro-pn`,
+      dados, true);
+  }
+
+  delParceiroNegocios(dados) { //Excluir Parceiro negocio
+    this.cpf = dados.cpf;
+    return this.requestService.delete(`${environment.urlApi}/cadastro-pn?cpf_cnpj=${this.cpf}`,
+      dados, true);
+  }
+
+  ///CADASTRO BANCOS
+
+  getBancos(dados) {
+    this.pesquisa = dados.pesquisa;
+    if (this.pesquisa == "") {
+      return this.requestService.get(`${environment.urlApi}/cadastro-bancos`,
+        null, true);
+    } else {
+      return this.requestService.get(`${environment.urlApi}/cadastro-bancos?pesquisa=${this.pesquisa}`,
+        null, true);
+    }
+  }
+
+  postBancos(dados) { //Criar Parceiro negocio
+    return this.requestService.post(`${environment.urlApi}/cadastro-bancos`,
+      dados, true);
+  }
+
+  putBancos(dados) { //Editar Parceiro negocio
+    return this.requestService.put(`${environment.urlApi}/cadastro-bancos`,
+      dados, true);
+  }
+
+  delBancos(dados) { //Excluir Parceiro negocio
+    this.cpf = dados.cpf;
+    return this.requestService.delete(`${environment.urlApi}/cadastro-bancos?cpf_cnpj=${this.cpf}`,
       dados, true);
   }
 }

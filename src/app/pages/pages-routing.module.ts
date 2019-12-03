@@ -7,6 +7,8 @@ import { PagesComponent } from './pages.component';
 import { PendenciaComponent } from './pendencia-fisico/pendencia.component';
 import { EsteiraProducaoComponent } from './esteira-producao/esteira-producao.component';
 import { ClientesComponent } from './cadastros/clientes/clientes.component';
+import { ParceiroNegocioComponent } from './cadastros/parceiro-negocio/parceiro-negocio.component';
+import { BancosComponent } from './cadastros/bancos/bancos.component';
 
 //define o a página inicial
 if (window.sessionStorage.permissao_dashboard_campanha) {
@@ -15,9 +17,13 @@ if (window.sessionStorage.permissao_dashboard_campanha) {
   home = 'pendencia-fisico';
 } else if (window.sessionStorage.permissao_esteira_producao) {
   home = 'esteira-producao';
+} else if (window.sessionStorage.permissao_cadastro_bancos) {
+  home = 'cadastros/parceiro-negocio';
 } else if (window.sessionStorage.permissao_cadastro_cliente) {
   home = 'cadastros/clientes';
-};
+} else if (window.sessionStorage.permissao_cadastro_parceiro_negocio) {
+  home = 'cadastros/parceiro-negocio';
+}
 
 const routes: Routes = [{
   path: '',
@@ -46,6 +52,17 @@ const routes: Routes = [{
       path: 'cadastros/clientes',
       component: ClientesComponent,
     },
+
+    {
+      path: 'cadastros/parceiro-negocio',
+      component: ParceiroNegocioComponent,
+    },
+
+    {
+      path: 'cadastros/bancos',
+      component: BancosComponent,
+    },
+
     {
       path: 'layout',
       loadChildren: () => import('./layout/layout.module')

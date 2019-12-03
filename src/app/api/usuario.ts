@@ -32,6 +32,8 @@ export class UsuarioApiService {
           this.sessionService.set('permissao_pendencia_fisico', s.permissao_acesso.pendencia_fisico.acesso);
           this.sessionService.set('permissao_esteira_producao', s.permissao_acesso.esteira_producao.acesso);
           this.sessionService.set('permissao_cadastro_cliente', s.permissao_acesso.cadastro_cliente_teste_1.acesso);
+          this.sessionService.set('permissao_cadastro_parceiro_negocio', s.permissao_acesso.cadastro_pn.acesso);
+          this.sessionService.set('permissao_cadastro_bancos', s.permissao_acesso.cadastro_bancos);
           resolve(s);
         })
         .catch((e) => {

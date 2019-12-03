@@ -1,15 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ClientesComponent } from '../clientes.component';
+import { ParceiroNegocioComponent } from '../parceiro-negocio.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationService } from '../../validation.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'dados-cadastro',
-  templateUrl: './dados-cadastro.component.html',
-  styleUrls: ['./dados-cadastro.component.scss']
+  selector: 'dados-cadastro-parceiro-negocio',
+  templateUrl: './dados-cadastro-parceiro-negocio.component.html',
+  styleUrls: ['./dados-cadastro-parceiro-negocio.scss']
 })
-export class DadosCadastroComponent implements OnInit, OnDestroy {
+export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy {
 
   usuarioEditado: any;
   edicaoUsuario: boolean;
@@ -59,7 +59,7 @@ export class DadosCadastroComponent implements OnInit, OnDestroy {
     'RS', 'RO', 'RR', 'SC', 'SP',
     'SE', 'TO'];
 
-  constructor(private options: ClientesComponent,
+  constructor(private options: ParceiroNegocioComponent,
     private modal: NgbModal,
     private formBuilder: FormBuilder) { }
 

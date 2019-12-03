@@ -30,9 +30,14 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { OrderModule } from 'ngx-order-pipe';
 import { StatusComponent } from './status/status.component';
 import { DadosCadastroComponent } from './clientes/dados-cadastro/dados-cadastro.component';
+import {
+  DadosCadastroParceiroNegocioComponent,
+} from './parceiro-negocio/dados-cadastro-parceiro-negocio/dados-cadastro-parceiro-negocio.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ControlMessagesComponent } from './control-messages.component';
 import { ParceiroNegocioComponent } from './parceiro-negocio/parceiro-negocio.component';
+import { BancosComponent } from './bancos/bancos.component';
+import { DadosCadastroBancosComponent } from './bancos/dados-cadastro-bancos/dados-cadastro-bancos.component';
 
 @NgModule({
   imports: [
@@ -73,8 +78,11 @@ import { ParceiroNegocioComponent } from './parceiro-negocio/parceiro-negocio.co
     ClientesComponent,
     StatusComponent,
     DadosCadastroComponent,
+    DadosCadastroParceiroNegocioComponent,
+    DadosCadastroBancosComponent,
     ControlMessagesComponent,
     ParceiroNegocioComponent,
+    BancosComponent,
   ],
 })
 
