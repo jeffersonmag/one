@@ -13,7 +13,7 @@ import { Component, Input } from '@angular/core';
       </div>
       <div class="details">
         <div class="title">{{ title }}</div>
-        <div class="title">CPF: {{ dados }}</div>
+        <div class="title">CPF/CNPJ: {{ dados }}</div>
       </div>
     </nb-card>
   `,

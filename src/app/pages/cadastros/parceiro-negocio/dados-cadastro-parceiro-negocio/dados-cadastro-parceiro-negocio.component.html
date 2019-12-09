@@ -1,9 +1,9 @@
 <div class="buttons-row">
   <div *ngIf="erro">
-    <nb-alert class="erro" status="danger">Erro. {{mensagem_erro}}</nb-alert> <br>
+    <nb-alert class="erro" status="danger">Erro: {{mensagem_erro}}</nb-alert> <br>
   </div>
   <button *ngIf="criacaoUsuario" class="buttons-row" nbButton shape="round" size="tiny" status="success"
-    nbTooltip="Salvar" (click)="salvarDadosUsuario(form)">
+    nbTooltip="Salvar" (click)="salvarDados(form)">
     <i class="fa fa-check color"></i>
     <div class="espacamento">Salvar</div>
   </button>
@@ -12,6 +12,7 @@
     <i class="fa fa-check color"></i>
     <div class="espacamento">Salvar</div>
   </button>
+
   <!--Confirmar edicao dos dados-->
   <ng-template #contentedicao let-c="close" let-d="dismiss">
     <div class="modal-header">
@@ -20,7 +21,7 @@
     <div class="modal-body">
       <div class="buttons-row">
         <button class="buttons-row" nbButton shape="round" size="tiny" status="success" nbTooltip="Salvar"
-          (click)="editarDadosUsuario(form)">
+          (click)="editarDados(form)">
           <i class="fa fa-check color"></i>
           <div class="espacamento">Sim</div>
         </button>
@@ -38,6 +39,7 @@
     <i class="fa fa-times color"></i>
     <div class="espacamento" nbTooltip="Excluir usuário">Excluir</div>
   </button>
+
   <!--Confirmar exclusao dos dados-->
   <ng-template #contentconfirmacao let-c="close" let-d="dismiss">
     <div class="modal-header">
@@ -46,7 +48,7 @@
     <div class="modal-body">
       <div class="buttons-row">
         <button class="buttons-row" nbButton shape="round" size="tiny" status="success" nbTooltip="Salvar"
-          (click)="excluirDadosUsuario(form)">
+          (click)="excluirDados(form)">
           <i class="fa fa-check color"></i>
           <div class="espacamento">Sim</div>
         </button>
@@ -62,11 +64,30 @@
   <button *ngIf="edicaoUsuario && !permissaoExclusao" disabled class="buttons-row" nbButton shape="round" size="tiny"
     status="danger">
     <i class="fa fa-times color"></i>
-    <div class="espacamento" nbTooltip="Sem permissão para excluir">Delete</div>
+    <div class="espacamento" nbTooltip="Sem permissão para excluir">Excluir</div>
   </button>
 </div>
+
 <form #form="ngForm" class="formulario" [formGroup]="formulario">
   <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputCodigo" class="label col-sm-3 col-form-label">Código</label>
+        <div class="col-sm-9">
+          <input type="text" nbInput readonly shape="rectangle" fieldSize="tiny" id="inputCodigo" formControlName="pk"
+            placeholder="Código" tabindex="2">
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputRazaoSocial" class="label col-sm-3 col-form-label">Razão Social</label>
+        <div class="col-sm-9">
+          <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputRazaoSocial"
+            formControlName="razao_social" placeholder="Razão Social" tabindex="4">
+        </div>
+      </div>
+    </div>
     <div class="col-sm-6">
       <div class="form-group row">
         <label for="inputNome" class="label col-sm-3 col-form-label">Nome Fantasia</label>
@@ -79,34 +100,60 @@
     </div>
     <div class="col-sm-6">
       <div class="form-group row">
-        <label for="inputCpf" class="label col-sm-3 col-form-label">CPF</label>
+        <label for="inputCpf" class="label col-sm-3 col-form-label">CPF/CNPJ</label>
         <div class="col-sm-9">
-          <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCpf" formControlName="cpf"
-            placeholder="CPF" tabindex="3">
-          <control-messages [control]="formulario.get('cpf')"></control-messages>
+          <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCpf"
+            formControlName="cpf_cnpj" placeholder="CPF/CNPJ" tabindex="3">
+          <control-messages [control]="formulario.get('cpf_cnpj')"></control-messages>
         </div>
       </div>
     </div>
-    <div class="col-sm-6">
-      <div class="form-group row">
-        <label for="inputCodigo" class="label col-sm-3 col-form-label">Código</label>
-        <div class="col-sm-9">
-          <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCodigo"
-            formControlName="codigo" placeholder="Código" tabindex="2">
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="form-group row">
+            <label for="inputativo" class="label col-sm-3 col-form-label">Ativo</label>
+            <div class="col-sm-9">
+              <nb-select fullWidth size="tiny" selected="formulario.ativo" placeholder="Ativo" tabindex="11">
+                <nb-option value="true">Sim</nb-option>
+                <nb-option value="false">Não</nb-option>
+              </nb-select>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="col-sm-6">
-      <div class="form-group row">
-        <label for="inputDataCadastro" class="label col-sm-3 col-form-label">Data Cadastro</label>
-        <div class="col-sm-9">
-          <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputDataCadastro"
-            formControlName="data_cadastro" placeholder="Data Cadastro" tabindex="4">
+
+        <div class="col">
+          <div class="form-group row">
+            <label for="inputgenero" class="label col-sm-3 col-form-label">Gênero</label>
+            <div class="col-sm-9">
+              <nb-select fullWidth size="tiny" placeholder="Gênero" id="inputgenero" formControlName="genero"
+                tabindex="11">
+                <nb-option value="1">F</nb-option>
+                <nb-option value="2">M</nb-option>
+              </nb-select>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="form-group row">
+            <label for="inputtipo_pessoa" class="label col-lg-3 col-form-label">Tipo de Pessoa</label>
+            <div class="col-sm-9">
+              <nb-select fullWidth size="tiny" selected="" placeholder="Tipo de Pessoa" tabindex="11">
+                <nb-option value="1">Física</nb-option>
+                <nb-option value="2">Jurídica</nb-option>
+              </nb-select>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <nb-tabset class="size-fonte" fullWidth>
+
+
+
+  <nb-tabset fullWidth>
     <nb-tab [tabTitle]="'GERAL'" [active]="true" badgeStatus="info" tabindex="5">
       <div class="row">
         <div class="col-sm-6">
@@ -123,7 +170,7 @@
             <label for="inputTelefone1" class="label col-sm-3 col-form-label">Telefone 1</label>
             <div class="col-sm-9">
               <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputTelefone1"
-                formControlName="telefone1" placeholder="Telefone 1" tabindex="13">
+                formControlName="telefone" placeholder="Telefone 1" tabindex="13">
             </div>
           </div>
         </div>
@@ -150,7 +197,7 @@
             <label for="inputcomplemento" class="label col-sm-3 col-form-label">Complemento</label>
             <div class="col-sm-9">
               <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputcomplemento"
-                formControlName="complemento" placeholder="Complemento" tabindex="8">
+                formControlName="complmento" placeholder="Complemento" tabindex="8">
             </div>
           </div>
         </div>
@@ -159,7 +206,7 @@
             <label for="inputCelular" class="label col-sm-3 col-form-label">Celular</label>
             <div class="col-sm-9">
               <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCelular"
-                formControlName="celular" placeholder="Celular" tabindex="15">
+                formControlName="telefone_celular" placeholder="Celular" tabindex="15">
             </div>
           </div>
         </div>
@@ -177,7 +224,7 @@
             <label for="inputrecado" class="label col-sm-3 col-form-label">Recado</label>
             <div class="col-sm-9">
               <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputrecado"
-                formControlName="recado" placeholder="Recado" tabindex="16">
+                formControlName="telefone_recado" placeholder="Recado" tabindex="16">
             </div>
           </div>
         </div>
@@ -192,23 +239,30 @@
         </div>
         <div class="col-sm-6">
           <div class="form-group row">
+            <label for="inputpessoal_contato" class="label col-sm-3 col-form-label">Contato Pessoal</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputpessoal_contato"
+                formControlName="pessoal_contato" placeholder="Contato Pessoal" tabindex="10">
+            </div>
           </div>
         </div>
         <div class="col-sm-6">
           <div class="form-group row">
             <label for="inputUF" class="label col-sm-3 col-form-label">UF</label>
             <div class="col-sm-9">
-              <input type="text" nbInput shape="rectangle" fieldSize="tiny" id="inputUF" formControlName="uf"
-                placeholder="UF" tabindex="11">
+              <nb-select size="tiny" selected="uf" formControlName="uf" id="inputUF" tabindex="11" placeholder="Estado">
+                <nb-option *ngFor="let p of estados" [value]="p">{{ p }}</nb-option>
+              </nb-select>
             </div>
           </div>
         </div>
         <div class="col-sm-6">
           <div class="form-group row">
-            <label for="inputdata_fundacao" class="label col-sm-3 col-form-label">Data de Fundação</label>
+            <label for="inputemail" class="label col-sm-3 col-form-label">E-mail</label>
             <div class="col-sm-9">
-              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputdata_fundacao"
-                formControlName="data_fundacao" placeholder="Data de Fundação" tabindex="17">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputemail"
+                formControlName="email" placeholder="E-mail" tabindex="10">
+              <control-messages [control]="formulario.get('email')"></control-messages>
             </div>
           </div>
         </div>
@@ -223,10 +277,28 @@
         </div>
         <div class="col-sm-6">
           <div class="form-group row">
+            <label for="inputdata_fundacao" class="label col-sm-3 col-form-label">Data de Nascimento / Fundação</label>
+            <div class="col-sm-9">
+              <input nbInput nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputdata_fundacao"
+                formControlName="data_nascimento_fundacao" placeholder="Data de Nascimento / Fundação" tabindex="17"
+                [nbDatepicker]="formpicker">
+              <nb-datepicker #formpicker format="dd/MM/yyyy" hideOnSelect=false></nb-datepicker>
+            </div>
           </div>
         </div>
         <div class="col-sm-6">
           <div class="form-group row">
+            <label for="inputEstadoCivil" class="label col-sm-3 col-form-label">Estado Civil</label>
+            <div class="col-sm-9">
+              <nb-select fullWidth size="tiny" selected="estado_civil" formControlName="estado_civil"
+                placeholder="Estado Civil" id="inputEstadoCivil" tabindex="11">
+                <nb-option value="1">Solteiro (a)</nb-option>
+                <nb-option value="2">Casado (a)</nb-option>
+                <nb-option value="3">Divorciado (a)</nb-option>
+                <nb-option value="4">Viúvo (a)</nb-option>
+                <nb-option value="5">Separado (a)</nb-option>
+              </nb-select>
+            </div>
           </div>
         </div>
         <div class="col-sm-6">
@@ -240,6 +312,11 @@
         </div>
         <div class="col-sm-6">
           <div class="form-group row">
+            <label for="inputconjuge" class="label col-sm-3 col-form-label">Nome do Cônjuge</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputconjuge"
+                formControlName="nome_conjuge" placeholder="Nome do Cônjuge" tabindex="18">
+            </div>
           </div>
         </div>
         <div class="col-sm-6">
@@ -253,8 +330,308 @@
         </div>
       </div>
     </nb-tab>
-    <nb-tab [tabTitle]="'DOCUMENTAÇÕES'" [active]="false" badgeStatus="info"></nb-tab>
-    <nb-tab [tabTitle]="'ANOTAÇÕES'" [active]="false" badgeStatus="info"></nb-tab>
-    <nb-tab [tabTitle]="'ANEXOS'" [active]="false" badgeStatus="info"></nb-tab>
+
+
+
+    <nb-tab [tabTitle]="'DOCUMENTAÇÃO'" [active]="false" badgeStatus="info">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputRg" class="label col-sm-3 col-form-label">RG</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputRg" formControlName="rg"
+                placeholder="RG" tabindex="6">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputNaturalidade" class="label col-sm-3 col-form-label">Naturalidade</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputNaturalidade"
+                formControlName="naturalidade" placeholder="Naturalidade" tabindex="13">
+            </div>
+          </div>
+        </div><br><br>
+
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div class="form-group row">
+                <label for="inputOrgaoEmissor" class="label col-sm-3 col-form-label">Órgão Emissor</label>
+                <div class="col-sm-9">
+                  <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputOrgaoEmissor"
+                    formControlName="rg_orgao_emissor" placeholder="Órgão Emissor" tabindex="13">
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-group row">
+                <label for="inputrg_uf_orgao_emissor" class="label col-sm-3 col-form-label">UF | Órgão Emissor</label>
+                <div class="col-sm-9">
+                  <nb-select size="tiny" selected="" id="inputrg_uf_orgao_emissor" tabindex="11"
+                    placeholder="UF | Órgão Emissor">
+                    <nb-option *ngFor="let p of estados" [value]="p">{{ p }}</nb-option>
+                  </nb-select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-group row">
+                <label for="inputdata_emissao" class="label col-lg-3 col-form-label">Data Emissão</label>
+                <div class="col-sm-9">
+                  <input nbInput nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputdata_emissao"
+                    formControlName="rg_data_emissao" placeholder="Data Emissão" tabindex="17"
+                    [nbDatepicker]="formpickeremissao">
+                  <nb-datepicker #formpickeremissao for="inputdata_emissao" format="dd/MM/yyyy"></nb-datepicker>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><br><br><br><br>
+
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div class="form-group row">
+                <label for="inputCnh" class="label col-sm-3 col-form-label">CNH</label>
+                <div class="col-sm-9">
+                  <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCnh"
+                    formControlName="cnh" placeholder="CNH" tabindex="13">
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-group row">
+                <label for="inputcnh_data_emissao" class="label col-sm-3 col-form-label">CNH Data Emissão</label>
+                <div class="col-sm-9">
+                  <input nbInput nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputcnh_data_emissao"
+                    formControlName="cnh_data_emissao" placeholder="CNH Data Emissão" tabindex="17"
+                    [nbDatepicker]="formpickercnhemissao">
+                  <nb-datepicker #formpickercnhemissao format="dd/MM/yyyy" hideOnSelect></nb-datepicker>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-group row">
+                <label for="inputcnh_data_vencimento" class="label col-lg-3 col-form-label">CNH Data Vencimento</label>
+                <div class="col-sm-9">
+                  <input nbInput nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputcnh_data_vencimento"
+                    formControlName="cnh_data_vencimento" placeholder="CNH Data Vencimento" tabindex="17"
+                    [nbDatepicker]="formpickercnhvencimento">
+                  <nb-datepicker #formpickercnhvencimento format="dd/MM/yyyy" hideOnSelect></nb-datepicker>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><br><br><br><br>
+
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div class="form-group row">
+                <label for="inputTituloEleitor" class="label col-sm-3 col-form-label">Título Eleitor</label>
+                <div class="col-sm-9">
+                  <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputTituloEleitor"
+                    formControlName="titulo_eleitor" placeholder="Título Eleitor" tabindex="13">
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-group row">
+                <label for="inputZona" class="label col-sm-3 col-form-label">Zona</label>
+                <div class="col-sm-9">
+                  <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputZona"
+                    formControlName="titulo_eleitor_zona" placeholder="Zona" tabindex="13">
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-group row">
+                <label for="inputSessao" class="label col-lg-3 col-form-label">Sessão</label>
+                <div class="col-sm-9">
+                  <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputSessao"
+                    formControlName="titulo_eleitor_sessao" placeholder="Sessão" tabindex="13">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><br><br><br><br>
+
+
+
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputCtps" class="label col-sm-3 col-form-label">CTPS</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCtps"
+                formControlName="ctps" placeholder="CTPS" tabindex="7">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputCtpsSerie" class="label col-sm-3 col-form-label">CTPS Série</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCtpsSerie"
+                formControlName="ctps_serie" placeholder="CTPS Série" tabindex="14">
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputReservista" class="label col-lg-3 col-form-label">Reservista</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputReservista"
+                formControlName="reservista" placeholder="Reservista" tabindex="14">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+          </div>
+        </div><br><br><br><br>
+
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputInscricaoEstadual" class="label col-lg-3 col-form-label">Inscrição Estadual</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputInscricaoEstadual"
+                formControlName="inscricao_estadual" placeholder="Inscrição Estadual" tabindex="14">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputInscricaoMunicipal" class="label col-lg-3 col-form-label">Inscrição Municipal</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputInscricaoMunicipal"
+                formControlName="inscricao_municipal" placeholder="Inscrição Municipal" tabindex="14">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputRegimeTributario" class="label col-lg-3 col-form-label">Regime Tributário</label>
+            <div class="col-sm-9">
+              <nb-select fullWidth size="tiny" selected="" formControlName="codigo_regime_tributario"
+                placeholder="Regime Tributário" id="inputRegimeTributario" tabindex="11">
+                <nb-option value="1">Simples Nacional</nb-option>
+                <nb-option value="2">Lucro Presumido</nb-option>
+                <nb-option value="3">Lucro Real</nb-option>
+              </nb-select>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group row">
+          </div>
+        </div><br><br><br><br>
+
+
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div class="form-group row">
+                <label for="inputEmpregador" class="label col-sm-3 col-form-label">Empregador</label>
+                <div class="col-sm-9">
+                  <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputEmpregador"
+                    formControlName="empregador" placeholder="Empregador" tabindex="14">
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-group row">
+                <label for="inputCargo" class="label col-sm-3 col-form-label">Cargo</label>
+                <div class="col-sm-9">
+                  <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCargo"
+                    formControlName="cargo" placeholder="Cargo" tabindex="14">
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-group row">
+                <label for="inputMatricula" class="label col-lg-3 col-form-label">Matrícula</label>
+                <div class="col-sm-9">
+                  <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputMatricula"
+                    formControlName="matricula" placeholder="Matrícula" tabindex="14">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nb-tab>
+
+
+    <nb-tab [tabTitle]="'CONTABILIDADE'" [active]="false" badgeStatus="info">
+      <div class="col-sm-6">
+        <div class="form-group row">
+          <label for="inputCodigoExterno" class="label col-lg-3 col-form-label">Código Externo</label>
+          <div class="col-sm-9">
+            <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCodigoExterno"
+              formControlName="codigo_externo" placeholder="Código Externo" tabindex="14">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group row">
+          <label for="inputPlanoContasReceber" class="label col-lg-3 col-form-label">Plano Contas Receber</label>
+          <div class="col-sm-9">
+            <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputPlanoContasReceber"
+              formControlName="plano_contas_receber" placeholder="Plano Contas Receber" tabindex="14">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group row">
+          <label for="inputPlanoContasPagar" class="label col-lg-3 col-form-label">Plano Contas Pagar</label>
+          <div class="col-sm-9">
+            <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputPlanoContasPagar"
+              formControlName="plano_contas_pagar" placeholder="Plano Contas Pagar" tabindex="14">
+          </div>
+        </div>
+      </div>
+    </nb-tab>
+
+
+
+    <nb-tab [tabTitle]="'ANOTAÇÕES'" [active]="false" badgeStatus="info">
+      <div class="col-sm-6">
+        <div class="form-group row">
+          <label for="inputDataCadastro" class="label col-lg-3 col-form-label">Data Cadastro</label>
+          <div class="col-sm-9">
+            <input nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputDataCadastro"
+              formControlName="data_cadastro" placeholder="Data de Cadastro" tabindex="17"
+              [nbDatepicker]="formpickerdatacadastro">
+            <nb-datepicker #formpickerdatacadastro format="dd/MM/yyyy" for="inputDataCadastro" hideOnSelect=false>
+            </nb-datepicker>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group row">
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-group row">
+          <label for="inputAnotacoes" class="label col-lg-3 col-form-label">Anotações</label>
+          <textarea nbInput fullWidth formControlName="anotacoes" shape="round" placeholder="Anotações"
+            id="inputAnotacoes"></textarea>
+        </div>
+      </div>
+    </nb-tab>
   </nb-tabset>
 </form>

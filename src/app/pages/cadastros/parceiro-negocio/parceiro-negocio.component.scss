@@ -1,3 +1,25 @@
+/*::ng-deep {
+  nb-layout-column {
+    height: 80vw;
+  }
+
+  button + button {
+    margin-left: 1rem;
+  }
+
+  .dialog-card {
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+  }
+
+  @media (min-width: 40rem) {
+    .dialog-card {
+      width: 38rem;
+    }
+  }
+}*/
+
 .list-card {
   nb-card-header {
     border-bottom: none;
@@ -10,6 +32,20 @@
 
 .icons-right {
   float: right;
+}
+
+.size-modal {
+  /* topo | horizontal | inferior */
+  margin: 1em auto 2em;
+  /* topo | direita | inferior | esquerda */
+  //margin: 2px 1em 0 auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: auto;
+  margin-top: 10px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow: auto;
 }
 
 .buttons-row {

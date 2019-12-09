@@ -3,6 +3,7 @@ import { ParceiroNegocioComponent } from '../parceiro-negocio.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationService } from '../../validation.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NbDateService } from '@nebular/theme';
 
 @Component({
   selector: 'dados-cadastro-parceiro-negocio',
@@ -21,36 +22,6 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
   mensagem_erro: string = '';
   modalConfirmacao: NgbModalRef;
 
-  /*estados = [
-    { sigla: "AC" },
-    { sigla: "AL" },
-    { sigla: "AP" },
-    { sigla: "AM" },
-    { sigla: "BA" },
-    { sigla: "CE" },
-    { sigla: "DF" },
-    { sigla: "ES" },
-    { sigla: "GO" },
-    { sigla: "MA" },
-    { sigla: "MS" },
-    { sigla: "MT" },
-    { sigla: "MG" },
-    { sigla: "PA" },
-    { sigla: "PB" },
-    { sigla: "PR" },
-    { sigla: "PE" },
-    { sigla: "PI" },
-    { sigla: "RJ" },
-    { sigla: "RN" },
-    { sigla: "RS" },
-    { sigla: "RO" },
-    { sigla: "RR" },
-    { sigla: "SC" },
-    { sigla: "SP" },
-    { sigla: "SE" },
-    { sigla: "TO" },
-  ];*/
-
   estados = [
     'AC', 'AL', 'AP', 'AM', 'BA',
     'CE', 'DF', 'ES', 'GO', 'MA',
@@ -58,39 +29,77 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
     'PR', 'PE', 'PI', 'RJ', 'RN',
     'RS', 'RO', 'RR', 'SC', 'SP',
     'SE', 'TO'];
+  max: Date;
 
   constructor(private options: ParceiroNegocioComponent,
     private modal: NgbModal,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    protected dateService: NbDateService<Date>) {
+    this.max = this.dateService.addDay(this.dateService.today(), 0);
+  }
 
   ngOnInit() {
     this.usuarioEditado = [];
     this.edicaoUsuario = this.options.edicaoUsuario;
     this.criacaoUsuario = this.options.criacaoUsuario;
     this.permissaoExclusao = this.options.permissaoDelete;
+
     if (this.options.usuarioEdicao.length !== 0) {
       this.usuarioEditado = this.options.usuarioEdicao;
     }
 
     this.formulario = this.formBuilder.group({
-      nome: [this.usuarioEditado.nome, [Validators.required, Validators.minLength(10)]],
-      cpf: [this.usuarioEditado.cpf, [Validators.required, ValidationService.validarCPF_CNPJ]],
-      codigo: [this.usuarioEditado.cpf],
-      data_cadastro: [this.usuarioEditado.data_emissao],
-      endereco: [this.usuarioEditado.endereco],
-      telefone1: [this.usuarioEditado.telefone],
-      telefone2: [this.usuarioEditado.telefone2],
-      uf: [this.usuarioEditado.uf],
+      anotacoes: [this.usuarioEditado.anotacoes],
+      ativo: [this.usuarioEditado.ativo],
+      bairro: [this.usuarioEditado.bairro],
+      cargo: [this.usuarioEditado.cargo],
       cep: [this.usuarioEditado.cep],
-      data_fundacao: [this.usuarioEditado.data_fundacao],
+      cidade: [this.usuarioEditado.cidade],
+      cnh: [this.usuarioEditado.cnh],
+      cnh_data_emissao: [this.usuarioEditado.cnh_data_emissao],
+      cnh_data_vencimento: [this.usuarioEditado.cnh_data_vencimento],
+      codigo_externo: [this.usuarioEditado.codigo_externo],
+      codigo_regime_tributario: [this.usuarioEditado.codigo_regime_tributario],
+      complmento: [this.usuarioEditado.complmento],
+      cpf_cnpj: [this.usuarioEditado.cpf_cnpj, [Validators.required, ValidationService.validarCPF_CNPJ]],
+      ctps: [this.usuarioEditado.ctps],
+      ctps_serie: [this.usuarioEditado.ctps_serie],
+      data_cadastro: [this.usuarioEditado.data_cadastro],
+      data_nascimento_fundacao: [this.usuarioEditado.data_nascimento_fundacao],
+      email: [this.usuarioEditado.email],
+      empregador: [this.usuarioEditado.empregador],
+      endereco: [this.usuarioEditado.endereco],
+      estado_civil: [this.usuarioEditado.estado_civil],
+      genero: [this.usuarioEditado.genero],
+      inscricao_estadual: [this.usuarioEditado.inscricao_estadual],
+      inscricao_municipal: [this.usuarioEditado.inscricao_municipal],
+      matricula: [this.usuarioEditado.matricula],
+      naturalidade: [this.usuarioEditado.naturalidade],
+      nome: [this.usuarioEditado.nome, [Validators.required, Validators.minLength(10)]],
+      nome_conjuge: [this.usuarioEditado.nome_conjuge],
       nome_mae: [this.usuarioEditado.nome_mae],
       nome_pai: [this.usuarioEditado.nome_pai],
       numero: [this.usuarioEditado.numero],
-      complemento: [this.usuarioEditado.complemento],
-      celular: [this.usuarioEditado.celular],
-      bairro: [this.usuarioEditado.bairro],
-      recado: [this.usuarioEditado.recado],
-      cidade: [this.usuarioEditado.cidade],
+      pessoal_contato: [this.usuarioEditado.pessoal_contato],
+      pk: [this.usuarioEditado.pk],
+      plano_contas_pagar: [this.usuarioEditado.plano_contas_pagar],
+      plano_contas_receber: [this.usuarioEditado.plano_contas_receber],
+      razao_social: [this.usuarioEditado.razao_social],
+      reservista: [this.usuarioEditado.reservista],
+      rg: [this.usuarioEditado.rg],
+      rg_data_emissao: [this.usuarioEditado.rg_data_emissao],
+      rg_orgao_emissor: [this.usuarioEditado.rg_orgao_emissor],
+      rg_uf_orgao_emissor: [this.usuarioEditado.rg_uf_orgao_emissor],
+      site: [this.usuarioEditado.site],
+      telefone: [this.usuarioEditado.telefone],
+      telefone2: [this.usuarioEditado.telefone2],
+      telefone_celular: [this.usuarioEditado.telefone_celular],
+      telefone_recado: [this.usuarioEditado.telefone_recado],
+      tipo_pessoa: [this.usuarioEditado.tipo_pessoa],
+      titulo_eleitor: [this.usuarioEditado.titulo_eleitor],
+      titulo_eleitor_sessao: [this.usuarioEditado.titulo_eleitor_sessao],
+      titulo_eleitor_zona: [this.usuarioEditado.titulo_eleitor_zona],
+      uf: [this.usuarioEditado.uf],
     });
   }
 
@@ -98,31 +107,33 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
     this.usuarioEditado = [];
   }
 
-  salvarDadosUsuario() {
-    if (this.formulario.value.nome === null || this.formulario.value.nome.trim() === '') {
+  salvarDados() {
+    if (this.formulario.value.nome === null ||
+      this.formulario.value.nome.trim() === '' ||
+      this.formulario.value.cpf_cnpj === null) {
       this.erro = true;
-      this.mensagem_erro = 'Informe o nome do usuário para continuar';
+      this.mensagem_erro = 'Informe os dados necessários para continuar';
     } else {
       this.erro = false;
       this.mensagem_erro = '';
-      this.options.insereUsuarios(this.formulario.value);
+      this.options.insereParceiroNegocios(this.formulario.value);
     }
   }
 
-  editarDadosUsuario() {
-    if (this.formulario.value.nome === null || this.formulario.value.nome.trim() === '') {
+  editarDados() {
+    if (this.formulario.value.nome === null || this.formulario.value.nome.trim() === '' ||
+      this.formulario.value.cpf_cnpj === null) {
       this.erro = true;
-      this.mensagem_erro = 'Informe o nome do usuário para continuar';
+      this.mensagem_erro = 'Informe os dados necessários para continuar';
       this.modalConfirmacao.close();
     } else {
       this.erro = false;
       this.mensagem_erro = '';
-      this.options.alteraUsuarios(this.formulario.value);
-      this.modalConfirmacao.close();
+      this.options.alteraParceiroNegocios(this.formulario.value);
     }
   }
 
-  excluirDadosUsuario() {
+  excluirDados() {
     if (this.formulario.value.nome === null || this.formulario.value.nome.trim() === '') {
       this.erro = true;
       this.mensagem_erro = 'Sem usuários para excluir';
@@ -130,7 +141,7 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
     } else {
       this.erro = false;
       this.mensagem_erro = '';
-      this.options.excluirUsuarios(this.formulario.value);
+      this.options.excluirParceiroNegocios(this.formulario.value);
       this.modalConfirmacao.close();
     }
   }

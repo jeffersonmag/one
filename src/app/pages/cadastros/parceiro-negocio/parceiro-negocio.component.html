@@ -19,13 +19,13 @@
       <nb-card-body>
         <div *ngIf="ativaBotaoPesquisa">
           <button nbButton shape="round" size="small" status="info" nbTooltip="Limpar Filtro da Pesquisa"
-            (click)="buscaUsuarios('')">
+            (click)="buscaParceiroNegocios('')">
             FILTRO: {{this.value}} &times;
           </button>
         </div><br>
         <div class="buttons-row">
           <button *ngIf="permissaoInsert" class="buttons-row" nbButton shape="round" size="small" status="primary"
-            (click)="cadastrarNovoUsuario(content)" nbTooltip="Cadastrar Usuário">
+            (click)="cadastrarNovoParceiroNegocios(contentWindow)" nbTooltip="Cadastrar Usuário">
             <i class="fa fa-plus color"></i>
             <div class="espacamento">Criar</div>
           </button>
@@ -34,14 +34,18 @@
             <i class="fa fa-plus color"></i>
             <div class="espacamento" nbTooltip="Não existe permissão de cadastro para seu usuário.">Criar</div>
           </button>
-          <ng-template #content let-c="close" let-d="dismiss">
-            <div class="modal-header">
-              <span>Cadastro de Parceiros de Negócio</span>
-              <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <dados-cadastro-parceiro-negocio></dados-cadastro-parceiro-negocio>
+          <ng-template #contentWindow let-data let-ref="dialogRef">
+            <nb-card class="size-modal">
+              <nb-card-header>
+                <span>Cadastro de Parceiros de Negócio</span>
+                <button type="button" class="close" aria-label="Close" (click)="ref.close()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </nb-card-header>
+              <nb-card-body>
+                <dados-cadastro-parceiro-negocio></dados-cadastro-parceiro-negocio>
+              </nb-card-body>
+            </nb-card>
           </ng-template>
         </div><br>
 
@@ -58,37 +62,45 @@
         <div *ngIf="dados.length != 0 && permissaoSelect">
           <div *ngIf="modoLista">
             <nb-list *ngIf="permissaoUpdate">
-              <nb-list-item *ngFor="let user of dados" (click)="editar(contentedit, user)"
+              <nb-list-item *ngFor="let user of dados" (click)="editarParceiroNegocios(contentedit, user)"
                 nbTooltip="Clique para editar o usuário.">
                 {{ user.nome }}<br>
-                <div class="font-size-list">CPF: {{ user.cpf }}</div>
+                <div class="font-size-list">CPF/CNPJ: {{ user.cpf_cnpj }}</div>
               </nb-list-item>
 
-              <ng-template #contentedit let-c="close" let-d="dismiss">
-                <div class="modal-header">
-                  <span>Editar Cadastro de Parceiros de Negócio</span>
-                  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <dados-cadastro-parceiro-negocio></dados-cadastro-parceiro-negocio>
+              <ng-template #contentedit let-data let-ref="dialogRef">
+                <nb-card class="size-modal">
+                  <nb-card-header>
+                    <span>Cadastro de Parceiros de Negócio</span>
+                    <button type="button" class="close" aria-label="Close" (click)="ref.close()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </nb-card-header>
+                  <nb-card-body>
+                    <dados-cadastro-parceiro-negocio></dados-cadastro-parceiro-negocio>
+                  </nb-card-body>
+                </nb-card>
               </ng-template>
             </nb-list>
 
             <nb-list *ngIf="!permissaoUpdate">
               <nb-list-item *ngFor="let user of dados" nbTooltip="Sem permissão para editar o Parceiro de Negócio.">
                 {{ user.nome }}<br>
-                <div class="font-size-list">CPF: {{ user.cpf }}</div>
+                <div class="font-size-list">CPF/CNPJ: {{ user.cpf_cnpj }}</div>
               </nb-list-item>
 
-              <ng-template #contentedit let-c="close" let-d="dismiss">
-                <div class="modal-header">
-                  <span>Editar Cadastro de Parceiros de Negócio</span>
-                  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <dados-cadastro-parceiro-negocio></dados-cadastro-parceiro-negocio>
+              <ng-template #contentedit let-data let-ref="dialogRef">
+                <nb-card class="size-modal">
+                  <nb-card-header>
+                    <span>Cadastro de Parceiros de Negócio</span>
+                    <button type="button" class="close" aria-label="Close" (click)="ref.close()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </nb-card-header>
+                  <nb-card-body>
+                    <dados-cadastro-parceiro-negocio></dados-cadastro-parceiro-negocio>
+                  </nb-card-body>
+                </nb-card>
               </ng-template>
             </nb-list>
           </div>
@@ -96,25 +108,29 @@
           <div class="row" *ngIf="modoGrade">
             <div class="col-xxxl-3 col-md-4" *ngFor="let user of dados">
               <div *ngIf="permissaoUpdate">
-                <status [title]="user.nome" [dados]="user.cpf" [type]="primary"
-                  (click)="editarUsuario(contentedit, user)" nbTooltip="Editar Parceiros de Negócio">
+                <status [title]="user.nome" [dados]="user.cpf_cnpj" [type]="primary"
+                  (click)="editarParceiroNegocios(contentedit, user)" nbTooltip="Editar Parceiros de Negócio">
                   <img class="container-image" src="assets/imgs/parceiro-icon.png">
                 </status>
               </div>
               <div *ngIf="!permissaoUpdate">
-                <status [title]="user.nome" [dados]="user.cpf" [type]="primary"
+                <status [title]="user.nome" [dados]="user.cpf_cnpj" [type]="primary"
                   nbTooltip="Sem permissão para editar Parceiros de Negócio.">
                   <img class="container-image" src="assets/imgs/parceiro-icon.png">
                 </status>
               </div>
-              <ng-template #contentedit let-c="close" let-d="dismiss">
-                <div class="modal-header">
-                  <span>Editar Cadastro de Parceiros de Negócio</span>
-                  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <dados-cadastro-parceiro-negocio></dados-cadastro-parceiro-negocio>
+              <ng-template #contentedit let-data let-ref="dialogRef">
+                <nb-card class="size-modal">
+                  <nb-card-header>
+                    <span>Editar Cadastro de Parceiros de Negócio</span>
+                    <button type="button" class="close" aria-label="Close" (click)="ref.close()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </nb-card-header>
+                  <nb-card-body>
+                    <dados-cadastro-parceiro-negocio></dados-cadastro-parceiro-negocio>
+                  </nb-card-body>
+                </nb-card>
               </ng-template>
             </div>
           </div>

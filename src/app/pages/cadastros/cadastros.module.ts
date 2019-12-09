@@ -19,6 +19,8 @@ import {
   NbInputModule,
   NbDatepickerModule,
   NbAlertModule,
+  NbWindowModule,
+  NbDialogModule,
 } from '@nebular/theme';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { ThemeModule } from '../../@theme/theme.module';
@@ -38,6 +40,7 @@ import { ControlMessagesComponent } from './control-messages.component';
 import { ParceiroNegocioComponent } from './parceiro-negocio/parceiro-negocio.component';
 import { BancosComponent } from './bancos/bancos.component';
 import { DadosCadastroBancosComponent } from './bancos/dados-cadastro-bancos/dados-cadastro-bancos.component';
+import { NbMomentDateModule } from '@nebular/moment';
 
 @NgModule({
   imports: [
@@ -69,9 +72,12 @@ import { DadosCadastroBancosComponent } from './bancos/dados-cadastro-bancos/dad
     NbDatepickerModule,
     FormsModule,
     ReactiveFormsModule,
+    NbMomentDateModule,
     NbSelectModule,
     NgSelectModule,
     NbAlertModule,
+    NbDialogModule.forChild(),
+    NbWindowModule.forChild(),
   ],
   declarations: [
     CadastrosComponent,

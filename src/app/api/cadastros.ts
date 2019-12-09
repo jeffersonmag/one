@@ -8,8 +8,9 @@ import { RequestService } from '../services/request.service';
 })
 export class CadastrosApiService {
 
-  pesquisa: string = "";
-  cpf: string = "";
+  pesquisa: string = '';
+  cpf: string = '';
+  pk: string = '';
 
   constructor(
     private requestService: RequestService,
@@ -86,19 +87,19 @@ export class CadastrosApiService {
     }
   }
 
-  postBancos(dados) { //Criar Parceiro negocio
+  postBancos(dados) { //Criar Bancos
     return this.requestService.post(`${environment.urlApi}/cadastro-bancos`,
       dados, true);
   }
 
-  putBancos(dados) { //Editar Parceiro negocio
+  putBancos(dados) { //Editar Bancos
     return this.requestService.put(`${environment.urlApi}/cadastro-bancos`,
       dados, true);
   }
 
-  delBancos(dados) { //Excluir Parceiro negocio
-    this.cpf = dados.cpf;
-    return this.requestService.delete(`${environment.urlApi}/cadastro-bancos?cpf_cnpj=${this.cpf}`,
+  delBancos(dados) { //Excluir Bancos
+    this.pk = dados.pk;
+    return this.requestService.delete(`${environment.urlApi}/cadastro-bancos?pk=${this.pk}`,
       dados, true);
   }
 }
