@@ -38,14 +38,54 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
     this.max = this.dateService.addDay(this.dateService.today(), 0);
   }
 
+  formataData(data) {
+    var dd = data.getDate();
+    var mm = data.getMonth() + 1;
+    var yyyy = data.getFullYear();
+
+    if (dd < 10) {
+      dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+      mm = '0' + mm;
+    }
+    //var dataFormadata = String(String(yyyy) + '-' + String(mm) + '-' + String(dd));
+    var dataFormatada = String(String(dd) + '/' + String(mm) + '/' + String(yyyy));
+    return dataFormatada;
+  }
+
   ngOnInit() {
     this.usuarioEditado = [];
     this.edicaoUsuario = this.options.edicaoUsuario;
     this.criacaoUsuario = this.options.criacaoUsuario;
     this.permissaoExclusao = this.options.permissaoDelete;
 
+    var cnh_data_emissao = '';
+    var cnh_data_vencimento = '';
+    var data_nascimento_fundacao = '';
+    var data_cadastro = '';
+    var rg_data_emissao = '';
+
+
     if (this.options.usuarioEdicao.length !== 0) {
       this.usuarioEditado = this.options.usuarioEdicao;
+
+      if (this.usuarioEditado.cnh_data_emissao !== null) {
+        cnh_data_emissao = this.usuarioEditado.cnh_data_emissao.substr(0, 10);
+      }
+      if (this.usuarioEditado.cnh_data_vencimento !== null) {
+        cnh_data_vencimento = this.usuarioEditado.cnh_data_vencimento.substr(0, 10);
+      }
+      if (this.usuarioEditado.data_nascimento_fundacao !== null) {
+        data_nascimento_fundacao = this.usuarioEditado.data_nascimento_fundacao.substr(0, 10);
+      }
+      if (this.usuarioEditado.data_cadastro !== null) {
+        data_cadastro = this.usuarioEditado.data_cadastro.substr(0, 10);
+      }
+      if (this.usuarioEditado.rg_data_emissao !== null) {
+        rg_data_emissao = this.usuarioEditado.rg_data_emissao.substr(0, 10);
+      }
     }
 
     this.formulario = this.formBuilder.group({
@@ -56,17 +96,17 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
       cep: [this.usuarioEditado.cep],
       cidade: [this.usuarioEditado.cidade],
       cnh: [this.usuarioEditado.cnh],
-      cnh_data_emissao: [this.usuarioEditado.cnh_data_emissao],
-      cnh_data_vencimento: [this.usuarioEditado.cnh_data_vencimento],
+      cnh_data_emissao: [cnh_data_emissao],
+      cnh_data_vencimento: [cnh_data_vencimento],
       codigo_externo: [this.usuarioEditado.codigo_externo],
       codigo_regime_tributario: [this.usuarioEditado.codigo_regime_tributario],
       complmento: [this.usuarioEditado.complmento],
       cpf_cnpj: [this.usuarioEditado.cpf_cnpj, [Validators.required, ValidationService.validarCPF_CNPJ]],
       ctps: [this.usuarioEditado.ctps],
       ctps_serie: [this.usuarioEditado.ctps_serie],
-      data_cadastro: [this.usuarioEditado.data_cadastro],
-      data_nascimento_fundacao: [this.usuarioEditado.data_nascimento_fundacao],
-      email: [this.usuarioEditado.email],
+      data_cadastro: [data_cadastro],
+      data_nascimento_fundacao: [data_nascimento_fundacao],
+      email: [this.usuarioEditado.email, [ValidationService.emailValidator]],
       empregador: [this.usuarioEditado.empregador],
       endereco: [this.usuarioEditado.endereco],
       estado_civil: [this.usuarioEditado.estado_civil],
@@ -75,7 +115,7 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
       inscricao_municipal: [this.usuarioEditado.inscricao_municipal],
       matricula: [this.usuarioEditado.matricula],
       naturalidade: [this.usuarioEditado.naturalidade],
-      nome: [this.usuarioEditado.nome, [Validators.required, Validators.minLength(10)]],
+      nome: [this.usuarioEditado.nome, [Validators.required, Validators.minLength(5)]],
       nome_conjuge: [this.usuarioEditado.nome_conjuge],
       nome_mae: [this.usuarioEditado.nome_mae],
       nome_pai: [this.usuarioEditado.nome_pai],
@@ -87,7 +127,7 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
       razao_social: [this.usuarioEditado.razao_social],
       reservista: [this.usuarioEditado.reservista],
       rg: [this.usuarioEditado.rg],
-      rg_data_emissao: [this.usuarioEditado.rg_data_emissao],
+      rg_data_emissao: [rg_data_emissao],
       rg_orgao_emissor: [this.usuarioEditado.rg_orgao_emissor],
       rg_uf_orgao_emissor: [this.usuarioEditado.rg_uf_orgao_emissor],
       site: [this.usuarioEditado.site],
@@ -101,6 +141,8 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
       titulo_eleitor_zona: [this.usuarioEditado.titulo_eleitor_zona],
       uf: [this.usuarioEditado.uf],
     });
+
+    var forms = this.formulario;
   }
 
   ngOnDestroy() {
@@ -130,6 +172,7 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
       this.erro = false;
       this.mensagem_erro = '';
       this.options.alteraParceiroNegocios(this.formulario.value);
+      this.modalConfirmacao.close();
     }
   }
 

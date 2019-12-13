@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   NbGlobalPosition, NbGlobalPhysicalPosition,
-  NbComponentStatus, NbSearchService, NbToastrService,
+  NbComponentStatus, NbSearchService, NbToastrService, NbDialogService, NbDialogRef,
 } from '@nebular/theme';
 import { CadastrosApiService } from '../../../api/cadastros';
 
 @Component({
   selector: 'ngx-bancos',
   templateUrl: './bancos.component.html',
-  styleUrls: ['./bancos.component.scss']
+  styleUrls: ['./bancos.component.scss'],
 })
 export class BancosComponent implements OnInit {
 
@@ -37,6 +37,8 @@ export class BancosComponent implements OnInit {
   edicaoUsuario: boolean = false;
   ativaBotaoPesquisa: boolean = false;
 
+  dialogReference: NbDialogRef<any>;
+
   modoGrade: boolean = true; // Modo Grade = 0
   modoLista: boolean = false; // Modo Lista = 1
 
@@ -45,6 +47,7 @@ export class BancosComponent implements OnInit {
 
   constructor(private campanhasApiService: CadastrosApiService,
     private searchService: NbSearchService,
+    private dialogService: NbDialogService,
     private modalService: NgbModal,
     private toastrService: NbToastrService) {
 
@@ -148,18 +151,24 @@ export class BancosComponent implements OnInit {
     this.usuarioEdicao = [];
     this.criacaoUsuario = true;
     this.edicaoUsuario = false;
-    this.modalReference = this.modalService.open(modal, { size: 'xl', backdrop: 'static' });
+    this.dialogReference = this.dialogService.open(modal,
+      {
+        hasBackdrop: false,
+      });
   }
 
   editarUsuario(modal, usuario) {
     this.usuarioEdicao = usuario;
     this.edicaoUsuario = true;
     this.criacaoUsuario = false;
-    this.modalReference = this.modalService.open(modal, { size: 'xl', backdrop: 'static' });
+    this.dialogReference = this.dialogService.open(modal,
+      {
+        hasBackdrop: false,
+      });
   }
 
   JoinAndClose() {
-    this.modalReference.close();
+    this.dialogReference.close();
     this.usuarioEdicao = [];
   }
 

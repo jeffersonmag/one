@@ -80,6 +80,22 @@ export class ParceiroNegocioComponent implements OnInit {
     }
   }
 
+  formataDataPadraoBr(data) {
+    var dd = data.getDate();
+    var mm = data.getMonth() + 1;
+    var yyyy = data.getFullYear();
+
+    if (dd < 10) {
+      dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+      mm = '0' + mm;
+    }
+    var dataFormatada = String(String(dd) + '/' + String(mm) + '/' + String(yyyy));
+    return dataFormatada;
+  }
+
   buscaParceiroNegocios(valor?: string) {
     if (valor === '') {
       this.value = '';
@@ -91,7 +107,88 @@ export class ParceiroNegocioComponent implements OnInit {
       },
     )
       .then((s) => {
+        this.dados = [];
         this.dados = s;
+        var cnh_data_emissao = '';
+        var cnh_data_vencimento = '';
+        var data_nascimento_fundacao = '';
+        var data_cadastro = '';
+        var rg_data_emissao = '';
+        var dadosParceiroNegocios = [];
+
+        for (let i of s) {
+          if (i.cnh_data_emissao !== null) {
+            cnh_data_emissao = i.cnh_data_emissao.substr(0, 10);
+          }
+          if (i.cnh_data_vencimento !== null) {
+            cnh_data_vencimento = i.cnh_data_vencimento.substr(0, 10);
+          }
+          if (i.data_nascimento_fundacao !== null) {
+            data_nascimento_fundacao = i.data_nascimento_fundacao.substr(0, 10);
+          }
+          if (i.data_cadastro !== null) {
+            data_cadastro = i.data_cadastro.substr(0, 10);
+            data_cadastro = this.formataDataPadraoBr(data_cadastro);
+          }
+          if (i.rg_data_emissao !== null) {
+            rg_data_emissao = i.rg_data_emissao.substr(0, 10);
+          }
+          dadosParceiroNegocios.push(
+            {
+              anotacoes: i.anotacoes,
+              ativo: i.ativo,
+              bairro: i.bairro,
+              cargo: i.cargo,
+              cep: i.cep,
+              cidade: i.cidade,
+              cnh: i.cnh,
+              cnh_data_emissao: this.formataDataPadraoBr(cnh_data_emissao),
+              cnh_data_vencimento: this.formataDataPadraoBr(cnh_data_vencimento),
+              codigo_externo: i.codigo_externo,
+              codigo_regime_tributario: i.codigo_regime_tributario,
+              complmento: i.complmento,
+              cpf_cnpj: i.cpf_cnpj,
+              ctps: i.ctps,
+              ctps_serie: i.ctps_serie,
+              data_nascimento_fundacao: this.formataDataPadraoBr(data_nascimento_fundacao),
+              data_cadastro: i.data_cadastro,
+              email: i.email,
+              empregador: i.empregador,
+              endereco: i.endereco,
+              estado_civil: i.estado_civil,
+              genero: i.genero,
+              inscricao_estadual: i.inscricao_estadual,
+              inscricao_municipal: i.inscricao_municipal,
+              matricula: i.matricula,
+              naturalidade: i.naturalidade,
+              nome: i.nome,
+              nome_conjuge: i.nome_conjuge,
+              nome_mae: i.nome_mae,
+              nome_pai: i.nome_pai,
+              numero: i.numero,
+              pessoal_contato: i.pessoal_contato,
+              plano_contas_pagar: i.plano_contas_pagar,
+              plano_contas_receber: i.plano_contas_receber,
+              pk: i.pk,
+              razao_social: i.razao_social,
+              reservista: i.reservista,
+              rg: i.rg,
+              rg_data_emissao: this.formataDataPadraoBr(rg_data_emissao),
+              rg_orgao_emissor: i.rg_orgao_emissor,
+              rg_uf_orgao_emissor: i.rg_uf_orgao_emissor,
+              site: i.site,
+              telefone: i.telefone,
+              telefone2: i.telefone2,
+              telefone_celular: i.telefone_celular,
+              telefone_recado: i.telefone_recado,
+              tipo_pessoa: i.tipo_pessoa,
+              titulo_eleitor: i.titulo_eleitor,
+              titulo_eleitor_sessao: i.titulo_eleitor_sessao,
+              titulo_eleitor_zona: i.titulo_eleitor_zona,
+              uf: i.uf,
+            });
+        }
+        this.dados = dadosParceiroNegocios;
       })
       .catch((e) => {
         console.log(e);
@@ -99,7 +196,35 @@ export class ParceiroNegocioComponent implements OnInit {
       });
   }
 
+  formataData(data) {
+    var dd = data.getDate();
+    var mm = data.getMonth() + 1;
+    var yyyy = data.getFullYear();
+
+    if (dd < 10) {
+      dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+      mm = '0' + mm;
+    }
+    var dataFormatada = String(String(yyyy) + '-' + String(mm) + '-' + String(dd));
+    return dataFormatada;
+  }
+
   insereParceiroNegocios(valor?) {
+    if (valor.cnh_data_emissao !== null && valor.cnh_data_emissao !== "") {
+      var cnh_data_emissao = this.formataData(valor.cnh_data_emissao);
+    }
+    if (valor.cnh_data_vencimento !== null && valor.cnh_data_vencimento !== "") {
+      var cnh_data_vencimento = this.formataData(valor.cnh_data_vencimento);
+    }
+    if (valor.data_nascimento_fundacao !== null && valor.data_nascimento_fundacao !== "") {
+      var data_nascimento_fundacao = this.formataData(valor.data_nascimento_fundacao);
+    }
+    if (valor.rg_data_emissao !== null && valor.rg_data_emissao !== "") {
+      var rg_data_emissao = this.formataData(valor.rg_data_emissao);
+    }
     this.campanhasApiService.postParceiroNegocios(
       {
         'anotacoes': valor.anotacoes,
@@ -109,16 +234,15 @@ export class ParceiroNegocioComponent implements OnInit {
         'cep': valor.cep,
         'cidade': valor.cidade,
         'cnh': valor.cnh,
-        'cnh_data_emissao': valor.cnh_data_emissao,
-        'cnh_data_vencimento': valor.cnh_data_vencimento,
+        'cnh_data_emissao': cnh_data_emissao,
+        'cnh_data_vencimento': cnh_data_vencimento,
         'codigo_externo': valor.codigo_externo,
         'codigo_regime_tributario': valor.codigo_regime_tributario,
         'complmento': valor.complmento,
         'cpf_cnpj': valor.cpf_cnpj,
         'ctps': valor.ctps,
         'ctps_serie': valor.ctps_serie,
-        'data_cadastro': valor.data_cadastro,
-        'data_nascimento_fundacao': valor.data_nascimento_fundacao,
+        'data_nascimento_fundacao': data_nascimento_fundacao,
         'email': valor.email,
         'empregador': valor.empregador,
         'endereco': valor.endereco,
@@ -134,13 +258,12 @@ export class ParceiroNegocioComponent implements OnInit {
         'nome_pai': valor.nome_pai,
         'numero': valor.numero,
         'pessoal_contato': valor.pessoal_contato,
-        'pk': valor.pk,
         'plano_contas_pagar': valor.plano_contas_pagar,
         'plano_contas_receber': valor.plano_contas_receber,
         'razao_social': valor.razao_social,
         'reservista': valor.reservista,
         'rg': valor.rg,
-        'rg_data_emissao': valor.rg_data_emissao,
+        'rg_data_emissao': rg_data_emissao,
         'rg_orgao_emissor': valor.rg_orgao_emissor,
         'rg_uf_orgao_emissor': valor.rg_uf_orgao_emissor,
         'site': valor.site,
@@ -162,15 +285,73 @@ export class ParceiroNegocioComponent implements OnInit {
       })
       .catch((e) => {
         this.makeToast('danger', 'Ocorreu um erro!', e.error.message);
-        this.JoinAndClose();
       });
   }
 
   alteraParceiroNegocios(valor?) {
+    if (valor.cnh_data_emissao !== null && valor.cnh_data_emissao !== "") {
+      var cnh_data_emissao = this.formataData(new Date(valor.cnh_data_emissao));
+    }
+    if (valor.cnh_data_vencimento !== null && valor.cnh_data_vencimento !== "") {
+      var cnh_data_vencimento = this.formataData(new Date(valor.cnh_data_vencimento));
+    }
+    if (valor.data_nascimento_fundacao !== null && valor.data_nascimento_fundacao !== "") {
+      var data_nascimento_fundacao = this.formataData(new Date(valor.data_nascimento_fundacao));
+    }
+    if (valor.rg_data_emissao !== null && valor.rg_data_emissao !== "") {
+      var rg_data_emissao = this.formataData(new Date(valor.rg_data_emissao));
+    }
     this.campanhasApiService.putParceiroNegocios(
       {
-        'cpf': valor.cpf,
+        'anotacoes': valor.anotacoes,
+        'ativo': valor.ativo,
+        'bairro': valor.bairro,
+        'cargo': valor.cargo,
+        'cep': valor.cep,
+        'cidade': valor.cidade,
+        'cnh': valor.cnh,
+        'cnh_data_emissao': cnh_data_emissao,
+        'cnh_data_vencimento': cnh_data_vencimento,
+        'codigo_externo': valor.codigo_externo,
+        'codigo_regime_tributario': valor.codigo_regime_tributario,
+        'complmento': valor.complmento,
+        'cpf_cnpj': valor.cpf_cnpj,
+        'ctps': valor.ctps,
+        'ctps_serie': valor.ctps_serie,
+        'data_nascimento_fundacao': data_nascimento_fundacao,
+        'email': valor.email,
+        'empregador': valor.empregador,
+        'endereco': valor.endereco,
+        'estado_civil': valor.estado_civil,
+        'genero': valor.genero,
+        'inscricao_estadual': valor.inscricao_estadual,
+        'inscricao_municipal': valor.inscricao_municipal,
+        'matricula': valor.matricula,
+        'naturalidade': valor.naturalidade,
         'nome': valor.nome,
+        'nome_conjuge': valor.nome_conjuge,
+        'nome_mae': valor.nome_mae,
+        'nome_pai': valor.nome_pai,
+        'numero': valor.numero,
+        'pessoal_contato': valor.pessoal_contato,
+        'plano_contas_pagar': valor.plano_contas_pagar,
+        'plano_contas_receber': valor.plano_contas_receber,
+        'razao_social': valor.razao_social,
+        'reservista': valor.reservista,
+        'rg': valor.rg,
+        'rg_data_emissao': rg_data_emissao,
+        'rg_orgao_emissor': valor.rg_orgao_emissor,
+        'rg_uf_orgao_emissor': valor.rg_uf_orgao_emissor,
+        'site': valor.site,
+        'telefone': valor.telefone,
+        'telefone2': valor.telefone2,
+        'telefone_celular': valor.telefone_celular,
+        'telefone_recado': valor.telefone_recado,
+        'tipo_pessoa': valor.tipo_pessoa,
+        'titulo_eleitor': valor.titulo_eleitor,
+        'titulo_eleitor_sessao': valor.titulo_eleitor_sessao,
+        'titulo_eleitor_zona': valor.titulo_eleitor_zona,
+        'uf': valor.uf,
       },
     )
       .then((s) => {
@@ -179,7 +360,6 @@ export class ParceiroNegocioComponent implements OnInit {
         this.buscaParceiroNegocios(this.value);
       })
       .catch((e) => {
-        this.JoinAndClose();
         this.makeToast('danger', 'Erro!', e.error.message);
       });
   }
@@ -187,7 +367,7 @@ export class ParceiroNegocioComponent implements OnInit {
   excluirParceiroNegocios(valor?) {
     this.campanhasApiService.delParceiroNegocios(
       {
-        'cpf': valor.cpf,
+        'cpf_cnpj': valor.cpf_cnpj,
       },
     )
       .then((s) => {
@@ -196,7 +376,6 @@ export class ParceiroNegocioComponent implements OnInit {
         this.buscaParceiroNegocios(this.value);
       })
       .catch((e) => {
-        this.JoinAndClose();
         this.makeToast('danger', 'Erro!', e.error.message);
       });
   }
@@ -222,7 +401,7 @@ export class ParceiroNegocioComponent implements OnInit {
   }
 
   JoinAndClose() {
-    this.windowReference.close();
+    this.dialogReference.close();
     this.usuarioEdicao = [];
   }
 

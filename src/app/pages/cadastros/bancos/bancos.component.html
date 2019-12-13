@@ -34,14 +34,25 @@
             <i class="fa fa-plus color"></i>
             <div class="espacamento" nbTooltip="Não existe permissão de cadastro para seu usuário.">Criar</div>
           </button>
-          <ng-template #content let-c="close" let-d="dismiss">
-            <div class="modal-header">
+          <ng-template #content let-data let-ref="dialogRef">
+            <!--<div class="modal-header">
               <span>Cadastro de Bancos</span>
               <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <dados-cadastro-bancos></dados-cadastro-bancos>
+            <dados-cadastro-bancos></dados-cadastro-bancos>-->
+            <nb-card class="size-modal">
+              <nb-card-header>
+                <span>Cadastro de Parceiros de Negócio</span>
+                <button type="button" class="close" aria-label="Close" (click)="ref.close()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </nb-card-header>
+              <nb-card-body>
+                <dados-cadastro-bancos></dados-cadastro-bancos>
+              </nb-card-body>
+            </nb-card>
           </ng-template>
         </div><br>
 

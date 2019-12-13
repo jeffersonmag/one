@@ -7,7 +7,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'dados-cadastro-bancos',
   templateUrl: './dados-cadastro-bancos.component.html',
-  styleUrls: ['./dados-cadastro-bancos.scss']
+  styleUrls: ['./dados-cadastro-bancos.scss'],
 })
 export class DadosCadastroBancosComponent implements OnInit, OnDestroy {
 

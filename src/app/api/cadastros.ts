@@ -69,7 +69,7 @@ export class CadastrosApiService {
   }
 
   delParceiroNegocios(dados) { //Excluir Parceiro negocio
-    this.cpf = dados.cpf;
+    this.cpf = dados.cpf_cnpj;
     return this.requestService.delete(`${environment.urlApi}/cadastro-pn?cpf_cnpj=${this.cpf}`,
       dados, true);
   }

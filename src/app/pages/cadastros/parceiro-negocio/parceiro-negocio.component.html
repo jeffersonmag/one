@@ -24,12 +24,12 @@
           </button>
         </div><br>
         <div class="buttons-row">
-          <button *ngIf="permissaoInsert" class="buttons-row" nbButton shape="round" size="small" status="primary"
+          <button nbButton *ngIf="permissaoInsert" class="buttons-row" shape="round" size="small" status="primary"
             (click)="cadastrarNovoParceiroNegocios(contentWindow)" nbTooltip="Cadastrar Usuário">
             <i class="fa fa-plus color"></i>
             <div class="espacamento">Criar</div>
           </button>
-          <button *ngIf="!permissaoInsert" disabled class="buttons-row" nbButton shape="round" size="small"
+          <button nbButton *ngIf="!permissaoInsert" disabled class="buttons-row" shape="round" size="small"
             status="primary">
             <i class="fa fa-plus color"></i>
             <div class="espacamento" nbTooltip="Não existe permissão de cadastro para seu usuário.">Criar</div>
