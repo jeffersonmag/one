@@ -409,7 +409,7 @@ export class EsteiraProducaoComponent implements OnInit, OnDestroy {
 
   filtroFindPropostasInconsistentesSearch(proposta) {
     if (proposta != 0) {
-      let pendenciaFiltrados = this.propostasInconsistencias.filter(valorContratos => valorContratos.proposta == proposta);
+      let pendenciaFiltrados = this.propostasInconsistencias.filter(valorContratos => valorContratos.proposta == proposta || valorContratos.cpf_cliente == proposta);
       if (pendenciaFiltrados.length == 0) {
         this.makeToast('warning', 'Filtro Vazio', 'Sem propostas para serem exibidas');
         this.habilitaLimparFiltro = false;

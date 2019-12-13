@@ -108,13 +108,13 @@
           <div class="row" *ngIf="modoGrade">
             <div class="col-xxxl-3 col-md-4" *ngFor="let user of dados">
               <div *ngIf="permissaoUpdate">
-                <status [title]="user.nome" [dados]="user.cpf_cnpj" [type]="primary"
+                <status [title]="user.nome" dados="CPF/CNPJ: {{user.cpf_cnpj}}" [type]="primary"
                   (click)="editarParceiroNegocios(contentedit, user)" nbTooltip="Editar Parceiros de Negócio">
                   <img class="container-image" src="assets/imgs/parceiro-icon.png">
                 </status>
               </div>
               <div *ngIf="!permissaoUpdate">
-                <status [title]="user.nome" [dados]="user.cpf_cnpj" [type]="primary"
+                <status [title]="user.nome" dados="CPF/CNPJ: {{user.cpf_cnpj}}" [type]="primary"
                   nbTooltip="Sem permissão para editar Parceiros de Negócio.">
                   <img class="container-image" src="assets/imgs/parceiro-icon.png">
                 </status>

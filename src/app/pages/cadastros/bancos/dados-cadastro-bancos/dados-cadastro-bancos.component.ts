@@ -11,7 +11,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 })
 export class DadosCadastroBancosComponent implements OnInit, OnDestroy {
 
-  usuarioEditado: any;
+  dadosEditado: any;
   edicaoUsuario: boolean;
   criacaoUsuario: boolean;
   permissaoExclusao: boolean;
@@ -64,73 +64,58 @@ export class DadosCadastroBancosComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.usuarioEditado = [];
+    this.dadosEditado = [];
     this.edicaoUsuario = this.options.edicaoUsuario;
     this.criacaoUsuario = this.options.criacaoUsuario;
     this.permissaoExclusao = this.options.permissaoDelete;
     if (this.options.usuarioEdicao.length !== 0) {
-      this.usuarioEditado = this.options.usuarioEdicao;
+      this.dadosEditado = this.options.usuarioEdicao;
     }
 
     this.formulario = this.formBuilder.group({
-      nome: [this.usuarioEditado.nome, [Validators.required, Validators.minLength(10)]],
-      cpf: [this.usuarioEditado.cpf, [Validators.required, ValidationService.validarCPF_CNPJ]],
-      codigo: [this.usuarioEditado.cpf],
-      data_cadastro: [this.usuarioEditado.data_emissao],
-      endereco: [this.usuarioEditado.endereco],
-      telefone1: [this.usuarioEditado.telefone],
-      telefone2: [this.usuarioEditado.telefone2],
-      uf: [this.usuarioEditado.uf],
-      cep: [this.usuarioEditado.cep],
-      data_fundacao: [this.usuarioEditado.data_fundacao],
-      nome_mae: [this.usuarioEditado.nome_mae],
-      nome_pai: [this.usuarioEditado.nome_pai],
-      numero: [this.usuarioEditado.numero],
-      complemento: [this.usuarioEditado.complemento],
-      celular: [this.usuarioEditado.celular],
-      bairro: [this.usuarioEditado.bairro],
-      recado: [this.usuarioEditado.recado],
-      cidade: [this.usuarioEditado.cidade],
+      nome: [this.dadosEditado.nome, [Validators.required, Validators.minLength(5)]],
+      pk: [this.dadosEditado.pk],
+      codigo: [this.dadosEditado.codigo, [Validators.required]],
     });
   }
 
   ngOnDestroy() {
-    this.usuarioEditado = [];
+    this.dadosEditado = [];
   }
 
-  salvarDadosUsuario() {
+  salvarDados() {
     if (this.formulario.value.nome === null || this.formulario.value.nome.trim() === '') {
       this.erro = true;
-      this.mensagem_erro = 'Informe o nome do usuário para continuar';
+      this.mensagem_erro = 'Informe os dados necessários para continuar';
     } else {
       this.erro = false;
       this.mensagem_erro = '';
-      this.options.insereUsuarios(this.formulario.value);
+      this.options.insereBancos(this.formulario.value);
     }
   }
 
-  editarDadosUsuario() {
+  editarDados() {
     if (this.formulario.value.nome === null || this.formulario.value.nome.trim() === '') {
       this.erro = true;
-      this.mensagem_erro = 'Informe o nome do usuário para continuar';
+      this.mensagem_erro = 'Informe os dados necessários para continuar';
       this.modalConfirmacao.close();
     } else {
       this.erro = false;
       this.mensagem_erro = '';
-      this.options.alteraUsuarios(this.formulario.value);
+      this.options.alteraBancos(this.formulario.value);
       this.modalConfirmacao.close();
     }
   }
 
-  excluirDadosUsuario() {
-    if (this.formulario.value.nome === null || this.formulario.value.nome.trim() === '') {
+  excluirDados() {
+    if (this.formulario.value.pk === null || this.formulario.value.pk === '') {
       this.erro = true;
-      this.mensagem_erro = 'Sem usuários para excluir';
+      this.mensagem_erro = 'Sem dados inseridos para excluir';
       this.modalConfirmacao.close();
     } else {
       this.erro = false;
       this.mensagem_erro = '';
-      this.options.excluirUsuarios(this.formulario.value);
+      this.options.excluirBancos(this.formulario.value);
       this.modalConfirmacao.close();
     }
   }
@@ -144,7 +129,7 @@ export class DadosCadastroBancosComponent implements OnInit, OnDestroy {
   }
 
   Close() {
-    this.usuarioEditado = [];
+    this.dadosEditado = [];
     this.options.JoinAndClose();
   }
 }

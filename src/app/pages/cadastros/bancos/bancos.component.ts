@@ -55,10 +55,10 @@ export class BancosComponent implements OnInit {
       .subscribe((data: any) => {
         this.value = data.term;
         this.ativaBotaoPesquisa = true;
-        this.buscaUsuarios(this.value);
+        this.buscaBancos(this.value);
       });
 
-    this.buscaUsuarios('');
+    this.buscaBancos('');
   }
 
   ngOnInit() {
@@ -75,7 +75,7 @@ export class BancosComponent implements OnInit {
     }
   }
 
-  buscaUsuarios(valor?: string) {
+  buscaBancos(valor?: string) {
     if (valor == '') {
       this.value = '';
       this.ativaBotaoPesquisa = false;
@@ -94,17 +94,17 @@ export class BancosComponent implements OnInit {
       });
   }
 
-  insereUsuarios(valor?) {
+  insereBancos(valor?) {
     this.campanhasApiService.postBancos(
       {
-        "cpf": valor.cpf,
+        "codigo": valor.codigo,
         "nome": valor.nome,
       },
     )
       .then((s) => {
         this.JoinAndClose();
         this.makeToast('success', 'Sucesso!', 'Banco inserido com sucesso!');
-        this.buscaUsuarios(this.value);
+        this.buscaBancos(this.value);
       })
       .catch((e) => {
         this.JoinAndClose();
@@ -112,17 +112,18 @@ export class BancosComponent implements OnInit {
       });
   }
 
-  alteraUsuarios(valor?) {
+  alteraBancos(valor?) {
     this.campanhasApiService.putBancos(
       {
-        "cpf": valor.cpf,
+        "codigo": valor.codigo,
         "nome": valor.nome,
+        "pk": valor.pk,
       },
     )
       .then((s) => {
         this.JoinAndClose();
         this.makeToast('success', 'Sucesso!', 'Dados do banco alterado com sucesso!');
-        this.buscaUsuarios(this.value);
+        this.buscaBancos(this.value);
       })
       .catch((e) => {
         this.JoinAndClose();
@@ -130,16 +131,16 @@ export class BancosComponent implements OnInit {
       });
   }
 
-  excluirUsuarios(valor?) {
+  excluirBancos(valor?) {
     this.campanhasApiService.delBancos(
       {
-        "cpf": valor.cpf,
+        "pk": valor.pk,
       },
     )
       .then((s) => {
         this.JoinAndClose();
-        this.makeToast('success', 'Sucesso!', 'Dados do banco excluídos com sucesso!');
-        this.buscaUsuarios(this.value);
+        this.makeToast('success', 'Sucesso!', 'Banco excluído com sucesso!');
+        this.buscaBancos(this.value);
       })
       .catch((e) => {
         this.JoinAndClose();
@@ -147,7 +148,7 @@ export class BancosComponent implements OnInit {
       });
   }
 
-  cadastrarNovoUsuario(modal) {
+  cadastrarNovoBanco(modal) {
     this.usuarioEdicao = [];
     this.criacaoUsuario = true;
     this.edicaoUsuario = false;
@@ -157,7 +158,7 @@ export class BancosComponent implements OnInit {
       });
   }
 
-  editarUsuario(modal, usuario) {
+  editarBanco(modal, usuario) {
     this.usuarioEdicao = usuario;
     this.edicaoUsuario = true;
     this.criacaoUsuario = false;
