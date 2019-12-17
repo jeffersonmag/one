@@ -16,7 +16,7 @@
   <!--Confirmar edicao dos dados-->
   <ng-template #contentedicao let-c="close" let-d="dismiss">
     <div class="modal-header">
-      <span>Confirmar edição de usuário?</span>
+      <span>Confirmar edição dos dados?</span>
     </div>
     <div class="modal-body">
       <div class="buttons-row">
@@ -75,29 +75,7 @@
         <label for="inputCodigo" class="label col-sm-3 col-form-label">Código</label>
         <div class="col-sm-9">
           <input type="text" nbInput readonly shape="rectangle" fieldSize="tiny" id="inputCodigo" formControlName="pk"
-            placeholder="Código" tabindex="1">
-        </div>
-      </div>
-    </div>
-
-    <div class="col-sm-6">
-      <div class="form-group row">
-        <label for="inputRazaoSocial" class="label col-sm-3 col-form-label">Razão Social</label>
-        <div class="col-sm-9">
-          <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
-            fieldSize="tiny" id="inputRazaoSocial" formControlName="razao_social" placeholder="Razão Social"
-            tabindex="3">
-        </div>
-      </div>
-    </div>
-
-    <div class="col-sm-6">
-      <div class="form-group row">
-        <label for="inputNome" class="label col-sm-3 col-form-label">Nome Fantasia</label>
-        <div class="col-sm-9">
-          <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
-            fieldSize="tiny" id="inputNome" formControlName="nome" placeholder="Nome Fantasia" tabindex="2">
-          <control-messages [control]="formulario.get('nome')"></control-messages>
+            tabindex="1">
         </div>
       </div>
     </div>
@@ -107,7 +85,7 @@
         <label for="inputCpf" class="label col-sm-3 col-form-label">CPF/CNPJ</label>
         <div class="col-sm-9">
           <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
-            fieldSize="tiny" id="inputCpf" formControlName="cpf_cnpj" placeholder="CPF/CNPJ" tabindex="4">
+            fieldSize="tiny" id="inputCpf" formControlName="cpf_cnpj" mask="000.000.000-99" tabindex="4">
           <control-messages [control]="formulario.get('cpf_cnpj')"></control-messages>
         </div>
       </div>
@@ -115,12 +93,11 @@
 
     <div class="col-sm-6">
       <div class="form-group row">
-        <label for="inputgenero" class="label col-sm-3 col-form-label">Gênero</label>
+        <label for="inputNome" class="label col-sm-3 col-form-label">Nome Fantasia</label>
         <div class="col-sm-9">
-          <nb-select fullWidth size="tiny" placeholder="Gênero" id="inputgenero" formControlName="genero" tabindex="6">
-            <nb-option value="F">F</nb-option>
-            <nb-option value="M">M</nb-option>
-          </nb-select>
+          <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+            fieldSize="tiny" id="inputNome" formControlName="nome" tabindex="2">
+          <control-messages [control]="formulario.get('nome')"></control-messages>
         </div>
       </div>
     </div>
@@ -129,243 +106,261 @@
       <div class="form-group row">
         <label for="inputtipo_pessoa" class="label col-lg-3 col-form-label">Tipo de Pessoa</label>
         <div class="col-sm-9">
-          <nb-select fullWidth size="tiny" placeholder="Tipo de Pessoa" id="inputtipo_pessoa"
-            formControlName="tipo_pessoa" tabindex="7">
+          <nb-select fullWidth size="tiny" id="inputtipo_pessoa" formControlName="tipo_pessoa" tabindex="7">
             <nb-option value="F">Física</nb-option>
             <nb-option value="J">Jurídica</nb-option>
           </nb-select>
         </div>
       </div>
     </div>
-  </div>
-  <nb-tabset fullWidth>
-    <nb-tab [tabTitle]="'GERAL'" [active]="true" badgeStatus="info" tabindex="8">
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputEndereco" class="label col-sm-3 col-form-label">Endereço</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
-                fieldSize="tiny" id="inputEndereco" formControlName="endereco" placeholder="Endereço" tabindex="9">
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputTelefone1" class="label col-sm-3 col-form-label">Telefone 1</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputTelefone1"
-                formControlName="telefone" placeholder="Telefone 1" tabindex="18">
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputnumero" class="label col-sm-3 col-form-label">Número</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputnumero"
-                formControlName="numero" placeholder="Número" tabindex="10">
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputTelefone2" class="label col-sm-3 col-form-label">Telefone 2</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputTelefone2"
-                formControlName="telefone2" placeholder="Telefone 2" tabindex="19">
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputcomplemento" class="label col-sm-3 col-form-label">Complemento</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
-                fieldSize="tiny" id="inputcomplemento" formControlName="complmento" placeholder="Complemento"
-                tabindex="11">
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputCelular" class="label col-sm-3 col-form-label">Celular</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCelular"
-                formControlName="telefone_celular" placeholder="Celular" tabindex="20">
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputbairro" class="label col-sm-3 col-form-label">Bairro</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
-                fieldSize="tiny" id="inputbairro" formControlName="bairro" placeholder="Bairro" tabindex="12">
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputrecado" class="label col-sm-3 col-form-label">Recado</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
-                fieldSize="tiny" id="inputrecado" formControlName="telefone_recado" placeholder="Recado" tabindex="21">
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputcidade" class="label col-sm-3 col-form-label">Cidade</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
-                fieldSize="tiny" id="inputcidade" formControlName="cidade" placeholder="Cidade" tabindex="13">
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputpessoal_contato" class="label col-sm-3 col-form-label">Contato Pessoal</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
-                fieldSize="tiny" id="inputpessoal_contato" formControlName="pessoal_contato"
-                placeholder="Contato Pessoal" tabindex="22">
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputUF" class="label col-sm-3 col-form-label">UF</label>
-            <div class="col-sm-9">
-              <nb-select size="tiny" selected="uf" formControlName="uf" id="inputUF" tabindex="14" formControlName="uf"
-                placeholder="Estado">
-                <nb-option *ngFor="let p of estados" value="{{ p }}">{{ p }}</nb-option>
-              </nb-select>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputemail" class="label col-sm-3 col-form-label">E-mail</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputemail"
-                formControlName="email" placeholder="E-mail" tabindex="23">
-              <control-messages [control]="formulario.get('email')"></control-messages>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputcep" class="label col-sm-3 col-form-label">CEP</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputcep"
-                formControlName="cep" placeholder="CEP" tabindex="15">
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputsite" class="label col-sm-3 col-form-label">Site</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputsite"
-                formControlName="site" placeholder="Site" tabindex="24">
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputData_fundacao" class="label col-sm-3 col-form-label">Data de Nascimento /
-              Fundação</label>
-            <div class="col-sm-9">
-              <input nbInput nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputData_fundacao"
-                formControlName="data_nascimento_fundacao" placeholder="Data de Nascimento / Fundação" tabindex="25"
-                [nbDatepicker]="formpicker">
-              <nb-datepicker #formpicker format="dd/MM/yyyy" formControlName="data_nascimento_fundacao"
-                hideOnSelect=false></nb-datepicker>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputEstadoCivil" class="label col-sm-3 col-form-label">Estado Civil</label>
-            <div class="col-sm-9">
-              <nb-select fullWidth size="tiny" selected="estado_civil" formControlName="estado_civil"
-                placeholder="Estado Civil" id="inputEstadoCivil" tabindex="16">
-                <nb-option value="SOLTEIRO(A)">SOLTEIRO(A)</nb-option>
-                <nb-option value="CASADO(A)">CASADO(A)</nb-option>
-                <nb-option value="DIVORCIADO(A)">DIVORCIADO(A)</nb-option>
-                <nb-option value="VIÚVO(A)">VIÚVO(A)</nb-option>
-                <nb-option value="SEPARADO(A)">SEPARADO(A)</nb-option>
-              </nb-select>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputnome_mae" class="label col-sm-3 col-form-label">Nome da mãe</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
-                fieldSize="tiny" id="inputnome_mae" formControlName="nome_mae" placeholder="Nome da mãe" tabindex="26">
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputconjuge" class="label col-sm-3 col-form-label">Nome do Cônjuge</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
-                fieldSize="tiny" id="inputconjuge" formControlName="nome_conjuge" placeholder="Nome do Cônjuge"
-                tabindex="17">
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputnome_pai" class="label col-sm-3 col-form-label">Nome do Pai</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
-                fieldSize="tiny" id="inputnome_pai" formControlName="nome_pai" placeholder="Nome do Pai" tabindex="27">
-            </div>
-          </div>
+
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputRazaoSocial" class="label col-sm-3 col-form-label">Razão Social</label>
+        <div class="col-sm-9">
+          <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+            fieldSize="tiny" id="inputRazaoSocial" formControlName="razao_social" tabindex="3">
         </div>
       </div>
-    </nb-tab>
+    </div>
 
-    <nb-tab [tabTitle]="'DOCUMENTAÇÃO'" [active]="false" badgeStatus="info" tabIndex="28">
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputRg" class="label col-sm-3 col-form-label">RG</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputRg" formControlName="rg"
-                placeholder="RG" tabindex="29">
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputgenero" class="label col-sm-3 col-form-label">Gênero</label>
+        <div class="col-sm-9">
+          <nb-select fullWidth size="tiny" id="inputgenero" formControlName="genero" tabindex="6">
+            <nb-option value="F">Feminino</nb-option>
+            <nb-option value="M">Masculino</nb-option>
+          </nb-select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tabset_config">
+    <nb-tabset fullWidth>
+      <nb-tab [tabTitle]="'GERAL'" [active]="true" badgeStatus="info" tabindex="8">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputEndereco" class="label col-sm-3 col-form-label">Endereço</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+                  fieldSize="tiny" id="inputEndereco" formControlName="endereco" tabindex="9">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputTelefone1" class="label col-sm-3 col-form-label">Telefone 1</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputTelefone1"
+                  formControlName="telefone" mask="(00) 0000-0000" tabindex="18">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputnumero" class="label col-sm-3 col-form-label">Número</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputnumero"
+                  formControlName="numero" tabindex="10">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputTelefone2" class="label col-sm-3 col-form-label">Telefone 2</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputTelefone2"
+                  formControlName="telefone2" mask="(00) 0000-0000" tabindex="19">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputcomplemento" class="label col-sm-3 col-form-label">Complemento</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+                  fieldSize="tiny" id="inputcomplemento" formControlName="complmento" tabindex="11">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputCelular" class="label col-sm-3 col-form-label">Celular</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCelular"
+                  formControlName="telefone_celular" mask="(00) 00000-0000" tabindex="20">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputbairro" class="label col-sm-3 col-form-label">Bairro</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+                  fieldSize="tiny" id="inputbairro" formControlName="bairro" tabindex="12">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputrecado" class="label col-sm-3 col-form-label">Recado</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+                  fieldSize="tiny" id="inputrecado" mask="(00) 00000-0000" formControlName="telefone_recado"
+                  tabindex="21">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputcidade" class="label col-sm-3 col-form-label">Cidade</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+                  fieldSize="tiny" id="inputcidade" formControlName="cidade" tabindex="13">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputpessoal_contato" class="label col-sm-3 col-form-label">Contato Pessoal</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+                  fieldSize="tiny" id="inputpessoal_contato" formControlName="pessoal_contato" tabindex="22">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputUF" class="label col-sm-3 col-form-label">UF</label>
+              <div class="col-sm-9">
+                <nb-select size="tiny" selected="uf" formControlName="uf" id="inputUF" tabindex="14"
+                  formControlName="uf">
+                  <nb-option *ngFor="let p of estados" value="{{ p }}">{{ p }}</nb-option>
+                </nb-select>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputemail" class="label col-sm-3 col-form-label">E-mail</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputemail"
+                  formControlName="email" tabindex="23">
+                <control-messages [control]="formulario.get('email')"></control-messages>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputcep" class="label col-sm-3 col-form-label">CEP</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputcep"
+                  formControlName="cep" tabindex="15">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputsite" class="label col-sm-3 col-form-label">Site</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputsite"
+                  formControlName="site" tabindex="24">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputData_fundacao" class="label col-sm-3 col-form-label">Data de Nascimento /
+                Fundação</label>
+              <div class="col-sm-9">
+                <input nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputData_fundacao"
+                  formControlName="data_nascimento_fundacao" format="dd/MM/yyyy" tabindex="25"
+                  [nbDatepicker]="formpicker">
+                <nb-datepicker #formpicker format="dd/MM/yyyy" formControlName="data_nascimento_fundacao"
+                  hideOnSelect=false></nb-datepicker>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputEstadoCivil" class="label col-sm-3 col-form-label">Estado Civil</label>
+              <div class="col-sm-9">
+                <nb-select fullWidth size="tiny" selected="estado_civil" formControlName="estado_civil"
+                  id="inputEstadoCivil" tabindex="16">
+                  <nb-option value="SOLTEIRO(A)">SOLTEIRO(A)</nb-option>
+                  <nb-option value="CASADO(A)">CASADO(A)</nb-option>
+                  <nb-option value="DIVORCIADO(A)">DIVORCIADO(A)</nb-option>
+                  <nb-option value="VIÚVO(A)">VIÚVO(A)</nb-option>
+                  <nb-option value="SEPARADO(A)">SEPARADO(A)</nb-option>
+                </nb-select>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputnome_mae" class="label col-sm-3 col-form-label">Nome da mãe</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+                  fieldSize="tiny" id="inputnome_mae" formControlName="nome_mae" tabindex="26">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputconjuge" class="label col-sm-3 col-form-label">Nome do Cônjuge</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+                  fieldSize="tiny" id="inputconjuge" formControlName="nome_conjuge" tabindex="17">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputnome_pai" class="label col-sm-3 col-form-label">Nome do Pai</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+                  fieldSize="tiny" id="inputnome_pai" formControlName="nome_pai" tabindex="27">
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputNaturalidade" class="label col-sm-3 col-form-label">Naturalidade</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
-                fieldSize="tiny" id="inputNaturalidade" formControlName="naturalidade" placeholder="Naturalidade"
-                tabindex="30">
+      </nb-tab>
+
+      <nb-tab [tabTitle]="'DOCUMENTAÇÃO'" [active]="false" badgeStatus="info" tabIndex="28">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputRg" class="label col-sm-3 col-form-label">RG</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputRg"
+                  formControlName="rg" tabindex="29">
+              </div>
             </div>
           </div>
-        </div><br><br>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputNaturalidade" class="label col-sm-3 col-form-label">Naturalidade</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+                  fieldSize="tiny" id="inputNaturalidade" formControlName="naturalidade" tabindex="30">
+              </div>
+            </div>
+          </div><br><br>
 
-        <div class="container">
+          <!--<div class="container">
           <div class="row">
             <div class="col">
               <div class="form-group row">
                 <label for="inputOrgaoEmissor" class="label col-sm-3 col-form-label">Órgão Emissor</label>
                 <div class="col-sm-9">
                   <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
-                    fieldSize="tiny" id="inputOrgaoEmissor" formControlName="rg_orgao_emissor"
-                    placeholder="Órgão Emissor" tabindex="31">
+                    fieldSize="tiny" id="inputOrgaoEmissor" formControlName="rg_orgao_emissor" tabindex="31">
                 </div>
               </div>
             </div>
@@ -376,7 +371,7 @@
                   Emissor</label>
                 <div class="col-sm-9">
                   <nb-select fullWidth size="tiny" selected="" id="inputrg_uf_orgao_emissor" tabindex="32"
-                    formControlName="rg_uf_orgao_emissor" placeholder="UF | Órgão Emissor">
+                    formControlName="rg_uf_orgao_emissor">
                     <nb-option *ngFor="let p of estados" value="{{ p }}">{{ p }}</nb-option>
                   </nb-select>
                 </div>
@@ -388,7 +383,7 @@
                 <label for="inputdata_emissao" class="label col-lg-3 col-form-label">Data Emissão</label>
                 <div class="col-sm-9">
                   <input nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputdata_emissao"
-                    formControlName="rg_data_emissao" placeholder="Data Emissão" tabindex="33"
+                    formControlName="rg_data_emissao" tabindex="33" format="dd/MM/yyyy"
                     [nbDatepicker]="formpickeremissao">
                   <nb-datepicker #formpickeremissao for="inputdata_emissao" format="dd/MM/yyyy"></nb-datepicker>
                 </div>
@@ -404,7 +399,7 @@
                 <label for="inputCnh" class="label col-sm-3 col-form-label">CNH</label>
                 <div class="col-sm-9">
                   <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCnh"
-                    formControlName="cnh" placeholder="CNH" tabindex="34">
+                    formControlName="cnh" tabindex="34">
                 </div>
               </div>
             </div>
@@ -413,8 +408,8 @@
               <div class="form-group row">
                 <label for="inputcnh_data_emissao" class="label col-sm-3 col-form-label">CNH Data Emissão</label>
                 <div class="col-sm-9">
-                  <input nbInput nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputcnh_data_emissao"
-                    formControlName="cnh_data_emissao" placeholder="CNH Data Emissão" tabindex="35"
+                  <input nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputcnh_data_emissao"
+                    formControlName="cnh_data_emissao" tabindex="35" format="dd/MM/yyyy"
                     [nbDatepicker]="formpickercnhemissao">
                   <nb-datepicker #formpickercnhemissao format="dd/MM/yyyy" hideOnSelect=false></nb-datepicker>
                 </div>
@@ -426,8 +421,8 @@
                 <label for="inputcnh_data_vencimento" class="label col-lg-3 col-form-label">CNH Data
                   Vencimento</label>
                 <div class="col-sm-9">
-                  <input nbInput nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputcnh_data_vencimento"
-                    formControlName="cnh_data_vencimento" placeholder="CNH Data Vencimento" tabindex="36"
+                  <input nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputcnh_data_vencimento"
+                    formControlName="cnh_data_vencimento" format="dd/MM/yyyy" tabindex="36"
                     [nbDatepicker]="formpickercnhvencimento">
                   <nb-datepicker #formpickercnhvencimento format="dd/MM/yyyy" hideOnSelect=false></nb-datepicker>
                 </div>
@@ -443,7 +438,7 @@
                 <label for="inputTituloEleitor" class="label col-sm-3 col-form-label">Título Eleitor</label>
                 <div class="col-sm-9">
                   <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputTituloEleitor"
-                    formControlName="titulo_eleitor" placeholder="Título Eleitor" tabindex="37">
+                    formControlName="titulo_eleitor" tabindex="37">
                 </div>
               </div>
             </div>
@@ -453,7 +448,7 @@
                 <label for="inputZona" class="label col-sm-3 col-form-label">Zona</label>
                 <div class="col-sm-9">
                   <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputZona"
-                    formControlName="titulo_eleitor_zona" placeholder="Zona" tabindex="38">
+                    formControlName="titulo_eleitor_zona" tabindex="38">
                 </div>
               </div>
             </div>
@@ -463,178 +458,313 @@
                 <label for="inputSessao" class="label col-lg-3 col-form-label">Sessão</label>
                 <div class="col-sm-9">
                   <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputSessao"
-                    formControlName="titulo_eleitor_sessao" placeholder="Sessão" tabindex="39">
+                    formControlName="titulo_eleitor_sessao" tabindex="39">
                 </div>
               </div>
             </div>
           </div>
-        </div><br><br><br><br>
+        </div><br><br><br><br>-->
 
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputCtps" class="label col-sm-3 col-form-label">CTPS</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCtps"
-                formControlName="ctps" placeholder="CTPS" tabindex="40">
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputCtpsSerie" class="label col-sm-3 col-form-label">CTPS Série</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCtpsSerie"
-                formControlName="ctps_serie" placeholder="CTPS Série" tabindex="41">
-            </div>
-          </div>
-        </div>
-
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputReservista" class="label col-lg-3 col-form-label">Reservista</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputReservista"
-                formControlName="reservista" placeholder="Reservista" tabindex="42">
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-          </div>
-        </div><br><br><br><br>
-
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputInscricaoEstadual" class="label col-lg-3 col-form-label">Inscrição Estadual</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputInscricaoEstadual"
-                formControlName="inscricao_estadual" placeholder="Inscrição Estadual" tabindex="43">
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputInscricaoMunicipal" class="label col-lg-3 col-form-label">Inscrição Municipal</label>
-            <div class="col-sm-9">
-              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputInscricaoMunicipal"
-                formControlName="inscricao_municipal" placeholder="Inscrição Municipal" tabindex="44">
-            </div>
-          </div>
-        </div>
-
-        <div class="col-sm-6">
-          <div class="form-group row">
-            <label for="inputRegimeTributario" class="label col-lg-3 col-form-label">Regime Tributário</label>
-            <div class="col-sm-9">
-              <nb-select fullWidth size="tiny" selected="" formControlName="codigo_regime_tributario"
-                placeholder="Regime Tributário" id="inputRegimeTributario" tabindex="45">
-                <nb-option value="2">Simples Nacional</nb-option>
-                <nb-option value="3">Lucro Presumido</nb-option>
-                <nb-option value="4">Lucro Real</nb-option>
-              </nb-select>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div class="form-group row">
-          </div>
-        </div><br><br><br><br>
-
-
-        <div class="container">
-          <div class="row">
-            <div class="col">
-              <div class="form-group row">
-                <label for="inputEmpregador" class="label col-sm-3 col-form-label">Empregador</label>
-                <div class="col-sm-9">
-                  <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
-                    fieldSize="tiny" id="inputEmpregador" formControlName="empregador" placeholder="Empregador"
-                    tabindex="46">
-                </div>
-              </div>
-            </div>
-
-            <div class="col">
-              <div class="form-group row">
-                <label for="inputCargo" class="label col-sm-3 col-form-label">Cargo</label>
-                <div class="col-sm-9">
-                  <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
-                    fieldSize="tiny" id="inputCargo" formControlName="cargo" placeholder="Cargo" tabindex="47">
-                </div>
-              </div>
-            </div>
-
-            <div class="col">
-              <div class="form-group row">
-                <label for="inputMatricula" class="label col-lg-3 col-form-label">Matrícula</label>
-                <div class="col-sm-9">
-                  <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputMatricula"
-                    formControlName="matricula" placeholder="Matrícula" tabindex="48">
-                </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputOrgaoEmissor" class="label col-sm-3 col-form-label">Órgão Emissor</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+                  fieldSize="tiny" id="inputOrgaoEmissor" formControlName="rg_orgao_emissor" tabindex="31">
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </nb-tab>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputCnh" class="label col-sm-3 col-form-label">CNH</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCnh"
+                  formControlName="cnh" tabindex="34">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputrg_uf_orgao_emissor" class="label col-sm-3 col-form-label">UF | Órgão
+                Emissor</label>
+              <div class="col-sm-9">
+                <nb-select fullWidth size="tiny" selected="" id="inputrg_uf_orgao_emissor" tabindex="32"
+                  formControlName="rg_uf_orgao_emissor">
+                  <nb-option *ngFor="let p of estados" value="{{ p }}">{{ p }}</nb-option>
+                </nb-select>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputcnh_data_emissao" class="label col-sm-3 col-form-label">CNH Data Emissão</label>
+              <div class="col-sm-9">
+                <input nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputcnh_data_emissao"
+                  formControlName="cnh_data_emissao" tabindex="35" format="dd/MM/yyyy"
+                  [nbDatepicker]="formpickercnhemissao">
+                <nb-datepicker #formpickercnhemissao format="dd/MM/yyyy" hideOnSelect=false></nb-datepicker>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputdata_emissao" class="label col-lg-3 col-form-label">Data Emissão</label>
+              <div class="col-sm-9">
+                <input nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputdata_emissao"
+                  formControlName="rg_data_emissao" tabindex="33" format="dd/MM/yyyy"
+                  [nbDatepicker]="formpickeremissao">
+                <nb-datepicker #formpickeremissao for="inputdata_emissao" format="dd/MM/yyyy"></nb-datepicker>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputcnh_data_vencimento" class="label col-lg-3 col-form-label">CNH Data
+                Vencimento</label>
+              <div class="col-sm-9">
+                <input nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputcnh_data_vencimento"
+                  formControlName="cnh_data_vencimento" format="dd/MM/yyyy" tabindex="36"
+                  [nbDatepicker]="formpickercnhvencimento">
+                <nb-datepicker #formpickercnhvencimento format="dd/MM/yyyy" hideOnSelect=false></nb-datepicker>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputTituloEleitor" class="label col-sm-3 col-form-label">Título Eleitor</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputTituloEleitor"
+                  formControlName="titulo_eleitor" tabindex="37">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputCtps" class="label col-sm-3 col-form-label">CTPS</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCtps"
+                  formControlName="ctps" tabindex="40">
+              </div>
+            </div>
+          </div>
 
 
-    <nb-tab [tabTitle]="'CONTABILIDADE'" [active]="false" badgeStatus="info" tabindex="49">
-      <div class="col-sm-6">
-        <div class="form-group row">
-          <label for="inputCodigoExterno" class="label col-lg-3 col-form-label">Código Externo</label>
-          <div class="col-sm-9">
-            <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCodigoExterno"
-              formControlName="codigo_externo" placeholder="Código Externo" tabindex="50">
-          </div>
-        </div>
-      </div><br>
-      <div class="col-sm-6">
-        <div class="form-group row">
-          <label for="inputPlanoContasReceber" class="label col-lg-3 col-form-label">Plano Contas Receber</label>
-          <div class="col-sm-9">
-            <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputPlanoContasReceber"
-              formControlName="plano_contas_receber" placeholder="Plano Contas Receber" tabindex="51">
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="form-group row">
-          <label for="inputPlanoContasPagar" class="label col-lg-3 col-form-label">Plano Contas Pagar</label>
-          <div class="col-sm-9">
-            <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputPlanoContasPagar"
-              formControlName="plano_contas_pagar" placeholder="Plano Contas Pagar" tabindex="52">
-          </div>
-        </div>
-      </div>
-    </nb-tab>
 
-    <nb-tab [tabTitle]="'ANOTAÇÕES'" [active]="false" badgeStatus="info" tabindex="53">
-      <div class="col-sm-6">
-        <div class="form-group row">
-          <label for="inputDataCadastro" class="label col-lg-3 col-form-label">Data Cadastro</label>
-          <div class="col-sm-9">
-            <input nbInput readonly fullWidth shape="rectangle" fieldSize="tiny" id="inputDataCadastro"
-              formControlName="data_cadastro" placeholder="Data de Cadastro" format="dd/MM/yyyy" tabindex="54"
-              [nbDatepicker]="formpickerdatacadastro">
-            <nb-datepicker #formpickerdatacadastro readonly format="dd/MM/yyyy" formControlName="data_cadastro"
-              for="inputDataCadastro" hideOnSelect=false>
-            </nb-datepicker>
+
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputZona" class="label col-sm-3 col-form-label">Zona</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputZona"
+                  formControlName="titulo_eleitor_zona" tabindex="38">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputCtpsSerie" class="label col-sm-3 col-form-label">CTPS Série</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCtpsSerie"
+                  formControlName="ctps_serie" tabindex="41">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputSessao" class="label col-lg-3 col-form-label">Sessão</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputSessao"
+                  formControlName="titulo_eleitor_sessao" tabindex="39">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputReservista" class="label col-lg-3 col-form-label">Reservista</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputReservista"
+                  formControlName="reservista" tabindex="42">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputInscricaoEstadual" class="label col-lg-3 col-form-label">Inscrição Estadual</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputInscricaoEstadual"
+                  formControlName="inscricao_estadual" tabindex="43">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputInscricaoMunicipal" class="label col-lg-3 col-form-label">Inscrição Municipal</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputInscricaoMunicipal"
+                  formControlName="inscricao_municipal" tabindex="44">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputRegimeTributario" class="label col-lg-3 col-form-label">Regime Tributário</label>
+              <div class="col-sm-9">
+                <nb-select fullWidth size="tiny" selected="" formControlName="codigo_regime_tributario"
+                  id="inputRegimeTributario" tabindex="45">
+                  <nb-option value="2">Simples Nacional</nb-option>
+                  <nb-option value="3">Lucro Presumido</nb-option>
+                  <nb-option value="4">Lucro Real</nb-option>
+                </nb-select>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+            </div>
+          </div><br>
+
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputEmpregador" class="label col-sm-3 col-form-label">Empregador</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+                  fieldSize="tiny" id="inputEmpregador" formControlName="empregador" tabindex="46">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputCargo" class="label col-sm-3 col-form-label">Cargo</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+                  fieldSize="tiny" id="inputCargo" formControlName="cargo" tabindex="47">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group row">
+              <label for="inputMatricula" class="label col-lg-3 col-form-label">Matrícula</label>
+              <div class="col-sm-9">
+                <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputMatricula"
+                  formControlName="matricula" tabindex="48">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group row">
+            </div>
+          </div>
+
+          <!--<div class="container">
+            <div class="row">
+              <div class="col">
+                <div class="form-group row">
+                  <label for="inputEmpregador" class="label col-sm-3 col-form-label">Empregador</label>
+                  <div class="col-sm-9">
+                    <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()"
+                      shape="rectangle" fieldSize="tiny" id="inputEmpregador" formControlName="empregador"
+                      tabindex="46">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="form-group row">
+                  <label for="inputCargo" class="label col-sm-3 col-form-label">Cargo</label>
+                  <div class="col-sm-9">
+                    <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()"
+                      shape="rectangle" fieldSize="tiny" id="inputCargo" formControlName="cargo" tabindex="47">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="form-group row">
+                  <label for="inputMatricula" class="label col-lg-3 col-form-label">Matrícula</label>
+                  <div class="col-sm-9">
+                    <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputMatricula"
+                      formControlName="matricula" tabindex="48">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>-->
+        </div>
+      </nb-tab>
+
+      <nb-tab [tabTitle]="'CONTABILIDADE'" [active]="false" badgeStatus="info" tabindex="49">
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputCodigoExterno" class="label col-lg-3 col-form-label">Código Externo</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCodigoExterno"
+                formControlName="codigo_externo" tabindex="50">
+            </div>
+          </div>
+        </div><br>
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputPlanoContasReceber" class="label col-lg-3 col-form-label">Plano Contas Receber</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputPlanoContasReceber"
+                formControlName="plano_contas_receber" tabindex="51">
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="form-group row">
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputPlanoContasPagar" class="label col-lg-3 col-form-label">Plano Contas Pagar</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputPlanoContasPagar"
+                formControlName="plano_contas_pagar" tabindex="52">
+            </div>
+          </div>
         </div>
-      </div>
+      </nb-tab>
 
-      <div class="col">
-        <div class="form-group row">
-          <label for="inputAnotacoes" class="label col-lg-3 col-form-label">Anotações</label>
-          <textarea nbInput fullWidth oninput="this.value = this.value.toUpperCase()" formControlName="anotacoes"
-            shape="round" placeholder="Anotações" id="inputAnotacoes" tabindex="55"></textarea>
+      <nb-tab [tabTitle]="'ANOTAÇÕES'" [active]="false" badgeStatus="info" tabindex="53">
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputDataCadastro" class="label col-lg-3 col-form-label">Data Cadastro</label>
+            <div class="col-sm-9">
+              <input nbInput readonly fullWidth shape="rectangle" fieldSize="tiny" id="inputDataCadastro"
+                formControlName="data_cadastro" tabindex="54">
+              <!--[nbDatepicker]="formpickerdatacadastro"> <nb-datepicker #formpickerdatacadastro readonly format="dd/MM/yyyy" formControlName="data_cadastro"
+                for="inputDataCadastro" hideOnSelect=false>
+              </nb-datepicker>-->
+            </div>
+          </div>
         </div>
-      </div>
-    </nb-tab>
-  </nb-tabset>
+        <div class="col-sm-6">
+          <div class="form-group row">
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="form-group row">
+            <label for="inputAnotacoes" class="label col-lg-3 col-form-label">Anotações</label>
+            <textarea nbInput fullWidth oninput="this.value = this.value.toUpperCase()" formControlName="anotacoes"
+              shape="round" id="inputAnotacoes" class="anotacoes_height" tabindex="55"></textarea>
+          </div>
+        </div>
+      </nb-tab>
+    </nb-tabset>
+  </div>
 </form>

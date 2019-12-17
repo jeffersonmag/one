@@ -9,6 +9,7 @@ import { EsteiraProducaoComponent } from './esteira-producao/esteira-producao.co
 import { ClientesComponent } from './cadastros/clientes/clientes.component';
 import { ParceiroNegocioComponent } from './cadastros/parceiro-negocio/parceiro-negocio.component';
 import { BancosComponent } from './cadastros/bancos/bancos.component';
+import { PlanoContasComponent } from './cadastros/plano-contas/plano-contas.component';
 
 //define o a página inicial
 if (window.sessionStorage.permissao_dashboard_campanha) {
@@ -23,6 +24,8 @@ if (window.sessionStorage.permissao_dashboard_campanha) {
   home = 'cadastros/clientes';
 } else if (window.sessionStorage.permissao_cadastro_parceiro_negocio) {
   home = 'cadastros/parceiro-negocio';
+} else if (window.sessionStorage.permissao_cadastro_plano_de_contas) {
+  home = 'cadastros/plano-contas';
 }
 
 const routes: Routes = [{
@@ -64,6 +67,11 @@ const routes: Routes = [{
     },
 
     {
+      path: 'cadastros/plano-contas',
+      component: PlanoContasComponent,
+    },
+
+    {
       path: 'layout',
       loadChildren: () => import('./layout/layout.module')
         .then(m => m.LayoutModule),
@@ -78,13 +86,11 @@ const routes: Routes = [{
       loadChildren: () => import('./ui-features/ui-features.module')
         .then(m => m.UiFeaturesModule),
     },
-
     {
       path: 'extra-components',
       loadChildren: () => import('./extra-components/extra-components.module')
         .then(m => m.ExtraComponentsModule),
     },
-
     {
       path: 'charts',
       loadChildren: () => import('./charts/charts.module')

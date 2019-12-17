@@ -5,7 +5,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { registerLocaleData, Location } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import pt from '@angular/common/locales/pt';
-registerLocaleData(pt)
+registerLocaleData(pt);
+import { NbDateFnsDateModule } from '@nebular/date-fns';
 
 import {
   NbChatModule,
@@ -31,6 +32,9 @@ import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { NgIdleModule } from '@ng-idle/core';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SmartTableData } from './@core/data/smart-table';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+
+export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
 
 /**
@@ -40,7 +44,7 @@ import { SmartTableData } from './@core/data/smart-table';
  */
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,6 +74,8 @@ import { SmartTableData } from './@core/data/smart-table';
     NbProgressBarModule,
     Ng2SmartTableModule,
     NbTreeGridModule,
+    NgxMaskModule.forRoot(options),
+    NbDateFnsDateModule.forRoot({ format: 'dd/MM/yyyy' }),
   ],
 
   providers: [
@@ -77,7 +83,7 @@ import { SmartTableData } from './@core/data/smart-table';
     {
       provide: LOCALE_ID,
       useValue: 'pt',
-    }
+    },
 
   ],
 

@@ -198,7 +198,7 @@ export class ParceiroNegocioComponent implements OnInit {
 
   formataData(data) {
     var dd = data.getDate();
-    var mm = data.getMonth() + 1;
+    var mm = data.getMonth();
     var yyyy = data.getFullYear();
 
     if (dd < 10) {
@@ -387,6 +387,7 @@ export class ParceiroNegocioComponent implements OnInit {
     this.dialogReference = this.dialogService.open(modal,
       {
         hasBackdrop: false,
+        closeOnEsc: false,
       });
   }
 
@@ -397,6 +398,7 @@ export class ParceiroNegocioComponent implements OnInit {
     this.dialogReference = this.dialogService.open(modal,
       {
         hasBackdrop: false,
+        closeOnEsc: false,
       });
   }
 

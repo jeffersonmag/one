@@ -41,6 +41,8 @@ import { ParceiroNegocioComponent } from './parceiro-negocio/parceiro-negocio.co
 import { BancosComponent } from './bancos/bancos.component';
 import { DadosCadastroBancosComponent } from './bancos/dados-cadastro-bancos/dados-cadastro-bancos.component';
 import { NbMomentDateModule } from '@nebular/moment';
+import { PlanoContasComponent } from './plano-contas/plano-contas.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   imports: [
@@ -78,6 +80,7 @@ import { NbMomentDateModule } from '@nebular/moment';
     NbAlertModule,
     NbDialogModule.forChild(),
     NbWindowModule.forChild(),
+    NgxMaskModule.forChild(),
   ],
   declarations: [
     CadastrosComponent,
@@ -89,6 +92,7 @@ import { NbMomentDateModule } from '@nebular/moment';
     ControlMessagesComponent,
     ParceiroNegocioComponent,
     BancosComponent,
+    PlanoContasComponent,
   ],
 })
 

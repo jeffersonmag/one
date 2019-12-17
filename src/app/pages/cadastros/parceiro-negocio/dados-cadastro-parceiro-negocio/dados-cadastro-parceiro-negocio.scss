@@ -59,6 +59,16 @@ nb-card.inline-form-card nb-card-body {
   margin: 1em;
 }
 
+.tabset_config {
+  min-height: 100px;
+  overflow: auto;
+}
+
+.anotacoes_height {
+  min-height: 300px;
+  height: 300px;
+}
+
 .ng-select.custom {
   border: 4px;
   border-color: cadetblue;

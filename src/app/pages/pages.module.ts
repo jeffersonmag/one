@@ -12,6 +12,7 @@ import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { NgIdleModule } from '@ng-idle/core';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { CadastrosModule } from './cadastros/cadastros.module';
+import { NbDateFnsDateModule } from '@nebular/date-fns';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { CadastrosModule } from './cadastros/cadastros.module';
     Ng2SmartTableModule,
     NbTreeGridModule,
     CadastrosModule,
+    NbDateFnsDateModule.forChild({ format: 'dd/MM/yyyy' }),
   ],
   declarations: [
     PagesComponent,

@@ -155,6 +155,7 @@ export class BancosComponent implements OnInit {
     this.dialogReference = this.dialogService.open(modal,
       {
         hasBackdrop: false,
+        closeOnEsc: false,
       });
   }
 
@@ -165,6 +166,7 @@ export class BancosComponent implements OnInit {
     this.dialogReference = this.dialogService.open(modal,
       {
         hasBackdrop: false,
+        closeOnEsc: false,
       });
   }
 

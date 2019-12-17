@@ -39,7 +39,25 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
   }
 
   formataData(data) {
-    var dd = data.getDate();
+    var dd = data.getDate() + 1;
+    var mm = data.getMonth() + 1;
+    var yyyy = data.getFullYear();
+
+    if (dd < 10) {
+      dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+      mm = '0' + mm;
+    }
+    //var dataFormadata = String(String(yyyy) + '-' + String(mm) + '-' + String(dd));
+    //String(dd) + '/' + String(mm) + '/' + String(yyyy)
+    var dataFormatada = new Date(String(String(yyyy) + '-' + String(mm) + '-' + String(dd)));
+    return dataFormatada;
+  }
+
+  formataDataFundacao(data) {
+    var dd = data.getDate() + 1;
     var mm = data.getMonth() + 1;
     var yyyy = data.getFullYear();
 
@@ -61,30 +79,37 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
     this.criacaoUsuario = this.options.criacaoUsuario;
     this.permissaoExclusao = this.options.permissaoDelete;
 
-    var cnh_data_emissao = '';
-    var cnh_data_vencimento = '';
-    var data_nascimento_fundacao = '';
-    var data_cadastro = '';
-    var rg_data_emissao = '';
+    var cnh_data_emissao: any;
+    var cnh_data_vencimento: any;
+    var data_nascimento_fundacao: any;
+    var data_cadastro: any;
+    var rg_data_emissao: any;
 
 
     if (this.options.usuarioEdicao.length !== 0) {
       this.usuarioEditado = this.options.usuarioEdicao;
 
       if (this.usuarioEditado.cnh_data_emissao !== null) {
-        cnh_data_emissao = this.usuarioEditado.cnh_data_emissao.substr(0, 10);
+        cnh_data_emissao = new Date(String(this.usuarioEditado.cnh_data_emissao.substr(0, 10)));
+        cnh_data_emissao.setDate(cnh_data_emissao.getDate() + 1);
       }
       if (this.usuarioEditado.cnh_data_vencimento !== null) {
-        cnh_data_vencimento = this.usuarioEditado.cnh_data_vencimento.substr(0, 10);
+        cnh_data_vencimento = new Date(String(this.usuarioEditado.cnh_data_vencimento.substr(0, 10)));
+        cnh_data_vencimento.setDate(cnh_data_vencimento.getDate() + 1);
       }
       if (this.usuarioEditado.data_nascimento_fundacao !== null) {
-        data_nascimento_fundacao = this.usuarioEditado.data_nascimento_fundacao.substr(0, 10);
-      }
-      if (this.usuarioEditado.data_cadastro !== null) {
-        data_cadastro = this.usuarioEditado.data_cadastro.substr(0, 10);
+        // tslint:disable-next-line: max-line-length
+        data_nascimento_fundacao = new Date(String(this.usuarioEditado.data_nascimento_fundacao.substr(0, 10)));
+        data_nascimento_fundacao.setDate(data_nascimento_fundacao.getDate() + 1);
       }
       if (this.usuarioEditado.rg_data_emissao !== null) {
-        rg_data_emissao = this.usuarioEditado.rg_data_emissao.substr(0, 10);
+        rg_data_emissao = new Date(String(this.usuarioEditado.rg_data_emissao.substr(0, 10)));
+        rg_data_emissao.setDate(rg_data_emissao.getDate() + 1);
+      }
+
+       ///DATA CADASTRO
+      if (this.usuarioEditado.data_cadastro !== null) {
+        data_cadastro = this.formataDataFundacao(new Date(String(this.usuarioEditado.data_cadastro.substr(0, 10))));
       }
     }
 
