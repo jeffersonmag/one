@@ -84,8 +84,9 @@
       <div class="form-group row">
         <label for="inputCpf" class="label col-sm-3 col-form-label">CPF/CNPJ</label>
         <div class="col-sm-9">
-          <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
-            fieldSize="tiny" id="inputCpf" formControlName="cpf_cnpj" mask="000.000.000-99" tabindex="4">
+          <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCpf"
+            mask="{{this.formulario.value.cpf_cnpj.length < 12 ? this.mascara[0] : this.mascara[1]}}"
+            formControlName="cpf_cnpj" tabindex="4">
           <control-messages [control]="formulario.get('cpf_cnpj')"></control-messages>
         </div>
       </div>
@@ -256,7 +257,7 @@
             <div class="form-group row">
               <label for="inputcep" class="label col-sm-3 col-form-label">CEP</label>
               <div class="col-sm-9">
-                <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputcep"
+                <input type="text" nbInput fullWidth shape="rectangle" mask="00000-000" fieldSize="tiny" id="inputcep"
                   formControlName="cep" tabindex="15">
               </div>
             </div>
@@ -282,8 +283,7 @@
                 <input nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputData_fundacao"
                   formControlName="data_nascimento_fundacao" format="dd/MM/yyyy" tabindex="25"
                   [nbDatepicker]="formpicker">
-                <nb-datepicker #formpicker format="dd/MM/yyyy" formControlName="data_nascimento_fundacao"
-                  hideOnSelect=false></nb-datepicker>
+                <nb-datepicker #formpicker format="dd/MM/yyyy" hideOnSelect=false></nb-datepicker>
               </div>
             </div>
           </div>
@@ -338,7 +338,7 @@
             <div class="form-group row">
               <label for="inputRg" class="label col-sm-3 col-form-label">RG</label>
               <div class="col-sm-9">
-                <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputRg"
+                <input type="text" nbInput fullWidth shape="rectangle" mask="00.000.000-A" fieldSize="tiny" id="inputRg"
                   formControlName="rg" tabindex="29">
               </div>
             </div>

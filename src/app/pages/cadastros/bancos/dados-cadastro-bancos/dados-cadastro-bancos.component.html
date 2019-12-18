@@ -75,7 +75,7 @@
         <label for="inputpk" class="label col-sm-3 col-form-label">Chave</label>
         <div class="col-sm-9">
           <input type="text" nbInput readonly shape="rectangle" fieldSize="tiny" id="inputpk" formControlName="pk"
-            placeholder="Chave" tabindex="1">
+            tabindex="1">
         </div>
       </div>
     </div>
@@ -85,7 +85,7 @@
         <label for="inputCodigo" class="label col-sm-3 col-form-label">Código Banco</label>
         <div class="col-sm-9">
           <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCodigo"
-            formControlName="codigo" placeholder="Código Banco" tabindex="3">
+            formControlName="codigo" tabindex="3">
         </div>
       </div>
     </div>
@@ -95,7 +95,7 @@
         <label for="inputNome" class="label col-sm-3 col-form-label">Nome do Banco</label>
         <div class="col-sm-9">
           <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
-            fieldSize="tiny" id="inputNome" formControlName="nome" placeholder="Nome Banco" tabindex="2">
+            fieldSize="tiny" id="inputNome" formControlName="nome" tabindex="2">
           <control-messages [control]="formulario.get('nome')"></control-messages>
         </div>
       </div>

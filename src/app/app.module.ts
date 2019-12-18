@@ -33,6 +33,7 @@ import { NgIdleModule } from '@ng-idle/core';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SmartTableData } from './@core/data/smart-table';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { NgxCpfCnpjModule } from 'ngx-cpf-cnpj';
 
 export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
@@ -76,6 +77,7 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     NbTreeGridModule,
     NgxMaskModule.forRoot(options),
     NbDateFnsDateModule.forRoot({ format: 'dd/MM/yyyy' }),
+    NgxCpfCnpjModule,
   ],
 
   providers: [

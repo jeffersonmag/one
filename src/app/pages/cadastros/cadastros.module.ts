@@ -43,6 +43,7 @@ import { DadosCadastroBancosComponent } from './bancos/dados-cadastro-bancos/dad
 import { NbMomentDateModule } from '@nebular/moment';
 import { PlanoContasComponent } from './plano-contas/plano-contas.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { NgxCpfCnpjModule } from 'ngx-cpf-cnpj';
 
 @NgModule({
   imports: [

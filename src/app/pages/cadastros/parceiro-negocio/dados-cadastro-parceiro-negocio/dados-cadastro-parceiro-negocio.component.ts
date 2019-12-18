@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ParceiroNegocioComponent } from '../parceiro-negocio.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationService } from '../../validation.service';
@@ -12,6 +12,8 @@ import { NbDateService } from '@nebular/theme';
 })
 export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy {
 
+  @Input() cpfOUCnpj: string = '';
+
   usuarioEditado: any;
   edicaoUsuario: boolean;
   criacaoUsuario: boolean;
@@ -21,6 +23,8 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
   erro: boolean = false;
   mensagem_erro: string = '';
   modalConfirmacao: NgbModalRef;
+  mascara = ['000.000.000-000', '00.000.000/0000-00'];
+  //mascara_aplicada = (this.cpfOUCnpj.length <= 11 ? '000.000.000-009' : '00.000.000/0000-00');
 
   estados = [
     'AC', 'AL', 'AP', 'AM', 'BA',
@@ -84,6 +88,7 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
     var data_nascimento_fundacao: any;
     var data_cadastro: any;
     var rg_data_emissao: any;
+    var cpf_cnpj: string = '';
 
 
     if (this.options.usuarioEdicao.length !== 0) {
@@ -107,9 +112,18 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
         rg_data_emissao.setDate(rg_data_emissao.getDate() + 1);
       }
 
-       ///DATA CADASTRO
+      ///DATA CADASTRO
       if (this.usuarioEditado.data_cadastro !== null) {
         data_cadastro = this.formataDataFundacao(new Date(String(this.usuarioEditado.data_cadastro.substr(0, 10))));
+      }
+
+      if (this.usuarioEditado.cpf_cnpj !== null) {
+        cpf_cnpj = String(this.usuarioEditado.cpf_cnpj).trim();
+        if (cpf_cnpj.length <= 11) {
+          this.mascara = ['000.000.000-00', '000.000.000-00'];
+        } else {
+          this.mascara = ['00.000.000/0000-00', '00.000.000/0000-00'];
+        }
       }
     }
 
@@ -126,7 +140,7 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
       codigo_externo: [this.usuarioEditado.codigo_externo],
       codigo_regime_tributario: [this.usuarioEditado.codigo_regime_tributario],
       complmento: [this.usuarioEditado.complmento],
-      cpf_cnpj: [this.usuarioEditado.cpf_cnpj, [Validators.required, ValidationService.validarCPF_CNPJ]],
+      cpf_cnpj: [cpf_cnpj, [Validators.required, ValidationService.validarCPF_CNPJ]],
       ctps: [this.usuarioEditado.ctps],
       ctps_serie: [this.usuarioEditado.ctps_serie],
       data_cadastro: [data_cadastro],
@@ -185,6 +199,10 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
       this.mensagem_erro = '';
       this.options.insereParceiroNegocios(this.formulario.value);
     }
+  }
+
+  mask() {
+
   }
 
   editarDados() {
