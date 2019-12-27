@@ -117,20 +117,20 @@ export class ParceiroNegocioComponent implements OnInit {
         var dadosParceiroNegocios = [];
 
         for (let i of s) {
-          if (i.cnh_data_emissao !== null) {
+          if (i.cnh_data_emissao !== null && i.cnh_data_emissao !== undefined) {
             cnh_data_emissao = i.cnh_data_emissao.substr(0, 10);
           }
-          if (i.cnh_data_vencimento !== null) {
+          if (i.cnh_data_vencimento !== null && i.cnh_data_vencimento !== undefined) {
             cnh_data_vencimento = i.cnh_data_vencimento.substr(0, 10);
           }
-          if (i.data_nascimento_fundacao !== null) {
+          if (i.data_nascimento_fundacao !== null && i.data_nascimento_fundacao !== undefined) {
             data_nascimento_fundacao = i.data_nascimento_fundacao.substr(0, 10);
           }
-          if (i.data_cadastro !== null) {
+          if (i.data_cadastro !== null && i.data_cadastro !== undefined) {
             data_cadastro = i.data_cadastro.substr(0, 10);
             data_cadastro = this.formataDataPadraoBr(data_cadastro);
           }
-          if (i.rg_data_emissao !== null) {
+          if (i.rg_data_emissao !== null && i.rg_data_emissao !== undefined) {
             rg_data_emissao = i.rg_data_emissao.substr(0, 10);
           }
           dadosParceiroNegocios.push(
@@ -197,8 +197,8 @@ export class ParceiroNegocioComponent implements OnInit {
   }
 
   formataData(data) {
-    var dd = data.getDate();
-    var mm = data.getMonth();
+    var dd = data.getDate() ;
+    var mm = data.getMonth() + 1;
     var yyyy = data.getFullYear();
 
     if (dd < 10) {
@@ -213,16 +213,16 @@ export class ParceiroNegocioComponent implements OnInit {
   }
 
   insereParceiroNegocios(valor?) {
-    if (valor.cnh_data_emissao !== null && valor.cnh_data_emissao !== "") {
+    if (valor.cnh_data_emissao !== null && valor.cnh_data_emissao !== '' && valor.cnh_data_emissao !== undefined) {
       var cnh_data_emissao = this.formataData(valor.cnh_data_emissao);
     }
-    if (valor.cnh_data_vencimento !== null && valor.cnh_data_vencimento !== "") {
+    if (valor.cnh_data_vencimento !== null && valor.cnh_data_vencimento !== '' && valor.cnh_data_vencimento !== undefined) {
       var cnh_data_vencimento = this.formataData(valor.cnh_data_vencimento);
     }
-    if (valor.data_nascimento_fundacao !== null && valor.data_nascimento_fundacao !== "") {
+    if (valor.data_nascimento_fundacao !== null && valor.data_nascimento_fundacao !== '' && valor.data_nascimento_fundacao !== undefined) {
       var data_nascimento_fundacao = this.formataData(valor.data_nascimento_fundacao);
     }
-    if (valor.rg_data_emissao !== null && valor.rg_data_emissao !== "") {
+    if (valor.rg_data_emissao !== null && valor.rg_data_emissao !== '' && valor.rg_data_emissao !== undefined) {
       var rg_data_emissao = this.formataData(valor.rg_data_emissao);
     }
     this.campanhasApiService.postParceiroNegocios(
@@ -291,15 +291,24 @@ export class ParceiroNegocioComponent implements OnInit {
   alteraParceiroNegocios(valor?) {
     if (valor.cnh_data_emissao !== null && valor.cnh_data_emissao !== "") {
       var cnh_data_emissao = this.formataData(new Date(valor.cnh_data_emissao));
+    } else {
+      cnh_data_emissao = null;
     }
+
     if (valor.cnh_data_vencimento !== null && valor.cnh_data_vencimento !== "") {
       var cnh_data_vencimento = this.formataData(new Date(valor.cnh_data_vencimento));
+    } else {
+      cnh_data_vencimento = null;
     }
     if (valor.data_nascimento_fundacao !== null && valor.data_nascimento_fundacao !== "") {
       var data_nascimento_fundacao = this.formataData(new Date(valor.data_nascimento_fundacao));
+    } else {
+      data_nascimento_fundacao = null;
     }
     if (valor.rg_data_emissao !== null && valor.rg_data_emissao !== "") {
       var rg_data_emissao = this.formataData(new Date(valor.rg_data_emissao));
+    } else {
+      rg_data_emissao = null;
     }
     this.campanhasApiService.putParceiroNegocios(
       {
