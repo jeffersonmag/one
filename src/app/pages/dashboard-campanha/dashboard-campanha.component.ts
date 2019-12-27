@@ -615,7 +615,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.alive = false;
-    this.themeSubscription.unsubscribe();
+    //this.themeSubscription.unsubscribe();
   }
 
   findCampanha() {

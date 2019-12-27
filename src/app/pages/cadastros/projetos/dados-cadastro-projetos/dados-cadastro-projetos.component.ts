@@ -1,15 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BancosComponent } from '../bancos.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ValidationService } from '../../validation.service';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ProjetosComponent } from '../projetos.component';
 
 @Component({
-  selector: 'dados-cadastro-bancos',
-  templateUrl: './dados-cadastro-bancos.component.html',
-  styleUrls: ['./dados-cadastro-bancos.scss'],
+  selector: 'dados-cadastro-projetos',
+  templateUrl: './dados-cadastro-projetos.component.html',
+  styleUrls: ['./dados-cadastro-projetos.component.scss']
 })
-export class DadosCadastroBancosComponent implements OnInit, OnDestroy {
+export class DadosCadastroProjetosComponent implements OnInit, OnDestroy {
 
   dadosEditado: any;
   edicaoUsuario: boolean;
@@ -29,7 +28,7 @@ export class DadosCadastroBancosComponent implements OnInit, OnDestroy {
     'RS', 'RO', 'RR', 'SC', 'SP',
     'SE', 'TO'];
 
-  constructor(private options: BancosComponent,
+  constructor(private options: ProjetosComponent,
     private modal: NgbModal,
     private formBuilder: FormBuilder) { }
 
@@ -38,14 +37,28 @@ export class DadosCadastroBancosComponent implements OnInit, OnDestroy {
     this.edicaoUsuario = this.options.edicaoUsuario;
     this.criacaoUsuario = this.options.criacaoUsuario;
     this.permissaoExclusao = this.options.permissaoDelete;
-    if (this.options.usuarioEdicao.length !== 0) {
-      this.dadosEditado = this.options.usuarioEdicao;
+    var vigencia_ate: any;
+    var vigencia_de: any;
+
+    if (this.options.dadosEdicao.length !== 0) {
+      this.dadosEditado = this.options.dadosEdicao;
+    }
+
+    if (this.dadosEditado.vigencia_ate !== null && this.dadosEditado.vigencia_ate !== undefined) {
+      vigencia_ate = new Date(String(this.dadosEditado.vigencia_ate.substr(0, 10)));
+      vigencia_ate.setDate(vigencia_ate.getDate() + 1);
+    }
+
+    if (this.dadosEditado.vigencia_de !== null && this.dadosEditado.vigencia_de !== undefined) {
+      vigencia_de = new Date(String(this.dadosEditado.vigencia_de.substr(0, 10)));
+      vigencia_de.setDate(vigencia_de.getDate() + 1);
     }
 
     this.formulario = this.formBuilder.group({
-      nome: [this.dadosEditado.nome, [Validators.required, Validators.minLength(5)]],
+      nome: [this.dadosEditado.nome, [Validators.required, Validators.minLength(1)]],
       pk: [this.dadosEditado.pk],
-      codigo: [this.dadosEditado.codigo, [Validators.required]],
+      vigencia_de: [vigencia_de, [Validators.required]],
+      vigencia_ate: [vigencia_ate],
     });
   }
 
@@ -60,7 +73,7 @@ export class DadosCadastroBancosComponent implements OnInit, OnDestroy {
     } else {
       this.erro = false;
       this.mensagem_erro = '';
-      this.options.insereBancos(this.formulario.value);
+      this.options.insereProjetos(this.formulario.value);
     }
   }
 
@@ -72,7 +85,7 @@ export class DadosCadastroBancosComponent implements OnInit, OnDestroy {
     } else {
       this.erro = false;
       this.mensagem_erro = '';
-      this.options.alteraBancos(this.formulario.value);
+      this.options.alteraProjetos(this.formulario.value);
       this.modalConfirmacao.close();
     }
   }
@@ -85,7 +98,7 @@ export class DadosCadastroBancosComponent implements OnInit, OnDestroy {
     } else {
       this.erro = false;
       this.mensagem_erro = '';
-      this.options.excluirBancos(this.formulario.value);
+      this.options.excluirProjetos(this.formulario.value);
       this.modalConfirmacao.close();
     }
   }

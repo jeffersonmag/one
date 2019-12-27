@@ -43,14 +43,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
         expanded: (window.sessionStorage.permissao_cadastro_bancos === 'false'),
         hidden: (window.sessionStorage.permissao_cadastro_bancos === 'false'),
       },
-      {
+      /*{
         title: 'Clientes',
         link: '/pages/cadastros/clientes',
         icon: 'people-outline',
         home: false,
         expanded: (window.sessionStorage.permissao_cadastro_cliente === 'false'),
         hidden: (window.sessionStorage.permissao_cadastro_cliente === 'false'),
-      },
+      },*/
       {
         title: 'Parceiros de Negócio',
         link: '/pages/cadastros/parceiro-negocio',
@@ -66,6 +66,30 @@ export const MENU_ITEMS: NbMenuItem[] = [
         home: false,
         expanded: (window.sessionStorage.permissao_cadastro_plano_de_contas === 'false'),
         hidden: (window.sessionStorage.permissao_cadastro_plano_de_contas === 'false'),
+      },
+      {
+        title: 'Centro de custos',
+        link: '/pages/cadastros/centro-custos',
+        icon: 'book-outline',
+        home: false,
+        expanded: (window.sessionStorage.permissao_cadastro_centro_de_custos === 'false'),
+        hidden: (window.sessionStorage.permissao_cadastro_centro_de_custos === 'false'),
+      },
+      {
+        title: 'Projetos',
+        link: '/pages/cadastros/projetos',
+        icon: 'npm-outline',
+        home: false,
+        expanded: (window.sessionStorage.permissao_cadastro_projetos === 'false'),
+        hidden: (window.sessionStorage.permissao_cadastro_projetos === 'false'),
+      },
+      {
+        title: 'Tipo Conta Corrente',
+        link: '/pages/cadastros/tipo-conta-corrente',
+        icon: 'credit-card-outline',
+        home: false,
+        expanded: (window.sessionStorage.permissao_cadastro_tipo_conta_corrente === 'false'),
+        hidden: (window.sessionStorage.permissao_cadastro_tipo_conta_corrente === 'false'),
       },
     ],
   },

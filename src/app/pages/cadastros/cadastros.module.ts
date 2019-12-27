@@ -21,6 +21,7 @@ import {
   NbAlertModule,
   NbWindowModule,
   NbDialogModule,
+  NbCheckboxModule,
 } from '@nebular/theme';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { ThemeModule } from '../../@theme/theme.module';
@@ -43,7 +44,14 @@ import { DadosCadastroBancosComponent } from './bancos/dados-cadastro-bancos/dad
 import { NbMomentDateModule } from '@nebular/moment';
 import { PlanoContasComponent } from './plano-contas/plano-contas.component';
 import { NgxMaskModule } from 'ngx-mask';
-import { NgxCpfCnpjModule } from 'ngx-cpf-cnpj';
+import { UiSwitchModule } from 'ngx-ui-switch';
+import { MatSlideToggleModule } from '@angular/material';
+import { CentroCustosComponent } from './centro-custos/centro-custos.component';
+import { ProjetosComponent } from './projetos/projetos.component';
+import { DadosCadastroCentroCustosComponent } from './centro-custos/dados-cadastro-centro-custos/dados-cadastro-centro-custos.component';
+import { DadosCadastroProjetosComponent } from './projetos/dados-cadastro-projetos/dados-cadastro-projetos.component';
+import { TipoContaCorrenteComponent } from './tipo-conta-corrente/tipo-conta-corrente.component';
+import { DadosCadastroTipoCcComponent } from './tipo-conta-corrente/dados-cadastro-tipo-cc/dados-cadastro-tipo-cc.component';
 
 @NgModule({
   imports: [
@@ -79,6 +87,10 @@ import { NgxCpfCnpjModule } from 'ngx-cpf-cnpj';
     NbSelectModule,
     NgSelectModule,
     NbAlertModule,
+    NbSearchModule,
+    UiSwitchModule,
+    MatSlideToggleModule,
+    NbCheckboxModule,
     NbDialogModule.forChild(),
     NbWindowModule.forChild(),
     NgxMaskModule.forChild(),
@@ -94,6 +106,12 @@ import { NgxCpfCnpjModule } from 'ngx-cpf-cnpj';
     ParceiroNegocioComponent,
     BancosComponent,
     PlanoContasComponent,
+    CentroCustosComponent,
+    ProjetosComponent,
+    DadosCadastroCentroCustosComponent,
+    DadosCadastroProjetosComponent,
+    TipoContaCorrenteComponent,
+    DadosCadastroTipoCcComponent,
   ],
 })
 

@@ -82,22 +82,7 @@
 
     <div class="col-sm-6">
       <div class="form-group row">
-      </div>
-    </div>
-
-    <div class="col-sm-6">
-      <div class="form-group row">
-        <label for="inputCodigo" class="label col-sm-3 col-form-label">Código Banco</label>
-        <div class="col-sm-9">
-          <input type="text" nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputCodigo"
-            formControlName="codigo" tabindex="3">
-        </div>
-      </div>
-    </div>
-
-    <div class="col-sm-6">
-      <div class="form-group row">
-        <label for="inputNome" class="label col-sm-3 col-form-label">Nome do Banco</label>
+        <label for="inputNome" class="label col-sm-3 col-form-label">Nome do Projeto</label>
         <div class="col-sm-9">
           <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
             fieldSize="tiny" id="inputNome" formControlName="nome" tabindex="2">
@@ -106,5 +91,32 @@
       </div>
     </div>
 
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputData_Inicio" class="label col-sm-3 col-form-label">Data Início</label>
+        <div class="col-sm-9">
+          <input nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputData_Inicio"
+            formControlName="vigencia_de" format="dd/MM/yyyy" tabindex="25"
+            [nbDatepicker]="formpickerinicio">
+          <nb-datepicker #formpickerinicio format="dd/MM/yyyy" hideOnSelect=false></nb-datepicker>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputData_final" class="label col-sm-3 col-form-label">Data Final</label>
+        <div class="col-sm-9">
+          <input nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputData_final"
+            formControlName="vigencia_ate" format="dd/MM/yyyy" tabindex="25" [nbDatepicker]="formpickerfinal">
+          <nb-datepicker #formpickerfinal format="dd/MM/yyyy" hideOnSelect=false></nb-datepicker>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group row">
+      </div>
+    </div>
   </div>
 </form>

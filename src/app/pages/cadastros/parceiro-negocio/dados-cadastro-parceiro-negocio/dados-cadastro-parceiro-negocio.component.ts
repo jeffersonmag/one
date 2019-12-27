@@ -24,7 +24,7 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
   mensagem_erro: string = '';
   modalConfirmacao: NgbModalRef;
   mascara = ['000.000.000-000', '00.000.000/0000-00'];
-  //mascara_aplicada = (this.cpfOUCnpj.length <= 11 ? '000.000.000-009' : '00.000.000/0000-00');
+  mascaraTelefone = ['(00) 0000-00009', '(00) 00000-0000'];
 
   estados = [
     'AC', 'AL', 'AP', 'AM', 'BA',
@@ -54,8 +54,7 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
     if (mm < 10) {
       mm = '0' + mm;
     }
-    //var dataFormadata = String(String(yyyy) + '-' + String(mm) + '-' + String(dd));
-    //String(dd) + '/' + String(mm) + '/' + String(yyyy)
+
     var dataFormatada = new Date(String(String(yyyy) + '-' + String(mm) + '-' + String(dd)));
     return dataFormatada;
   }
@@ -89,6 +88,10 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
     var data_cadastro: any;
     var rg_data_emissao: any;
     var cpf_cnpj: string = '';
+    var telefone1: string = '';
+    var telefone2: string = '';
+    var celular: string = '';
+    var recado: string = '';
 
 
     if (this.options.usuarioEdicao.length !== 0) {
@@ -110,6 +113,19 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
       if (this.usuarioEditado.rg_data_emissao !== null) {
         rg_data_emissao = new Date(String(this.usuarioEditado.rg_data_emissao.substr(0, 10)));
         rg_data_emissao.setDate(rg_data_emissao.getDate() + 1);
+      }
+
+      if (this.usuarioEditado.telefone !== null && this.usuarioEditado.telefone !== undefined) {
+        telefone1 = String(this.usuarioEditado.telefone);
+      }
+      if (this.usuarioEditado.telefone2 !== null && this.usuarioEditado.telefone2 !== undefined) {
+        telefone2 = String(this.usuarioEditado.telefone2);
+      }
+      if (this.usuarioEditado.telefone_celular !== null && this.usuarioEditado.telefone_celular !== undefined) {
+        celular = String(this.usuarioEditado.telefone_celular);
+      }
+      if (this.usuarioEditado.telefone_recado !== null && this.usuarioEditado.telefone_recado !== undefined) {
+        recado = String(this.usuarioEditado.telefone_recado);
       }
 
       ///DATA CADASTRO
@@ -170,10 +186,10 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
       rg_orgao_emissor: [this.usuarioEditado.rg_orgao_emissor],
       rg_uf_orgao_emissor: [this.usuarioEditado.rg_uf_orgao_emissor],
       site: [this.usuarioEditado.site],
-      telefone: [this.usuarioEditado.telefone],
-      telefone2: [this.usuarioEditado.telefone2],
-      telefone_celular: [this.usuarioEditado.telefone_celular],
-      telefone_recado: [this.usuarioEditado.telefone_recado],
+      telefone: [telefone1],
+      telefone2: [telefone2],
+      telefone_celular: [celular],
+      telefone_recado: [recado],
       tipo_pessoa: [this.usuarioEditado.tipo_pessoa],
       titulo_eleitor: [this.usuarioEditado.titulo_eleitor],
       titulo_eleitor_sessao: [this.usuarioEditado.titulo_eleitor_sessao],
@@ -199,10 +215,6 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
       this.mensagem_erro = '';
       this.options.insereParceiroNegocios(this.formulario.value);
     }
-  }
-
-  mask() {
-
   }
 
   editarDados() {

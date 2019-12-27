@@ -36,6 +36,12 @@ export class UsuarioApiService {
           this.sessionService.set('permissao_cadastro_bancos', s.permissao_acesso.cadastro_bancos.acesso);
           this.sessionService.set('permissao_cadastro_plano_de_contas',
             s.permissao_acesso.cadastro_plano_de_contas.acesso);
+          this.sessionService.set('permissao_cadastro_centro_de_custos',
+            s.permissao_acesso.cadastro_centro_de_custos.acesso);
+          this.sessionService.set('permissao_cadastro_projetos',
+            s.permissao_acesso.cadastro_projetos.acesso);
+          this.sessionService.set('permissao_cadastro_tipo_conta_corrente',
+            s.permissao_acesso.cadastro_tipo_conta_corrente.acesso);
           resolve(s);
         })
         .catch((e) => {

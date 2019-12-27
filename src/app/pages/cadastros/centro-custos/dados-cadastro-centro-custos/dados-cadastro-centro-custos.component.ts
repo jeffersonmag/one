@@ -1,15 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BancosComponent } from '../bancos.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ValidationService } from '../../validation.service';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CentroCustosComponent } from '../centro-custos.component';
 
 @Component({
-  selector: 'dados-cadastro-bancos',
-  templateUrl: './dados-cadastro-bancos.component.html',
-  styleUrls: ['./dados-cadastro-bancos.scss'],
+  selector: 'dados-cadastro-centro-custos',
+  templateUrl: './dados-cadastro-centro-custos.component.html',
+  styleUrls: ['./dados-cadastro-centro-custos.component.scss']
 })
-export class DadosCadastroBancosComponent implements OnInit, OnDestroy {
+export class DadosCadastroCentroCustosComponent implements OnInit, OnDestroy {
 
   dadosEditado: any;
   edicaoUsuario: boolean;
@@ -21,6 +20,7 @@ export class DadosCadastroBancosComponent implements OnInit, OnDestroy {
   mensagem_erro: string = '';
   modalConfirmacao: NgbModalRef;
 
+
   estados = [
     'AC', 'AL', 'AP', 'AM', 'BA',
     'CE', 'DF', 'ES', 'GO', 'MA',
@@ -29,7 +29,7 @@ export class DadosCadastroBancosComponent implements OnInit, OnDestroy {
     'RS', 'RO', 'RR', 'SC', 'SP',
     'SE', 'TO'];
 
-  constructor(private options: BancosComponent,
+  constructor(private options: CentroCustosComponent,
     private modal: NgbModal,
     private formBuilder: FormBuilder) { }
 
@@ -43,9 +43,9 @@ export class DadosCadastroBancosComponent implements OnInit, OnDestroy {
     }
 
     this.formulario = this.formBuilder.group({
-      nome: [this.dadosEditado.nome, [Validators.required, Validators.minLength(5)]],
+      classificacao: [this.dadosEditado.classificacao, [Validators.required, Validators.minLength(5)]],
       pk: [this.dadosEditado.pk],
-      codigo: [this.dadosEditado.codigo, [Validators.required]],
+      nome: [this.dadosEditado.nome, [Validators.required]],
     });
   }
 
@@ -60,7 +60,7 @@ export class DadosCadastroBancosComponent implements OnInit, OnDestroy {
     } else {
       this.erro = false;
       this.mensagem_erro = '';
-      this.options.insereBancos(this.formulario.value);
+      this.options.insereCentroCustos(this.formulario.value);
     }
   }
 
@@ -72,7 +72,7 @@ export class DadosCadastroBancosComponent implements OnInit, OnDestroy {
     } else {
       this.erro = false;
       this.mensagem_erro = '';
-      this.options.alteraBancos(this.formulario.value);
+      this.options.alteraCentroCustos(this.formulario.value);
       this.modalConfirmacao.close();
     }
   }
@@ -85,7 +85,7 @@ export class DadosCadastroBancosComponent implements OnInit, OnDestroy {
     } else {
       this.erro = false;
       this.mensagem_erro = '';
-      this.options.excluirBancos(this.formulario.value);
+      this.options.excluirCentroCustos(this.formulario.value);
       this.modalConfirmacao.close();
     }
   }

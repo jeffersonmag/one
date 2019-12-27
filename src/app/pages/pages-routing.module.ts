@@ -10,6 +10,9 @@ import { ClientesComponent } from './cadastros/clientes/clientes.component';
 import { ParceiroNegocioComponent } from './cadastros/parceiro-negocio/parceiro-negocio.component';
 import { BancosComponent } from './cadastros/bancos/bancos.component';
 import { PlanoContasComponent } from './cadastros/plano-contas/plano-contas.component';
+import { CentroCustosComponent } from './cadastros/centro-custos/centro-custos.component';
+import { ProjetosComponent } from './cadastros/projetos/projetos.component';
+import { TipoContaCorrenteComponent } from './cadastros/tipo-conta-corrente/tipo-conta-corrente.component';
 
 //define o a página inicial
 if (window.sessionStorage.permissao_dashboard_campanha) {
@@ -26,6 +29,12 @@ if (window.sessionStorage.permissao_dashboard_campanha) {
   home = 'cadastros/parceiro-negocio';
 } else if (window.sessionStorage.permissao_cadastro_plano_de_contas) {
   home = 'cadastros/plano-contas';
+} else if (window.sessionStorage.permissao_cadastro_centro_de_custos) {
+  home = 'cadastros/centro-custos';
+} else if (window.sessionStorage.permissao_cadastro_projetos) {
+  home = 'cadastros/projetos';
+} else if (window.sessionStorage.permissao_cadastro_tipo_conta_corrente) {
+  home = 'cadastros/tipo-conta-corrente';
 }
 
 const routes: Routes = [{
@@ -69,6 +78,21 @@ const routes: Routes = [{
     {
       path: 'cadastros/plano-contas',
       component: PlanoContasComponent,
+    },
+
+    {
+      path: 'cadastros/centro-custos',
+      component: CentroCustosComponent,
+    },
+
+    {
+      path: 'cadastros/projetos',
+      component: ProjetosComponent,
+    },
+
+    {
+      path: 'cadastros/tipo-conta-corrente',
+      component: TipoContaCorrenteComponent,
     },
 
     {

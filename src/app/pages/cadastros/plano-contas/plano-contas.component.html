@@ -1,10 +1,142 @@
 <div class="infinite-cards row">
   <div class="col-md-12">
-    <nb-card>
+    <nb-card class="anotacoes_height">
       <nb-card-header>
         Cadastro de Plano de Contas
       </nb-card-header>
       <nb-card-body>
+        <form #form="ngForm" class="formulario" [formGroup]="formulario">
+          <div class="form-group row">
+            <!------ INICIO DO BOX 1 BOTOES ------->
+            <div class="col-md-6">
+              <button *ngIf="habilitaBotaoSalvar && permissaoInsert" class="buttons-row" nbButton shape="round"
+                size="tiny" status="success" nbTooltip="Salvar" (click)="salvarDados()">
+                <i class="fa fa-check color"></i>
+                <div class="espacamento">Salvar</div>
+              </button>
+
+              <button *ngIf="!habilitaBotaoSalvar && permissaoUpdate" class="buttons-row" nbButton shape="round"
+                size="tiny" status="success" nbTooltip="Salvar" (click)="editarDados()">
+                <i class="fa fa-check color"></i>
+                <div class="espacamento">Editar</div>
+              </button>
+
+              <button *ngIf="!habilitaBotaoSalvar" class="buttons-row" nbButton shape="round" size="tiny" status="info"
+                nbTooltip="Cancelar" (click)="cancelar()">
+                <i class="fa fa-check color"></i>
+                <div class="espacamento">Cancelar</div>
+              </button>
+
+              <button *ngIf="!habilitaBotaoSalvar && permissaoDelete" class="buttons-row" nbButton shape="round"
+                size="tiny" status="danger" nbTooltip="Excluir usuário" (click)="excluirDados()">
+                <i class="fa fa-times color"></i>
+                <div class="espacamento" nbTooltip="Excluir usuário">Excluir</div>
+              </button>
+            </div>
+            <!------ FIM DO BOX 1 BOTOES ------->
+            <!------ INICIO DO BOX 2 BOTOES ------->
+            <div class="col-md-6">
+              <button class="buttons-row" disabled nbButton shape="round" size="tiny" nbTooltip="Ações">
+                <div>Ações</div>
+              </button>
+            </div>
+            <!------ FIM DO BOX 2 BOTOES ------->
+          </div>
+
+          <div class="form-group row">
+            <!------ INICIO DO BOX 1 ------->
+            <div class="col-sm-6 espacamento-top">
+              <div class="form-group row">
+                <label for="inputCodigo" class="label col-sm-3 col-form-label">Código</label>
+                <div class="col-sm-9">
+                  <input type="text" nbInput fullWidth readOnly oninput="this.value = this.value.toUpperCase()"
+                    shape="rectangle" fieldSize="tiny" id="inputCodigo" formControlName="codigo" tabindex="2">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="inputClassificacao" class="label col-sm-3 col-form-label">Classificação</label>
+                <div class="col-sm-9">
+                  <input type="text" nbInput fullWidth formControlName="classificacao"
+                    oninput="this.value = this.value.toUpperCase()" shape="rectangle" fieldSize="tiny"
+                    id="inputClassificacao" tabindex="2">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputNome" class="label col-sm-3 col-form-label">Nome</label>
+                <div class="col-sm-9">
+                  <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+                    fieldSize="tiny" id="inputNome" formControlName="nome" tabindex="2">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="inputNatureza" class="label col-sm-3 col-form-label">Natureza</label>
+                <div class="col-sm-9">
+                  <nb-select fullWidth size="tiny" selected="estado_civil" formControlName="natureza" id="inputNatureza"
+                    tabindex="16">
+                    <nb-option value="D">Débito</nb-option>
+                    <nb-option value="C">Crédito</nb-option>
+                  </nb-select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="inputOrcavel" class="label col-sm-3 col-form-label">Orçável</label>
+                <div class="col-sm-9">
+                  <nb-checkbox id="inputOrcavel" formControlName="orcavel" status="success">
+                  </nb-checkbox>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-9">
+                  <br><br><br>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="inputConta_corrente" class="label col-sm-3 col-form-label">Conta Corrente</label>
+                <div class="col-sm-9">
+                  <nb-checkbox id="inputConta_corrente" formControlName="conta_corrente" status="success"></nb-checkbox>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="inputTipoConta_corrente" class="label col-sm-3 col-form-label">Tipo Conta Corrente</label>
+                <div class="col-sm-9">
+                  <nb-select fullWidth size="tiny" selected="estado_civil" id="inputTipoConta_corrente"
+                    formControlName="tipo_conta_corrente" tabindex="16">
+                    <nb-option value="1">Conta Corrente Pessoa Física</nb-option>
+                    <nb-option value="2">Conta Corrente Pessoa Jurídica</nb-option>
+                  </nb-select>
+                </div>
+              </div>
+
+
+            </div>
+            <!------ FIM DO BOX 1 ------->
+
+            <!------ INICIO DO BOX 1 ------->
+            <div *ngIf="permissaoSelect" class="col-md-6 espacamento-top">
+              <div class="tamanho_linha" *ngFor="let dado of dados">
+                <div [ngClass]="habilitaBotaoSalvar ? 'letra' : 'letra-with-background'" nbTooltip="Editar Dados"
+                  nbTooltipPlacement="start" nbTooltipStatus="info" (click)="habilitareditarDados(dado)">
+                  <strong *ngIf="dado.a_s === 'S'">
+                    <span *ngFor="let item of arrayOne(dado.nivel*3)">&nbsp;</span>{{ dado.nome_identado }}
+                  </strong>
+                </div>
+                <div [ngClass]="habilitaBotaoSalvar ? 'letra' : 'letra-with-background'" nbTooltip="Editar Dados"
+                  nbTooltipPlacement="start" nbTooltipStatus="info" (click)="habilitareditarDados(dado)">
+                  <div *ngIf="dado.a_s === 'A'">
+                    <span *ngFor="let item of arrayOne(dado.nivel*3)">&nbsp;</span>{{ dado.nome_identado }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!------ FIM DO BOX 2 ------->
+          </div>
+        </form>
       </nb-card-body>
     </nb-card>
   </div>

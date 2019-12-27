@@ -27,7 +27,10 @@
                             hint="Insira o número da proposta e pressione enter para pesquisar" show="true"
                             type="modal-drop" tag="pendencia"></nb-search>
                     </nb-card-header>
-                    <nb-card-body>
+                    <nb-card-body *ngIf="pendenciaSintetico.length == 0">
+                        <strong>Sem dados para exibir</strong>                        
+                    </nb-card-body>
+                    <nb-card-body *ngIf="pendenciaSintetico.length != 0">
                         <div class="row">
                             <div *ngIf="ativaBotaocanalVendas">
                                 <button nbButton shape="round" size="small" status="primary"
