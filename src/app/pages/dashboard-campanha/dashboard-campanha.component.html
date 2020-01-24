@@ -337,7 +337,7 @@
                       <span></span></td>
                   </tr>
                   <tr>
-                    <td class="ano-setado2">{{ contratosPagosSinteticos.ano_campanha_inicial }}</td>
+                    <td class="ano-setado2">{{contratosPagosSinteticos.ano_campanha_inicial}}</td>
                   </tr>
                 </table>
               </div>
@@ -362,7 +362,7 @@
                 <tr>
                   <td>
                     <div class="values">
-                      {{contratosPagosSinteticos.valor_elegivel_total_digitado | number:'.':'pt'}}
+                      {{((contratosPagosSinteticos.valor_elegivel_total_digitado / campanhaDiasUteisCorridos) * campanhaDias).toFixed(2) | number:'.':'pt'}}
                     </div>
                   </td>
                 </tr>
@@ -374,7 +374,7 @@
                 <tr>
                   <td>
                     <div class="values">
-                      {{contratosPagosSinteticos.valor_elegivel_total_pago | number:'.':'pt'}}
+                      {{((contratosPagosSinteticos.valor_elegivel_total_pago / campanhaDiasUteisCorridos) * campanhaDias).toFixed(2) | number:'.':'pt'}}
                     </div>
                   </td>
                 </tr>
@@ -598,7 +598,7 @@
                     <tbody *ngIf="dadosCampanhaMetasSmartTable.length != 0" style="height: 600px; overflow-y: scroll">
                       <tr *ngFor="let i of dadosCampanhaMetasSmartTable | orderBy:key:reverse;"
                         (click)="clickSmartTablePromotores(i)">
-                        <td class="size-fonte-left-body">{{i.nome_agrupamento}}</td>
+                        <td class="size-fonte-left-body"> {{i.nome_agrupamento}}</td>
                         <td class="size-fonte-right-body">{{i.meta_total_campanha}}</td>
                         <td class="size-fonte-right-body">{{i.atingimento_total_campanha}}</td>
                         <td class="size-fonte-right-body">{{i.perc_atingimento_total_campanha}}</td>

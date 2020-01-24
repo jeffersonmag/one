@@ -222,15 +222,16 @@ export class DashboardCampanhaComponent implements OnDestroy {
   datasHoje = [];
   datasOntem = [];
   contratosPagosSinteticos = {
-    "qtd_total_digitado": 0,
-    "qtd_total_pago": 0,
-    "relacao_qtd_digitado_pago": 0,
-    "relacao_valor_digitado_pago": 0,
-    "valor_elegivel_total_digitado": 0,
-    "valor_elegivel_total_pago": 0
+    'qtd_total_digitado': 0,
+    'qtd_total_pago': 0,
+    'relacao_qtd_digitado_pago': 0,
+    'relacao_valor_digitado_pago': 0,
+    'valor_elegivel_total_digitado': 0,
+    'valor_elegivel_total_pago': 0,
   };
   campanhaDias = 0;
   campanhaPendencias = 0;
+  campanhaDiasUteisCorridos = 0;
   ticketPerfil = 0;
   ticketGlobal = 0;
   porcentagemMetas = 0;
@@ -298,7 +299,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
     {
       id: 4,
       label: 'Abr',
-      mesExtenso: 'Abril'
+      mesExtenso: 'Abril',
     },
     {
       id: 5,
@@ -402,19 +403,19 @@ export class DashboardCampanhaComponent implements OnDestroy {
   };
 
   dadosProdutosCorban = {
-    "codigo_produto_corban": 0,
-    "meta_diaria_produto_corban": 0,
-    "meta_producao_produto_corban": 0,
-    "nivel_atingimento_produto_corban": 0,
-    "nome_produto_corban": "",
-    "nota_nivel_atingido": 0,
-    "percentual_atingido_produto_corban": 0,
-    "projecao_produto_corban": 0,
-    "qtd_elegivel_seguro": 0,
-    "qtd_realizado_seguro": 0,
-    "qtd_total_contratos_campanha": 0,
-    "ticket_medio_produto_corban": 0,
-    "valor_atingido_meta_producao_produto_corban": 0,
+    'codigo_produto_corban': 0,
+    'meta_diaria_produto_corban': 0,
+    'meta_producao_produto_corban': 0,
+    'nivel_atingimento_produto_corban': 0,
+    'nome_produto_corban': '',
+    'nota_nivel_atingido': 0,
+    'percentual_atingido_produto_corban': 0,
+    'projecao_produto_corban': 0,
+    'qtd_elegivel_seguro': 0,
+    'qtd_realizado_seguro': 0,
+    'qtd_total_contratos_campanha': 0,
+    'ticket_medio_produto_corban': 0,
+    'valor_atingido_meta_producao_produto_corban': 0,
   };
 
   codigos = {
@@ -645,12 +646,12 @@ export class DashboardCampanhaComponent implements OnDestroy {
     this.dadosCampanhaMetasSmartTable = [];
     this.campanhasApiService.metas(
       {
-        "codigo_campanha": this.filtro.campanha.codigo,
-        "visao": visao,
-        "codigo_regional": this.codigos.codigo_regional,
-        "codigo_comercial": this.codigos.codigo_comercial,
-        "codigo_loja": this.codigos.codigo_loja,
-        "codigo_funcionario": this.codigos.codigo_funcionario,
+        'codigo_campanha': this.filtro.campanha.codigo,
+        'visao': visao,
+        'codigo_regional': this.codigos.codigo_regional,
+        'codigo_comercial': this.codigos.codigo_comercial,
+        'codigo_loja': this.codigos.codigo_loja,
+        'codigo_funcionario': this.codigos.codigo_funcionario,
       }
     )
       .then((s) => {
@@ -670,18 +671,16 @@ export class DashboardCampanhaComponent implements OnDestroy {
 
   findCampanhaMetaSmartTable(visao) {
     this.dadosCampanhaMetasLoad = true;
-    //this.dadosCampanhaMetas = [];
-    //this.dadosProdutoCorbanCampanha = [];
     this.dadosCampanhaMetasSmartTable = [];
     let datasourcesmart: TreeNode<FSEntry>[];
     this.campanhasApiService.metas(
       {
-        "codigo_campanha": this.filtro.campanha.codigo,
-        "visao": visao,
-        "codigo_regional": this.codigos.codigo_regional,
-        "codigo_comercial": this.codigos.codigo_comercial,
-        "codigo_loja": this.codigos.codigo_loja,
-        "codigo_funcionario": this.codigos.codigo_funcionario,
+        'codigo_campanha': this.filtro.campanha.codigo,
+        'visao': visao,
+        'codigo_regional': this.codigos.codigo_regional,
+        'codigo_comercial': this.codigos.codigo_comercial,
+        'codigo_loja': this.codigos.codigo_loja,
+        'codigo_funcionario': this.codigos.codigo_funcionario,
       }
     )
       .then((s) => {
@@ -739,12 +738,12 @@ export class DashboardCampanhaComponent implements OnDestroy {
     this.contratosPagos = [];
     this.contratosDigitados = [];
     this.indiceContratosDigitadosApiService.pagos({
-      "codigo_campanha": this.filtro.campanha.codigo,
-      "codigo_regional": this.codigos.codigo_regional,
-      "codigo_comercial": this.codigos.codigo_comercial,
-      "codigo_loja": this.codigos.codigo_loja,
-      "codigo_funcionario": this.codigos.codigo_funcionario,
-      "data": ""
+      'codigo_campanha': this.filtro.campanha.codigo,
+      'codigo_regional': this.codigos.codigo_regional,
+      'codigo_comercial': this.codigos.codigo_comercial,
+      'codigo_loja': this.codigos.codigo_loja,
+      'codigo_funcionario': this.codigos.codigo_funcionario,
+      'data': ''
     })
       .then((s) => {
 
@@ -758,8 +757,12 @@ export class DashboardCampanhaComponent implements OnDestroy {
 
         if (this.contratosPagos[0].mes == this.mesVigente) {
           this.indiceContratosDigitadosApiService.pagos({
-            "codigo_campanha": this.filtro.campanha.codigo,
-            "data": this.hoje,
+            'codigo_campanha': this.filtro.campanha.codigo,
+            'data': this.hoje,
+            'codigo_comercial': this.codigos.codigo_comercial,
+            'codigo_regional': this.codigos.codigo_regional,
+            'codigo_loja': this.codigos.codigo_loja,
+            'codigo_funcionario': this.codigos.codigo_funcionario,
           })
             .then((c) => {
               this.datasHoje = c;
@@ -769,8 +772,12 @@ export class DashboardCampanhaComponent implements OnDestroy {
             });
 
           this.indiceContratosDigitadosApiService.pagos({
-            "codigo_campanha": this.filtro.campanha.codigo,
-            "data": this.ontem,
+            'codigo_campanha': this.filtro.campanha.codigo,
+            'data': this.ontem,
+            'codigo_comercial': this.codigos.codigo_comercial,
+            'codigo_regional': this.codigos.codigo_regional,
+            'codigo_loja': this.codigos.codigo_loja,
+            'codigo_funcionario': this.codigos.codigo_funcionario,
           })
             .then((d) => {
               this.datasOntem = d;
@@ -788,19 +795,19 @@ export class DashboardCampanhaComponent implements OnDestroy {
       });
 
     this.contratosPagosSinteticos = {
-      "qtd_total_digitado": 0,
-      "qtd_total_pago": 0,
-      "relacao_qtd_digitado_pago": 0,
-      "relacao_valor_digitado_pago": 0,
-      "valor_elegivel_total_digitado": 0,
-      "valor_elegivel_total_pago": 0
+      'qtd_total_digitado': 0,
+      'qtd_total_pago': 0,
+      'relacao_qtd_digitado_pago': 0,
+      'relacao_valor_digitado_pago': 0,
+      'valor_elegivel_total_digitado': 0,
+      'valor_elegivel_total_pago': 0
     };
     this.indiceContratosDigitadosApiService.sintetico({
-      "codigo_campanha": this.filtro.campanha.codigo,
-      "codigo_regional": this.codigos.codigo_regional,
-      "codigo_comercial": this.codigos.codigo_comercial,
-      "codigo_loja": this.codigos.codigo_loja,
-      "codigo_funcionario": this.codigos.codigo_funcionario
+      'codigo_campanha': this.filtro.campanha.codigo,
+      'codigo_regional': this.codigos.codigo_regional,
+      'codigo_comercial': this.codigos.codigo_comercial,
+      'codigo_loja': this.codigos.codigo_loja,
+      'codigo_funcionario': this.codigos.codigo_funcionario,
     })
       .then((s) => {
         for (const i of s) {
@@ -815,9 +822,9 @@ export class DashboardCampanhaComponent implements OnDestroy {
   findDiasUteis() {
     this.diasUteisPeriodoApiService.periodo(
       {
-        "data_inicial": this.campanhaSelecionada.data_inicio_campanha,
-        "data_final": this.campanhaSelecionada.data_fim_campanha
-      }
+        'data_inicial': this.campanhaSelecionada.data_inicio_campanha,
+        'data_final': this.campanhaSelecionada.data_fim_campanha,
+      },
     )
       .then((s) => {
         this.campanhaDias = s.qtd_dias_uteis;
@@ -825,11 +832,12 @@ export class DashboardCampanhaComponent implements OnDestroy {
       .catch((e) => {
         console.log(e);
       });
+
     this.diasUteisPeriodoApiService.periodo(
       {
-        "data_inicial": moment().format('YYYY-MM-DD'),
-        "data_final": this.campanhaSelecionada.data_fim_pendencia_fisico
-      }
+        'data_inicial': moment().format('YYYY-MM-DD'),
+        'data_final': this.campanhaSelecionada.data_fim_pendencia_fisico,
+      },
     )
       .then((s) => {
         this.campanhaPendencias = s.qtd_dias_uteis;
@@ -837,17 +845,30 @@ export class DashboardCampanhaComponent implements OnDestroy {
       .catch((e) => {
         console.log(e);
       });
+
+      this.diasUteisPeriodoApiService.periodo(
+        {
+          'data_inicial': this.campanhaSelecionada.data_inicio_campanha,
+          'data_final': moment().format('YYYY-MM-DD'),
+        },
+      )
+        .then((s) => {
+          this.campanhaDiasUteisCorridos = s.qtd_dias_uteis;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
   }
 
   findTickets() {
     this.ticketPerfil = 0;
     this.ticketGlobal = 0;
     this.ticketMedioApiService.perfil({
-      "codigo_campanha": this.filtro.campanha.codigo,
-      "codigo_regional": this.codigos.codigo_regional,
-      "codigo_comercial": this.codigos.codigo_comercial,
-      "codigo_loja": this.codigos.codigo_loja,
-      "codigo_funcionario": this.codigos.codigo_funcionario
+      'codigo_campanha': this.filtro.campanha.codigo,
+      'codigo_regional': this.codigos.codigo_regional,
+      'codigo_comercial': this.codigos.codigo_comercial,
+      'codigo_loja': this.codigos.codigo_loja,
+      'codigo_funcionario': this.codigos.codigo_funcionario,
     })
       .then((s) => {
         this.ticketPerfil = s.ticket_medio_perfil;
@@ -856,11 +877,11 @@ export class DashboardCampanhaComponent implements OnDestroy {
         console.log(e);
       });
     this.ticketMedioApiService.global({
-      "codigo_campanha": this.filtro.campanha.codigo,
-      "codigo_regional": this.codigos.codigo_regional,
-      "codigo_comercial": this.codigos.codigo_comercial,
-      "codigo_loja": this.codigos.codigo_loja,
-      "codigo_funcionario": this.codigos.codigo_funcionario
+      'codigo_campanha': this.filtro.campanha.codigo,
+      'codigo_regional': this.codigos.codigo_regional,
+      'codigo_comercial': this.codigos.codigo_comercial,
+      'codigo_loja': this.codigos.codigo_loja,
+      'codigo_funcionario': this.codigos.codigo_funcionario,
     })
       .then((s) => {
         this.ticketGlobal = s.ticket_medio_global;

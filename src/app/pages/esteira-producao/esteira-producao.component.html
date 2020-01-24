@@ -53,7 +53,7 @@
                             <div *ngIf="ativaBotaoFuncionario">
                                 <button nbButton shape="round" size="small" status="primary"
                                     nbTooltip="Limpar Filtro de Proposta" (click)="_filterFuncionario(0, '', true)">
-                                    PROMOTOR: {{nomeFuncionario}} &times;
+                                    CONSULTOR: {{nomeFuncionario}} &times;
                                 </button>
                             </div>
                         </div>
@@ -89,7 +89,7 @@
                                     <th class="textRight">Parceiro</th>
                                     <th class="textRight">Cliente</th>
                                     <th class="textRight">Data</th>
-                                    <th class="textRight">Órgão</th>
+                                    <th class="textRight">Convênio</th>
                                     <th class="textRight">Status</th>
                                     <th class="textRight">Valor</th>
                                     <th class="textRight">Ação</th>
@@ -513,7 +513,7 @@
 
                                 <div class="col" *ngIf="funcionario.length != 0">
                                     <nb-card accent="primary" status="primary" class="solar-card">
-                                        <nb-card-header>Promotor
+                                        <nb-card-header>Consultor
                                             <nb-icon *ngIf="revealed.funcionario" class="toggle-icon"
                                                 icon="chevron-up-outline" pack="eva"
                                                 (click)="toggleView('funcionario')"></nb-icon>
@@ -530,7 +530,7 @@
                                                                 <thead>
                                                                     <tr>
                                                                         <th class="text-left"></th>
-                                                                        <th class="text-left">Nome Promotor</th>
+                                                                        <th class="text-left">Nome Consultor</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>

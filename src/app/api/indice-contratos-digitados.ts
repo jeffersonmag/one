@@ -12,7 +12,7 @@ export class IndiceContratosDigitadosApiService {
     private requestService: RequestService,
   ) { }
 
-  pagos(dados = {}) {
+  pagos(dados) {
     return this.requestService.post(`${environment.urlApi}/indice-contratos-digitados-pagos`, dados, true);
   }
 

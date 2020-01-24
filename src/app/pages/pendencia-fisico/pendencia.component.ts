@@ -383,6 +383,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
       "codigo_canal_vendas": Number(this.codigoCanalVendas),
       "numero_bordero": Number(this.codigoBordero),
       "status_time_line": codigo_status_time_line.codigo_status_time_line,
+      "proposta": Number(this.valueProposta)
     })
       .then((s) => {
         this.pendencia = s.dados;
