@@ -34,6 +34,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SmartTableData } from './@core/data/smart-table';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { NgxCpfCnpjModule } from 'ngx-cpf-cnpj';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
@@ -79,16 +80,16 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     NbDateFnsDateModule.forRoot({ format: 'dd/MM/yyyy' }),
     NgxCpfCnpjModule,
   ],
-
   providers: [
-
     {
       provide: LOCALE_ID,
       useValue: 'pt',
     },
-
+    {
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy,
+    },
   ],
-
   bootstrap: [AppComponent],
 })
 export class AppModule {
