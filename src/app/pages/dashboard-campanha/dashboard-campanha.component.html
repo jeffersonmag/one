@@ -344,7 +344,13 @@
             </nb-card-header>
             <nb-card-body class="cardBody">
               <br>
+              <div class="simple-center">PROJEÇÃO</div>
               <table class="tabelaCircle">
+                <!--<tr>
+                  <td>
+                    
+                  </td>
+                </tr>-->
                 <tr>
                   <td rowspan="4">
                     <span
@@ -362,7 +368,7 @@
                 <tr>
                   <td>
                     <div class="values">
-                      {{((contratosPagosSinteticos.valor_elegivel_total_digitado / campanhaDiasUteisCorridos) * campanhaDias).toFixed(2) | number:'.':'pt'}}
+                      {{((contratosPagosSinteticos.valor_elegivel_total_digitado / campanhaDiasUteisCorridos) * campanhaDias).toFixed(0) | number:'.':'pt'}}
                     </div>
                   </td>
                 </tr>
@@ -374,7 +380,7 @@
                 <tr>
                   <td>
                     <div class="values">
-                      {{((contratosPagosSinteticos.valor_elegivel_total_pago / campanhaDiasUteisCorridos) * campanhaDias).toFixed(2) | number:'.':'pt'}}
+                      {{((contratosPagosSinteticos.valor_elegivel_total_pago / campanhaDiasUteisCorridos) * campanhaDias).toFixed(0) | number:'.':'pt'}}
                     </div>
                   </td>
                 </tr>

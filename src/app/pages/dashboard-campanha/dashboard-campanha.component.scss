@@ -189,6 +189,8 @@
   font-size: 25px;
   line-height: 100%;
   vertical-align: bottom;
+  align-content: center;
+  text-align: center;
 }
 
 .ano-setado {
@@ -212,6 +214,15 @@
 
 .simple {
   text-align: right;
+  margin-top: 4px;
+  margin-bottom: -2px;
+  font-size: 11px;
+  color: gray;
+}
+
+.simple-center {
+  text-align: center;
+  align-content: center;
   margin-top: 4px;
   margin-bottom: -2px;
   font-size: 11px;
