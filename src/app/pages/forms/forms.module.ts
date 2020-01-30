@@ -35,11 +35,11 @@ import { ButtonsComponent } from './buttons/buttons.component';
     NbIconModule,
   ],
   declarations: [
-    FormsComponent,
-    ButtonsComponent,
-    FormInputsComponent,
-    FormLayoutsComponent,
-    DatepickerComponent,
+    //FormsComponent,
+    //ButtonsComponent,
+    //FormInputsComponent,
+    //FormLayoutsComponent,
+    //DatepickerComponent,
   ],
 })
 export class FormsModule { }

@@ -35,8 +35,8 @@ interface FSEntry {
 })
 export class DashboardCampanhaComponent implements OnDestroy {
 
-  @ViewChild(NbPopoverDirective, { static: false }) popover: NbPopoverDirective;
-  @ViewChild('list', { read: TemplateRef, static: false }) templateList: TemplateRef<any>;
+  @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
+  @ViewChild('list', { read: TemplateRef }) templateList: TemplateRef<any>;
 
   private alive = true;
 

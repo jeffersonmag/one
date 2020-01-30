@@ -35,11 +35,11 @@ import { TelaComponent } from './tela/tela.component';
   declarations: [
     LoginComponent,
     TelaComponent,
-    FormsComponent,
-    FormInputsComponent,
-    FormLayoutsComponent,
-    ButtonsComponent,
-    DatepickerComponent
+    //FormsComponent,
+    //FormInputsComponent,
+    //FormLayoutsComponent,
+    //ButtonsComponent,
+    //DatepickerComponent
   ],
   imports: [
     LoginRoutingModule,

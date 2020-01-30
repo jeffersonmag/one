@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, Injectable } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import pt from '@angular/common/locales/pt';
 import {
@@ -23,6 +23,7 @@ interface IndicadoresSettings {
   type: string;
 }
 
+@Injectable()
 export class CustomModalOptions {
   cpf_cliente: number;
 }
