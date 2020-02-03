@@ -228,6 +228,9 @@ export class DashboardCampanhaComponent implements OnDestroy {
     'relacao_valor_digitado_pago': 0,
     'valor_elegivel_total_digitado': 0,
     'valor_elegivel_total_pago': 0,
+    'ano_campanha_inicial': 0,
+    'mes_campanha_inicial': 0,
+    'length': 0,
   };
   campanhaDias = 0;
   campanhaPendencias = 0;
@@ -692,8 +695,8 @@ export class DashboardCampanhaComponent implements OnDestroy {
               meta_total_campanha: parseFloat(i.meta_total_campanha),
               atingimento_total_campanha: parseFloat(i.atingimento_total_campanha),
               perc_atingimento_total_campanha:
-                (((i.atingimento_total_campanha).toFixed(2) / (i.meta_total_campanha).toFixed(2)) * 100).toFixed(2),
-              ticket_medio_campanha: parseFloat(i.ticket_medio_campanha),
+                parseFloat((((i.atingimento_total_campanha).toFixed(2) / (i.meta_total_campanha).toFixed(2)) * 100).toFixed(2)),
+              ticket_medio_campanha: parseFloat(i.ticket_medio_campanha).toFixed(0),
               meta_diaria_campanha: (parseFloat(i.meta_total_campanha) / this.campanhaDias).toFixed(0),
               meta_recalculada:
                 ((i.meta_total_campanha).toFixed(2) - (i.atingimento_total_campanha).toFixed(2) / this.campanhaPendencias)
@@ -800,7 +803,10 @@ export class DashboardCampanhaComponent implements OnDestroy {
       'relacao_qtd_digitado_pago': 0,
       'relacao_valor_digitado_pago': 0,
       'valor_elegivel_total_digitado': 0,
-      'valor_elegivel_total_pago': 0
+      'valor_elegivel_total_pago': 0,
+      'ano_campanha_inicial': 0,
+      'mes_campanha_inicial': 0,
+      'length': 0,
     };
     this.indiceContratosDigitadosApiService.sintetico({
       'codigo_campanha': this.filtro.campanha.codigo,
@@ -846,18 +852,18 @@ export class DashboardCampanhaComponent implements OnDestroy {
         console.log(e);
       });
 
-      this.diasUteisPeriodoApiService.periodo(
-        {
-          'data_inicial': this.campanhaSelecionada.data_inicio_campanha,
-          'data_final': moment().format('YYYY-MM-DD'),
-        },
-      )
-        .then((s) => {
-          this.campanhaDiasUteisCorridos = s.qtd_dias_uteis;
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+    this.diasUteisPeriodoApiService.periodo(
+      {
+        'data_inicial': this.campanhaSelecionada.data_inicio_campanha,
+        'data_final': moment().format('YYYY-MM-DD'),
+      },
+    )
+      .then((s) => {
+        this.campanhaDiasUteisCorridos = s.qtd_dias_uteis;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   findTickets() {

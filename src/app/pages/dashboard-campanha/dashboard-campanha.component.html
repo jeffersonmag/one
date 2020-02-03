@@ -97,7 +97,7 @@
                     </td>
                     <div class="vl"></div>
                     <td style="width: 16.66%;">
-                      <h6>{{dadosProdutoCorbanCampanha.ticket_medio_campanha}}</h6>
+                      <h6>{{dadosProdutoCorbanCampanha.ticket_medio_campanha | number:'.0-0':'pt'}}</h6>
                     </td>
                     <div class="vl"></div>
                     <td style="width: 16.66%;">
@@ -488,14 +488,14 @@
                       <tr *ngFor="let i of dadosCampanhaMetasSmartTable | orderBy:key:reverse;"
                         (click)="clickSmartTableLojas(i)">
                         <td class="size-fonte-left-body">{{i.nome_agrupamento}}</td>
-                        <td class="size-fonte-right-body">{{i.meta_total_campanha}}</td>
-                        <td class="size-fonte-right-body">{{i.atingimento_total_campanha}}</td>
-                        <td class="size-fonte-right-body">{{i.perc_atingimento_total_campanha}}</td>
-                        <td class="size-fonte-right-body">{{i.ticket_medio_campanha}}</td>
-                        <td class="size-fonte-right-body">{{i.meta_diaria_campanha}}</td>
-                        <td class="size-fonte-right-body">{{i.meta_recalculada}}</td>
-                        <td class="size-fonte-right-body">{{i.projecao_total_campanha}}</td>
-                        <td class="size-fonte-right-body">{{i.total_hc_participantes}}</td>
+                        <td class="size-fonte-right-body">{{i.meta_total_campanha | number:'.':'pt'}}</td>
+                        <td class="size-fonte-right-body">{{i.atingimento_total_campanha | number:'.':'pt'}}</td>
+                        <td class="size-fonte-right-body">{{i.perc_atingimento_total_campanha | number:'.2-2':'pt'}}</td>
+                        <td class="size-fonte-right-body">{{i.ticket_medio_campanha | number:'.':'pt'}}</td>
+                        <td class="size-fonte-right-body">{{i.meta_diaria_campanha | number:'.':'pt'}}</td>
+                        <td class="size-fonte-right-body">{{i.meta_recalculada | number:'.':'pt'}}</td>
+                        <td class="size-fonte-right-body">{{i.projecao_total_campanha | number:'.':'pt'}}</td>
+                        <td class="size-fonte-right-body">{{i.total_hc_participantes | number:'.':'pt'}}</td>
                       </tr>
                     </tbody>
                   </table><br>
@@ -549,14 +549,14 @@
                       <tr *ngFor="let i of dadosCampanhaMetasSmartTable | orderBy:key:reverse;"
                         [ngClass]="{'active': true}" (click)="clickSmartTableRegionais(i)">
                         <td class="size-fonte-left-body">{{i.nome_agrupamento}}</td>
-                        <td class="size-fonte-right-body">{{i.meta_total_campanha}}</td>
-                        <td class="size-fonte-right-body">{{i.atingimento_total_campanha}}</td>
-                        <td class="size-fonte-right-body">{{i.perc_atingimento_total_campanha}}</td>
-                        <td class="size-fonte-right-body">{{i.ticket_medio_campanha}}</td>
-                        <td class="size-fonte-right-body">{{i.meta_diaria_campanha}}</td>
-                        <td class="size-fonte-right-body">{{i.meta_recalculada}}</td>
-                        <td class="size-fonte-right-body">{{i.projecao_total_campanha}}</td>
-                        <td class="size-fonte-right-body">{{i.total_hc_participantes}}</td>
+                        <td class="size-fonte-right-body">{{i.meta_total_campanha | number:'.':'pt'}}</td>
+                        <td class="size-fonte-right-body">{{i.atingimento_total_campanha | number:'.':'pt'}}</td>
+                        <td class="size-fonte-right-body">{{i.perc_atingimento_total_campanha | number:'.2-2':'pt'}}</td>
+                        <td class="size-fonte-right-body">{{i.ticket_medio_campanha | number:'.':'pt'}}</td>
+                        <td class="size-fonte-right-body">{{i.meta_diaria_campanha | number:'.':'pt'}}</td>
+                        <td class="size-fonte-right-body">{{i.meta_recalculada | number:'.':'pt'}}</td>
+                        <td class="size-fonte-right-body">{{i.projecao_total_campanha | number:'.':'pt'}}</td>
+                        <td class="size-fonte-right-body">{{i.total_hc_participantes | number:'.':'pt'}}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -605,14 +605,14 @@
                       <tr *ngFor="let i of dadosCampanhaMetasSmartTable | orderBy:key:reverse;"
                         (click)="clickSmartTablePromotores(i)">
                         <td class="size-fonte-left-body"> {{i.nome_agrupamento}}</td>
-                        <td class="size-fonte-right-body">{{i.meta_total_campanha}}</td>
-                        <td class="size-fonte-right-body">{{i.atingimento_total_campanha}}</td>
-                        <td class="size-fonte-right-body">{{i.perc_atingimento_total_campanha}}</td>
-                        <td class="size-fonte-right-body">{{i.ticket_medio_campanha}}</td>
-                        <td class="size-fonte-right-body">{{i.meta_diaria_campanha}}</td>
-                        <td class="size-fonte-right-body">{{i.meta_recalculada}}</td>
-                        <td class="size-fonte-right-body">{{i.projecao_total_campanha}}</td>
-                        <td class="size-fonte-right-body">{{i.total_hc_participantes}}</td>
+                        <td class="size-fonte-right-body">{{i.meta_total_campanha | number:'.':'pt'}}</td>
+                        <td class="size-fonte-right-body">{{i.atingimento_total_campanha | number:'.':'pt'}}</td>
+                        <td class="size-fonte-right-body">{{i.perc_atingimento_total_campanha | number:'.2-2':'pt'}}</td>
+                        <td class="size-fonte-right-body">{{i.ticket_medio_campanha | number:'.':'pt'}}</td>
+                        <td class="size-fonte-right-body">{{i.meta_diaria_campanha | number:'.':'pt'}}</td>
+                        <td class="size-fonte-right-body">{{i.meta_recalculada | number:'.':'pt'}}</td>
+                        <td class="size-fonte-right-body">{{i.projecao_total_campanha | number:'.':'pt'}}</td>
+                        <td class="size-fonte-right-body">{{i.total_hc_participantes | number:'.':'pt'}}</td>
                       </tr>
                     </tbody>
                   </table>
