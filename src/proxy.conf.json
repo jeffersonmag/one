@@ -1,0 +1,7 @@
+{
+  "/api/*": {
+      "target": "https://serv-prod-01.ribercred.com.br:10740",
+      "secure": false,
+      "logLevel": "debug"
+  }
+}

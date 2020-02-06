@@ -14,13 +14,14 @@ export class UsuarioApiService {
     private sessionService: SessionService,
   ) { }
 
+  // 'codigo_conexao': 9 // usar esse parametro em ambiente de teste
   dados(user) {
     return new Promise((resolve, reject) => {
       const response = this.requestService.post(`${environment.urlApi}/dados-usuario`, {
-        "cpf": user.cpf,
-        "senha": String(user.senha).toUpperCase(),
-        "projeto": "CORBAN",
-        "at_cliente": "RIBERCRED"
+        'cpf': user.cpf,
+        'senha': String(user.senha).toUpperCase(),
+        'projeto': 'CORBAN',
+        'at_cliente': 'RIBERCRED',
       });
       response
         .then((s) => {

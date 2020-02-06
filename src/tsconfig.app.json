@@ -20,5 +20,8 @@
     "../src/*.ts",
     "../src/**/*.d.ts",
     "../node_modules/@nebular/**/*.ts"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "enableIvy": true
+  }
 }

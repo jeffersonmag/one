@@ -28,7 +28,7 @@
                             type="modal-drop" tag="pendencia"></nb-search>
                     </nb-card-header>
                     <nb-card-body *ngIf="pendenciaSintetico.length == 0">
-                        <strong>Sem dados para exibir</strong>                        
+                        <strong>Sem dados para exibir</strong>
                     </nb-card-body>
                     <nb-card-body *ngIf="pendenciaSintetico.length != 0">
                         <div class="row">
@@ -223,8 +223,10 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-dark"
                                             (click)="close()">Cancelar</button>
-                                        <button type="button" ngbAutofocus class="btn btn-danger"
-                                            (click)="gerarEnvioBordero()">Confirmar</button>
+                                        <button *ngIf="!borderoConfirmado" type="button" ngbAutofocus
+                                            class="btn btn-danger" (click)="gerarEnvioBordero()">Confirmar</button>
+                                        <button disabled *ngIf="borderoConfirmado" type="button" ngbAutofocus
+                                            class="btn btn-danger">Confirmar</button>
                                     </div>
                                 </ng-template>
                                 <div class="row justify-content-center">

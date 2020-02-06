@@ -2,7 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { registerLocaleData, Location } from '@angular/common';
+import { registerLocaleData } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import pt from '@angular/common/locales/pt';
 registerLocaleData(pt);
@@ -20,6 +20,13 @@ import {
   NbSelectModule,
   NbProgressBarModule,
   NbTreeGridModule,
+  NbCardModule,
+  NbCheckboxModule,
+  NbRadioModule,
+  NbButtonModule,
+  NbActionsModule,
+  NbUserModule,
+  NbIconModule,
 } from '@nebular/theme';
 
 import { CoreModule } from './@core/core.module';
@@ -27,14 +34,14 @@ import { ThemeModule } from './@theme/theme.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PipesModule } from './pipes/pipes.module';
-import { NgbModal, ModalDismissReasons, NgbModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
 import { NgIdleModule } from '@ng-idle/core';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { SmartTableData } from './@core/data/smart-table';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { NgxCpfCnpjModule } from 'ngx-cpf-cnpj';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { SmartTableData } from './@core/data/smart-table';
 import { LoginComponent } from './login/login.component';
 import { TelaComponent } from './login/tela/tela.component';
 import { FormsComponent } from './pages/forms/forms.component';
@@ -54,11 +61,10 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
 @NgModule({
   declarations: [
     AppComponent,
-    FormsComponent,
-    FormInputsComponent,
+    /*FormInputsComponent,
     FormLayoutsComponent,
     ButtonsComponent,
-    DatepickerComponent
+    DatepickerComponent*/
   ],
   imports: [HttpClientModule,
     NgbToastModule,
@@ -90,6 +96,13 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     BrowserAnimationsModule,
     BrowserModule,
     NgxCpfCnpjModule,
+    NbCardModule,
+    NbCheckboxModule,
+    NbRadioModule,
+    NbButtonModule,
+    NbActionsModule,
+    NbUserModule,
+    NbIconModule,
   ],
   providers: [
     {

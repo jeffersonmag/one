@@ -50,7 +50,6 @@ export class TelaComponent implements OnInit {
     }
 
     if (f.valid) {
-      //console.log('dados validos');
 
       this.usuarioApiService.dados({
         "cpf": f.value.cpf,

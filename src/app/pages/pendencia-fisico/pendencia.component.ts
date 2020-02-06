@@ -1,5 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { NbThemeService, NbSortDirection, NbTreeGridDataSource, NbComponentStatus, NbGlobalPhysicalPosition, NbToastrService, NbSearchService, } from '@nebular/theme';
+import {
+  NbThemeService, NbSortDirection, NbTreeGridDataSource, NbComponentStatus,
+  NbGlobalPhysicalPosition, NbToastrService, NbSearchService
+} from '@nebular/theme';
 import _ from 'lodash';
 import { takeWhile } from 'rxjs/operators';
 import { PendenciaFisicoApiService } from '../../api/pendencia-fisico';
@@ -12,10 +15,6 @@ interface CardSettings {
   iconClass: string;
   type: string;
 }
-
-//export interface Fruit {
-//  name: string;
-//}
 
 @Component({
   selector: 'ngx-pendencia',
@@ -38,6 +37,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
   statusCards: string;
   commonStatusCardsSet: CardSettings[] = [];
   status_time_line: number;
+  borderoConfirmado = false;
 
   revealed = {
     regional: false,
@@ -49,9 +49,8 @@ export class PendenciaComponent implements OnInit, OnDestroy {
     tipoPendencia: false,
     instituicao: false,
     pendencias: true,
-    pendenciaFisico: true
-  }
-  
+    pendenciaFisico: true,
+  };
 
   statusCardsByThemes: {
     default: CardSettings[];
@@ -96,7 +95,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
   pageSize: number;
   valorAtual: any;
   numero_contratos: number = 0;
-  
+
   customColumn = 'name';
   defaultColumns = ['size', 'kind', 'items'];
   allColumns = [this.customColumn, ...this.defaultColumns];
@@ -132,7 +131,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
     private pendenciaFisicoApiService: PendenciaFisicoApiService,
     private modalService: NgbModal,
     private searchServicePendencia: NbSearchService,
-    private toastrService: NbToastrService
+    private toastrService: NbToastrService,
   ) {
     this.themeService.getJsTheme()
       .pipe(takeWhile(() => this.alive))
@@ -150,9 +149,9 @@ export class PendenciaComponent implements OnInit, OnDestroy {
   }
 
   filtroFindContratosSearch(proposta) {
-    if (proposta != 0) {
+    if (proposta !== 0) {
       let pendenciaFiltrados = this.pendencia.filter(valorContratos => valorContratos.proposta == proposta);
-      if (pendenciaFiltrados.length == 0) {
+      if (pendenciaFiltrados.length === 0) {
         this.findPendenciaSinteticoPesquisaProposta();
       } else {
         this.findPendenciaSinteticoPesquisaProposta();
@@ -167,37 +166,37 @@ export class PendenciaComponent implements OnInit, OnDestroy {
     this.pendenciaSinteticoTemp = [];
     this.pendenciaFisicoApiService.pendenciasSintetico(
       {
-        "data_de": "",
-        "data_ate": "",
-        "criterio_de_data": "",
-        "codigo_matriz": Number(this.codigoLojaMatriz),
-        "codigo_instituicao": Number(this.codigoInstituicao),
-        "codigo_comercial": Number(this.codigoComercial),
-        "codigo_regional": Number(this.codigoRegional),
-        "codigo_loja": Number(this.codigoLoja),
-        "codigo_funcionario": Number(this.codigoFuncionario),
-        "status_farol": this.codigoTipoPendencia,
-        "codigo_canal_vendas": Number(this.codigoCanalVendas),
-        "numero_bordero": Number(this.codigoBordero),
-        "proposta": Number(this.valueProposta)
+        'data_de': '',
+        'data_ate': '',
+        'criterio_de_data': '',
+        'codigo_matriz': Number(this.codigoLojaMatriz),
+        'codigo_instituicao': Number(this.codigoInstituicao),
+        'codigo_comercial': Number(this.codigoComercial),
+        'codigo_regional': Number(this.codigoRegional),
+        'codigo_loja': Number(this.codigoLoja),
+        'codigo_funcionario': Number(this.codigoFuncionario),
+        'status_farol': this.codigoTipoPendencia,
+        'codigo_canal_vendas': Number(this.codigoCanalVendas),
+        'numero_bordero': Number(this.codigoBordero),
+        'proposta': Number(this.valueProposta),
       }
     ).then((s) => {
       this.pendenciaSintetico = s.status_time_line;
       for (let i of this.pendenciaSintetico) {
-        if (i.codigo_status_time_line == this.codigo_status_time_line) {
+        if (i.codigo_status_time_line === this.codigo_status_time_line) {
           this.pendenciaSinteticoTemp.push(i = {
             ...i,
-            "ativo": true
+            'ativo': true,
           })
         } else {
           this.pendenciaSinteticoTemp.push(i = {
             ...i,
-            "ativo": false
+            'ativo': false,
           })
         }
       }
       this.pendenciaSintetico = this.pendenciaSinteticoTemp;
-      if (this.pendenciaSintetico.length == 0) {
+      if (this.pendenciaSintetico.length === 0) {
         this.makeToast('warning', 'Filtro Vazio', 'Sem propostas para serem exibidas');
       }
       if (!vazio) {
@@ -215,31 +214,31 @@ export class PendenciaComponent implements OnInit, OnDestroy {
     this.pendenciaSintetico = [];
     this.pendenciaSinteticoTemp = [];
     this.pendenciaFisicoApiService.pendenciasSintetico({
-      "data_de": "",
-      "data_ate": "",
-      "criterio_de_data": "",
-      "codigo_matriz": Number(this.codigoLojaMatriz),
-      "codigo_instituicao": Number(this.codigoInstituicao),
-      "codigo_comercial": Number(this.codigoComercial),
-      "codigo_regional": Number(this.codigoRegional),
-      "codigo_loja": Number(this.codigoLoja),
-      "codigo_funcionario": Number(this.codigoFuncionario),
-      "status_farol": this.codigoTipoPendencia,
-      "codigo_canal_vendas": Number(this.codigoCanalVendas),
-      "numero_bordero": Number(this.codigoBordero)
+      'data_de': '',
+      'data_ate': '',
+      'criterio_de_data': '',
+      'codigo_matriz': Number(this.codigoLojaMatriz),
+      'codigo_instituicao': Number(this.codigoInstituicao),
+      'codigo_comercial': Number(this.codigoComercial),
+      'codigo_regional': Number(this.codigoRegional),
+      'codigo_loja': Number(this.codigoLoja),
+      'codigo_funcionario': Number(this.codigoFuncionario),
+      'status_farol': this.codigoTipoPendencia,
+      'codigo_canal_vendas': Number(this.codigoCanalVendas),
+      'numero_bordero': Number(this.codigoBordero),
     }
     ).then((s) => {
       this.pendenciaSintetico = s.status_time_line;
       for (let i of this.pendenciaSintetico) {
-        if (i.codigo_status_time_line == 0) {
+        if (i.codigo_status_time_line === 0) {
           this.pendenciaSinteticoTemp.push(i = {
             ...i,
-            "ativo": true
+            'ativo': true,
           })
         } else {
           this.pendenciaSinteticoTemp.push(i = {
             ...i,
-            "ativo": false
+            'ativo': false,
           })
         }
       }
@@ -256,32 +255,32 @@ export class PendenciaComponent implements OnInit, OnDestroy {
     this.pendenciaSintetico = [];
     this.pendenciaSinteticoTemp = [];
     this.pendenciaFisicoApiService.pendenciasSintetico({
-      "data_de": "",
-      "data_ate": "",
-      "criterio_de_data": "",
-      "codigo_matriz": Number(this.codigoLojaMatriz),
-      "codigo_instituicao": Number(this.codigoInstituicao),
-      "codigo_comercial": Number(this.codigoComercial),
-      "codigo_regional": Number(this.codigoRegional),
-      "codigo_loja": Number(this.codigoLoja),
-      "codigo_funcionario": Number(this.codigoFuncionario),
-      "status_farol": this.codigoTipoPendencia,
-      "codigo_canal_vendas": Number(this.codigoCanalVendas),
-      "numero_bordero": Number(this.codigoBordero),
-      "proposta": Number(this.valueProposta)
+      'data_de': '',
+      'data_ate': '',
+      'criterio_de_data': '',
+      'codigo_matriz': Number(this.codigoLojaMatriz),
+      'codigo_instituicao': Number(this.codigoInstituicao),
+      'codigo_comercial': Number(this.codigoComercial),
+      'codigo_regional': Number(this.codigoRegional),
+      'codigo_loja': Number(this.codigoLoja),
+      'codigo_funcionario': Number(this.codigoFuncionario),
+      'status_farol': this.codigoTipoPendencia,
+      'codigo_canal_vendas': Number(this.codigoCanalVendas),
+      'numero_bordero': Number(this.codigoBordero),
+      'proposta': Number(this.valueProposta)
     }
     ).then((s) => {
       this.pendenciaSintetico = s.status_time_line;
       for (let i of this.pendenciaSintetico) {
-        if (i.codigo_status_time_line == 0) {
+        if (i.codigo_status_time_line === 0) {
           this.pendenciaSinteticoTemp.push(i = {
             ...i,
-            "ativo": true
+            'ativo': true,
           })
         } else {
           this.pendenciaSinteticoTemp.push(i = {
             ...i,
-            "ativo": true
+            'ativo': true,
           })
         }
       }
@@ -307,21 +306,20 @@ export class PendenciaComponent implements OnInit, OnDestroy {
     this.loja = [];
     this.matriz = [];
     this.pararSpinner = true;
-    //this.codigo_status_time_line = codigo_status_time_line;
     this.pendenciaFisicoApiService.pendencias({
-      "data_de": "",
-      "data_ate": "",
-      "criterio_de_data": "",
-      "codigo_matriz": Number(this.codigoLojaMatriz),
-      "codigo_instituicao": Number(this.codigoInstituicao),
-      "codigo_comercial": Number(this.codigoComercial),
-      "codigo_regional": Number(this.codigoRegional),
-      "codigo_loja": Number(this.codigoLoja),
-      "codigo_funcionario": Number(this.codigoFuncionario),
-      "status_farol": this.codigoTipoPendencia,
-      "codigo_canal_vendas": Number(this.codigoCanalVendas),
-      "numero_bordero": Number(this.codigoBordero),
-      "proposta": Number(this.valueProposta)
+      'data_de': '',
+      'data_ate': '',
+      'criterio_de_data': '',
+      'codigo_matriz': Number(this.codigoLojaMatriz),
+      'codigo_instituicao': Number(this.codigoInstituicao),
+      'codigo_comercial': Number(this.codigoComercial),
+      'codigo_regional': Number(this.codigoRegional),
+      'codigo_loja': Number(this.codigoLoja),
+      'codigo_funcionario': Number(this.codigoFuncionario),
+      'status_farol': this.codigoTipoPendencia,
+      'codigo_canal_vendas': Number(this.codigoCanalVendas),
+      'numero_bordero': Number(this.codigoBordero),
+      'proposta': Number(this.valueProposta),
     })
       .then((s) => {
         this.pendencia = s.dados;
@@ -370,20 +368,20 @@ export class PendenciaComponent implements OnInit, OnDestroy {
     this.codigo_status_time_line = codigo_status_time_line.codigo_status_time_line
     this.valorAtual = event;
     this.pendenciaFisicoApiService.pendencias({
-      "data_de": "",
-      "data_ate": "",
-      "criterio_de_data": "",
-      "codigo_matriz": Number(this.codigoLojaMatriz),
-      "codigo_comercial": Number(this.codigoComercial),
-      "codigo_instituicao": Number(this.codigoInstituicao),
-      "codigo_regional": Number(this.codigoRegional),
-      "codigo_loja": Number(this.codigoLoja),
-      "codigo_funcionario": Number(this.codigoFuncionario),
-      "status_farol": this.codigoTipoPendencia,
-      "codigo_canal_vendas": Number(this.codigoCanalVendas),
-      "numero_bordero": Number(this.codigoBordero),
-      "status_time_line": codigo_status_time_line.codigo_status_time_line,
-      "proposta": Number(this.valueProposta)
+      'data_de': '',
+      'data_ate': '',
+      'criterio_de_data': '',
+      'codigo_matriz': Number(this.codigoLojaMatriz),
+      'codigo_comercial': Number(this.codigoComercial),
+      'codigo_instituicao': Number(this.codigoInstituicao),
+      'codigo_regional': Number(this.codigoRegional),
+      'codigo_loja': Number(this.codigoLoja),
+      'codigo_funcionario': Number(this.codigoFuncionario),
+      'status_farol': this.codigoTipoPendencia,
+      'codigo_canal_vendas': Number(this.codigoCanalVendas),
+      'numero_bordero': Number(this.codigoBordero),
+      'status_time_line': codigo_status_time_line.codigo_status_time_line,
+      'proposta': Number(this.valueProposta),
     })
       .then((s) => {
         this.pendencia = s.dados;
@@ -395,7 +393,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
         this.instituicao = s.agrupado_instituicao;
         this.canalVendas = s.agrupado_canal_vendas;
         this.tipoPendencia = s.agrupado_status_farol;
-        if (this.pendencia.length == 0) {
+        if (this.pendencia.length === 0) {
           this.pararSpinner = false;
           this.makeToast('warning', 'Filtro Vazio', 'Sem propostas para serem exibidas');
         }
@@ -418,19 +416,19 @@ export class PendenciaComponent implements OnInit, OnDestroy {
     this.pararSpinner = true;
     this.codigo_status_time_line = codigo_status_time_line;
     this.pendenciaFisicoApiService.pendencias({
-      "data_de": "",
-      "data_ate": "",
-      "criterio_de_data": "",
-      "codigo_matriz": Number(this.codigoLojaMatriz),
-      "codigo_instituicao": Number(this.codigoInstituicao),
-      "codigo_comercial": Number(this.codigoComercial),
-      "codigo_regional": Number(this.codigoRegional),
-      "codigo_loja": Number(this.codigoLoja),
-      "codigo_funcionario": Number(this.codigoFuncionario),
-      "status_farol": this.codigoTipoPendencia,
-      "codigo_canal_vendas": Number(this.codigoCanalVendas),
-      "numero_bordero": Number(this.codigoBordero),
-      "status_time_line": Number(this.codigo_status_time_line),
+      'data_de': '',
+      'data_ate': '',
+      'criterio_de_data': '',
+      'codigo_matriz': Number(this.codigoLojaMatriz),
+      'codigo_instituicao': Number(this.codigoInstituicao),
+      'codigo_comercial': Number(this.codigoComercial),
+      'codigo_regional': Number(this.codigoRegional),
+      'codigo_loja': Number(this.codigoLoja),
+      'codigo_funcionario': Number(this.codigoFuncionario),
+      'status_farol': this.codigoTipoPendencia,
+      'codigo_canal_vendas': Number(this.codigoCanalVendas),
+      'numero_bordero': Number(this.codigoBordero),
+      'status_time_line': Number(this.codigo_status_time_line),
     })
       .then((s) => {
         this.pendencia = s.dados;
@@ -442,7 +440,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
         this.instituicao = s.agrupado_instituicao;
         this.canalVendas = s.agrupado_canal_vendas;
         this.tipoPendencia = s.agrupado_status_farol;
-        if (this.pendencia.length == 0) {
+        if (this.pendencia.length === 0) {
           this.pararSpinner = false;
         }
       })
@@ -493,8 +491,8 @@ export class PendenciaComponent implements OnInit, OnDestroy {
 
   enviarPreBordero(pk_contrato) {
     this.pendenciaFisicoApiService.enviarPreBordero({
-      "pk_contrato": pk_contrato,
-      "id_tipo_bordero": this.codigo_status_time_line
+      'pk_contrato': pk_contrato,
+      'id_tipo_bordero': this.codigo_status_time_line
     })
       .then((s) => {
         this.makeToast('success', 'Sucesso', 'Proposta inserida no Pré Borderô');
@@ -511,7 +509,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
 
   retirarPreBordero(pk_contrato) {
     this.pendenciaFisicoApiService.retirarPreBordero({
-      "pk_contrato": pk_contrato
+      'pk_contrato': pk_contrato
     })
       .then((s) => {
         this.makeToast('success', 'Sucesso', 'Proposta removida do Pré Borderô');
@@ -544,52 +542,56 @@ export class PendenciaComponent implements OnInit, OnDestroy {
   }
 
   confirmarBordero(modal) {
-    this.modalReference = this.modalService.open(modal, { size: 'sm', backdrop: 'static' })
+    this.modalReference = this.modalService.open(modal, { size: 'sm', backdrop: 'static' });
   }
 
   listarBordero(modal) {
-    this.modalReference = this.modalService.open(modal, { size: 'lg', scrollable: false })
+    this.modalReference = this.modalService.open(modal, { size: 'lg', scrollable: false });
   }
 
   gerarEnvioBordero() {
     this.bordero = [];
+    this.borderoConfirmado = true;
     this.lista_tipo_bordero = [];
     if (this.numero_contratos == 0) {
       alert('Informe a quantidade de contratos para prosseguir!');
+      this.borderoConfirmado = false;
     } else {
       this.pendenciaFisicoApiService.gerarBordero({
-        "qtd_contratos_conferencia": this.numero_contratos,
+        'qtd_contratos_conferencia': this.numero_contratos,
       })
         .then((s) => {
           this.bordero = s;
           this.lista_tipo_bordero = s.lista_tipo_bordero;
-          if (this.lista_tipo_bordero[0].tipo == "REMESSA") {
+          if (this.lista_tipo_bordero[0].tipo === 'REMESSA') {
             this.imprimirBorderoRemessa(s.codigo_bordero);
             //setTimeout(() => {
-            if (this.lista_tipo_bordero[1].tipo == "REMESSA") {
+            if (this.lista_tipo_bordero[1].tipo === 'REMESSA') {
               this.imprimirBorderoRemessa(s.codigo_bordero);
             };
-            if (this.lista_tipo_bordero[1].tipo == "REGULARIZACAO") {
+            if (this.lista_tipo_bordero[1].tipo === 'REGULARIZACAO') {
               this.imprimirBorderoRegularizacao(s.codigo_bordero);
             };
             //}, 2000);
           };
-          if (this.lista_tipo_bordero[0].tipo == "REGULARIZACAO") {
+          if (this.lista_tipo_bordero[0].tipo === 'REGULARIZACAO') {
             this.imprimirBorderoRegularizacao(s.codigo_bordero);
             //setTimeout(() => {
-            if (this.lista_tipo_bordero[1].tipo == "REMESSA") {
+            if (this.lista_tipo_bordero[1].tipo === 'REMESSA') {
               this.imprimirBorderoRemessa(s.codigo_bordero);
             };
-            if (this.lista_tipo_bordero[1].tipo == "REGULARIZACAO") {
+            if (this.lista_tipo_bordero[1].tipo === 'REGULARIZACAO') {
               this.imprimirBorderoRegularizacao(s.codigo_bordero);
             };
             //}, 5000);
           };
           this.close();
           this.findPendenciaSintetico();
+          this.borderoConfirmado = false;
         })
         .catch((e) => {
           this.close();
+          this.borderoConfirmado = false;
           this.numero_contratos = 0;
           let erro = e.error.message;
           this.makeToast('danger', 'Erro', erro);
@@ -599,38 +601,35 @@ export class PendenciaComponent implements OnInit, OnDestroy {
 
   imprimirBorderoRemessa(bordero) {
     this.pendenciaFisicoApiService.imprimirBorderoRemessa(null, bordero).then((s) => {
-      //this.makeToast('success', 'Sucesso!', 'Borderô de Remessa gerado com sucesso!');
     })
       .catch((e) => {
         let erro = e.error.message;
         this.makeToast('danger', 'Erro', erro);
-        console.log(e)
+        console.log(e);
       });
   }
 
   imprimirBorderoRegularizacao(bordero) {
     this.pendenciaFisicoApiService.imprimirBorderoRegularizacao(null, bordero).then((s) => {
-      //this.makeToast('success', 'Sucesso!', 'Borderô de Regularização gerado com sucesso!');
     })
       .catch((e) => {
         let erro = e.error.message;
         this.makeToast('danger', 'Erro', erro);
-        console.log(e)
+        console.log(e);
       });
   }
 
 
   private _filterRegional(value: number, nome?: string, limpar?: boolean): any {
-    if (limpar && value == 0) {
+    if (limpar && value === 0) {
       this.ativaBotaoRegional = false;
-      this.codigoRegional = "";
+      this.codigoRegional = '';
       this.atualizaContador(this.ativaBotaoRegional)
     } else {
       this.ativaBotaoRegional = true;
       const filterValue = value;
       this.nomeRegional = nome;
       this.codigoRegional = String(filterValue);
-      //this.atualizaContador(this.ativaBotaoRegional)
       let regionaisFiltrados = this.regional.filter(valorRegional => valorRegional.codigo_regional == filterValue);
       let pendenciaFiltrados = this.pendencia.filter(valorContratos => valorContratos.codigo_regional == filterValue);
       this.regional = regionaisFiltrados;
@@ -642,8 +641,8 @@ export class PendenciaComponent implements OnInit, OnDestroy {
   private _filterInstituicao(value: number, nome?: string, limpar?: boolean): any {
     if (limpar && value == 0) {
       this.ativaBotaoInstituicao = false;
-      this.codigoInstituicao = "";
-      this.atualizaContador(this.ativaBotaoInstituicao)
+      this.codigoInstituicao = '';
+      this.atualizaContador(this.ativaBotaoInstituicao);
     } else {
       this.ativaBotaoInstituicao = true;
       const filterValue = value;
@@ -660,14 +659,13 @@ export class PendenciaComponent implements OnInit, OnDestroy {
   private _filterComercial(value: number, nome?: string, limpar?: boolean): any {
     if (limpar && value == 0) {
       this.ativaBotaoComercial = false;
-      this.codigoComercial = "";
+      this.codigoComercial = '';
       this.atualizaContador(this.ativaBotaoComercial)
     } else {
       const filterValue = value;
       this.ativaBotaoComercial = true;
       this.codigoComercial = String(filterValue);
       this.nomeComercial = nome;
-      //this.atualizaContador(this.ativaBotaoComercial)
       let comerciaisFiltrados = this.comercial.filter(valorComercial => valorComercial.codigo_comercial == filterValue);
       let pendenciaFiltrados = this.pendencia.filter(valorContratos => valorContratos.codigo_comercial == filterValue);
       this.comercial = comerciaisFiltrados;
@@ -679,14 +677,13 @@ export class PendenciaComponent implements OnInit, OnDestroy {
   private _filterLoja(value: number, nome?: string, limpar?: boolean): any {
     if (limpar && value == 0) {
       this.ativaBotaoLoja = false;
-      this.codigoLoja = "";
+      this.codigoLoja = '';
       this.atualizaContador(this.ativaBotaoLoja);
     } else {
       const filterValue = value;
       this.codigoLoja = String(filterValue);
       this.nomeLoja = nome;
       this.ativaBotaoLoja = true;
-      //this.atualizaContador(this.ativaBotaoLoja);
       let lojasFiltrados = this.loja.filter(valorLoja => valorLoja.codigo_loja == filterValue);
       let pendenciaFiltrados = this.pendencia.filter(valorContratos => valorContratos.chave_loja == filterValue);
       this.loja = lojasFiltrados;
@@ -698,7 +695,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
   private _filterLojaMatriz(value: number, nome?: string, limpar?: boolean): any {
     if (limpar && value == 0) {
       this.ativaBotaoLojaMatriz = false;
-      this.codigoLojaMatriz = "";
+      this.codigoLojaMatriz = '';
       this.atualizaContador(this.ativaBotaoLoja);
     } else {
       const filterValue = value;
@@ -717,7 +714,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
   private _filterFuncionario(value: number, nome?: string, limpar?: boolean): any {
     if (limpar && value == 0) {
       this.ativaBotaoFuncionario = false;
-      this.codigoFuncionario = "";
+      this.codigoFuncionario = '';
       this.atualizaContador(this.ativaBotaoFuncionario);
     } else {
       const filterValue = value;
@@ -736,7 +733,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
   private _filtercanalVendas(value: number, nome?: string, limpar?: boolean): any {
     if (limpar && value == 0) {
       this.ativaBotaocanalVendas = false;
-      this.codigoCanalVendas = "";
+      this.codigoCanalVendas = '';
       this.atualizaContador(this.ativaBotaocanalVendas);
     } else {
       const filterValue = value;
@@ -753,9 +750,9 @@ export class PendenciaComponent implements OnInit, OnDestroy {
   }
 
   private _filterTipoPendencia(value: string, nome?: string, limpar?: boolean): any {
-    if (limpar && value == "") {
+    if (limpar && value == '') {
       this.ativaBotaoTipoPendencia = false;
-      this.codigoTipoPendencia = "";
+      this.codigoTipoPendencia = '';
       this.atualizaContador(this.ativaBotaoTipoPendencia);
     } else {
       let filterValuePen: string = value;

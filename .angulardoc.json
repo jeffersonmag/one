@@ -1,4 +1,9 @@
 {
   "repoId": "cc2d5663-089b-41ea-8d24-995903269a1f",
-  "lastSync": 0
+  "lastSync": 0,
+  "defaults": {
+    "serve": {
+      "proxyConfig": "./proxy.config.js"
+    }
+  }
 }

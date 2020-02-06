@@ -12,4 +12,5 @@ export const environment = {
   production: false,
   urlAutentication: 'https://serv-prod-01.ribercred.com.br:10725/autenticador/v1/TServerMetodoToken/Token',
   urlApi: 'https://serv-prod-01.ribercred.com.br:10740/api',
+  // urlApi: 'http://192.168.60.53:10740/api', // ambiente de teste
 };

@@ -4,7 +4,7 @@ import { environment } from '../../environments/environment';
 import { RequestService } from '../services/request.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PendenciaFisicoApiService {
 
@@ -41,6 +41,7 @@ export class PendenciaFisicoApiService {
   }
 
   imprimirBorderoRegularizacao(dados, bordero: string) {
-    return this.requestService.getDownload(`${environment.urlApi}/imprime-bordero-regularizacao/` + bordero, dados, true);
+    return this.requestService.getDownload(`${environment.urlApi}/imprime-bordero-regularizacao/`
+    + bordero, dados, true);
   }
 }

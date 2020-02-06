@@ -24,7 +24,7 @@
   "scripts": {
     "ng": "ng",
     "conventional-changelog": "conventional-changelog",
-    "start": "ng serve --port 3000 --host 0.0.0.0",
+    "start": "ng serve --port 3000 --host 0.0.0.0 --proxy-config proxy.config.js",
     "build": "ng build --base-href http://rbc.com.br/one/ --deploy-url http://rbc.com.br/one/",
     "build:prod": "npm run build -- --prod --aot",
     "test": "ng test",
@@ -74,6 +74,7 @@
     "ckeditor": "4.7.3",
     "classlist.js": "1.1.20150312",
     "core-js": "2.5.1",
+    "cors": "^2.8.5",
     "cpf-cnpj-validator": "^0.1.0",
     "crypto-js": "^3.1.9-1",
     "date-fns": "^2.9.0",
