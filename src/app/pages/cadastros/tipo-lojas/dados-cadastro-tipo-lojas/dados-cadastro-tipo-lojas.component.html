@@ -1,0 +1,95 @@
+<div class="buttons-row">
+  <div *ngIf="erro">
+    <nb-alert class="erro" status="danger">Erro: {{mensagem_erro}}</nb-alert> <br>
+  </div>
+  <button *ngIf="criacaoUsuario" class="buttons-row" nbButton shape="round" size="tiny" status="success"
+    nbTooltip="Salvar" (click)="salvarDados(form)">
+    <i class="fa fa-check color"></i>
+    <div class="espacamento">Salvar</div>
+  </button>
+  <button *ngIf="edicaoUsuario" class="buttons-row" nbButton shape="round" size="tiny" status="success"
+    nbTooltip="Salvar" (click)="confirmacaoEdicao(contentedicao)">
+    <i class="fa fa-check color"></i>
+    <div class="espacamento">Salvar</div>
+  </button>
+
+  <!--Confirmar edicao dos dados-->
+  <ng-template #contentedicao let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <span>Confirmar edição de dados?</span>
+    </div>
+    <div class="modal-body">
+      <div class="buttons-row">
+        <button class="buttons-row" nbButton shape="round" size="tiny" status="success" nbTooltip="Salvar"
+          (click)="editarDados(form)">
+          <i class="fa fa-check color"></i>
+          <div class="espacamento">Sim</div>
+        </button>
+        <button class="buttons-row" nbButton shape="round" size="tiny" status="danger" nbTooltip="Salvar"
+          (click)="d('Cross click')">
+          <i class="fa fa-times color"></i>
+          <div class="espacamento">Não</div>
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <button *ngIf="edicaoUsuario && permissaoExclusao" class="buttons-row" nbButton shape="round" size="tiny"
+    status="danger" nbTooltip="Excluir usuário" (click)="confirmacaoExclusao(contentconfirmacao)">
+    <i class="fa fa-times color"></i>
+    <div class="espacamento" nbTooltip="Excluir usuário">Excluir</div>
+  </button>
+
+  <!--Confirmar exclusao dos dados-->
+  <ng-template #contentconfirmacao let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <span>Confirmar exclusão de dados?</span>
+    </div>
+    <div class="modal-body">
+      <div class="buttons-row">
+        <button class="buttons-row" nbButton shape="round" size="tiny" status="success" nbTooltip="Salvar"
+          (click)="excluirDados(form)">
+          <i class="fa fa-check color"></i>
+          <div class="espacamento">Sim</div>
+        </button>
+        <button class="buttons-row" nbButton shape="round" size="tiny" status="danger" nbTooltip="Salvar"
+          (click)="d('Cross click')">
+          <i class="fa fa-times color"></i>
+          <div class="espacamento">Não</div>
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <button *ngIf="edicaoUsuario && !permissaoExclusao" disabled class="buttons-row" nbButton shape="round" size="tiny"
+    status="danger">
+    <i class="fa fa-times color"></i>
+    <div class="espacamento" nbTooltip="Sem permissão para excluir">Excluir</div>
+  </button>
+</div>
+
+<form #form="ngForm" class="formulario" [formGroup]="formulario">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputpk" class="label col-sm-3 col-form-label">Chave</label>
+        <div class="col-sm-9">
+          <input type="text" nbInput readonly shape="rectangle" fieldSize="tiny" id="inputpk" formControlName="pk"
+            tabindex="1">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputNome" class="label col-sm-3 col-form-label">Nome do Tipo de Loja</label>
+        <div class="col-sm-9">
+          <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+            fieldSize="tiny" id="inputNome" formControlName="nome" tabindex="2">
+          <control-messages [control]="formulario.get('nome')"></control-messages>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</form>

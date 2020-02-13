@@ -1,0 +1,272 @@
+<div class="buttons-row">
+  <div *ngIf="erro">
+    <nb-alert class="erro" status="danger">Erro: {{mensagem_erro}}</nb-alert> <br>
+  </div>
+  <button *ngIf="criacaoUsuario" class="buttons-row" nbButton shape="round" size="tiny" status="success"
+    nbTooltip="Salvar" (click)="salvarDados(form)">
+    <i class="fa fa-check color"></i>
+    <div class="espacamento">Salvar</div>
+  </button>
+  <button *ngIf="edicaoUsuario" class="buttons-row" nbButton shape="round" size="tiny" status="success"
+    nbTooltip="Salvar" (click)="confirmacaoEdicao(contentedicao)">
+    <i class="fa fa-check color"></i>
+    <div class="espacamento">Salvar</div>
+  </button>
+
+  <!--Confirmar edicao dos dados-->
+  <ng-template #contentedicao let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <span>Confirmar edição de dados?</span>
+    </div>
+    <div class="modal-body">
+      <div class="buttons-row">
+        <button class="buttons-row" nbButton shape="round" size="tiny" status="success" nbTooltip="Salvar"
+          (click)="editarDados(form)">
+          <i class="fa fa-check color"></i>
+          <div class="espacamento">Sim</div>
+        </button>
+        <button class="buttons-row" nbButton shape="round" size="tiny" status="danger" nbTooltip="Salvar"
+          (click)="d('Cross click')">
+          <i class="fa fa-times color"></i>
+          <div class="espacamento">Não</div>
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <button *ngIf="edicaoUsuario && permissaoExclusao" class="buttons-row" nbButton shape="round" size="tiny"
+    status="danger" nbTooltip="Excluir dados" (click)="confirmacaoExclusao(contentconfirmacao)">
+    <i class="fa fa-times color"></i>
+    <div class="espacamento" nbTooltip="Excluir dados">Excluir</div>
+  </button>
+
+  <!--Confirmar exclusao dos dados-->
+  <ng-template #contentconfirmacao let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <span>Confirmar exclusão de dados?</span>
+    </div>
+    <div class="modal-body">
+      <div class="buttons-row">
+        <button class="buttons-row" nbButton shape="round" size="tiny" status="success" nbTooltip="Salvar"
+          (click)="excluirDados(form)">
+          <i class="fa fa-check color"></i>
+          <div class="espacamento">Sim</div>
+        </button>
+        <button class="buttons-row" nbButton shape="round" size="tiny" status="danger" nbTooltip="Salvar"
+          (click)="d('Cross click')">
+          <i class="fa fa-times color"></i>
+          <div class="espacamento">Não</div>
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <button *ngIf="edicaoUsuario && !permissaoExclusao" disabled class="buttons-row" nbButton shape="round" size="tiny"
+    status="danger">
+    <i class="fa fa-times color"></i>
+    <div class="espacamento" nbTooltip="Sem permissão para excluir">Excluir</div>
+  </button>
+</div>
+
+<form #form="ngForm" class="formulario" [formGroup]="formulario">
+  <nb-tabset fullWidth>
+    <nb-tab [tabTitle]="'GERAL'" [active]="true" badgeStatus="info">
+
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputpk" class="label col-sm-3 col-form-label">Chave</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput readonly shape="rectangle" fieldSize="tiny" id="inputpk" formControlName="pk"
+                tabindex="1">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputAtivo" class="label col-sm-3 col-form-label">Ativo</label>
+            <div class="col-sm-9">
+              <nb-toggle status="basic" id="inputAtivo" formControlName="ativo" tabindex="7"></nb-toggle>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputNome" class="label col-sm-3 col-form-label">Nome Fantasia</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+                fieldSize="tiny" id="inputNome" formControlName="nome_fantasia" tabindex="2">
+              <!--<control-messages [control]="formulario.get('nome_fantasia')"></control-messages>-->
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputPN" class="label col-sm-3 col-form-label">Parceiro de negócios</label>
+            <div class="col-sm-9">
+              <input #autoInputPN nbInput fullWidth fieldSize="tiny" oninput="this.value = this.value.toUpperCase()"
+                type="text" (input)="onChangePN()" [nbAutocomplete]="auto" formControlName="pn_nome" id="inputPN"
+                tabindex="8" autocomplete="doNotAutoComplete" />
+              <nb-autocomplete #auto (selectedChange)="onSelectionChangePN($event)">
+                <nb-option *ngFor="let option of filteredDadosPN$ | async" [value]="option">
+                  {{ option }}
+                </nb-option>
+              </nb-autocomplete>
+              <input nbInput type="hidden" id="inputCVpk" name="inputCVpk" value={{pn_codigo}}
+                formControlName="pn_codigo">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputTelefone1" class="label col-sm-3 col-form-label">Telefone 1</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth
+                mask="{{this.formulario.value.telefone1.length <= 10 ? this.mascaraTelefone[0] : this.mascaraTelefone[1]}}"
+                oninput="this.value = this.value.toUpperCase()" shape="rectangle" fieldSize="tiny" id="inputNome"
+                formControlName="telefone1" tabindex="3">
+              <!--<control-messages [control]="formulario.get('telefone2')"></control-messages>-->
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputTelefone2" class="label col-sm-3 col-form-label">Telefone 2</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth
+                mask="{{this.formulario.value.telefone2.length <= 10 ? this.mascaraTelefone[0] : this.mascaraTelefone[1]}}"
+                oninput="this.value = this.value.toUpperCase()" shape="rectangle" fieldSize="tiny" id="inputTelefone2"
+                formControlName="telefone2" tabindex="9">
+              <!--<control-messages [control]="formulario.get('telefone2')"></control-messages>-->
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputCelular" class="label col-sm-3 col-form-label">Celular</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth
+                mask="{{this.formulario.value.celular.length <= 10 ? this.mascaraTelefone[0] : this.mascaraTelefone[1]}}"
+                oninput="this.value = this.value.toUpperCase()" shape="rectangle" fieldSize="tiny" id="inputCelular"
+                formControlName="celular" tabindex="4">
+              <!--<control-messages [control]="formulario.get('celular')"></control-messages>-->
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputPessoaContato" class="label col-sm-3 col-form-label">Pessoa de contato</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()"
+                mask="{{this.formulario.value.pessoa_de_contato.length <= 10 ? this.mascaraTelefone[0] : this.mascaraTelefone[1]}}"
+                shape="rectangle" fieldSize="tiny" id="inputPessoaContato" formControlName="pessoa_de_contato"
+                tabindex="10">
+              <!--<control-messages [control]="formulario.get('pessoa_de_contato')"></control-messages>-->
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputEmailDiretoria" class="label col-sm-3 col-form-label">E-mail Diretoria</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+                fieldSize="tiny" id="inputEmailDiretoria" formControlName="email_diretoria" tabindex="5">
+              <!--<control-messages [control]="formulario.get('email_diretoria')"></control-messages>-->
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputemail_financeiro" class="label col-sm-3 col-form-label">E-mail Financeiro</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+                fieldSize="tiny" id="inputemail_financeiro" formControlName="email_financeiro" tabindex="11">
+              <!--<control-messages [control]="formulario.get('email_financeiro')"></control-messages>-->
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputemail_cadastro" class="label col-sm-3 col-form-label">E-mail Cadastro</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+                fieldSize="tiny" id="inputemail_cadastro" formControlName="email_cadastro" tabindex="6">
+              <!--<control-messages [control]="formulario.get('email_cadastro')"></control-messages>-->
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputemail_fisico" class="label col-sm-3 col-form-label">E-mail Físico</label>
+            <div class="col-sm-9">
+              <input type="text" nbInput fullWidth oninput="this.value = this.value.toUpperCase()" shape="rectangle"
+                fieldSize="tiny" id="inputemail_fisico" formControlName="email_fisico" tabindex="12">
+              <!--<control-messages [control]="formulario.get('email_fisico')"></control-messages>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </nb-tab>
+    <nb-tab [tabTitle]="'PARÂMETROS'" [active]="true" badgeStatus="info">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputCV" class="label col-sm-3 col-form-label">Canal de Vendas</label>
+            <div class="col-sm-9">
+              <input #autoInputCV nbInput fullWidth fieldSize="tiny" oninput="this.value = this.value.toUpperCase()"
+                type="text" (input)="onChangeCV()" [nbAutocomplete]="autoCV" formControlName="tipo_canal_venda_nome"
+                id="inputCV" tabindex="13" autocomplete="doNotAutoComplete" />
+              <nb-autocomplete #autoCV (selectedChange)="onSelectionChangeCV($event)">
+                <nb-option *ngFor="let option of filteredDadosCV$ | async" [value]="option">
+                  {{ option }}
+                </nb-option>
+              </nb-autocomplete>
+              <input nbInput type="hidden" id="inputCVpk" name="inputTipo_canal_venda_pk" value={{tipo_canal_venda_pk}}
+                formControlName="tipo_canal_venda_pk">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group row">
+            <label for="inputTLJ" class="label col-sm-3 col-form-label">Tipo de loja</label>
+            <div class="col-sm-9">
+              <input #autoInputTL nbInput fullWidth fieldSize="tiny" oninput="this.value = this.value.toUpperCase()"
+                type="text" (input)="onChangeTL()" [nbAutocomplete]="autoTL" formControlName="tipo_loja_nome"
+                id="inputTLJ" tabindex="15" autocomplete="doNotAutoComplete" />
+              <nb-autocomplete #autoTL (selectedChange)="onSelectionChangeTL($event)">
+                <nb-option *ngFor="let option of filteredDadosTL$ | async" [value]="option">
+                  {{ option }}
+                </nb-option>
+              </nb-autocomplete>
+              <input nbInput type="hidden" id="inputTLJpk" name="tipo_loja_pk" value={{tipo_loja_pk}}
+                formControlName="tipo_loja_pk">
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="form-group row">
+            <label for="inputAnotacoes" class="label col-lg-3 col-form-label">Anotações</label>
+            <div class="col-sm-9">
+              <textarea nbInput fullWidth oninput="this.value = this.value.toUpperCase()" formControlName="anotacao"
+                shape="round" id="inputAnotacoes" class="anotacoes_height" tabindex="14"></textarea>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </nb-tab>
+  </nb-tabset>
+</form>

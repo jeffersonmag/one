@@ -1,27 +1,13 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
-  NbActionsModule,
-  NbButtonModule,
-  NbCardModule,
-  NbIconModule,
-  NbListModule,
-  NbProgressBarModule,
-  NbRadioModule,
-  NbSelectModule,
-  NbSpinnerModule,
-  NbTabsetModule,
-  NbUserModule,
-  NbTooltipModule,
-  NbPopoverModule,
-  NbTreeGridModule,
-  NbSearchModule,
-  NbInputModule,
-  NbDatepickerModule,
-  NbAlertModule,
-  NbWindowModule,
-  NbDialogModule,
-  NbCheckboxModule,
+  NbActionsModule, NbButtonModule, NbCardModule,
+  NbIconModule, NbListModule, NbProgressBarModule,
+  NbRadioModule, NbSelectModule, NbSpinnerModule,
+  NbTabsetModule, NbUserModule, NbTooltipModule,
+  NbPopoverModule, NbTreeGridModule, NbSearchModule,
+  NbInputModule, NbDatepickerModule, NbAlertModule,
+  NbWindowModule, NbDialogModule, NbCheckboxModule, NbToggleComponent, NbToggleModule, NbAutocompleteModule,
 } from '@nebular/theme';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { ThemeModule } from '../../@theme/theme.module';
@@ -52,6 +38,12 @@ import { DadosCadastroCentroCustosComponent } from './centro-custos/dados-cadast
 import { DadosCadastroProjetosComponent } from './projetos/dados-cadastro-projetos/dados-cadastro-projetos.component';
 import { TipoContaCorrenteComponent } from './tipo-conta-corrente/tipo-conta-corrente.component';
 import { DadosCadastroTipoCcComponent } from './tipo-conta-corrente/dados-cadastro-tipo-cc/dados-cadastro-tipo-cc.component';
+import { LojasComponent } from './lojas/lojas.component';
+import { TipoLojaComponent } from './tipo-lojas/tipo-lojas.component';
+import { CanalVendasComponent } from './canal-vendas/canal-vendas.component';
+import { DadosCadastroLojasComponent } from './lojas/dados-cadastro-lojas/dados-cadastro-lojas.component';
+import { DadosCadastroTipoLojasComponent } from './tipo-lojas/dados-cadastro-tipo-lojas/dados-cadastro-tipo-lojas.component';
+import { DadosCadastroCanalVendasComponent } from './canal-vendas/dados-cadastro-canal-vendas/dados-cadastro-canal-vendas.component';
 
 @NgModule({
   imports: [
@@ -94,6 +86,8 @@ import { DadosCadastroTipoCcComponent } from './tipo-conta-corrente/dados-cadast
     NbDialogModule.forChild(),
     NbWindowModule.forChild(),
     NgxMaskModule.forChild(),
+    NgSelectModule,
+    NbAutocompleteModule,
   ],
   declarations: [
     CadastrosComponent,
@@ -112,6 +106,13 @@ import { DadosCadastroTipoCcComponent } from './tipo-conta-corrente/dados-cadast
     DadosCadastroProjetosComponent,
     TipoContaCorrenteComponent,
     DadosCadastroTipoCcComponent,
+    LojasComponent,
+    DadosCadastroLojasComponent,
+    TipoLojaComponent,
+    DadosCadastroTipoLojasComponent,
+    CanalVendasComponent,
+    DadosCadastroCanalVendasComponent,
+    NbToggleComponent,
   ],
 })
 

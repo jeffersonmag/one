@@ -144,7 +144,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
   sort(key) {
     this.key = key;
     this.reverse = !this.reverse;
-    this.dadosCampanhaMetasSmartTable.sort(function (a, b) { return a.string(this.key) - b.string(this.key) });
+    this.dadosCampanhaMetasSmartTable.sort(function (a, b) { return a.string(this.key) - b.string(this.key); });
   }
 
   allColumns = [this.customColumn, ...this.defaultColumns];
@@ -691,17 +691,19 @@ export class DashboardCampanhaComponent implements OnDestroy {
           this.dadosCampanhaMetasSmartTable.push(
             {
               codigo_agrupamento: i.codigo_agrupamento,
-              nome_agrupamento: i.nome_agrupamento,
+              nome_agrupamento: String(i.nome_agrupamento),
               meta_total_campanha: parseFloat(i.meta_total_campanha),
               atingimento_total_campanha: parseFloat(i.atingimento_total_campanha),
               perc_atingimento_total_campanha:
-                parseFloat((((i.atingimento_total_campanha).toFixed(2) / (i.meta_total_campanha).toFixed(2)) * 100).toFixed(2)),
-              ticket_medio_campanha: parseFloat(i.ticket_medio_campanha).toFixed(0),
+                parseFloat((((i.atingimento_total_campanha).toFixed(2)
+                  / (i.meta_total_campanha).toFixed(2)) * 100).toFixed(2)),
+              ticket_medio_campanha: parseFloat(parseFloat(i.ticket_medio_campanha).toFixed(0)),
               meta_diaria_campanha: (parseFloat(i.meta_total_campanha) / this.campanhaDias).toFixed(0),
               meta_recalculada:
-                ((i.meta_total_campanha).toFixed(2) - (i.atingimento_total_campanha).toFixed(2) / this.campanhaPendencias)
-                  .toFixed(0),
-              projecao_total_campanha: parseFloat(i.projecao_total_campanha).toFixed(0),
+                parseFloat((((parseFloat(i.meta_total_campanha.toFixed(2)))
+                  - parseFloat(i.atingimento_total_campanha.toFixed(2))) / this.campanhaPendencias)
+                  .toFixed(0)),
+              projecao_total_campanha: parseFloat(parseFloat(i.projecao_total_campanha).toFixed(0)),
               total_hc_participantes: i.total_hc_participantes,
             });
         }

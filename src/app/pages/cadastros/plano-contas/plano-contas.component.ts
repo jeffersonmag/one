@@ -15,6 +15,8 @@ export class PlanoContasComponent implements OnInit {
   ativaBotaoPesquisa: boolean = false;
   formulario: FormGroup;
   habilitaBotaoSalvar: boolean = true;
+  toggle_orcavel: boolean = false;
+  toggle_cc: boolean = false;
 
   permissoes: any = JSON.parse(window.sessionStorage.permissao_acesso);
   permissaoDelete: boolean = this.permissoes.cadastro_plano_de_contas.acl.D;
@@ -109,8 +111,8 @@ export class PlanoContasComponent implements OnInit {
         'classificacao': this.formulario.value.classificacao,
         'nome': this.formulario.value.nome,
         'd_c': this.formulario.value.natureza,
-        'orcavel': this.formulario.value.orcavel !== null ? true : false,
-        'conta_corrente': this.formulario.value.conta_corrente !== null ? true : false,
+        'orcavel': this.formulario.value.orcavel,
+        'conta_corrente': this.formulario.value.conta_corrente,
         'codigo_tipo_conta_corrente': null,
       },
     )
@@ -130,8 +132,8 @@ export class PlanoContasComponent implements OnInit {
         'classificacao': this.formulario.value.classificacao,
         'nome': this.formulario.value.nome,
         'd_c': this.formulario.value.natureza,
-        'orcavel': this.formulario.value.orcavel !== null ? true : false,
-        'conta_corrente': this.formulario.value.conta_corrente !== null ? true : false,
+        'orcavel': this.formulario.value.orcavel,
+        'conta_corrente': this.formulario.value.conta_corrente,
         'codigo_tipo_conta_corrente': null,
         'pk': this.formulario.value.codigo,
       },

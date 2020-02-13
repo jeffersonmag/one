@@ -5,7 +5,7 @@ import { RequestService } from '../services/request.service';
 import { SessionService } from './../services/session.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsuarioApiService {
 
@@ -43,13 +43,18 @@ export class UsuarioApiService {
             s.permissao_acesso.cadastro_projetos.acesso);
           this.sessionService.set('permissao_cadastro_tipo_conta_corrente',
             s.permissao_acesso.cadastro_tipo_conta_corrente.acesso);
+          this.sessionService.set('permissao_cadastro_lojas',
+            s.permissao_acesso.cadastro_loja.acesso);
+          this.sessionService.set('permissao_cadastro_tipo_lojas',
+            s.permissao_acesso.cadastro_tipo_loja.acesso);
+          this.sessionService.set('permissao_cadastro_tipo_canal_vendas',
+            s.permissao_acesso.cadastro_tipo_canal_venda.acesso);
           resolve(s);
         })
         .catch((e) => {
           console.log(e);
           reject('Usuário ou senha inválidos');
-        })
-    })
-
+        });
+    });
   }
 }

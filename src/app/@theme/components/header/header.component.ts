@@ -63,9 +63,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // sets a timeout period of 5 minutes.
     idle.setTimeout(60);
     // sets the interrupts like Keydown, scroll, mouse wheel, mouse down, and etc
-    //idle.setInterrupts([
-    //  new EventTargetInterruptSource(
-    //    this.element.nativeElement, 'keydown DOMMouseScroll mousewheel mousedown touchstart touchmove scroll')]);
+    // idle.setInterrupts([
+    // new EventTargetInterruptSource(
+    // this.element.nativeElement, 'keydown DOMMouseScroll mousewheel mousedown touchstart touchmove scroll')]);
     idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
     this.onIdleEnd$ = idle.onIdleEnd.subscribe(() => {

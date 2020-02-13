@@ -1,0 +1,126 @@
+<div class="infinite-cards row">
+  <div class="col-md-12">
+    <nb-card>
+      <nb-card-header>
+        Cadastro de Lojas
+        <div class="icons-right">
+          <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Modo Grade"
+            (click)="modoExibicao(0)">
+            <nb-icon icon="grid" pack="eva" class="flip-icon"></nb-icon>
+          </button>
+          <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Modo Lista"
+            (click)="modoExibicao(1)">
+            <nb-icon icon="menu-2" pack="eva" class="flip-icon"></nb-icon>
+          </button>
+          <nb-search *ngIf="permissaoSelect" placeholder="Pesquisar" hint="" show="true" type="column-curtain"
+            tag="pendencia"></nb-search>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        <div *ngIf="ativaBotaoPesquisa">
+          <button nbButton shape="round" size="small" status="info" nbTooltip="Limpar Filtro da Pesquisa"
+            (click)="buscaLojas('')">
+            FILTRO: {{this.value}} &times;
+          </button>
+        </div><br>
+        <div class="buttons-row">
+          <button *ngIf="permissaoInsert" class="buttons-row" nbButton shape="round" size="small" status="primary"
+            (click)="cadastrarNovoLojas(content)" nbTooltip="Cadastrar Lojas">
+            <i class="fa fa-plus color"></i>
+            <div class="espacamento">Criar</div>
+          </button>
+          <button *ngIf="!permissaoInsert" disabled class="buttons-row" nbButton shape="round" size="small"
+            status="primary">
+            <i class="fa fa-plus color"></i>
+            <div class="espacamento" nbTooltip="Não existe permissão de cadastro para seu usuário.">Criar</div>
+          </button>
+          <ng-template #content let-data let-ref="dialogRef">
+            <nb-card class="size-modal">
+              <nb-card-header>
+                <span>Cadastro de Lojas</span>
+                <button type="button" class="close" aria-label="Close" (click)="ref.close()">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </nb-card-header>
+              <nb-card-body>
+                <dados-cadastro-lojas></dados-cadastro-lojas>
+              </nb-card-body>
+            </nb-card>
+          </ng-template>
+        </div><br>
+
+        <div *ngIf="dados.length == 0 && permissaoSelect">
+          <nb-alert size="tiny" outline="primary">
+            Sem dados para serem exibidos.
+          </nb-alert> <br>
+        </div>
+        <div *ngIf="!permissaoSelect">
+          <nb-alert size="tiny" outline="primary">
+            Sem permissão para exibir dados.
+          </nb-alert> <br>
+        </div>
+        <div *ngIf="dados.length != 0 && permissaoSelect">
+          <div *ngIf="modoLista">
+            <nb-list *ngIf="permissaoUpdate">
+              <nb-list-item *ngFor="let Lojas of dados" (click)="editarLojas(contentedit, Lojas)"
+                nbTooltip="Clique para editar os dados.">
+                {{ Lojas.nome_fantasia }}<br>
+                <div class="font-size-list">CÓDIGO: {{ Lojas.pk }}</div>
+              </nb-list-item>
+              <ng-template #contentedit let-data let-ref="dialogRef">
+                <nb-card class="size-modal">
+                  <nb-card-header>
+                    <span>Editar Cadastro de Lojas</span>
+                    <button type="button" class="close" aria-label="Close" (click)="ref.close()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </nb-card-header>
+                  <nb-card-body>
+                    <dados-cadastro-lojas></dados-cadastro-lojas>
+                  </nb-card-body>
+                </nb-card>
+              </ng-template>
+            </nb-list>
+
+            <nb-list *ngIf="!permissaoUpdate">
+              <nb-list-item *ngFor="let Lojas of dados" nbTooltip="Sem permissão para editar os dados.">
+                {{ Lojas.nome }}<br>
+                <div class="font-size-list">CÓDIGO: {{ Lojas.codigo }}</div>
+              </nb-list-item>
+            </nb-list>
+          </div>
+
+          <div class="row" *ngIf="modoGrade">
+            <div class="col-xxxl-3 col-md-4" *ngFor="let Lojas of dados">
+              <div *ngIf="permissaoUpdate">
+                <status [title]="Lojas.nome_fantasia" dados="CÓDIGO: {{Lojas.pk}}" [type]="primary"
+                  (click)="editarLojas(contentedit, Lojas)" nbTooltip="Editar dados">
+                  <img class="container-image" src="assets/imgs/loja-icons.png">
+                </status>
+              </div>
+              <div *ngIf="!permissaoUpdate">
+                <status [title]="Lojas.nome_fantasia" dados="CÓDIGO: {{Lojas.pk}}" [type]="primary"
+                  nbTooltip="Sem permissão para editar dados.">
+                  <img class="container-image" src="assets/imgs/loja-icons.png">
+                </status>
+              </div>
+              <ng-template #contentedit let-data let-ref="dialogRef">
+                <nb-card class="size-modal">
+                  <nb-card-header>
+                    <span>Editar Cadastro de Lojas</span>
+                    <button type="button" class="close" aria-label="Close" (click)="ref.close()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </nb-card-header>
+                  <nb-card-body>
+                    <dados-cadastro-lojas></dados-cadastro-lojas>
+                  </nb-card-body>
+                </nb-card>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
