@@ -108,7 +108,7 @@
             <label for="inputPN" class="label col-sm-3 col-form-label">Parceiro de negócios</label>
             <div class="col-sm-9">
               <input #autoInputPN nbInput fullWidth fieldSize="tiny" oninput="this.value = this.value.toUpperCase()"
-                type="text" (input)="onChangePN()" [nbAutocomplete]="auto" formControlName="pn_nome" id="inputPN"
+                type="text" (keyup)="onChangePN()" [nbAutocomplete]="auto" formControlName="pn_nome" id="inputPN"
                 tabindex="8" autocomplete="doNotAutoComplete" />
               <nb-autocomplete #auto (selectedChange)="onSelectionChangePN($event)">
                 <nb-option *ngFor="let option of filteredDadosPN$ | async" [value]="option">

@@ -14,7 +14,8 @@ export class UsuarioApiService {
     private sessionService: SessionService,
   ) { }
 
-  // 'codigo_conexao': 9 // usar esse parametro em ambiente de teste
+  // 'codigo_conexao': 9 // usar esse parametro em ambiente de teste completo banco e máquina
+  // 'codigo_conexao': 8 // máquina do Rafael Banco de produção
   dados(user) {
     return new Promise((resolve, reject) => {
       const response = this.requestService.post(`${environment.urlApi}/dados-usuario`, {
@@ -49,6 +50,8 @@ export class UsuarioApiService {
             s.permissao_acesso.cadastro_tipo_loja.acesso);
           this.sessionService.set('permissao_cadastro_tipo_canal_vendas',
             s.permissao_acesso.cadastro_tipo_canal_venda.acesso);
+          this.sessionService.set('permissao_cadastro_financeiro',
+            s.permissao_acesso.manutencao_financeiro.acesso);
           resolve(s);
         })
         .catch((e) => {

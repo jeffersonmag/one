@@ -41,14 +41,6 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { NgxCpfCnpjModule } from 'ngx-cpf-cnpj';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { SmartTableData } from './@core/data/smart-table';
-import { LoginComponent } from './login/login.component';
-import { TelaComponent } from './login/tela/tela.component';
-import { FormsComponent } from './pages/forms/forms.component';
-import { FormInputsComponent } from './pages/forms/form-inputs/form-inputs.component';
-import { FormLayoutsComponent } from './pages/forms/form-layouts/form-layouts.component';
-import { ButtonsComponent } from './pages/forms/buttons/buttons.component';
-import { DatepickerComponent } from './pages/forms/datepicker/datepicker.component';
 
 export let options: Partial<IConfig> | (() => Partial<IConfig>);
 

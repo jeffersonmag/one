@@ -63,7 +63,7 @@ import { ListagemBorderoComponent } from './listagem-bordero/listagem-bordero.co
     MatIconModule,
     NgbModule,
     NbSearchModule,
-    NbTreeGridModule, 
+    NbTreeGridModule,
   ],
   declarations: [
     PendenciaComponent,

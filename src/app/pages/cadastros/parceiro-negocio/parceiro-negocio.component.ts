@@ -197,7 +197,7 @@ export class ParceiroNegocioComponent implements OnInit {
   }
 
   formataData(data) {
-    var dd = data.getDate() ;
+    var dd = data.getDate();
     var mm = data.getMonth() + 1;
     var yyyy = data.getFullYear();
 
@@ -213,16 +213,24 @@ export class ParceiroNegocioComponent implements OnInit {
   }
 
   insereParceiroNegocios(valor?) {
-    if (valor.cnh_data_emissao !== null && valor.cnh_data_emissao !== '' && valor.cnh_data_emissao !== undefined) {
+    if (valor.cnh_data_emissao !== null
+      && valor.cnh_data_emissao !== ''
+      && valor.cnh_data_emissao !== undefined) {
       var cnh_data_emissao = this.formataData(valor.cnh_data_emissao);
     }
-    if (valor.cnh_data_vencimento !== null && valor.cnh_data_vencimento !== '' && valor.cnh_data_vencimento !== undefined) {
+    if (valor.cnh_data_vencimento !== null
+      && valor.cnh_data_vencimento !== ''
+      && valor.cnh_data_vencimento !== undefined) {
       var cnh_data_vencimento = this.formataData(valor.cnh_data_vencimento);
     }
-    if (valor.data_nascimento_fundacao !== null && valor.data_nascimento_fundacao !== '' && valor.data_nascimento_fundacao !== undefined) {
+    if (valor.data_nascimento_fundacao !== null
+      && valor.data_nascimento_fundacao !== ''
+      && valor.data_nascimento_fundacao !== undefined) {
       var data_nascimento_fundacao = this.formataData(valor.data_nascimento_fundacao);
     }
-    if (valor.rg_data_emissao !== null && valor.rg_data_emissao !== '' && valor.rg_data_emissao !== undefined) {
+    if (valor.rg_data_emissao !== null
+      && valor.rg_data_emissao !== ''
+      && valor.rg_data_emissao !== undefined) {
       var rg_data_emissao = this.formataData(valor.rg_data_emissao);
     }
     this.campanhasApiService.postParceiroNegocios(

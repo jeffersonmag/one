@@ -1,0 +1,32 @@
+.list-card {
+  nb-card-header {
+    border-bottom: none;
+  }
+
+  nb-card-body {
+    padding: 0;
+  }
+}
+
+.icons-right {
+  float: right;
+}
+
+.buttons-row {
+  margin-left: 0.1rem;
+}
+
+.font-size-list {
+  font-size: 13px;
+}
+
+.container-image {
+  max-width: 100px;
+  max-height: 100px;
+  width: 40px;
+  height: 40px;
+}
+
+.espacamento {
+  margin-left: 0.4rem;
+}

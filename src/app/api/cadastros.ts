@@ -91,10 +91,10 @@ export class CadastrosApiService {
   getParceiroNegociosBuscaAutomatica(dados) {
     this.pesquisa = dados.pesquisa;
     if (this.pesquisa === '') {
-      return this.requestService.get(`${environment.urlApi}/consulta-pn-by-nome?nome=%`,
+      return this.requestService.get(`${environment.urlApi}/one/consultas/consulta-pn-by-nome?nome=%`,
         null, true);
     } else {
-      return this.requestService.get(`${environment.urlApi}/consulta-pn-by-nome?nome=${this.pesquisa}`,
+      return this.requestService.get(`${environment.urlApi}/one/consultas/consulta-pn-by-nome?nome=${this.pesquisa}`,
         null, true);
     }
   }
@@ -102,10 +102,10 @@ export class CadastrosApiService {
   getCanalVendasBuscaAutomatica(dados) {
     this.pesquisa = dados.pesquisa;
     if (this.pesquisa === '') {
-      return this.requestService.get(`${environment.urlApi}/consulta-tipo-canal-venda-by-nome?nome=%`,
+      return this.requestService.get(`${environment.urlApi}/one/consultas/consulta-tipo-canal-venda-by-nome?nome=%`,
         null, true);
     } else {
-      return this.requestService.get(`${environment.urlApi}/consulta-tipo-canal-venda-by-nome?nome=${this.pesquisa}`,
+      return this.requestService.get(`${environment.urlApi}/one/consultas/consulta-tipo-canal-venda-by-nome?nome=${this.pesquisa}`,
         null, true);
     }
   }
@@ -113,10 +113,10 @@ export class CadastrosApiService {
   getTipoLojasBuscaAutomatica(dados) {
     this.pesquisa = dados.pesquisa;
     if (this.pesquisa === '') {
-      return this.requestService.get(`${environment.urlApi}/consulta-tipo-loja-by-nome?nome=%`,
+      return this.requestService.get(`${environment.urlApi}/one/consultas/consulta-tipo-loja-by-nome?nome=%`,
         null, true);
     } else {
-      return this.requestService.get(`${environment.urlApi}/consulta-tipo-loja-by-nome?nome=${this.pesquisa}`,
+      return this.requestService.get(`${environment.urlApi}/one/consultas/consulta-tipo-loja-by-nome?nome=${this.pesquisa}`,
         null, true);
     }
   }

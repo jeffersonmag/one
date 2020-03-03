@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes, ExtraOptions } from '@angular/router';
-
+import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardCampanhaComponent } from './dashboard-campanha/dashboard-campanha.component';
 import { PagesComponent } from './pages.component';
@@ -16,6 +15,7 @@ import { TipoContaCorrenteComponent } from './cadastros/tipo-conta-corrente/tipo
 import { LojasComponent } from './cadastros/lojas/lojas.component';
 import { CanalVendasComponent } from './cadastros/canal-vendas/canal-vendas.component';
 import { TipoLojaComponent } from './cadastros/tipo-lojas/tipo-lojas.component';
+import { FinanceiroComponent } from './financeiro/financeiro.component';
 
 
 //define o a página inicial
@@ -45,6 +45,8 @@ if (window.sessionStorage.permissao_dashboard_campanha) {
   home = 'cadastros/tipo-lojas';
 } else if (window.sessionStorage.permissao_cadastro_tipo_canal_vendas) {
   home = 'cadastros/tipo-canal-vendas';
+} else if (window.sessionStorage.permissao_cadastro_financeiro) {
+  home = 'financeiro';
 }
 
 const routes: Routes = [{
@@ -68,6 +70,11 @@ const routes: Routes = [{
     {
       path: 'esteira-producao',
       component: EsteiraProducaoComponent,
+    },
+
+    {
+      path: 'financeiro',
+      component: FinanceiroComponent,
     },
 
     {

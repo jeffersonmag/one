@@ -277,6 +277,16 @@ export class EsteiraProducaoComponent implements OnInit, OnDestroy {
     this.revealed[acao] = !this.revealed[acao];
   }
 
+  downloadCSV() {
+    this.EsteiraProducaoApiService.imprimirCSV(null).then((s) => {
+    })
+      .catch((e) => {
+        let erro = e.error.message;
+        this.makeToast('danger', 'Erro', erro);
+        console.log(e)
+      });
+  }
+
   setColors() {
     this.propostasInconsistenciasC = [];
     for (let i of this.propostasInconsistencias) {

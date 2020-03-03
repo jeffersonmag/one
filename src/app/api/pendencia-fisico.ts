@@ -37,11 +37,12 @@ export class PendenciaFisicoApiService {
   }
 
   imprimirBorderoRemessa(dados, bordero: string) {
-    return this.requestService.getDownload(`${environment.urlApi}/imprime-bordero-remessa/` + bordero, dados, true);
+    return this.requestService.getDownload(`${environment.urlApi}/imprime-bordero-remessa/` + bordero,
+      dados, true, bordero);
   }
 
   imprimirBorderoRegularizacao(dados, bordero: string) {
     return this.requestService.getDownload(`${environment.urlApi}/imprime-bordero-regularizacao/`
-    + bordero, dados, true);
+      + bordero, dados, true);
   }
 }

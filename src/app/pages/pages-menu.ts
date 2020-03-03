@@ -32,6 +32,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
 
   {
+    title: 'Financeiro',
+    link: '/pages/financeiro',
+    icon: 'percent-outline',
+    home: false,
+    expanded: (window.sessionStorage.permissao_cadastro_financeiro === 'false'),
+    hidden: (window.sessionStorage.permissao_cadastro_financeiro === 'false'),
+  },
+
+  {
     title: 'Cadastros',
     icon: 'grid-outline',
     children: [

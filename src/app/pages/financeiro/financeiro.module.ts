@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   NbActionsModule,
   NbButtonModule,
@@ -21,33 +21,27 @@ import {
   NbCheckboxModule,
   NbInputModule,
   NbPopoverModule,
-  NbDialogRef,
-  NbSearchService,
-  NbSearchModule
+  NbSearchModule,
+  NbAutocompleteModule,
+  NbDatepickerModule,
 } from '@nebular/theme';
 import { NgbPaginationModule, NgbModalModule, NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { CommonModule } from '@angular/common';
-import { EsteiraProducaoComponent, CustomModalOptions } from './esteira-producao.component';
 import { ThemeModule } from '../../@theme/theme.module';
 import { PipesModule } from '../../pipes/pipes.module';
 import { HttpClientModule } from '@angular/common/http';
-import { EsteiraProducaoRoutingModule, routedComponents } from './esteira-producao-routing.module';
-import { BaseHistoricaComponent } from './base-historica/base-historica.component';
-import { SolucaoInconsistenciasComponent } from './solucao-inconsistencias/solucao-inconsistencias.component';
-import { StatusCardComponent } from './status-card/status-card.component';
+import { FinanceiroComponent } from './financeiro.component';
+import { CadastroFinanceiroComponent } from './cadastro-financeiro/cadastro-financeiro.component';
+import { StatusComponent } from '../financeiro/status/status.component';
+import { NbDateFnsDateModule } from '@nebular/date-fns';
+import { AdicionarParcelasComponent } from './cadastro-financeiro/adicionar-parcelas/adicionar-parcelas.component';
 
 @NgModule({
-  declarations: [
-    EsteiraProducaoComponent,
-    BaseHistoricaComponent,
-    SolucaoInconsistenciasComponent,
-    ...routedComponents,
-    SolucaoInconsistenciasComponent,
-    StatusCardComponent,
-  ],
+  declarations: [FinanceiroComponent, CadastroFinanceiroComponent, StatusComponent, AdicionarParcelasComponent],
   imports: [
     FormsModule,
+    ReactiveFormsModule,
     CommonModule,
     ThemeModule,
     NbAlertModule,
@@ -74,13 +68,13 @@ import { StatusCardComponent } from './status-card/status-card.component';
     NbPopoverModule,
     NbCheckboxModule,
     NbInputModule,
-    EsteiraProducaoRoutingModule,
-    NgbModalModule,
-    NgbPaginationModule,
-    NbSearchModule ],
-  entryComponents: [BaseHistoricaComponent],
-  providers: [CustomModalOptions, NgbActiveModal]
+    NbSearchModule,
+    NbAutocompleteModule,
+    NbDatepickerModule,
+    NgbPaginationModule],
+  entryComponents: [],
+  providers: [NgbActiveModal],
 })
-export class EsteiraProducaoModule { }
+export class FinanceiroModule { }
 
 export class PageModule { }

@@ -1,0 +1,280 @@
+<div class="buttons-row">
+  <div *ngIf="erro">
+    <nb-alert class="erro" status="danger">Erro: {{mensagem_erro}}</nb-alert> <br>
+  </div>
+  <button *ngIf="criacaoFinanceiroDocumento" class="buttons-row" nbButton shape="round" size="tiny" status="success"
+    nbTooltip="Salvar" (click)="salvarDados(form)">
+    <i class="fa fa-check color"></i>
+    <div class="espacamento">Salvar</div>
+  </button>
+  <button *ngIf="edicaoFinanceiroDocumento" class="buttons-row" nbButton shape="round" size="tiny" status="success"
+    nbTooltip="Salvar" (click)="confirmacaoEdicao(contentedicao)">
+    <i class="fa fa-check color"></i>
+    <div class="espacamento">Salvar</div>
+  </button>
+
+  <!--Confirmar edicao dos dados-->
+  <ng-template #contentedicao let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <span>Confirmar edição de usuário?</span>
+    </div>
+    <div class="modal-body">
+      <div class="buttons-row">
+        <button class="buttons-row" nbButton shape="round" size="tiny" status="success" nbTooltip="Salvar"
+          (click)="editarDados(form)">
+          <i class="fa fa-check color"></i>
+          <div class="espacamento">Sim</div>
+        </button>
+        <button class="buttons-row" nbButton shape="round" size="tiny" status="danger" nbTooltip="Salvar"
+          (click)="d('Cross click')">
+          <i class="fa fa-times color"></i>
+          <div class="espacamento">Não</div>
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <button *ngIf="edicaoFinanceiroDocumento && permissaoExclusao" class="buttons-row" nbButton shape="round" size="tiny"
+    status="danger" nbTooltip="Excluir usuário" (click)="confirmacaoExclusao(contentconfirmacao)">
+    <i class="fa fa-times color"></i>
+    <div class="espacamento">Excluir</div>
+  </button>
+
+  <!--Confirmar exclusao dos dados-->
+  <ng-template #contentconfirmacao let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <span>Confirmar exclusão de usuário?</span>
+    </div>
+    <div class="modal-body">
+      <div class="buttons-row">
+        <button class="buttons-row" nbButton shape="round" size="tiny" status="success" nbTooltip="Salvar"
+          (click)="excluirDados(form)">
+          <i class="fa fa-check color"></i>
+          <div class="espacamento">Sim</div>
+        </button>
+        <button class="buttons-row" nbButton shape="round" size="tiny" status="danger" nbTooltip="Salvar"
+          (click)="d('Cross click')">
+          <i class="fa fa-times color"></i>
+          <div class="espacamento">Não</div>
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <button nbbutton disabled *ngIf="edicaoFinanceiroDocumento && !permissaoExclusao" class="buttons-row" shape="round"
+    size="tiny" status="danger">
+    <i class="fa fa-times color"></i>
+    <div class="espacamento" nbTooltip="Sem permissão para excluir">Excluir</div>
+  </button>
+</div>
+
+<form #form="ngForm" class="formulario" [formGroup]="formulario">
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputTD" class="label col-sm-3 col-form-label">Tipo de documento</label>
+        <div class="col-sm-9">
+          <input #autoInputTD nbInput fullWidth fieldSize="tiny" oninput="this.value = this.value.toUpperCase()"
+            type="text" (keyup)="onChangeTD()" [nbAutocomplete]="autoTD"
+            formControlName="tipo_documentos_financeiro_nome" id="inputTD" tabindex="8"
+            autocomplete="doNotAutoComplete" />
+          <nb-autocomplete #autoTD (selectedChange)="onSelectionChangeTD($event)">
+            <nb-option *ngFor="let option of filteredDadosTD$ | async" [value]="option">
+              {{ option }}
+            </nb-option>
+          </nb-autocomplete>
+          <input nbInput type="hidden" id="inputTDpk" name="inputTDFpk" value={{tipo_documentos_financeiro_pk}}
+            formControlName="tipo_documentos_financeiro_pk">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputEmissorDocFiscal" class="label col-sm-3 col-form-label">Emissor Doc Fiscal</label>
+        <div class="col-sm-9">
+          <input #autoInputPN nbInput fullWidth fieldSize="tiny" oninput="this.value = this.value.toUpperCase()"
+            type="text" (keyup)="onChangePN()" [nbAutocomplete]="auto" formControlName="pn_nome_emissor_documento"
+            id="inputEmissorDocFiscal" tabindex="9" autocomplete="doNotAutoComplete" />
+          <nb-autocomplete #auto (selectedChange)="onSelectionChangePN($event)">
+            <nb-option *ngFor="let option of filteredDadosPN$ | async" [value]="option">
+              {{ option }}
+            </nb-option>
+          </nb-autocomplete>
+          <input nbInput type="hidden" id="inputEmissorDocFiscalpk" name="inputEmissorDocFiscalpk" value={{pn_codigo}}
+            formControlName="pn_pk_emissor_documento">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputNumDocumento" class="label col-sm-3 col-form-label">Número documento</label>
+        <div class="col-sm-9">
+          <input nbInput fullWidth type="text" shape="rectangle" formControlName="documento" fieldSize="tiny"
+            oninput="this.value = this.value.toUpperCase()" id="inputNumDocumento" tabindex="2">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputDescricao" class="label col-sm-3 col-form-label">Descrição</label>
+        <div class="col-sm-9">
+          <input type="text" nbInput fullWidth shape="rectangle" formControlName="descricao" fieldSize="tiny"
+            oninput="this.value = this.value.toUpperCase()" id="inputDescricao" mask="" tabindex="7">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputDataEmissao" class="label col-sm-3 col-form-label">Data Emissão</label>
+        <div class="col-sm-9">
+          <input nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputDataEmissao"
+            formControlName="data_emissao" format="dd/MM/yyyy" tabindex="20" [nbDatepicker]="formpicker">
+          <nb-datepicker #formpicker format="dd/MM/yyyy" hideOnSelect=false></nb-datepicker>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputProjeto" class="label col-sm-3 col-form-label">Projeto</label>
+        <div class="col-sm-9">
+          <input type="text" nbInput fullWidth shape="rectangle" formControlName="projetos_nome" fieldSize="tiny"
+            oninput="this.value = this.value.toUpperCase()" id="inputProjeto" mask="" tabindex="7">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputcompetencia" class="label col-sm-3 col-form-label">Competência</label>
+        <div class="col-sm-9">
+          <input nbInput fullWidth shape="rectangle" fieldSize="tiny" oninput="this.value = this.value.toUpperCase()"
+            id="inputcompetencia" formControlName="competencia" format="dd/MM/yyyy" tabindex="20"
+            [nbDatepicker]="formpickercompetencia">
+          <nb-datepicker #formpickercompetencia format="dd/MM/yyyy" hideOnSelect=false></nb-datepicker>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group row">
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputValorTotal" class="label col-sm-3 col-form-label">Valor Total</label>
+        <div class="col-sm-9">
+          <input nbInput fullWidth type="number" shape="rectangle" formControlName="valor_total_principal"
+            fieldSize="tiny" id="inputValorTotal" tabindex="2">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group row">
+      </div>
+    </div>
+  </div>
+
+  <button *ngIf="edicaoFinanceiroDocumento && !total_documento_alcancado" class="buttons-row" nbButton shape="round"
+    size="tiny" status="info" nbTooltip="Adicionar Parcelas" (click)="adicionarParcelas(contentaddparcela)">
+    ＋ Adicionar Parcelas</button>
+  <div class="col-sm-3" nbTooltip="Adicionar Parcelas Bloqueado antes da inserção do registro"
+    nbTooltipPlacement="left">
+    <button *ngIf="criacaoFinanceiroDocumento && !total_documento_alcancado" class="buttons-row" nbButton disabled
+      shape="round" size="tiny" status="info">
+      ＋ Adicionar Parcelas</button>
+  </div>
+  <div class="col-sm-3" nbTooltip="Total do Valor do documento já alcançado!" nbTooltipPlacement="left">
+    <button *ngIf="total_documento_alcancado" class="buttons-row" nbButton disabled shape="round" size="tiny"
+      status="info">
+      ＋ Adicionar Parcelas</button>
+  </div>
+
+  <ng-template #contentaddparcela let-data let-ref="dialogRef">
+    <nb-card class="size-modal">
+      <nb-card-header>
+        <span>Adicionar Parcelas</span>
+        <button type="button" class="close" aria-label="Close" (click)="ref.close()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </nb-card-header>
+      <nb-card-body>
+        <adicionar-parcelas></adicionar-parcelas>
+      </nb-card-body>
+    </nb-card>
+  </ng-template>
+
+  <nb-tabset>
+    <nb-tab tabTitle="FATURAS">
+      <div class="container">
+        <table class="tabela" equalColumnsWidth>
+          <thead>
+            <tr>
+              <th class="text-left">Parcela</th>
+              <th class="text-left">Vencimento</th>
+              <th class="text-left">Loja</th>
+              <th class="text-left">Fornecedor</th>
+              <th class="text-left">Conta Caixa</th>
+              <th class="text-left">Valor</th>
+              <th class="text-left">Porcentagem Quitação</th>
+              <th class="text-left">Última Quitação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let i of parcelas | slice: pageSize | slice: 0:itemsPerPage"
+              (click)="editarParcelas(contentaddparcela, i)">
+              <td class="size-fonte">{{i.parcela}} DE {{i.parcela_de}} </td>
+              <td class="size-fonte">{{i.data_vencimento | moment: 'DD/MM/YYYY'}}</td>
+              <td class="size-fonte">
+                <span nbTooltip="Nome Loja">{{i.nome_loja}}</span><br>
+              </td>
+              <td class="size-fonte">
+                <span nbTooltip="Nome Fornecedor">{{i.pn_nome_cliente_fornecedor}}</span><br>
+              </td>
+              <td class="size-fonte">
+                <span nbTooltip="Plano de Contas">{{i.plano_de_contas_nome}}</span><br>
+              </td>
+              <td class="size-fonte">
+                <span nbTooltip="Valor">{{i.valor | number:'.2-2':'pt'}}</span><br>
+              </td>
+              <td class="size-fonte">
+                <span nbTooltip="Valor">{{i.porcentagem_quitacao}}</span><br>
+              </td>
+              <td class="size-fonte">
+                <span nbTooltip="Valor">{{i.ultima_quitacao | number:'.2-2':'pt'}}</span><br>
+              </td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="parcelas.length == 0 || parcelas === undefined">
+            <tr>
+              <td colspan="8"> NENHUMA PARCELA ENCONTRADA </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row justify-content-center">
+        <td class="size-font">
+          <ngb-pagination *ngIf="parcelas.length !== 0 || parcelas !== undefined" class="pagination"
+            [collectionSize]="parcelas.length" #numPages [maxSize]="15" [pageSize]="itemsPerPage" [(page)]="currentPage"
+            (pageChange)="onPageChange(currentPage)">
+          </ngb-pagination>
+        </td>
+      </div>
+    </nb-tab>
+  </nb-tabset>
+</form>

@@ -71,87 +71,6 @@ export class RequestService {
     });
   }
 
-  putDownload(url: string, body: any, security: boolean = false): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.validaUser(security)
-        .then((token: any) => {
-          this.http.put(url, body, this._optionsDownload(token))
-            .toPromise()
-            .then(response => this.downLoadFile(response, "application/pdf"));
-        })
-        .then(data => resolve(data))
-        .catch(err => reject(err));
-    });
-  }
-
-  getDownload(url: string, parametros: any, security: boolean = false): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.validaUser(security)
-        .then((token: any) => {
-          this.http.get(url, this._optionsDownload(token, parametros))
-            .subscribe(response => this.downLoadFile(response, "application/pdf"))
-        })
-        .then(data => resolve(data))
-        .catch(err => reject(err));
-    });
-  }
-
-  downLoadFile(data: any, type: string) {
-    let blob = new Blob([data], { type: type });
-    let url = window.URL.createObjectURL(blob);
-    if (url != null) {
-      this.makeToast('success', 'Sucesso', 'O Borderô será aberto em uma nova página!');
-    }
-    let pwa = window.open(url);
-    if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
-      alert('Por favor, habilite pop-up na página.');
-    }
-    //const a = document.createElement('a');
-    //a.setAttribute('style', 'display:none;');
-    //document.body.appendChild(a);
-    // create file, attach to hidden element and open hidden element
-    //a.href = url;
-    //a.download = 'nome.pdf';
-    //a.click();
-    //return url;
-  }
-
-  makeToast(type: NbComponentStatus, title: string, body: string) {
-    const config = {
-      status: type,
-      destroyByClick: true,
-      duration: 10000,
-      hasIcon: true,
-      position: NbGlobalPhysicalPosition.TOP_RIGHT,
-      preventDuplicates: true,
-    };
-
-    const titleContent = title ? `${title}` : '';
-
-    this.toastrService.show(
-      body,
-      `${titleContent}`,
-      config);
-  }
-
-  /*downloadFile(url: string, body: any, security: boolean = false) {
-    this.validaUser(security)
-      .then((token: any) => {
-        return this.http
-          .put(url, body, this._options(token))
-          .subscribe(response => this.downLoadFile2(response, "application/pdf"));
-      });
-  }
-
-  downLoadFile2(data: any, type: string) {
-    let blob = new Blob([data], { type: type });
-    let url = window.URL.createObjectURL(blob);
-    let pwa = window.open(url);
-    if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
-      alert('Please disable your Pop-up blocker and try again.');
-    }
-  }*/
-
   get(url: string, parametros: any, security: boolean = false): Promise<any> {
     return new Promise((resolve, reject) => {
       this.validaUser(security)
@@ -186,6 +105,92 @@ export class RequestService {
     });
   }
 
+  putDownload(url: string, body: any, security: boolean = false): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.validaUser(security)
+        .then((token: any) => {
+          this.http.put(url, body, this._optionsDownload(token))
+            .toPromise()
+            .then(response => this.downLoadFile(response, "application/pdf"));
+        })
+        .then(data => resolve(data))
+        .catch(err => reject(err));
+    });
+  }
+
+  postDownload(url: string, body: any, security: boolean = false): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.validaUser(security)
+        .then((token: any) => {
+          return this.http
+            .post(url, body, this._optionsDownload(token))
+            .toPromise()
+            .then(response => this.downLoadFile(response, 'text/csv;charset=ANSI'));
+        })
+        .then(data => resolve(data))
+        .catch(err => reject(err));
+    });
+  }
+
+  getDownload(url: string, parametros: any, security: boolean = false, bordero?): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.validaUser(security)
+        .then((token: any) => {
+          this.http.get(url, this._optionsDownload(token, parametros))
+            .subscribe(response => this.downLoadFile(response, 'application/pdf', bordero))
+        })
+        .then(data => resolve(data))
+        .catch(err => reject(err));
+    });
+  }
+
+  downLoadFile(data: any, type: string, filename?) {
+    var blob = new Blob([data], {
+      type: type
+    });
+
+    let url = window.URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    document.body.appendChild(a);
+
+    if (type === 'text/csv;charset=ASCII') {
+      a.download = 'esteira.csv';
+      a.href = url;
+    }
+
+    if (type === 'application/pdf' && filename !== undefined) {
+      a.download = 'bordero_' + filename + '.pdf';
+      a.href = url;
+    } else if (type === 'application/pdf' && filename === undefined) {
+      a.download = 'bordero.pdf';
+      a.href = url;
+    }
+    a.click();
+    window.URL.revokeObjectURL(url);
+
+    if (url != null) {
+      this.makeToast('success', 'Sucesso', 'O download foi realizado com sucesso!');
+    }
+  }
+
+  makeToast(type: NbComponentStatus, title: string, body: string) {
+    const config = {
+      status: type,
+      destroyByClick: true,
+      duration: 10000,
+      hasIcon: true,
+      position: NbGlobalPhysicalPosition.TOP_RIGHT,
+      preventDuplicates: true,
+    };
+
+    const titleContent = title ? `${title}` : '';
+
+    this.toastrService.show(
+      body,
+      `${titleContent}`,
+      config);
+  }
+
   private validaUser(security: boolean): Promise<any> {
     return new Promise((resolve, reject) => {
       const token = window.sessionStorage.getItem('token');
@@ -195,15 +200,11 @@ export class RequestService {
           reject(this._userNotFound());
           return;
         }
-
         resolve(token);
         return;
-
       }
-
       resolve('');
       return;
-
     });
   }
 
@@ -226,7 +227,7 @@ export class RequestService {
     }
     return {
       headers: headers,
-      params: params
+      params: params,
     };
   }
 

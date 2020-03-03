@@ -48,7 +48,7 @@ export class PlanoContasComponent implements OnInit {
     this.formulario = this.formBuilder.group({
       codigo: [''],
       classificacao: [''],
-      nome: [''], //Débito ou Crédito
+      nome: [''],
       natureza: [''],
       orcavel: [false],
       tipo_conta_corrente: [''],
@@ -72,7 +72,7 @@ export class PlanoContasComponent implements OnInit {
         this.formulario = this.formBuilder.group({
           codigo: [this.dados.pk],
           classificacao: [this.dados.classificacao],
-          nome: [this.dados.nome], //Débito ou Crédito
+          nome: [this.dados.nome],
           natureza: [this.dados.d_c],
           orcavel: [this.dados.orcavel],
           tipo_conta_corrente: [this.dados.codigo_tipo_conta_corrente],
@@ -96,7 +96,7 @@ export class PlanoContasComponent implements OnInit {
     this.formulario = this.formBuilder.group({
       codigo: [dados.pk],
       classificacao: [dados.classificacao],
-      nome: [dados.nome], //Débito ou Crédito
+      nome: [dados.nome],
       natureza: [dados.d_c],
       orcavel: [dados.orcavel],
       tipo_conta_corrente: [dados.codigo_tipo_conta_corrente],
@@ -160,7 +160,7 @@ export class PlanoContasComponent implements OnInit {
         this.formulario = this.formBuilder.group({
           codigo: [''],
           classificacao: [''],
-          nome: [''], //Débito ou Crédito
+          nome: [''],
           natureza: [''],
           orcavel: [false],
           tipo_conta_corrente: [''],

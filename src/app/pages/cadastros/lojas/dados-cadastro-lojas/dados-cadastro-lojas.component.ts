@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { LojasComponent } from '../lojas.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Observable, of } from 'rxjs';
+import { Observable, of, observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CadastrosApiService } from '../../../../api/cadastros';
 
@@ -22,6 +22,9 @@ export class DadosCadastroLojasComponent implements OnInit, OnDestroy {
   erro: boolean = false;
   mensagem_erro: string = '';
   modalConfirmacao: NgbModalRef;
+  interval: any;
+
+  public contimer: number = 0;
 
   dadosPN: any[];
   dadosTL: any[];
@@ -113,7 +116,7 @@ export class DadosCadastroLojasComponent implements OnInit, OnDestroy {
 
   private filterPN(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.nomesPN.filter(optionValue => optionValue.toLowerCase().includes(filterValue));
+    return this.nomesPN.filter(optionValue => value.toLowerCase().includes(filterValue));
   }
 
   private filterCV(value: string): string[] {
@@ -157,12 +160,25 @@ export class DadosCadastroLojasComponent implements OnInit, OnDestroy {
           nomes.push(String(i.nome));
         }
         this.nomesPN = nomes;
-        this.filteredDadosPN$ = this.getFilteredOptionsPN(this.inputPN.nativeElement.value);
+        this.filteredDadosPN$ = of(nomes); // this.getFilteredOptionsPN(this.inputPN.nativeElement.value);
       })
       .catch((e) => {
         console.log(e);
       });
   }
+
+  /*onChangePNTime() {
+    // clearTimeout(timeout);
+    let valor: string = String(this.inputPN.nativeElement.value);
+    this.contimer = this.contimer + 1;
+    var timeout = setTimeout(function () {
+      if (this.contimer > 3) {
+        this.contimer = 0;
+        clearTimeout(timeout);
+        console.log(valor);
+      } else { console.log('menos que 3 segundos'); }
+    }, 1000);
+  }*/
 
   onChangeCV() {
     this.campanhasApiService.getCanalVendasBuscaAutomatica(
@@ -177,7 +193,7 @@ export class DadosCadastroLojasComponent implements OnInit, OnDestroy {
           nomes.push(String(i.nome));
         }
         this.nomesCV = nomes;
-        this.filteredDadosCV$ = this.getFilteredOptionsCV(this.inputCV.nativeElement.value);
+        this.filteredDadosCV$ = of(nomes); // this.getFilteredOptionsCV(this.inputCV.nativeElement.value);
       })
       .catch((e) => {
         console.log(e);
@@ -197,7 +213,7 @@ export class DadosCadastroLojasComponent implements OnInit, OnDestroy {
           nomes.push(String(i.nome));
         }
         this.nomesTL = nomes;
-        this.filteredDadosTL$ = this.getFilteredOptionsTL(this.inputTL.nativeElement.value);
+        this.filteredDadosTL$ = of(nomes); // this.getFilteredOptionsTL(this.inputTL.nativeElement.value);
       })
       .catch((e) => {
         console.log(e);

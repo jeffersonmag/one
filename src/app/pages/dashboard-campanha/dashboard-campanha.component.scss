@@ -462,7 +462,7 @@ thead > tr > th {
   width: 100%;
 
   tr {
-    border: 1px solid #f7f7f7;
+    border: 0px solid #f7f7f7;
     -webkit-background-clip: padding-box; /* for Safari */
     background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
     border-spacing: 0;
@@ -470,16 +470,16 @@ thead > tr > th {
 
     th {
       padding: 5px;
-      border-left: 0.1px solid #f7f7f7;
-      border-right: 0.1px solid #f7f7f7;
+      border-left: 0px solid #f7f7f7;
+      border-right: 0px solid #f7f7f7;
       border-spacing: 0;
       border-collapse: collapse;
       //opacity: 0.6;
     }
     td {
       padding: 5px;
-      border-left: 0.1px solid #f7f7f7;
-      border-right: 0.1px solid #f7f7f7;
+      border-left: 0px solid #f7f7f7;
+      border-right: 0px solid #f7f7f7;
       border-spacing: 0;
       border-collapse: collapse;
       //opacity: 0.6;

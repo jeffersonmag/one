@@ -698,7 +698,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
                 parseFloat((((i.atingimento_total_campanha).toFixed(2)
                   / (i.meta_total_campanha).toFixed(2)) * 100).toFixed(2)),
               ticket_medio_campanha: parseFloat(parseFloat(i.ticket_medio_campanha).toFixed(0)),
-              meta_diaria_campanha: (parseFloat(i.meta_total_campanha) / this.campanhaDias).toFixed(0),
+              meta_diaria_campanha: parseFloat((parseFloat(i.meta_total_campanha) / this.campanhaDias).toFixed(0)),
               meta_recalculada:
                 parseFloat((((parseFloat(i.meta_total_campanha.toFixed(2)))
                   - parseFloat(i.atingimento_total_campanha.toFixed(2))) / this.campanhaPendencias)

@@ -17,7 +17,6 @@ import { ClientesComponent } from './clientes/clientes.component';
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { OrderModule } from 'ngx-order-pipe';
-import { StatusComponent } from './status/status.component';
 import { DadosCadastroComponent } from './clientes/dados-cadastro/dados-cadastro.component';
 import {
   DadosCadastroParceiroNegocioComponent,
@@ -44,6 +43,7 @@ import { CanalVendasComponent } from './canal-vendas/canal-vendas.component';
 import { DadosCadastroLojasComponent } from './lojas/dados-cadastro-lojas/dados-cadastro-lojas.component';
 import { DadosCadastroTipoLojasComponent } from './tipo-lojas/dados-cadastro-tipo-lojas/dados-cadastro-tipo-lojas.component';
 import { DadosCadastroCanalVendasComponent } from './canal-vendas/dados-cadastro-canal-vendas/dados-cadastro-canal-vendas.component';
+import { StatusComponent } from './status/status.component';
 
 @NgModule({
   imports: [
@@ -73,7 +73,6 @@ import { DadosCadastroCanalVendasComponent } from './canal-vendas/dados-cadastro
     NbSearchModule,
     NbInputModule,
     NbDatepickerModule,
-    FormsModule,
     ReactiveFormsModule,
     NbMomentDateModule,
     NbSelectModule,
@@ -92,7 +91,6 @@ import { DadosCadastroCanalVendasComponent } from './canal-vendas/dados-cadastro
   declarations: [
     CadastrosComponent,
     ClientesComponent,
-    StatusComponent,
     DadosCadastroComponent,
     DadosCadastroParceiroNegocioComponent,
     DadosCadastroBancosComponent,
@@ -113,6 +111,7 @@ import { DadosCadastroCanalVendasComponent } from './canal-vendas/dados-cadastro
     CanalVendasComponent,
     DadosCadastroCanalVendasComponent,
     NbToggleComponent,
+    StatusComponent,
   ],
 })
 

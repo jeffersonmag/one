@@ -15,7 +15,8 @@ export class EsteiraProducaoApiService {
   ) { }
 
   indicadores(dados = {}) {
-    return this.requestService.post(`${environment.urlApi}/indicadores-propostas-por-status-agrupado-inconsistencia`, dados, true);
+    return this.requestService.post(`${environment.urlApi}/indicadores-propostas-por-status-agrupado-inconsistencia`,
+      dados, true);
   }
 
   propostasInconsistentes(dados = {}) {
@@ -24,7 +25,8 @@ export class EsteiraProducaoApiService {
 
   drillDown(dados) {
     this.cpf = dados.cpf_cliente;
-    return this.requestService.get(`${environment.urlApi}/drilldown-base-historica-contratos-por-cliente/${this.cpf}`, null, true);
+    return this.requestService.get(`${environment.urlApi}/drilldown-base-historica-contratos-por-cliente/${this.cpf}`,
+      null, true);
   }
 
   listarAcoesPredefinidas() {
@@ -33,6 +35,11 @@ export class EsteiraProducaoApiService {
 
   resolveInconsistenciaAcao(dados) {
     return this.requestService.put(`${environment.urlApi}/resolve-inconsistencia-com-acao-predifinida`, dados, true);
+  }
+
+  imprimirCSV(dados) {
+    return this.requestService.postDownload(`${environment.urlApi}/propostas-inconsistentes-analitico-csv`,
+      dados, true);
   }
 
 }

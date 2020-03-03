@@ -1,0 +1,195 @@
+<div *ngIf="erro">
+  <nb-alert class="erro" status="danger">Erro: {{mensagem_erro}}</nb-alert> <br>
+</div>
+<button *ngIf="options.novaParcela && criacaoFinanceiroParcela" class="buttons-row" nbButton shape="round" size="tiny"
+  status="success" nbTooltip="Salvar" (click)="salvarDados(form)">
+  <i class="fa fa-check color"></i>
+  <div class="espacamento">Salvar</div>
+</button>
+<button *ngIf="!options.novaParcela && edicaoFinanceiroParcela" class="buttons-row" nbButton shape="round" size="tiny"
+  status="success" nbTooltip="Salvar edição" (click)="confirmacaoEdicao(contentedicao)">
+  <i class="fa fa-check color"></i>
+  <div class="espacamento">Salvar</div>
+</button>
+
+<!--Confirmar edicao dos dados-->
+<ng-template #contentedicao let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <span>Confirmar edição de usuário?</span>
+  </div>
+  <div class="modal-body">
+    <div class="buttons-row">
+      <button class="buttons-row" nbButton shape="round" size="tiny" status="success" nbTooltip="Salvar"
+        (click)="editarDados(form)">
+        <i class="fa fa-check color"></i>
+        <div class="espacamento">Sim</div>
+      </button>
+      <button class="buttons-row" nbButton shape="round" size="tiny" status="danger" nbTooltip="Salvar"
+        (click)="d('Cross click')">
+        <i class="fa fa-times color"></i>
+        <div class="espacamento">Não</div>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<button *ngIf="!options.novaParcela && exclusaoFinanceiroParcela" class="buttons-row" nbButton shape="round" size="tiny"
+  status="danger" nbTooltip="Excluir usuário" (click)="confirmacaoExclusao(contentconfirmacao)">
+  <i class="fa fa-times color"></i>
+  <div class="espacamento">Excluir</div>
+</button>
+
+<!--Confirmar exclusao dos dados-->
+<ng-template #contentconfirmacao let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <span>Confirmar exclusão de usuário?</span>
+  </div>
+  <div class="modal-body">
+    <div class="buttons-row">
+      <button class="buttons-row" nbButton shape="round" size="tiny" status="success" nbTooltip="Salvar"
+        (click)="excluirDados(form)">
+        <i class="fa fa-check color"></i>
+        <div class="espacamento">Sim</div>
+      </button>
+      <button class="buttons-row" nbButton shape="round" size="tiny" status="danger" nbTooltip="Salvar"
+        (click)="d('Cross click')">
+        <i class="fa fa-times color"></i>
+        <div class="espacamento">Não</div>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<form #form="ngForm" class="formulario" [formGroup]="formulario">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputParcela" class="label col-sm-3 col-form-label">Parcela</label>
+        <div class="col-sm-9">
+          <input type="number" nbInput fullWidth shape="rectangle" formControlName="parcela" fieldSize="tiny"
+            id="inputParcela" tabindex="7">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputParcelaDe" class="label col-sm-3 col-form-label">Parcelas Totais</label>
+        <div class="col-sm-9">
+          <input type="text" nbInput readonly fullWidth shape="rectangle" formControlName="parcela_de" fieldSize="tiny"
+            id="inputParcelaDe" tabindex="7">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputCodigo" class="label col-sm-3 col-form-label">Loja</label>
+        <div class="col-sm-9">
+          <!--<input nbInput fullWidth type="text" shape="rectangle" formControlName="loja_nome" fieldSize="tiny" id="inputCodigo"
+          tabindex="2">-->
+          <input #autoInputLoja nbInput fullWidth fieldSize="tiny" oninput="this.value = this.value.toUpperCase()"
+            type="text" (keyup)="onChangeLoja()" [nbAutocomplete]="autoInputLoja" formControlName="loja_nome"
+            id="inputLoja" tabindex="9" autocomplete="doNotAutoComplete" />
+          <nb-autocomplete #autoInputLoja (selectedChange)="onSelectionChangeLoja($event)">
+            <nb-option *ngFor="let option of filteredDadosLoja$ | async" [value]="option">
+              {{ option }}
+            </nb-option>
+          </nb-autocomplete>
+          <input nbInput type="hidden" id="inputLojapk" name="inputLojapk" value={{Loja_codigo}}
+            formControlName="loja_pk">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputCodigo" class="label col-sm-3 col-form-label">Fornecedor</label>
+        <div class="col-sm-9">
+          <!--<input nbInput fullWidth type="text" shape="rectangle" formControlName="pn_nome_cliente_fornecedor" fieldSize="tiny" id="inputCodigo"
+          tabindex="2">-->
+          <input #autoInputPN nbInput fullWidth fieldSize="tiny" oninput="this.value = this.value.toUpperCase()"
+            type="text" (keyup)="onChangePN()" [nbAutocomplete]="autoInputPN"
+            formControlName="pn_nome_cliente_fornecedor" id="inputPN" tabindex="9" autocomplete="doNotAutoComplete" />
+          <nb-autocomplete #autoInputPN (selectedChange)="onSelectionChangePN($event)">
+            <nb-option *ngFor="let option of filteredDadosPN$ | async" [value]="option">
+              {{ option }}
+            </nb-option>
+          </nb-autocomplete>
+          <input nbInput type="hidden" id="inputPNpk" name="inputPNpk" value={{pn_codigo}}
+            formControlName="pn_pk_cliente_fornecedor">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputCodigo" class="label col-sm-3 col-form-label">Conta Caixa</label>
+        <div class="col-sm-9">
+          <!--<input nbInput fullWidth type="text" shape="rectangle" formControlName="plano_de_contas_nome" fieldSize="tiny" id="inputCodigo"
+          tabindex="2">-->
+          <input #autoInputContaCaixa nbInput fullWidth fieldSize="tiny" oninput="this.value = this.value.toUpperCase()"
+            type="text" (keyup)="onChangeContaCaixa()" [nbAutocomplete]="autoInputContaCaixa"
+            formControlName="plano_de_contas_nome" id="inputContaCaixa" tabindex="9" autocomplete="doNotAutoComplete" />
+          <nb-autocomplete #autoInputContaCaixa (selectedChange)="onSelectionChangeContaCaixa($event)">
+            <nb-option *ngFor="let option of filteredDadosContaCaixa$ | async" [value]="option">
+              {{ option }}
+            </nb-option>
+          </nb-autocomplete>
+          <input nbInput type="hidden" id="inputContaCaixapk" name="inputContaCaixapk" value={{ContaCaixa_codigo}}
+            formControlName="plano_de_contas_pk">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputCodigo" class="label col-sm-3 col-form-label">Valor</label>
+        <div class="col-sm-9">
+          <input nbInput fullWidth type="number" shape="rectangle" formControlName="valor" fieldSize="tiny"
+            id="inputCodigo" tabindex="2">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--<div class="row">
+  <div class="col-sm-6">
+    <div class="form-group row">
+      <label for="inputCodigo" class="label col-sm-3 col-form-label">Valor Quitado</label>
+      <div class="col-sm-9">
+        <input nbInput fullWidth type="text" shape="rectangle" formControlName="" fieldSize="tiny" id="inputCodigo"
+          tabindex="2">
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="form-group row">
+      <label for="inputCodigo" class="label col-sm-3 col-form-label">% Quitado</label>
+      <div class="col-sm-9">
+        <input nbInput fullWidth type="text" shape="rectangle" formControlName="" fieldSize="tiny" id="inputCodigo"
+          tabindex="2">
+      </div>
+    </div>
+  </div>
+</div>-->
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group row">
+        <label for="inputDataEmissao" class="label col-sm-3 col-form-label">Vencimento</label>
+        <div class="col-sm-9">
+          <input nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputDataEmissao"
+            formControlName="data_vencimento" format="dd/MM/yyyy" tabindex="20" [nbDatepicker]="formpicker">
+          <nb-datepicker #formpicker format="dd/MM/yyyy" hideOnSelect=false></nb-datepicker>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group row">
+      </div>
+    </div>
+  </div>
+</form>

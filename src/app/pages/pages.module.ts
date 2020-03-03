@@ -13,16 +13,10 @@ import { NgIdleModule } from '@ng-idle/core';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { CadastrosModule } from './cadastros/cadastros.module';
 import { NbDateFnsDateModule } from '@nebular/date-fns';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgxCpfCnpjModule } from 'ngx-cpf-cnpj';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
-import { NgbToastModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AppRoutingModule } from '../../../projects/cadastros/src/app/app-routing.module';
-import { FormsModule } from '@angular/forms';
-import { CoreModule } from '../@core/core.module';
-import { PipesModule } from '../pipes/pipes.module';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { FinanceiroModule } from './financeiro/financeiro.module';
+import { StatusComponent } from './cadastros/status/status.component';
+import { FormsModule } from '@angular/forms';
 
 export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
@@ -33,6 +27,7 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     NbMenuModule,
     DashboardModule,
     PendenciaModule,
+    FinanceiroModule,
     EsteiraProducaoModule,
     NbStepperModule,
     NbPopoverModule,
@@ -44,7 +39,7 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     NbTreeGridModule,
     CadastrosModule,
     NbDateFnsDateModule.forChild({ format: 'dd/MM/yyyy' }),
-  ],
+    FormsModule  ],
   declarations: [
     PagesComponent,
   ],

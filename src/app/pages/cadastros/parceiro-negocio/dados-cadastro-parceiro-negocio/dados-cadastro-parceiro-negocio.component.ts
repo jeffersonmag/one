@@ -71,7 +71,6 @@ export class DadosCadastroParceiroNegocioComponent implements OnInit, OnDestroy 
     if (mm < 10) {
       mm = '0' + mm;
     }
-    //var dataFormadata = String(String(yyyy) + '-' + String(mm) + '-' + String(dd));
     var dataFormatada = String(String(dd) + '/' + String(mm) + '/' + String(yyyy));
     return dataFormatada;
   }
