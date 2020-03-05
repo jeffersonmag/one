@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { CadastroFinanceiroComponent } from '../cadastro-financeiro.component';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Observable, of } from 'rxjs';
@@ -52,9 +52,7 @@ export class AdicionarParcelasComponent implements OnInit {
   constructor(protected options: CadastroFinanceiroComponent,
     private formBuilder: FormBuilder,
     private modal: NgbModal,
-    private FinanceiroApiService: FinanceiroApiService) { }
-
-  ngOnInit(): void {
+    private FinanceiroApiService: FinanceiroApiService) {
     this.dadosTD = [];
     this.dadosContaCaixa = [];
     this.dadosLoja = [];
@@ -62,29 +60,38 @@ export class AdicionarParcelasComponent implements OnInit {
     this.dadosEditado = [];
 
     var data_vencimento: any;
-    var parcela_de: any;
+    var valor: any;
 
     this.edicaoFinanceiroParcela = this.options.edicaoFinanceiroParcela;
     this.criacaoFinanceiroParcela = this.options.criacaoFinanceiroParcela;
     this.exclusaoFinanceiroParcela = this.options.exclusaoFinanceiroParcela;
 
-    if (this.options.dadosEditado.parcela_de !== undefined) {
-      if (this.options.dadosEditado.parcela_de !== 0) {
-        parcela_de = this.options.dadosEditado.parcela_de;
+    if (!this.options.novaParcela) {
+      if (this.options.parcelaUnica !== undefined) {
+        // if (this.options.parcelas.length !== 0) {
+        this.dadosEditado = Object(this.options.parcelaUnica);
+
+        if (this.dadosEditado.data_vencimento !== null) {
+          data_vencimento = new Date(String(this.dadosEditado.data_vencimento.substr(0, 10)));
+          data_vencimento.setDate(data_vencimento.getDate() + 1);
+        }
+
+        if (this.dadosEditado.valor !== null) {
+          valor = this.dadosEditado.valor;
+        } else {
+          valor = 0;
+        }
       }
+      // }
     }
 
-    parcela_de = 10;
-
-    if (!this.options.novaParcela) {
-      if (this.options.parcelas !== undefined) {
-        if (this.options.parcelas.length !== 0) {
-          this.dadosEditado = Object(this.options.parcelas[0]);
-
-          if (this.dadosEditado.data_vencimento !== null) {
-            data_vencimento = new Date(String(this.dadosEditado.data_vencimento.substr(0, 10)));
-            data_vencimento.setDate(data_vencimento.getDate() + 1);
-          }
+    if (valor === 0) {
+      if (this.options.diferencaValorDocumentoValorParcela !== undefined ||
+        this.options.diferencaValorDocumentoValorParcela !== null) {
+        if (this.options.diferencaValorDocumentoValorParcela !== 0) {
+          valor = this.options.diferencaValorDocumentoValorParcela;
+        } else {
+          valor = 0;
         }
       }
     }
@@ -99,13 +106,13 @@ export class AdicionarParcelasComponent implements OnInit {
       plano_de_contas_pk: [this.dadosEditado.plano_de_contas_pk],
       plano_de_contas_nome: [this.dadosEditado.plano_de_contas_nome],
       data_vencimento: [data_vencimento],
-      parcela: [this.dadosEditado.parcela],
-      parcela_de: [parcela_de],
-      valor: [this.dadosEditado.valor],
-      porcentagem_quitacao: [this.dadosEditado.porcentagem_quitacao],
-      ultima_quitacao: [this.dadosEditado.ultima_quitacao],
+      valor: [valor],
     });
 
+    this.formulario.value;
+  }
+
+  ngOnInit(): void {
   }
 
   excluirDados() {
@@ -135,25 +142,31 @@ export class AdicionarParcelasComponent implements OnInit {
   }
 
   salvarDados() {
-    if (this.formulario.value.parcela === null || String(this.formulario.value.parcela).trim() === '') {
+    if (this.formulario.value.valor === null || String(this.formulario.value.valor).trim() === '') {
       this.erro = true;
       this.mensagem_erro = 'Sem dados para a inserção';
       this.modalConfirmacao.close();
     } else {
-      this.erro = false;
-      this.mensagem_erro = '';
-      this.options.salvarDadosParcela(this.formulario.value);
-      this.modalConfirmacao.close();
+      if (this.options.formulario.value.pk === null || String(this.options.formulario.value.pk).trim() === '') {
+        this.erro = false;
+        this.mensagem_erro = '';
+        this.options.insereDadosDocumento(this.options.formulario.value, this.formulario.value);
+      } else {
+        this.erro = false;
+        this.mensagem_erro = '';
+        this.formulario.controls['pk'].setValue(this.options.formulario.value.pk);
+        this.options.salvarDadosParcela(this.formulario.value);
+      }
     }
   }
 
 
   confirmacaoExclusao(modal) {
-    this.modalConfirmacao = this.modal.open(modal, { size: 'sm', backdrop: 'static' });
+    this.modalConfirmacao = this.modal.open(modal, { size: 'sm', backdrop: 'static', backdropClass: 'light-black-backdrop' });
   }
 
   confirmacaoEdicao(modal) {
-    this.modalConfirmacao = this.modal.open(modal, { size: 'sm', backdrop: 'static' });
+    this.modalConfirmacao = this.modal.open(modal, { size: 'sm', backdrop: 'static', backdropClass: 'light-black-backdrop' });
   }
 
   onChangeLoja() {

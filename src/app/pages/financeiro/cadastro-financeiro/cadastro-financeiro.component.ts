@@ -36,10 +36,21 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
 
   total_parcelas = 0;
   total_documento_alcancado = false;
+  pk_documento: any;
+  diferencaValorDocumentoValorParcela: any;
+
+  // Projetos
+  filteredDadosProjetos$: Observable<string[]>;
+  dadosProjetos: any[];
+  pk_filteredDadosProjetos = [];
+  nomesProjetos: any[];
+  Projetos_codigo: number;
+  @ViewChild('autoInputProjetos', { static: false }) inputProjetos;
 
   dadosTD: any[];
   nomesTD: any[];
   parcelas: any[];
+  parcelaUnica: any[];
   pk_filteredDadosTD = [];
   tipo_documentos_financeiro_pk: number;
   filteredDadosTD$: Observable<string[]>;
@@ -65,6 +76,7 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
 
     this.filteredDadosTD$ = of(this.dadosTD);
     this.filteredDadosPN$ = of(this.dadosPN);
+    this.filteredDadosProjetos$ = of(this.dadosProjetos);
 
     var data_emissao: any;
     var competencia: any;
@@ -116,11 +128,16 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.dadosEditado = [];
+    if (this.dialogReference !== null || this.dialogReference !== undefined) {
+      this.dialogReference.close();
+    }
   }
 
   buscaParcelasDoDocumento(valor?: string) {
     if (valor === '' || valor === undefined) {
-      this.parcelas = [];
+      if (this.pk_documento === null || this.pk_documento === undefined) {
+        valor = String(this.pk_documento);
+      } else { this.parcelas = []; }
     } else {
       this.FinanceiroApiService_.getParcelaFinanceiro(
         {
@@ -129,13 +146,15 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
       )
         .then((s) => {
           this.parcelas = s;
+          this.total_parcelas = 0
           for (let i of s) {
             this.total_parcelas = this.total_parcelas + i.valor;
           }
-          if (this.dadosEditado.valor_total_principal <= this.total_parcelas){
-            this.total_documento_alcancado = true; //
+          if (this.dadosEditado.valor_total_principal <= this.total_parcelas) {
+            this.total_documento_alcancado = true;
           } else {
             this.total_documento_alcancado = false;
+            this.diferencaValorDocumentoValorParcela = (this.formulario.value.valor - this.total_parcelas);
           }
         })
         .catch((e) => {
@@ -146,25 +165,51 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
   }
 
   salvarDados() {
-    if (this.formulario.value.documento === null || this.formulario.value.documento.trim() === '') {
-      this.erro = true;
-      this.mensagem_erro = 'Informe os dados necessários para continuar';
+    this.total_parcelas = 0;
+    for (let i of this.parcelas) {
+      this.total_parcelas = this.total_parcelas + i.valor;
+    }
+    if (this.formulario.value.valor_total_principal <= this.total_parcelas) {
+      this.total_documento_alcancado = true;
     } else {
-      this.erro = false;
-      this.mensagem_erro = '';
-      this.options.insereDados(this.formulario.value);
+      this.total_documento_alcancado = false;
+      this.diferencaValorDocumentoValorParcela = (this.formulario.value.valor_total_principal - this.total_parcelas);
+    }
+
+    if (this.total_documento_alcancado) {
+      this.options.JoinAndClose();
+    } else {
+      this.erro = true;
+      this.mensagem_erro = 'Adicione a quantidade de parcelas até que atinja o valor do documento';
     }
   }
 
   editarDados() {
-    if (this.formulario.value.pk === null || String(this.formulario.value.pk).trim() === '') {
-      this.erro = true;
-      this.mensagem_erro = 'Informe os dados necessários para continuar';
-      this.modalConfirmacao.close();
+    this.total_parcelas = 0;
+    for (let i of this.parcelas) {
+      this.total_parcelas = this.total_parcelas + i.valor;
+    }
+    if (this.formulario.value.valor_total_principal <= this.total_parcelas) {
+      this.total_documento_alcancado = true;
     } else {
-      this.erro = false;
-      this.mensagem_erro = '';
-      this.options.alteraDados(this.formulario.value);
+      this.total_documento_alcancado = false;
+      this.diferencaValorDocumentoValorParcela = (this.formulario.value.valor_total_principal - this.total_parcelas);
+    }
+
+    if (this.total_documento_alcancado) {
+      if (this.formulario.value.pk === null || String(this.formulario.value.pk).trim() === '') {
+        this.erro = true;
+        this.mensagem_erro = 'Informe os dados necessários para continuar';
+        this.modalConfirmacao.close();
+      } else {
+        this.erro = false;
+        this.mensagem_erro = '';
+        this.options.alteraDados(this.formulario.value);
+        this.modalConfirmacao.close(); // correcao edicao
+      }
+    } else {
+      this.erro = true;
+      this.mensagem_erro = 'Adicione a quantidade de parcelas até que atinja o valor do documento';
       this.modalConfirmacao.close();
     }
   }
@@ -183,29 +228,156 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
   }
 
   excluirDadosParcela(formularioParcela) {
-    this.options.excluirDadosParcela(formularioParcela);
+    this.excluirDadosParcelaExclusaoModal(formularioParcela);
     this.buscaParcelasDoDocumento(this.dadosEditado.pk);
     this.dialogReference.close();
   }
 
   editarDadosParcela(formularioParcela) {
-    this.options.editarDadosParcela(formularioParcela, this.dadosEditado.pk);
+    this.editarDadosParcelaEdicaoModal(formularioParcela, this.dadosEditado.pk);
     this.buscaParcelasDoDocumento(this.dadosEditado.pk);
     this.dialogReference.close();
   }
 
   salvarDadosParcela(formularioParcela) {
-    this.options.salvarDadosParcela(formularioParcela, this.dadosEditado.pk);
-    this.buscaParcelasDoDocumento(this.dadosEditado.pk);
+    this.parcelas = this.salvarDadosParcelaInsercaoModal(formularioParcela, this.formulario.value.pk);
     this.dialogReference.close();
   }
 
   confirmacaoExclusao(modal) {
-    this.modalConfirmacao = this.modal.open(modal, { size: 'sm', backdrop: 'static' });
+    this.modalConfirmacao = this.modal.open(modal, { size: 'sm', backdrop: 'static', backdropClass: 'light-black-backdrop' });
   }
 
   confirmacaoEdicao(modal) {
-    this.modalConfirmacao = this.modal.open(modal, { size: 'sm', backdrop: 'static' });
+    this.modalConfirmacao = this.modal.open(modal, { size: 'sm', backdrop: 'static', backdropClass: 'light-black-backdrop' });
+  }
+
+  salvarDadosParcelaInsercaoModal(valor?, pk_documento?): any {
+    if (valor.data_vencimento !== null && valor.data_vencimento !== '' && valor.data_vencimento !== undefined) {
+      var data_vencimento = this.options.formataData(valor.data_vencimento);
+    } else {
+      data_vencimento = null;
+    }
+    this.FinanceiroApiService_.postParcelaFinanceiro(
+      {
+        'data_vencimento': data_vencimento,
+        'financeiro_documento_pk': pk_documento,
+        'loja_nome': valor.loja_nome,
+        'loja_pk': valor.loja_pk,
+        'parcela': valor.parcela,
+        'parcela_de': valor.parcela_de,
+        'plano_de_contas_nome': valor.plano_de_contas_nome,
+        'plano_de_contas_pk': valor.plano_de_contas_pk,
+        'pn_nome_cliente_fornecedor': valor.pn_nome_cliente_fornecedor,
+        'pn_pk_cliente_fornecedor': valor.pn_pk_cliente_fornecedor,
+        'valor': valor.valor,
+      },
+    )
+      .then((s) => {
+        this.options.makeToast('success', 'Sucesso!', 'Dados incluídos com sucesso!');
+        this.buscaParcelasDoDocumento(String(this.formulario.value.pk));
+      })
+      .catch((e) => {
+        this.options.makeToast('danger', 'Erro!', e.error.message);
+        this.buscaParcelasDoDocumento(String(this.formulario.value.pk));
+      });
+  }
+
+  excluirDadosParcelaExclusaoModal(valor?) {
+    this.FinanceiroApiService_.delParcelaFinanceiro(
+      {
+        'pk': valor.pk,
+      },
+    )
+      .then((s) => {
+        this.options.JoinAndClose();
+        this.options.makeToast('success', 'Sucesso!', 'Dados excluído com sucesso!');
+        this.options.buscaDados(this.options.value);
+        this.buscaParcelasDoDocumento(String(this.formulario.value.pk));
+      })
+      .catch((e) => {
+        this.options.JoinAndClose();
+        this.options.makeToast('danger', 'Erro!', e.error.message);
+      });
+  }
+
+  editarDadosParcelaEdicaoModal(valor?, pk_documento?) {
+    if (valor.data_vencimento !== null && valor.data_vencimento !== '' && valor.data_vencimento !== undefined) {
+      var data_vencimento = this.options.formataData(valor.data_vencimento);
+    } else {
+      data_vencimento = null;
+    }
+    this.FinanceiroApiService_.putParcelaFinanceiro(
+      {
+        'data_vencimento': data_vencimento,
+        'financeiro_documento_pk': pk_documento,
+        'loja_nome': valor.loja_nome,
+        'loja_pk': valor.loja_pk,
+        'parcela': valor.parcela,
+        'parcela_de': valor.parcela_de,
+        'plano_de_contas_nome': valor.plano_de_contas_nome,
+        'plano_de_contas_pk': valor.plano_de_contas_pk,
+        'pn_nome_cliente_fornecedor': valor.pn_nome_cliente_fornecedor,
+        'pn_pk_cliente_fornecedor': valor.pn_pk_cliente_fornecedor,
+        'valor': valor.valor,
+        'pk': valor.pk
+      },
+    )
+      .then((s) => {
+        //this.JoinAndClose();
+        this.options.makeToast('success', 'Sucesso!', 'Dados editados com sucesso!');
+        this.options.buscaDados(this.options.value);
+        this.buscaParcelasDoDocumento(String(this.formulario.value.pk));
+      })
+      .catch((e) => {
+        this.options.makeToast('danger', 'Erro!', e.error.message);
+        this.buscaParcelasDoDocumento(String(this.formulario.value.pk));
+      });
+  }
+
+  onChangeProjetos() {
+    this.FinanceiroApiService_.getProjetosAutomatica(
+      {
+        'pesquisa': this.inputProjetos.nativeElement.value,
+      },
+    )
+      .then((s) => {
+        var nomes = [];
+        this.dadosProjetos = s;
+        for (let i of s) {
+          nomes.push(String(i.nome));
+        }
+        this.nomesProjetos = nomes;
+        this.filteredDadosProjetos$ = of(nomes); // this.getFilteredOptionsPN(this.inputPN.nativeElement.value);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  onSelectionChangeProjetos($event) {
+    this.filteredDadosProjetos$ = this.getFilteredOptionsProjetos($event);
+    if (this.dadosProjetos.length !== 0 && this.dadosProjetos !== undefined) {
+      this.pk_filteredDadosProjetos = this.dadosProjetos.filter((item) => {
+        return item.nome === $event;
+      });
+      this.Projetos_codigo = Number(this.pk_filteredDadosProjetos[0].pk);
+      this.formulario.controls['projetos_pk'].setValue(this.Projetos_codigo);
+      console.log(this.formulario.value);
+    }
+  }
+
+  getFilteredOptionsProjetos(value: string): Observable<string[]> {
+    return of(value).pipe(
+      map(filterString => this.filterProjetos(filterString)),
+    );
+  }
+
+  private filterProjetos(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    if (this.nomesProjetos !== undefined) {
+      return this.nomesProjetos.filter(optionValue => value.toLowerCase().includes(filterValue));
+    }
   }
 
   onChangeTD() {
@@ -298,7 +470,93 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
   }
 
   adicionarParcelas(modal) {
-    this.novaParcela = true;
+    this.erro = false;
+    if (this.formulario.value.pk === null || String(this.formulario.value.pk).trim() === '') {
+      if (this.formulario.value.documento === null || this.formulario.value.documento.trim() === '') {
+        this.erro = true;
+        this.mensagem_erro = 'Informe os dados necessários para continuar';
+      } else {
+        this.total_parcelas = 0;
+        for (let i of this.parcelas) {
+          this.total_parcelas = this.total_parcelas + i.valor;
+        }
+        if (this.formulario.value.valor_total_principal <= this.total_parcelas) {
+          this.total_documento_alcancado = true;
+        } else {
+          this.total_documento_alcancado = false;
+          this.diferencaValorDocumentoValorParcela =
+            (this.formulario.value.valor_total_principal - this.total_parcelas);
+        }
+        this.novaParcela = true;
+        this.dialogReference = this.dialogService.open(modal,
+          {
+            hasBackdrop: false,
+            closeOnEsc: false,
+          });
+      }
+    } else {
+      this.total_parcelas = 0;
+      for (let i of this.parcelas) {
+        this.total_parcelas = this.total_parcelas + i.valor;
+      }
+      if (this.formulario.value.valor_total_principal <= this.total_parcelas) {
+        this.total_documento_alcancado = true;
+      } else {
+        this.total_documento_alcancado = false;
+        this.diferencaValorDocumentoValorParcela = (this.formulario.value.valor_total_principal - this.total_parcelas);
+      }
+      this.options.alteraDados(this.formulario.value);
+      this.erro = false;
+      this.novaParcela = true;
+      this.dialogReference = this.dialogService.open(modal,
+        {
+          hasBackdrop: false,
+          closeOnEsc: false,
+        });
+    }
+  }
+
+  insereDadosDocumento(valorDocumento?, valorParcela?) {
+    if (valorDocumento.data_emissao !== null && valorDocumento.data_emissao !== ''
+      && valorDocumento.data_emissao !== undefined) {
+      var data_emissao = this.options.formataData(valorDocumento.data_emissao);
+    }
+    if (valorDocumento.competencia !== null && valorDocumento.competencia !== ''
+      && valorDocumento.competencia !== undefined) {
+      var competencia = this.options.formataData(valorDocumento.competencia);
+    }
+    this.FinanceiroApiService_.postDocumentoFinanceiro(
+      {
+        'competencia': competencia,
+        'data_emissao': data_emissao,
+        'descricao': valorDocumento.descricao,
+        'documento': valorDocumento.documento,
+        'pn_pk_emissor_documento': valorDocumento.pn_pk_emissor_documento,
+        'projetos_nome': valorDocumento.projetos_nome,
+        'projetos_pk': valorDocumento.projetos_pk,
+        'tipo': 'P',
+        'tipo_documentos_financeiro_pk': valorDocumento.tipo_documentos_financeiro_pk,
+        'valor_total_principal': valorDocumento.valor_total_principal,
+      },
+    )
+      .then((s) => {
+        //this.JoinAndClose();
+        this.pk_documento = s.codigo;
+        this.options.makeToast('success', 'Sucesso!', 'Dados Financeiros inseridos com sucesso!');
+        this.formulario.controls['pk'].setValue(this.pk_documento);
+        this.salvarDadosParcela(valorParcela);
+        this.options.buscaDados(this.options.value);
+      })
+      .catch((e) => {
+        //this.JoinAndClose();
+        this.options.makeToast('danger', 'Ocorreu um erro!', e.error.message);
+      });
+  }
+
+  editarParcelas(modal, financeiro?) {
+    //this.parcelas = financeiro;
+    this.parcelaUnica = financeiro;
+    this.novaParcela = false;
     this.dialogReference = this.dialogService.open(modal,
       {
         hasBackdrop: false,
@@ -306,13 +564,17 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
       });
   }
 
-  editarParcelas(modal, financeiro?) {
-    this.novaParcela = false;
-    this.dialogReference = this.dialogService.open(modal,
-      {
-        hasBackdrop: false,
-        closeOnEsc: false,
-      });
+  VerificaAlteracao() {
+    this.total_parcelas = 0;
+    for (let i of this.parcelas) {
+      this.total_parcelas = this.total_parcelas + i.valor;
+    }
+    if (this.formulario.value.valor_total_principal <= this.total_parcelas) {
+      this.total_documento_alcancado = true;
+    } else {
+      this.total_documento_alcancado = false;
+      this.diferencaValorDocumentoValorParcela = (this.formulario.value.valor_total_principal - this.total_parcelas);
+    }
   }
 
   public onPageChange(pageNum: number): void {

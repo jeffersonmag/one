@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FinanceiroApiService } from '../../api/financeiro';
 import {
   NbComponentStatus, NbGlobalPhysicalPosition,
@@ -10,7 +10,7 @@ import {
   templateUrl: './financeiro.component.html',
   styleUrls: ['./financeiro.component.scss']
 })
-export class FinanceiroComponent implements OnInit {
+export class FinanceiroComponent implements OnInit, OnDestroy {
 
   permissoes: any = JSON.parse(window.sessionStorage.permissao_acesso);
   permissaoDelete: boolean = this.permissoes.manutencao_financeiro.acl.D;
@@ -50,6 +50,10 @@ export class FinanceiroComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngOnDestroy() {
+    this.JoinAndClose();
+  }
+
   modoExibicao(modo) {
     if (modo === 0) { // Modo Grade = 0
       this.modoGrade = true;
@@ -80,7 +84,7 @@ export class FinanceiroComponent implements OnInit {
       });
   }
 
-  /**buscaDadosParcela(valor?: string) {
+  buscaDadosParcela(valor?: string): any {
     if (valor === '') {
       this.value = '';
       this.ativaBotaoPesquisa = false;
@@ -91,13 +95,13 @@ export class FinanceiroComponent implements OnInit {
       },
     )
       .then((s) => {
-        this.parcela = s;
+        return this.parcela = s;
       })
       .catch((e) => {
         console.log(e);
         this.makeToast('danger', 'Ocorreu um erro!', e.error.message);
       });
-  }**/
+  }
 
   formataData(data) {
     var dd = data.getDate();
@@ -115,37 +119,6 @@ export class FinanceiroComponent implements OnInit {
     return dataFormatada;
   }
 
-  insereDados(valor?) {
-    if (valor.data_emissao !== null && valor.data_emissao !== '' && valor.data_emissao !== undefined) {
-      var data_emissao = this.formataData(valor.data_emissao);
-    }
-    if (valor.competencia !== null && valor.competencia !== '' && valor.competencia !== undefined) {
-      var competencia = this.formataData(valor.competencia);
-    }
-    this.FinanceiroApiService.postDocumentoFinanceiro(
-      {
-        'competencia': competencia,
-        'data_emissao': data_emissao,
-        'descricao': valor.descricao,
-        'documento': valor.documento,
-        'pn_pk_emissor_documento': valor.pn_pk_emissor_documento,
-        'projetos_nome': valor.projetos_nome,
-        'projetos_pk': valor.projetos_pk,
-        'tipo': 'P',
-        'tipo_documentos_financeiro_pk': valor.tipo_documentos_financeiro_pk,
-        'valor_total_principal': valor.valor_total_principal,
-      },
-    )
-      .then((s) => {
-        this.JoinAndClose();
-        this.makeToast('success', 'Sucesso!', 'Dados Financeiros inseridos com sucesso!');
-        this.buscaDados(this.value);
-      })
-      .catch((e) => {
-        this.JoinAndClose();
-        this.makeToast('danger', 'Ocorreu um erro!', e.error.message);
-      });
-  }
 
   alteraDados(valor?) {
     if (valor.data_emissao !== null && valor.data_emissao !== '' && valor.data_emissao !== undefined) {
@@ -174,12 +147,12 @@ export class FinanceiroComponent implements OnInit {
       },
     )
       .then((s) => {
-        this.JoinAndClose();
+        //this.JoinAndClose();
         this.makeToast('success', 'Sucesso!', 'Dados alterados com sucesso!');
         this.buscaDados(this.value);
       })
       .catch((e) => {
-        this.JoinAndClose();
+        //this.JoinAndClose();
         this.makeToast('danger', 'Erro!', e.error.message);
       });
   }
@@ -201,57 +174,7 @@ export class FinanceiroComponent implements OnInit {
       });
   }
 
-  excluirDadosParcela(valor?) {
-    this.FinanceiroApiService.delParcelaFinanceiro(
-      {
-        'pk': valor.pk,
-      },
-    )
-      .then((s) => {
-        this.JoinAndClose();
-        this.makeToast('success', 'Sucesso!', 'Dados excluído com sucesso!');
-        this.buscaDados(this.value);
-      })
-      .catch((e) => {
-        this.JoinAndClose();
-        this.makeToast('danger', 'Erro!', e.error.message);
-      });
-  }
-
-  editarDadosParcela(valor?, pk_documento?) {
-    if (valor.data_vencimento !== null && valor.data_vencimento !== '' && valor.data_vencimento !== undefined) {
-      var data_vencimento = this.formataData(valor.data_vencimento);
-    } else {
-      data_vencimento = null;
-    }
-    this.FinanceiroApiService.putParcelaFinanceiro(
-      {
-        'data_vencimento': data_vencimento,
-        'financeiro_documento_pk': pk_documento,
-        'loja_nome': valor.loja_nome,
-        'loja_pk': valor.loja_pk,
-        'parcela': valor.parcela,
-        'parcela_de': valor.parcela_de,
-        'plano_de_contas_nome': valor.plano_de_contas_nome,
-        'plano_de_contas_pk': valor.plano_de_contas_pk,
-        'pn_nome_cliente_fornecedor': valor.pn_nome_cliente_fornecedor,
-        'pn_pk_cliente_fornecedor': valor.pn_pk_cliente_fornecedor,
-        'valor': valor.valor,
-        'pk': valor.pk
-      },
-    )
-      .then((s) => {
-        this.JoinAndClose();
-        this.makeToast('success', 'Sucesso!', 'Dados excluído com sucesso!');
-        this.buscaDados(this.value);
-      })
-      .catch((e) => {
-        this.JoinAndClose();
-        this.makeToast('danger', 'Erro!', e.error.message);
-      });
-  }
-
-  salvarDadosParcela(valor?, pk_documento?) {
+  salvarDadosParcela(valor?, pk_documento?): any {
     if (valor.data_vencimento !== null && valor.data_vencimento !== '' && valor.data_vencimento !== undefined) {
       var data_vencimento = this.formataData(valor.data_vencimento);
     } else {
@@ -273,12 +196,14 @@ export class FinanceiroComponent implements OnInit {
       },
     )
       .then((s) => {
-        this.JoinAndClose();
-        this.makeToast('success', 'Sucesso!', 'Dados excluído com sucesso!');
+        //this.JoinAndClose();
+        this.makeToast('success', 'Sucesso!', 'Dados incluídos com sucesso!');
         this.buscaDados(this.value);
+        this.parcela = this.buscaDadosParcela(String(pk_documento));
+        return this.parcela;
       })
       .catch((e) => {
-        this.JoinAndClose();
+        //this.JoinAndClose();
         this.makeToast('danger', 'Erro!', e.error.message);
       });
   }
@@ -291,6 +216,7 @@ export class FinanceiroComponent implements OnInit {
       {
         hasBackdrop: false,
         closeOnEsc: false,
+        backdropClass: 'light-black-backdrop',
       });
   }
 
@@ -302,6 +228,7 @@ export class FinanceiroComponent implements OnInit {
       {
         hasBackdrop: false,
         closeOnEsc: false,
+        backdropClass: 'light-black-backdrop',
       });
   }
 

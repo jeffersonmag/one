@@ -107,10 +107,21 @@ export class FinanceiroApiService {
   getTipoContaCaixaBuscaAutomatica(dados) {
     this.pesquisa = dados.pesquisa;
     if (this.pesquisa === '') {
-      return this.requestService.get(`${environment.urlApi}/one/consultas/consulta-plano-conta-by-nome?nome=%`,
+      return this.requestService.get(`${environment.urlApi}/one/consultas/consulta-plano-conta-by-nome?nome=%&classificacao=3`,
         null, true);
     } else {
-      return this.requestService.get(`${environment.urlApi}/one/consultas/consulta-plano-conta-by-nome?nome=${this.pesquisa}`,
+      return this.requestService.get(`${environment.urlApi}/one/consultas/consulta-plano-conta-by-nome?nome=${this.pesquisa}&classificacao=3`,
+        null, true);
+    }
+  }
+
+  getProjetosAutomatica(dados) {
+    this.pesquisa = dados.pesquisa;
+    if (this.pesquisa === '') {
+      return this.requestService.get(`${environment.urlApi}/one/consultas/consulta-projeto-by-nome?nome=%`,
+        null, true);
+    } else {
+      return this.requestService.get(`${environment.urlApi}/one/consultas/consulta-projeto-by-nome?nome=${this.pesquisa}`,
         null, true);
     }
   }
