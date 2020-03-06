@@ -45,4 +45,9 @@ export class PendenciaFisicoApiService {
     return this.requestService.getDownload(`${environment.urlApi}/imprime-bordero-regularizacao/`
       + bordero, dados, true);
   }
+
+  imprimirCSV(dados) {
+    return this.requestService.postDownload(`${environment.urlApi}/resumo-pendencia-fisico-analitico-perfil-csv`,
+      dados, true, 'pendencia-fisico');
+  }
 }

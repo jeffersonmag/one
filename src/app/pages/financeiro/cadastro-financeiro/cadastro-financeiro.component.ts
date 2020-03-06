@@ -169,7 +169,7 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
     for (let i of this.parcelas) {
       this.total_parcelas = this.total_parcelas + i.valor;
     }
-    if (this.formulario.value.valor_total_principal <= this.total_parcelas) {
+    if (this.formulario.value.valor_total_principal == this.total_parcelas) {
       this.total_documento_alcancado = true;
     } else {
       this.total_documento_alcancado = false;
@@ -189,7 +189,7 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
     for (let i of this.parcelas) {
       this.total_parcelas = this.total_parcelas + i.valor;
     }
-    if (this.formulario.value.valor_total_principal <= this.total_parcelas) {
+    if (this.formulario.value.valor_total_principal == this.total_parcelas) {
       this.total_documento_alcancado = true;
     } else {
       this.total_documento_alcancado = false;
@@ -290,13 +290,13 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
       },
     )
       .then((s) => {
-        this.options.JoinAndClose();
+        //this.options.JoinAndClose();
         this.options.makeToast('success', 'Sucesso!', 'Dados excluído com sucesso!');
         this.options.buscaDados(this.options.value);
         this.buscaParcelasDoDocumento(String(this.formulario.value.pk));
       })
       .catch((e) => {
-        this.options.JoinAndClose();
+        //this.options.JoinAndClose();
         this.options.makeToast('danger', 'Erro!', e.error.message);
       });
   }
@@ -480,7 +480,7 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
         for (let i of this.parcelas) {
           this.total_parcelas = this.total_parcelas + i.valor;
         }
-        if (this.formulario.value.valor_total_principal <= this.total_parcelas) {
+        if (this.formulario.value.valor_total_principal == this.total_parcelas) {
           this.total_documento_alcancado = true;
         } else {
           this.total_documento_alcancado = false;
@@ -499,7 +499,7 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
       for (let i of this.parcelas) {
         this.total_parcelas = this.total_parcelas + i.valor;
       }
-      if (this.formulario.value.valor_total_principal <= this.total_parcelas) {
+      if (this.formulario.value.valor_total_principal == this.total_parcelas) {
         this.total_documento_alcancado = true;
       } else {
         this.total_documento_alcancado = false;
@@ -569,7 +569,7 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
     for (let i of this.parcelas) {
       this.total_parcelas = this.total_parcelas + i.valor;
     }
-    if (this.formulario.value.valor_total_principal <= this.total_parcelas) {
+    if (this.formulario.value.valor_total_principal == this.total_parcelas) {
       this.total_documento_alcancado = true;
     } else {
       this.total_documento_alcancado = false;

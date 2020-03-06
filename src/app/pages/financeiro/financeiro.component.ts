@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, destroyPlatform } from '@angular/core';
 import { FinanceiroApiService } from '../../api/financeiro';
 import {
   NbComponentStatus, NbGlobalPhysicalPosition,
@@ -51,7 +51,9 @@ export class FinanceiroComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.JoinAndClose();
+    if (this.dialogReference !== undefined) {
+      this.dialogReference.close();
+    }
   }
 
   modoExibicao(modo) {
@@ -216,6 +218,7 @@ export class FinanceiroComponent implements OnInit, OnDestroy {
       {
         hasBackdrop: false,
         closeOnEsc: false,
+        hasScroll: true,
         backdropClass: 'light-black-backdrop',
       });
   }
@@ -228,6 +231,7 @@ export class FinanceiroComponent implements OnInit, OnDestroy {
       {
         hasBackdrop: false,
         closeOnEsc: false,
+        hasScroll: true,
         backdropClass: 'light-black-backdrop',
       });
   }

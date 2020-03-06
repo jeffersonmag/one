@@ -39,7 +39,7 @@ export class EsteiraProducaoApiService {
 
   imprimirCSV(dados) {
     return this.requestService.postDownload(`${environment.urlApi}/propostas-inconsistentes-analitico-csv`,
-      dados, true);
+      dados, true, 'esteira-producao');
   }
 
 }

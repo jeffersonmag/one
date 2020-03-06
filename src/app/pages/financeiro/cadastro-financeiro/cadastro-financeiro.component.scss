@@ -65,3 +65,8 @@ nb-card.inline-form-card nb-card-body {
 .light-black-backdrop {
   background-color: #000;
 }
+
+.maxContent {
+  max-height: 200px;
+  overflow: auto;
+}

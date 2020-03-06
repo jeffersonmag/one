@@ -19,6 +19,10 @@
                             </div>
                             <listagem-bordero></listagem-bordero>
                         </ng-template>
+                        <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Download CSV">
+                            <nb-icon icon="download-outline" pack="eva" class="flip-icon" (click)="downloadCSV()">
+                            </nb-icon>
+                        </button>
                         <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Filtros"
                             (click)="revelar()">
                             <nb-icon icon="funnel-outline" pack="eva" class="flip-icon"></nb-icon>

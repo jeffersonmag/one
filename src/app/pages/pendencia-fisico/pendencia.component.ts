@@ -549,6 +549,30 @@ export class PendenciaComponent implements OnInit, OnDestroy {
     this.modalReference = this.modalService.open(modal, { size: 'lg', scrollable: false });
   }
 
+  downloadCSV() {
+    this.pendenciaFisicoApiService.imprimirCSV({
+      'data_de': '',
+      'data_ate': '',
+      'criterio_de_data': '',
+      'codigo_matriz': Number(this.codigoLojaMatriz),
+      'codigo_comercial': Number(this.codigoComercial),
+      'codigo_instituicao': Number(this.codigoInstituicao),
+      'codigo_regional': Number(this.codigoRegional),
+      'codigo_loja': Number(this.codigoLoja),
+      'codigo_funcionario': Number(this.codigoFuncionario),
+      'status_farol': this.codigoTipoPendencia,
+      'codigo_canal_vendas': Number(this.codigoCanalVendas),
+      'numero_bordero': Number(this.codigoBordero),
+      'proposta': Number(this.valueProposta),
+    }).then((s) => {
+    })
+      .catch((e) => {
+        let erro = e.error.message;
+        this.makeToast('danger', 'Erro', erro);
+        console.log(e)
+      });
+  }
+
   gerarEnvioBordero() {
     this.bordero = [];
     this.borderoConfirmado = true;

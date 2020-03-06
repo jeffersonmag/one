@@ -118,14 +118,14 @@ export class RequestService {
     });
   }
 
-  postDownload(url: string, body: any, security: boolean = false): Promise<any> {
+  postDownload(url: string, body: any, security: boolean = false, modulo?): Promise<any> {
     return new Promise((resolve, reject) => {
       this.validaUser(security)
         .then((token: any) => {
           return this.http
             .post(url, body, this._optionsDownload(token))
             .toPromise()
-            .then(response => this.downLoadFile(response, 'text/csv;charset=ANSI'));
+            .then(response => this.downLoadFile(response, 'text/csv;charset=ANSI', modulo));
         })
         .then(data => resolve(data))
         .catch(err => reject(err));
@@ -153,9 +153,14 @@ export class RequestService {
     var a = document.createElement('a');
     document.body.appendChild(a);
 
-    if (type === 'text/csv;charset=ASCII') {
-      a.download = 'esteira.csv';
-      a.href = url;
+    if (type === 'text/csv;charset=ANSI') {
+      if (filename != '') {
+        a.download = filename + '.csv';
+        a.href = url;
+      } else {
+        a.download = 'esteira.csv';
+        a.href = url;
+      }
     }
 
     if (type === 'application/pdf' && filename !== undefined) {

@@ -232,7 +232,7 @@
 
   <nb-tabset>
     <nb-tab tabTitle="FATURAS">
-      <div class="container">
+      <div class="maxContent">
         <table class="tabela" equalColumnsWidth>
           <thead>
             <tr>
@@ -251,7 +251,7 @@
               <td class="size-fonte">{{i.parcela}} DE {{i.parcela_de}} </td>
               <td class="size-fonte">{{i.data_vencimento | moment: 'DD/MM/YYYY'}}</td>
               <td class="size-fonte">
-                <span nbTooltip="Nome Loja">{{i.nome_loja}}</span><br>
+                <span nbTooltip="Nome Loja">{{i.loja_nome}}</span><br>
               </td>
               <td class="size-fonte">
                 <span nbTooltip="Nome Fornecedor">{{i.pn_nome_cliente_fornecedor}}</span><br>

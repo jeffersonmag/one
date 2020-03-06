@@ -60,7 +60,7 @@ export class AdicionarParcelasComponent implements OnInit {
     this.dadosEditado = [];
 
     var data_vencimento: any;
-    var valor: any;
+    var valor: any = 0;
 
     this.edicaoFinanceiroParcela = this.options.edicaoFinanceiroParcela;
     this.criacaoFinanceiroParcela = this.options.criacaoFinanceiroParcela;
