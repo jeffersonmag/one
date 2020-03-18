@@ -21,8 +21,13 @@ export class FinanceiroApiService {
       return this.requestService.get(`${environment.urlApi}/one/financeiro/financeiro-documento`,
         null, true);
     } else {
-      return this.requestService.get(`${environment.urlApi}/one/financeiro/financeiro-documento?pesquisa=${this.pesquisa}`,
-        null, true);
+      if (dados.filtrar) {
+        return this.requestService.get(`${environment.urlApi}/one/financeiro/financeiro-documento?${this.pesquisa}`,
+          null, true);
+      } else {
+        return this.requestService.get(`${environment.urlApi}/one/financeiro/financeiro-documento`,
+          null, true); // ?pesquisa=${this.pesquisa}
+      }
     }
   }
 

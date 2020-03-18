@@ -22,12 +22,23 @@
   margin-bottom: 10px;
   margin-top: 10px;
   max-width: 90%;
-  min-height: 80%;
+  min-height: 90%;
   overflow: auto;
+}
+
+.borda-lateral {
+  margin-left: 1em;  
 }
 
 .buttons-row {
   margin-left: 0.1rem;
+}
+
+.espacamento-top {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  max-height: 485px;
+  overflow: auto;
 }
 
 .font-size-list {
@@ -47,4 +58,9 @@
 
 .light-black-backdrop {
   background-color: #000;
+}
+
+:host nb-layout-column {
+  margin-left: auto;
+  background-color: white;
 }

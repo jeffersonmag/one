@@ -128,7 +128,7 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.dadosEditado = [];
-    if (this.dialogReference !== null || this.dialogReference !== undefined) {
+    if (this.dialogReference !== null && this.dialogReference !== undefined) {
       this.dialogReference.close();
     }
   }
@@ -146,7 +146,7 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
       )
         .then((s) => {
           this.parcelas = s;
-          this.total_parcelas = 0
+          this.total_parcelas = 0;
           for (let i of s) {
             this.total_parcelas = this.total_parcelas + i.valor;
           }
@@ -230,18 +230,15 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
   excluirDadosParcela(formularioParcela) {
     this.excluirDadosParcelaExclusaoModal(formularioParcela);
     this.buscaParcelasDoDocumento(this.dadosEditado.pk);
-    this.dialogReference.close();
   }
 
   editarDadosParcela(formularioParcela) {
     this.editarDadosParcelaEdicaoModal(formularioParcela, this.dadosEditado.pk);
     this.buscaParcelasDoDocumento(this.dadosEditado.pk);
-    this.dialogReference.close();
   }
 
   salvarDadosParcela(formularioParcela) {
     this.parcelas = this.salvarDadosParcelaInsercaoModal(formularioParcela, this.formulario.value.pk);
-    this.dialogReference.close();
   }
 
   confirmacaoExclusao(modal) {
@@ -276,6 +273,7 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
       .then((s) => {
         this.options.makeToast('success', 'Sucesso!', 'Dados incluídos com sucesso!');
         this.buscaParcelasDoDocumento(String(this.formulario.value.pk));
+        this.dialogReference.close();
       })
       .catch((e) => {
         this.options.makeToast('danger', 'Erro!', e.error.message);
@@ -294,6 +292,7 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
         this.options.makeToast('success', 'Sucesso!', 'Dados excluído com sucesso!');
         this.options.buscaDados(this.options.value);
         this.buscaParcelasDoDocumento(String(this.formulario.value.pk));
+        this.dialogReference.close();
       })
       .catch((e) => {
         //this.options.JoinAndClose();
@@ -328,6 +327,7 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
         this.options.makeToast('success', 'Sucesso!', 'Dados editados com sucesso!');
         this.options.buscaDados(this.options.value);
         this.buscaParcelasDoDocumento(String(this.formulario.value.pk));
+        this.dialogReference.close();
       })
       .catch((e) => {
         this.options.makeToast('danger', 'Erro!', e.error.message);
@@ -452,7 +452,7 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
       });
       this.pn_codigo = Number(this.pk_filteredDadosPN[0].pk);
       this.formulario.controls['pn_pk_emissor_documento'].setValue(this.pn_codigo);
-      console.log(this.formulario.value);
+      // console.log(this.formulario.value);
     }
   }
 
@@ -473,14 +473,18 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
     this.erro = false;
     if (this.formulario.value.pk === null || String(this.formulario.value.pk).trim() === '') {
       if (this.formulario.value.documento === null || this.formulario.value.documento.trim() === '') {
-        this.erro = true;
-        this.mensagem_erro = 'Informe os dados necessários para continuar';
+        if (this.formulario.value.valor_total_principal === null ||
+          this.formulario.value.valor_total_principal.trim() === '' ||
+          this.formulario.value.valor_total_principal === 0) {
+          this.erro = true;
+          this.mensagem_erro = 'Informe os dados necessários para continuar';
+        }
       } else {
         this.total_parcelas = 0;
         for (let i of this.parcelas) {
           this.total_parcelas = this.total_parcelas + i.valor;
         }
-        if (this.formulario.value.valor_total_principal == this.total_parcelas) {
+        if (this.formulario.value.valor_total_principal === this.total_parcelas) {
           this.total_documento_alcancado = true;
         } else {
           this.total_documento_alcancado = false;
@@ -499,7 +503,7 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
       for (let i of this.parcelas) {
         this.total_parcelas = this.total_parcelas + i.valor;
       }
-      if (this.formulario.value.valor_total_principal == this.total_parcelas) {
+      if (this.formulario.value.valor_total_principal === this.total_parcelas) {
         this.total_documento_alcancado = true;
       } else {
         this.total_documento_alcancado = false;
@@ -540,7 +544,7 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
       },
     )
       .then((s) => {
-        //this.JoinAndClose();
+        // this.JoinAndClose();
         this.pk_documento = s.codigo;
         this.options.makeToast('success', 'Sucesso!', 'Dados Financeiros inseridos com sucesso!');
         this.formulario.controls['pk'].setValue(this.pk_documento);
@@ -548,13 +552,13 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
         this.options.buscaDados(this.options.value);
       })
       .catch((e) => {
-        //this.JoinAndClose();
+        // this.JoinAndClose();
         this.options.makeToast('danger', 'Ocorreu um erro!', e.error.message);
       });
   }
 
   editarParcelas(modal, financeiro?) {
-    //this.parcelas = financeiro;
+    // this.parcelas = financeiro;
     this.parcelaUnica = financeiro;
     this.novaParcela = false;
     this.dialogReference = this.dialogService.open(modal,

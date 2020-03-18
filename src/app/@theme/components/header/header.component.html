@@ -15,8 +15,7 @@
 </div>-->
 <div class="header-container">
   <nb-action class="user-action" *nbIsGranted="['view', 'user']">
-    <nb-user [nbContextMenu]="userMenu" 
-             [name]="user?.nome_usuario" >
+    <nb-user [nbContextMenu]="userMenu" [name]="user?.nome_usuario">
     </nb-user>
   </nb-action>
 </div>

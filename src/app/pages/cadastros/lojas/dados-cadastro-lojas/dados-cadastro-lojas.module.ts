@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NbOptionComponent, NbSelectModule, NbAlertModule, NbToggleModule } from '@nebular/theme';
+import { NbOptionComponent, NbSelectModule, NbAlertModule } from '@nebular/theme';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 

@@ -87,6 +87,7 @@ import { StatusComponent } from './status/status.component';
     NgxMaskModule.forChild(),
     NgSelectModule,
     NbAutocompleteModule,
+    NbToggleModule,
   ],
   declarations: [
     CadastrosComponent,
@@ -110,7 +111,6 @@ import { StatusComponent } from './status/status.component';
     DadosCadastroTipoLojasComponent,
     CanalVendasComponent,
     DadosCadastroCanalVendasComponent,
-    NbToggleComponent,
     StatusComponent,
   ],
 })

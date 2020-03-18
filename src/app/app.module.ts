@@ -41,8 +41,21 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { NgxCpfCnpjModule } from 'ngx-cpf-cnpj';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { NgxCurrencyModule } from "ngx-currency";
 
-export let options: Partial<IConfig> | (() => Partial<IConfig>);
+export let options: Partial<IConfig> | (() => Partial<IConfig>) = {};
+
+export const customCurrencyMaskConfig = {
+  align: "right",
+  allowNegative: true,
+  allowZero: true,
+  decimal: ",",
+  precision: 2,
+  prefix: "R$ ",
+  suffix: "",
+  thousands: ".",
+  nullable: true
+};
 
 
 /**
@@ -95,6 +108,8 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     NbActionsModule,
     NbUserModule,
     NbIconModule,
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
+    NbSidebarModule.forRoot(),
   ],
   providers: [
     {

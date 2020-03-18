@@ -77,7 +77,7 @@
         <div class="col-sm-9">
           <input #autoInputTD nbInput fullWidth fieldSize="tiny" oninput="this.value = this.value.toUpperCase()"
             type="text" (keyup)="onChangeTD()" [nbAutocomplete]="autoTD"
-            formControlName="tipo_documentos_financeiro_nome" id="inputTD" tabindex="8" autocomplete="off" />
+            formControlName="tipo_documentos_financeiro_nome" id="inputTD" tabindex="1" autocomplete="off" />
           <nb-autocomplete #autoTD (selectedChange)="onSelectionChangeTD($event)">
             <nb-option *ngFor="let option of filteredDadosTD$ | async" [value]="option">
               {{ option }}
@@ -95,7 +95,7 @@
         <div class="col-sm-9">
           <input #autoInputPN nbInput fullWidth fieldSize="tiny" oninput="this.value = this.value.toUpperCase()"
             type="text" (keyup)="onChangePN()" [nbAutocomplete]="auto" formControlName="pn_nome_emissor_documento"
-            id="inputEmissorDocFiscal" tabindex="9" autocomplete="off" />
+            id="inputEmissorDocFiscal" tabindex="6" autocomplete="off" />
           <nb-autocomplete #auto (selectedChange)="onSelectionChangePN($event)">
             <nb-option *ngFor="let option of filteredDadosPN$ | async" [value]="option">
               {{ option }}
@@ -136,7 +136,7 @@
         <label for="inputDataEmissao" class="label col-sm-3 col-form-label">Data Emissão</label>
         <div class="col-sm-9">
           <input nbInput fullWidth shape="rectangle" fieldSize="tiny" id="inputDataEmissao"
-            formControlName="data_emissao" format="dd/MM/yyyy" tabindex="20" [nbDatepicker]="formpicker">
+            formControlName="data_emissao" format="dd/MM/yyyy" tabindex="3" [nbDatepicker]="formpicker">
           <nb-datepicker #formpicker format="dd/MM/yyyy" hideOnSelect=false></nb-datepicker>
         </div>
       </div>
@@ -148,7 +148,7 @@
         <div class="col-sm-9">
           <input #autoInputProjetos nbInput fullWidth fieldSize="tiny" oninput="this.value = this.value.toUpperCase()"
             type="text" (keyup)="onChangeProjetos()" [nbAutocomplete]="autoProjetos" formControlName="projetos_nome"
-            id="inputProjetos" tabindex="9" autocomplete="off" />
+            id="inputProjetos" tabindex="8" autocomplete="off" />
           <nb-autocomplete #autoProjetos (selectedChange)="onSelectionChangeProjetos($event)">
             <nb-option *ngFor="let option of filteredDadosProjetos$ | async" [value]="option">
               {{ option }}
@@ -169,7 +169,7 @@
         <label for="inputcompetencia" class="label col-sm-3 col-form-label">Competência</label>
         <div class="col-sm-9">
           <input nbInput fullWidth shape="rectangle" fieldSize="tiny" oninput="this.value = this.value.toUpperCase()"
-            id="inputcompetencia" formControlName="competencia" format="dd/MM/yyyy" tabindex="20"
+            id="inputcompetencia" formControlName="competencia" format="dd/MM/yyyy" tabindex="4"
             [nbDatepicker]="formpickercompetencia">
           <nb-datepicker #formpickercompetencia format="dd/MM/yyyy" hideOnSelect=false></nb-datepicker>
         </div>
@@ -187,8 +187,8 @@
       <div class="form-group row">
         <label for="inputValorTotal" class="label col-sm-3 col-form-label">Valor Total</label>
         <div class="col-sm-9">
-          <input nbInput fullWidth type="number" shape="rectangle" formControlName="valor_total_principal"
-            fieldSize="tiny" id="inputValorTotal" tabindex="2" (blur)="VerificaAlteracao()">
+          <input nbInput fullWidth currencyMask formControlName="valor_total_principal" type="number" shape="rectangle"
+            fieldSize="tiny" id="inputValorTotal" tabindex="5" (blur)="VerificaAlteracao()">
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, destroyPlatform } from '@angular/core';
 import { FinanceiroApiService } from '../../api/financeiro';
 import {
   NbComponentStatus, NbGlobalPhysicalPosition,
-  NbToastrService, NbDialogRef, NbDialogService,
+  NbToastrService, NbDialogRef, NbDialogService, NbSidebarService,
 } from '@nebular/theme';
 
 @Component({
@@ -12,6 +12,27 @@ import {
 })
 export class FinanceiroComponent implements OnInit, OnDestroy {
 
+  public filtros = [{
+    nome: 'Fornecedor',
+    parametro: 'filtro_fornecedor',
+  }, {
+    nome: 'Conta Caixa',
+    parametro: 'filtro_conta_caixa',
+  }, {
+    nome: 'Emissor Documento',
+    parametro: 'filtro_emissor_documento',
+  },
+  {
+    nome: 'Data Emissão',
+    parametro: 'filtro_emissao',
+  },
+  {
+    nome: 'Data Vencimento',
+    parametro: 'filtro_vencimento',
+  }];
+  public selectedFiltro: string;
+  public dadosFiltro: string;
+
   permissoes: any = JSON.parse(window.sessionStorage.permissao_acesso);
   permissaoDelete: boolean = this.permissoes.manutencao_financeiro.acl.D;
   permissaoInsert: boolean = this.permissoes.manutencao_financeiro.acl.I;
@@ -20,6 +41,8 @@ export class FinanceiroComponent implements OnInit, OnDestroy {
 
   modoGrade: boolean = true;
   modoLista: boolean = false;
+
+  exibirToggle = false;
 
   value = '';
 
@@ -43,7 +66,8 @@ export class FinanceiroComponent implements OnInit, OnDestroy {
 
   constructor(private dialogService: NbDialogService,
     private toastrService: NbToastrService,
-    private FinanceiroApiService: FinanceiroApiService) {
+    private FinanceiroApiService: FinanceiroApiService,
+    private sidebarService: NbSidebarService) {
     this.buscaDados('');
   }
 
@@ -54,6 +78,11 @@ export class FinanceiroComponent implements OnInit, OnDestroy {
     if (this.dialogReference !== undefined) {
       this.dialogReference.close();
     }
+  }
+
+  toggleCompact() {
+    this.sidebarService.toggle(false);
+    this.exibirToggle = !this.exibirToggle;
   }
 
   modoExibicao(modo) {
@@ -71,10 +100,17 @@ export class FinanceiroComponent implements OnInit, OnDestroy {
     if (valor === '') {
       this.value = '';
       this.ativaBotaoPesquisa = false;
+    } else {
+      if (this.selectedFiltro !== '' && this.selectedFiltro !== undefined) {
+        this.value = valor;
+        this.ativaBotaoPesquisa = true;
+        valor = this.selectedFiltro + '=' + valor;
+      }
     }
     this.FinanceiroApiService.getDocumentoFinanceiro(
       {
         'pesquisa': valor,
+        'filtrar': this.ativaBotaoPesquisa,
       },
     )
       .then((s) => {

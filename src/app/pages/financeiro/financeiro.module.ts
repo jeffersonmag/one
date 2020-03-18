@@ -24,6 +24,10 @@ import {
   NbSearchModule,
   NbAutocompleteModule,
   NbDatepickerModule,
+  NbSidebarModule,
+  NbLayoutModule,
+  NbToggleComponent,
+  NbToggleModule,
 } from '@nebular/theme';
 import { NgbPaginationModule, NgbModalModule, NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NgxEchartsModule } from 'ngx-echarts';
@@ -71,7 +75,10 @@ import { AdicionarParcelasComponent } from './cadastro-financeiro/adicionar-parc
     NbSearchModule,
     NbAutocompleteModule,
     NbDatepickerModule,
-    NgbPaginationModule],
+    NgbPaginationModule,
+    NbSidebarModule,
+    NbLayoutModule,
+    NbToggleModule],
   entryComponents: [],
   providers: [NgbActiveModal],
 })

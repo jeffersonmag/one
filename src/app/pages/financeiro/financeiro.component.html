@@ -1,22 +1,62 @@
-<div class="infinite-cards row">
+<!--<div class="infinite-cards row">
   <div class="col-md-12">
-    <nb-card>
-      <nb-card-header>
-        Manutenção Financeira
-        <div class="icons-right">
-          <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Modo Grade"
-            (click)="modoExibicao(0)">
-            <nb-icon icon="grid" pack="eva" class="flip-icon"></nb-icon>
-          </button>
-          <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Modo Lista"
-            (click)="modoExibicao(1)">
-            <nb-icon icon="menu-2" pack="eva" class="flip-icon"></nb-icon>
-          </button>
-          <nb-search *ngIf="permissaoSelect" placeholder="Pesquisar" hint="" show="true" type="column-curtain"
-            tag="pendencia"></nb-search>
+<nb-layout>
+  <nb-layout-header collapsed *ngIf="exibirToggle">
+    <input nbInput fullWidth id="pesquisa" placeholder="Pesquisa">
+  </nb-layout-header>
+</nb-layout>-->
+<nb-card>
+  <nb-card-header>
+    Manutenção Financeira
+    <div class="icons-right">
+      <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Modo Grade"
+        (click)="modoExibicao(0)">
+        <nb-icon icon="grid" pack="eva" class="flip-icon"></nb-icon>
+      </button>
+      <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Modo Lista"
+        (click)="modoExibicao(1)">
+        <nb-icon icon="menu-2" pack="eva" class="flip-icon"></nb-icon>
+      </button>
+      <!--<nb-search *ngIf="permissaoSelect" placeholder="Pesquisar" hint="" show="true" type="column-curtain"
+                tag="pendencia"></nb-search>-->
+      <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Pesquisa" [nbPopover]="list"
+        nbPopoverPlacement="bottom">
+        <nb-icon icon="search-outline" pack="eva" class="flip-icon"></nb-icon>
+      </button>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-layout>
+      <!--<nb-layout-header collapsed *ngIf="exibirToggle">
+        <div class="row">
+          <input nbInput class="label col-xl-4 col-form-label" id="pesquisa" placeholder="Pesquisa">
+          <nb-toggle id="inputOrcavel" class="col-xl-4" status="success">Campo 1</nb-toggle>
+          <nb-toggle id="inputOrcavel" class="col-xl-4" status="success">Campo 2</nb-toggle>
         </div>
-      </nb-card-header>
-      <nb-card-body>
+      </nb-layout-header>
+      <div class="popover-container">-->
+      <ng-template #list>
+        <nb-card>
+          <nb-card-header>Filtros</nb-card-header>
+          <input nbInput [(ngModel)]="dadosFiltro" class="label col-xl-4 col-form-label" id="pesquisa" placeholder="Pesquisa">
+          <nb-radio-group [(ngModel)]="selectedFiltro">
+            <nb-radio *ngFor="let f of filtros" [value]="f.parametro">
+              {{ f.nome }}
+            </nb-radio>
+          </nb-radio-group>
+          <!--<nb-checkbox id="checkCampo" status="primary">Campo 1</nb-checkbox>
+            <nb-checkbox id="checkCampo" status="primary">Campo 2</nb-checkbox>
+            <nb-toggle id="inputOrcavel" class="col-xl-4" status="success">Campo 1</nb-toggle>
+            <nb-toggle id="inputOrcavel" class="col-xl-4" status="success">Campo 2</nb-toggle>-->
+          <nb-card-footer>
+            <button class="buttons-row" nbButton shape="round" size="tiny" status="primary" nbTooltip="Filtrar" (click)="buscaDados(dadosFiltro)">
+              <div class="espacamento">Buscar</div>
+            </button>
+          </nb-card-footer>
+        </nb-card>
+      </ng-template>
+      <!--</div>-->
+      <nb-layout-column>
         <div *ngIf="ativaBotaoPesquisa">
           <button nbButton shape="round" size="small" status="info" nbTooltip="Limpar Filtro da Pesquisa"
             (click)="buscaDados('')">
@@ -121,7 +161,9 @@
             </div>
           </div>
         </div>
-      </nb-card-body>
-    </nb-card>
-  </div>
-</div>
+      </nb-layout-column>
+    </nb-layout>
+  </nb-card-body>
+</nb-card>
+<!--</div>
+</div>-->
