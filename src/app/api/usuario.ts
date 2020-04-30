@@ -56,7 +56,7 @@ export class UsuarioApiService {
         })
         .catch((e) => {
           console.log(e);
-          reject('Usuário ou senha inválidos');
+          reject('Erro de autenticação do usuário');
         });
     });
   }

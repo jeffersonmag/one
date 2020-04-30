@@ -40,9 +40,10 @@ import { CadastroFinanceiroComponent } from './cadastro-financeiro/cadastro-fina
 import { StatusComponent } from '../financeiro/status/status.component';
 import { NbDateFnsDateModule } from '@nebular/date-fns';
 import { AdicionarParcelasComponent } from './cadastro-financeiro/adicionar-parcelas/adicionar-parcelas.component';
+import { QuitarParcelaComponent } from './cadastro-financeiro/quitar-parcela/quitar-parcela.component';
 
 @NgModule({
-  declarations: [FinanceiroComponent, CadastroFinanceiroComponent, StatusComponent, AdicionarParcelasComponent],
+  declarations: [FinanceiroComponent, CadastroFinanceiroComponent, StatusComponent, AdicionarParcelasComponent, QuitarParcelaComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,

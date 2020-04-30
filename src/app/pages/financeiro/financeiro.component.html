@@ -38,7 +38,8 @@
       <ng-template #list>
         <nb-card>
           <nb-card-header>Filtros</nb-card-header>
-          <input nbInput [(ngModel)]="dadosFiltro" class="label col-xl-4 col-form-label" id="pesquisa" placeholder="Pesquisa">
+          <input nbInput [(ngModel)]="dadosFiltro" class="label col-xl-4 col-form-label" id="pesquisa"
+            placeholder="Pesquisa">
           <nb-radio-group [(ngModel)]="selectedFiltro">
             <nb-radio *ngFor="let f of filtros" [value]="f.parametro">
               {{ f.nome }}
@@ -49,7 +50,8 @@
             <nb-toggle id="inputOrcavel" class="col-xl-4" status="success">Campo 1</nb-toggle>
             <nb-toggle id="inputOrcavel" class="col-xl-4" status="success">Campo 2</nb-toggle>-->
           <nb-card-footer>
-            <button class="buttons-row" nbButton shape="round" size="tiny" status="primary" nbTooltip="Filtrar" (click)="buscaDados(dadosFiltro)">
+            <button class="buttons-row" nbButton shape="round" size="tiny" status="primary" nbTooltip="Filtrar"
+              (click)="buscaDados(dadosFiltro)">
               <div class="espacamento">Buscar</div>
             </button>
           </nb-card-footer>

@@ -64,6 +64,11 @@ export class FinanceiroApiService {
       dados, true);
   }
 
+  postQuitarParcelaFinanceiro(dados) {
+    return this.requestService.post(`${environment.urlApi}/one/financeiro/lanca-financeiro-parcela`,
+      dados, true);
+  }
+
   putParcelaFinanceiro(dados) {
     this.pk = dados.pk;
     return this.requestService.put(`${environment.urlApi}/one/financeiro/financeiro-parcela?pk=${this.pk}`,
@@ -116,6 +121,17 @@ export class FinanceiroApiService {
         null, true);
     } else {
       return this.requestService.get(`${environment.urlApi}/one/consultas/consulta-plano-conta-by-nome?nome=${this.pesquisa}&classificacao=3`,
+        null, true);
+    }
+  }
+
+  getTipoContaCorrenteBuscaAutomatica(dados) {
+    this.pesquisa = dados.pesquisa;
+    if (this.pesquisa === '') {
+      return this.requestService.get(`${environment.urlApi}/one/consultas/consulta-plano-conta-by-nome?nome=%&conta_corrente=True`,
+        null, true);
+    } else {
+      return this.requestService.get(`${environment.urlApi}/one/consultas/consulta-plano-conta-by-nome?nome=${this.pesquisa}&conta_corrente=True`,
         null, true);
     }
   }

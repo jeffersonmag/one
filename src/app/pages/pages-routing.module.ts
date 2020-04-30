@@ -16,6 +16,7 @@ import { LojasComponent } from './cadastros/lojas/lojas.component';
 import { CanalVendasComponent } from './cadastros/canal-vendas/canal-vendas.component';
 import { TipoLojaComponent } from './cadastros/tipo-lojas/tipo-lojas.component';
 import { FinanceiroComponent } from './financeiro/financeiro.component';
+import { ConfiguracoesComponent } from './cadastros/configuracoes/configuracoes.component';
 
 
 //define o a página inicial
@@ -25,6 +26,8 @@ if (window.sessionStorage.permissao_dashboard_campanha) {
   home = 'pendencia-fisico';
 } else if (window.sessionStorage.permissao_esteira_producao) {
   home = 'esteira-producao';
+} else if (window.sessionStorage.permissao_cadastro_financeiro) {
+  home = 'financeiro';
 } else if (window.sessionStorage.permissao_cadastro_bancos) {
   home = 'cadastros/parceiro-negocio';
 } else if (window.sessionStorage.permissao_cadastro_cliente) {
@@ -45,129 +48,134 @@ if (window.sessionStorage.permissao_dashboard_campanha) {
   home = 'cadastros/tipo-lojas';
 } else if (window.sessionStorage.permissao_cadastro_tipo_canal_vendas) {
   home = 'cadastros/tipo-canal-vendas';
-} else if (window.sessionStorage.permissao_cadastro_financeiro) {
-  home = 'financeiro';
-}
+} else if (window.sessionStorage.permissao_cadastro_tipo_canal_vendas) {
+  home = 'cadastros/configuracoes';
+};
 
-const routes: Routes = [{
-  path: '',
-  component: PagesComponent,
-  children: [
-    {
-      path: 'dashboard',
-      component: DashboardComponent,
-    },
-    {
-      path: 'dashboard-campanha',
-      component: DashboardCampanhaComponent,
-    },
+  const routes: Routes = [{
+    path: '',
+    component: PagesComponent,
+    children: [
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+      },
+      {
+        path: 'dashboard-campanha',
+        component: DashboardCampanhaComponent,
+      },
 
-    {
-      path: 'pendencia-fisico',
-      component: PendenciaComponent,
-    },
+      {
+        path: 'pendencia-fisico',
+        component: PendenciaComponent,
+      },
 
-    {
-      path: 'esteira-producao',
-      component: EsteiraProducaoComponent,
-    },
+      {
+        path: 'esteira-producao',
+        component: EsteiraProducaoComponent,
+      },
 
-    {
-      path: 'financeiro',
-      component: FinanceiroComponent,
-    },
+      {
+        path: 'financeiro',
+        component: FinanceiroComponent,
+      },
 
-    {
-      path: 'cadastros/clientes',
-      component: ClientesComponent,
-    },
+      {
+        path: 'cadastros/clientes',
+        component: ClientesComponent,
+      },
 
-    {
-      path: 'cadastros/parceiro-negocio',
-      component: ParceiroNegocioComponent,
-    },
+      {
+        path: 'cadastros/parceiro-negocio',
+        component: ParceiroNegocioComponent,
+      },
 
-    {
-      path: 'cadastros/bancos',
-      component: BancosComponent,
-    },
+      {
+        path: 'cadastros/bancos',
+        component: BancosComponent,
+      },
 
-    {
-      path: 'cadastros/plano-contas',
-      component: PlanoContasComponent,
-    },
+      {
+        path: 'cadastros/plano-contas',
+        component: PlanoContasComponent,
+      },
 
-    {
-      path: 'cadastros/centro-custos',
-      component: CentroCustosComponent,
-    },
+      {
+        path: 'cadastros/centro-custos',
+        component: CentroCustosComponent,
+      },
 
-    {
-      path: 'cadastros/projetos',
-      component: ProjetosComponent,
-    },
+      {
+        path: 'cadastros/projetos',
+        component: ProjetosComponent,
+      },
 
-    {
-      path: 'cadastros/tipo-conta-corrente',
-      component: TipoContaCorrenteComponent,
-    },
+      {
+        path: 'cadastros/tipo-conta-corrente',
+        component: TipoContaCorrenteComponent,
+      },
 
-    {
-      path: 'cadastros/lojas',
-      component: LojasComponent,
-    },
+      {
+        path: 'cadastros/lojas',
+        component: LojasComponent,
+      },
 
-    {
-      path: 'cadastros/tipo-lojas',
-      component: TipoLojaComponent,
-    },
+      {
+        path: 'cadastros/tipo-lojas',
+        component: TipoLojaComponent,
+      },
 
-    {
-      path: 'cadastros/canal-vendas',
-      component: CanalVendasComponent,
-    },
+      {
+        path: 'cadastros/canal-vendas',
+        component: CanalVendasComponent,
+      },
 
-    {
-      path: 'layout',
-      loadChildren: () => import('./layout/layout.module')
-        .then(m => m.LayoutModule),
-    },
-    {
-      path: 'forms',
-      loadChildren: () => import('./forms/forms.module')
-        .then(m => m.FormsModule),
-    },
-    {
-      path: 'ui-features',
-      loadChildren: () => import('./ui-features/ui-features.module')
-        .then(m => m.UiFeaturesModule),
-    },
-    {
-      path: 'extra-components',
-      loadChildren: () => import('./extra-components/extra-components.module')
-        .then(m => m.ExtraComponentsModule),
-    },
-    {
-      path: 'charts',
-      loadChildren: () => import('./charts/charts.module')
-        .then(m => m.ChartsModule),
-    },
-    {
-      path: 'tables',
-      loadChildren: () => import('./tables/tables.module')
-        .then(m => m.TablesModule),
-    },
-    {
-      path: '',
-      redirectTo: home,
-      pathMatch: 'full',
-    },
-  ],
-}];
+      {
+        path: 'cadastros/configuracoes',
+        component: ConfiguracoesComponent,
+      },
 
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-})
-export class PagesRoutingModule {
-}
+      {
+        path: 'layout',
+        loadChildren: () => import('./layout/layout.module')
+          .then(m => m.LayoutModule),
+      },
+      {
+        path: 'forms',
+        loadChildren: () => import('./forms/forms.module')
+          .then(m => m.FormsModule),
+      },
+      {
+        path: 'ui-features',
+        loadChildren: () => import('./ui-features/ui-features.module')
+          .then(m => m.UiFeaturesModule),
+      },
+      {
+        path: 'extra-components',
+        loadChildren: () => import('./extra-components/extra-components.module')
+          .then(m => m.ExtraComponentsModule),
+      },
+      {
+        path: 'charts',
+        loadChildren: () => import('./charts/charts.module')
+          .then(m => m.ChartsModule),
+      },
+      {
+        path: 'tables',
+        loadChildren: () => import('./tables/tables.module')
+          .then(m => m.TablesModule),
+      },
+      {
+        path: '',
+        redirectTo: home,
+        pathMatch: 'full',
+      },
+    ],
+  }];
+
+  @NgModule({
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
+  })
+  export class PagesRoutingModule {
+  }

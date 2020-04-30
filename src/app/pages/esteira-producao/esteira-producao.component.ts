@@ -192,6 +192,7 @@ export class EsteiraProducaoComponent implements OnInit, OnDestroy {
         "codigo_loja": this.codigoLoja,
         "codigo_matriz": this.codigoLojaMatriz,
         "cpf_funcionario": this.codigoFuncionario,
+        'codigo_canal_vendas':this.codigoCanalVendas,
         "cpf_cliente": ""
       }
     ).then((s) => {
@@ -248,6 +249,7 @@ export class EsteiraProducaoComponent implements OnInit, OnDestroy {
         "codigo_loja": this.codigoLoja,
         "codigo_matriz": this.codigoLojaMatriz,
         "cpf_funcionario": this.codigoFuncionario,
+        'codigo_canal_vendas':this.codigoCanalVendas,
         "cpf_cliente": "",
       }
     ).then((s) => {
@@ -391,6 +393,7 @@ export class EsteiraProducaoComponent implements OnInit, OnDestroy {
           "codigo_loja": this.codigoLoja,
           "codigo_matriz": this.codigoLojaMatriz,
           "cpf_funcionario": this.codigoFuncionario,
+          'codigo_canal_vendas':this.codigoCanalVendas,
           "cpf_cliente": "",
           "codigo_status_agrupado_inconsistencia": codigo_status_agrupado_inconsistencia
         }
@@ -692,6 +695,7 @@ export class EsteiraProducaoComponent implements OnInit, OnDestroy {
       this.codigoCanalVendas = String(filterValue);
       this.nomeCanalVendas = nome;
       //this.atualizaContador(this.ativaBotaoFuncionario);
+      this.findPropostasInconsistentes();
       this.findIndicadores();
       let canalVendasFiltrados = this.canalVendas.filter(valorCanalVendas => valorCanalVendas.codigo_canal_vendas == filterValue);
       let propostasInconsistenciasFiltrados = this.propostasInconsistencias.filter(valorContratos => valorContratos.codigo_canal_vendas == filterValue);

@@ -1,0 +1,93 @@
+<button *ngIf="true" class="buttons-row" nbButton id="salvarId" shape="round" size="tiny" status="success"
+    nbTooltip="Salvar" (click)="salvarDadosPagar()">
+    <i class="fa fa-check color"></i>
+    <div class="espacamento">Salvar</div>
+</button>
+<form #form="ngForm" class="formulario" [formGroup]="formulario">
+    <div class="row">
+        <div class="col">
+            <div class="form-group row">
+                <label for="inputSinteticaFornecedores" class="label col-sm col-form-label">Sintética
+                    Fornecedores</label>
+                <div class="col-sm">
+                    <input #autoInputSinteticaFornecedores nbInput fullWidth fieldSize="tiny"
+                        oninput="this.value = this.value.toUpperCase()" type="text"
+                        (keyup)="onChangeSinteticaFornecedores()" [nbAutocomplete]="autoInputSinteticaFornecedores"
+                        formControlName="padrao_plano_contas_pn_pagar_nome" id="inputSinteticaFornecedores"
+                        autocomplete="doNotAutoComplete" class="campo" tabindex="16" />
+                    <nb-autocomplete #autoInputSinteticaFornecedores
+                        (selectedChange)="onSelectionChangeSinteticaFornecedores($event)">
+                        <nb-option *ngFor="let option of filteredDadosContaCaixa$ | async" [value]="option">
+                            {{ option }}
+                        </nb-option>
+                    </nb-autocomplete>
+                    <input nbInput type="hidden" id="inputSinteticaFornecedorespk" name="inputSinteticaFornecedorespk"
+                        value={{ContaCaixa_codigo}} formControlName="padrao_plano_contas_pn_pagar_pk">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-group row">
+                <label for="inputRazaoMultas" class="label col-sm col-form-label">Razão Multas</label>
+                <div class="col-sm">
+                    <input #autoInputRazaoMultas nbInput fullWidth fieldSize="tiny"
+                        oninput="this.value = this.value.toUpperCase()" type="text" (keyup)="onChangeRazaoMultas()"
+                        [nbAutocomplete]="autoInputRazaoMultas"
+                        formControlName="padrao_plano_contas_multa_mora_paga_nome" id="inputRazaoMultas"
+                        autocomplete="doNotAutoComplete" class="campo" tabindex="16" />
+                    <nb-autocomplete #autoInputRazaoMultas (selectedChange)="onSelectionChangeRazaoMultas($event)">
+                        <nb-option *ngFor="let option of filteredDadosContaCaixa$ | async" [value]="option">
+                            {{ option }}
+                        </nb-option>
+                    </nb-autocomplete>
+                    <input nbInput type="hidden" id="inputRazaoMultaspk" name="inputRazaoMultaspk"
+                        value={{ContaCaixa_codigo}} formControlName="padrao_plano_contas_multa_mora_paga_pk">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-group row">
+                <label for="inputRazaoJuros" class="label col-sm col-form-label">Razão Juros</label>
+                <div class="col-sm">
+                    <input #autoInputRazaoJuros nbInput fullWidth fieldSize="tiny"
+                        oninput="this.value = this.value.toUpperCase()" type="text" (keyup)="onChangeRazaoJuros()"
+                        [nbAutocomplete]="autoInputRazaoJuros" formControlName="padrao_plano_contas_juros_pago_nome"
+                        id="inputContaCaixa" autocomplete="doNotAutoComplete" class="campo" tabindex="16" />
+                    <nb-autocomplete #autoInputRazaoJuros (selectedChange)="onSelectionChangeRazaoJuros($event)">
+                        <nb-option *ngFor="let option of filteredDadosContaCaixa$ | async" [value]="option">
+                            {{ option }}
+                        </nb-option>
+                    </nb-autocomplete>
+                    <input nbInput type="hidden" id="inputRazaoJurospk" name="inputRazaoJurospk"
+                        value={{ContaCaixa_codigo}} formControlName="padrao_plano_contas_juros_pago_pk">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-group row">
+                <label for="inputRazaoDescontos" class="label col-sm col-form-label">Razão Descontos</label>
+                <div class="col-sm">
+                    <input #autoinputRazaoDescontos nbInput fullWidth fieldSize="tiny"
+                        oninput="this.value = this.value.toUpperCase()" type="text" (keyup)="onChangeRazaoDescontos()"
+                        [nbAutocomplete]="autoinputRazaoDescontos"
+                        formControlName="padrao_plano_contas_descontos_obtidos_nome" id="inputRazaoDescontos"
+                        autocomplete="doNotAutoComplete" class="campo" tabindex="16" />
+                    <nb-autocomplete #autoinputRazaoDescontos
+                        (selectedChange)="onSelectionChangeRazaoDescontos($event)">
+                        <nb-option *ngFor="let option of filteredDadosContaCaixa$ | async" [value]="option">
+                            {{ option }}
+                        </nb-option>
+                    </nb-autocomplete>
+                    <input nbInput type="hidden" id="inputRazaoDescontospk" name="inputRazaoDescontospk"
+                        value={{ContaCaixa_codigo}} formControlName="padrao_plano_contas_descontos_obtidos_pk">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

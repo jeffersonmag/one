@@ -44,6 +44,9 @@ import { DadosCadastroLojasComponent } from './lojas/dados-cadastro-lojas/dados-
 import { DadosCadastroTipoLojasComponent } from './tipo-lojas/dados-cadastro-tipo-lojas/dados-cadastro-tipo-lojas.component';
 import { DadosCadastroCanalVendasComponent } from './canal-vendas/dados-cadastro-canal-vendas/dados-cadastro-canal-vendas.component';
 import { StatusComponent } from './status/status.component';
+import { ConfiguracoesComponent } from './configuracoes/configuracoes.component';
+import { ConfiguracoesPagarComponent } from './configuracoes/configuracoes-pagar/configuracoes-pagar.component';
+import { ConfiguracoesReceberComponent } from './configuracoes/configuracoes-receber/configuracoes-receber.component';
 
 @NgModule({
   imports: [
@@ -112,6 +115,9 @@ import { StatusComponent } from './status/status.component';
     CanalVendasComponent,
     DadosCadastroCanalVendasComponent,
     StatusComponent,
+    ConfiguracoesComponent,
+    ConfiguracoesPagarComponent,
+    ConfiguracoesReceberComponent,
   ],
 })
 

@@ -527,7 +527,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
             axisLine: {
               onZero: false,
               lineStyle: {
-                color: colors.info,
+                color: colors.success,
               },
             },
             axisLabel: {
@@ -556,7 +556,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
             axisLine: {
               onZero: false,
               lineStyle: {
-                color: colors.success,
+                color: colors.info,
               },
             },
             axisLabel: {

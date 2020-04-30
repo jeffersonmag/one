@@ -91,7 +91,7 @@
           tabindex="2">-->
           <input #autoInputLoja nbInput fullWidth fieldSize="tiny" oninput="this.value = this.value.toUpperCase()"
             type="text" (keyup)="onChangeLoja()" [nbAutocomplete]="autoInputLoja" formControlName="loja_nome"
-            id="inputLoja" tabindex="10" autocomplete="doNotAutoComplete" />
+            id="inputLoja" tabindex="10" autocomplete="doNotAutoComplete" class="campo" />
           <nb-autocomplete #autoInputLoja (selectedChange)="onSelectionChangeLoja($event)">
             <nb-option *ngFor="let option of filteredDadosLoja$ | async" [value]="option">
               {{ option }}
@@ -111,7 +111,7 @@
           tabindex="2">-->
           <input #autoInputPN nbInput fullWidth fieldSize="tiny" oninput="this.value = this.value.toUpperCase()"
             type="text" (keyup)="onChangePN()" [nbAutocomplete]="autoInputPN"
-            formControlName="pn_nome_cliente_fornecedor" id="inputPN" tabindex="13" autocomplete="doNotAutoComplete" />
+            formControlName="pn_nome_cliente_fornecedor" id="inputPN" tabindex="13" autocomplete="doNotAutoComplete" class="campo" />
           <nb-autocomplete #autoInputPN (selectedChange)="onSelectionChangePN($event)">
             <nb-option *ngFor="let option of filteredDadosPN$ | async" [value]="option">
               {{ option }}
@@ -132,7 +132,7 @@
           tabindex="2">-->
           <input #autoInputContaCaixa nbInput fullWidth fieldSize="tiny" oninput="this.value = this.value.toUpperCase()"
             type="text" (keyup)="onChangeContaCaixa()" [nbAutocomplete]="autoInputContaCaixa"
-            formControlName="plano_de_contas_nome" id="inputContaCaixa" tabindex="11" autocomplete="doNotAutoComplete" />
+            formControlName="plano_de_contas_nome" id="inputContaCaixa" tabindex="11" autocomplete="doNotAutoComplete" class="campo" />
           <nb-autocomplete #autoInputContaCaixa (selectedChange)="onSelectionChangeContaCaixa($event)">
             <nb-option *ngFor="let option of filteredDadosContaCaixa$ | async" [value]="option">
               {{ option }}
@@ -149,7 +149,7 @@
         <label for="inputCodigo" class="label col-sm-3 col-form-label">Valor</label>
         <div class="col-sm-9">
           <input nbInput fullWidth type="number" shape="rectangle" formControlName="valor" fieldSize="tiny"
-            id="inputCodigo" tabindex="14">
+            id="inputCodigo" tabindex="14" class="campo">
         </div>
       </div>
     </div>

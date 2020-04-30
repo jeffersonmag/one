@@ -1,0 +1,224 @@
+<div *ngIf="erro">
+    <nb-alert class="erro" status="danger">Erro: {{mensagem_erro}}</nb-alert> <br>
+</div>
+<button *ngIf="true" class="buttons-row" nbButton id="salvarId" shape="round" size="tiny" status="success"
+    nbTooltip="Salvar" (click)="salvarQuitacao(form)">
+    <i class="fa fa-check color"></i>
+    <div class="espacamento">Salvar</div>
+</button>
+<!--<button *ngIf="!options.novaParcela && edicaoFinanceiroParcela" class="buttons-row" nbButton shape="round" size="tiny"
+    status="success" nbTooltip="Salvar edição" (click)="confirmacaoEdicao(contentedicao)">
+    <i class="fa fa-check color"></i>
+    <div class="espacamento">Salvar</div>
+</button>-->
+
+<!--Confirmar edicao dos dados-->
+<!--<ng-template #contentedicao let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <span>Confirmar edição de usuário?</span>
+    </div>
+    <div class="modal-body">
+        <div class="buttons-row">
+            <button class="buttons-row" nbButton shape="round" size="tiny" status="success" nbTooltip="Salvar"
+                (click)="editarDados(form)">
+                <i class="fa fa-check color"></i>
+                <div class="espacamento">Sim</div>
+            </button>
+            <button class="buttons-row" nbButton shape="round" size="tiny" status="danger" nbTooltip="Salvar"
+                (click)="d('Cross click')">
+                <i class="fa fa-times color"></i>
+                <div class="espacamento">Não</div>
+            </button>
+        </div>
+    </div>
+</ng-template>
+
+
+<button *ngIf="!options.novaParcela && exclusaoFinanceiroParcela" class="buttons-row" nbButton shape="round" size="tiny"
+    status="danger" nbTooltip="Excluir usuário" (click)="confirmacaoExclusao(contentconfirmacao)">
+    <i class="fa fa-times color"></i>
+    <div class="espacamento">Excluir</div>
+</button>-->
+
+<!--Confirmar exclusao dos dados-->
+<!--<ng-template #contentconfirmacao let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <span>Confirmar exclusão de usuário?</span>
+    </div>
+    <div class="modal-body">
+        <div class="buttons-row">
+            <button class="buttons-row" nbButton shape="round" size="tiny" status="success" nbTooltip="Salvar"
+                (click)="excluirDados(form)">
+                <i class="fa fa-check color"></i>
+                <div class="espacamento">Sim</div>
+            </button>
+            <button class="buttons-row" nbButton shape="round" size="tiny" status="danger" nbTooltip="Salvar"
+                (click)="d('Cross click')">
+                <i class="fa fa-times color"></i>
+                <div class="espacamento">Não</div>
+            </button>
+        </div>
+    </div>
+</ng-template>
+-->
+<form #form="ngForm" class="formulario" [formGroup]="formulario">
+    <div class="row">
+        <div class="col-lg">
+            <div class="form-group row">
+                <label for="inputDataQuitacao" class="label col-sm col-form-label">Data Quitação</label>
+                <div class="col-sm">
+                    <input nbInput #inputDataQuitacao fullWidth shape="rectangle" fieldSize="tiny"
+                        id="inputDataQuitacao" formControlName="data_pagamento_recebimento" format="dd/MM/yyyy"
+                        tabindex="10" [nbDatepicker]="formpicker" class="campo">
+                    <nb-datepicker #formpicker format="dd/MM/yyyy" hideOnSelect=false></nb-datepicker>
+                </div>
+            </div>
+        </div>
+
+        <!--<div class="col-sm-12">
+            <div class="form-group row">
+            </div>
+        </div>-->
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg">
+            <div class="form-group row">
+                <label for="inputValorQuitado" class="label col-sm col-form-label">Valor Quitado</label>
+                <div class="col-sm">
+                    <input nbInput fullWidth currencyMask formControlName="valor_evento" type="number" shape="rectangle"
+                        fieldSize="tiny" id="inputValorQuitado" tabindex="11" (blur)="calculaValorTotal()"
+                        class="campo">
+                </div>
+            </div>
+        </div>
+
+        <!--<div class="col-sm-12">
+            <div class="form-group row">
+            </div>
+        </div>-->
+    </div>
+
+    <div class="row">
+        <div class="col-lg">
+            <div class="form-group row">
+                <label for="inputMulta" class="label col-sm col-form-label">Multa</label>
+                <div class="col-sm">
+                    <input nbInput fullWidth formControlName="multa_mora_perc" type="number" shape="rectangle"
+                        fieldSize="tiny" id="inputMulta" tabindex="12" (blur)="calculaMultaPerc()"
+                        class="campo-with-perc">
+                </div>
+                <span>%</span>
+                <div class="col-sm">
+                    <input nbInput fullWidth currencyMask formControlName="multa_mora" type="number" shape="rectangle"
+                        fieldSize="tiny" id="inputMultaValor" tabindex="17" (blur)="calculaMulta()"
+                        class="campo-with-perc">
+                </div>
+            </div>
+        </div>
+        <!--<div class="col">
+            <div class="form-group row">                
+            </div>-->
+    </div>
+
+    <div class="row">
+        <div class="col-lg">
+            <div class="form-group row">
+                <label for="inputDesconto" class="label col-sm col-form-label">Desconto</label>
+                <div class="col-sm">
+                    <input nbInput fullWidth formControlName="descontos_perc" type="number" shape="rectangle"
+                        fieldSize="tiny" mask="##0,00%" id="inputDesconto" tabindex="13" (blur)="calculaDescontoPerc()"
+                        class="campo-with-perc">
+                </div>
+                <span>%</span>
+                <div class="col-sm">
+                    <input nbInput fullWidth currencyMask formControlName="descontos" type="number" shape="rectangle"
+                        fieldSize="tiny" id="inputDescontoValor" tabindex="18" (blur)="calculaDesconto()"
+                        class="campo-with-perc">
+                </div>
+            </div>
+        </div>
+        <!--<div class="col">
+            <div class="form-group row">                
+            </div>
+        </div>-->
+    </div>
+
+    <div class="row">''
+        <div class="col-lg">
+            <div class="form-group row">
+                <label for="inputJuros" class="label col-sm col-form-label">Juros</label>
+                <div class="col-sm">
+                    <input nbInput fullWidth formControlName="juros_perc" type="number" shape="rectangle"
+                        fieldSize="tiny" id="inputJuros" mask="##0,00%" tabindex="14" (blur)="calculaJurosPerc()"
+                        class="campo-with-perc">
+                </div>
+                <span>%</span>
+                <div class="col-sm">
+                    <input nbInput fullWidth currencyMask formControlName="juros" type="number" shape="rectangle"
+                        fieldSize="tiny" id="inputJurosValor" tabindex="19" (blur)="calculaJuros()"
+                        class="campo-with-perc">
+                </div>
+            </div>
+        </div>
+        <!--<div class="col">
+            <div class="form-group row">                
+            </div>
+        </div>-->
+    </div>
+
+    <div class="row">
+        <div class="col-lg">
+            <div class="form-group row">
+                <label for="inputValorTotal" class="label col-sm col-form-label">Valor Total</label>
+                <div class="col-sm">
+                    <input nbInput readonly fullWidth currencyMask formControlName="valor_total" type="number"
+                        shape="rectangle" fieldSize="tiny" id="inputValorTotal" tabindex="15"
+                        (blur)="calculaValorTotal()" class="campo">
+                </div>
+            </div>
+        </div>
+        <!--<div class="col-sm-12">
+            <div class="form-group row">
+            </div>
+        </div>-->
+    </div>
+
+    <!--<div class="row">
+        <div class="col">
+            <div class="form-group row">
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="form-group row">
+            </div>
+        </div>
+    </div>-->
+
+    <div class="row">
+        <div class="col-lg">
+            <div class="form-group row">
+                <label for="inputContaCaixa" class="label col-sm col-form-label">Conta Corrente</label>
+                <div class="col-sm">
+                    <input #autoInputContaCaixa nbInput fullWidth fieldSize="tiny"
+                        oninput="this.value = this.value.toUpperCase()" type="text" (keyup)="onChangeContaCaixa()"
+                        [nbAutocomplete]="autoInputContaCaixa" formControlName="plano_de_conta" id="inputContaCaixa"
+                        autocomplete="doNotAutoComplete" class="campo" tabindex="16" />
+                    <nb-autocomplete #autoInputContaCaixa (selectedChange)="onSelectionChangeContaCaixa($event)">
+                        <nb-option *ngFor="let option of filteredDadosContaCaixa$ | async" [value]="option">
+                            {{ option }}
+                        </nb-option>
+                    </nb-autocomplete>
+                    <input nbInput type="hidden" id="inputContaCaixapk" name="inputContaCaixapk"
+                        value={{ContaCaixa_codigo}} formControlName="codigo_plano_conta">
+                </div>
+            </div>
+        </div>
+        <!--<div class="col-sm-12">
+            <div class="form-group row">
+            </div>
+        </div>-->
+    </div>
+</form>

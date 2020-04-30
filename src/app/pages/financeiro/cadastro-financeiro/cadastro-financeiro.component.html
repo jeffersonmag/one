@@ -216,8 +216,8 @@
       ＋ Adicionar Parcelas</button>
   </div>
 
-  <ng-template #contentaddparcela let-data let-ref="dialogRef">
-    <nb-card class="size-modal">
+  <ng-template #contentaddparcela let-data let-ref="dialogRef" class="modalAdicionarParcelas">
+    <nb-card>
       <nb-card-header>
         <span>Adicionar Parcelas</span>
         <button type="button" class="close" aria-label="Close" (click)="ref.close()">
@@ -244,29 +244,45 @@
               <th class="text-left">Valor</th>
               <th class="text-left">Porcentagem Quitação</th>
               <th class="text-left">Última Quitação</th>
+              <th class="text-left">Ação</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let i of parcelas" (click)="editarParcelas(contentaddparcela, i)">
-              <td class="size-fonte">{{i.parcela}} DE {{i.parcela_de}} </td>
-              <td class="size-fonte">{{i.data_vencimento | moment: 'DD/MM/YYYY'}}</td>
-              <td class="size-fonte">
+            <tr *ngFor="let i of parcelas">
+              <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">{{i.parcela}} DE {{i.parcela_de}}
+              </td>
+              <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">
+                {{i.data_vencimento | moment: 'DD/MM/YYYY'}}</td>
+              <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">
                 <span nbTooltip="Nome Loja">{{i.loja_nome}}</span><br>
               </td>
-              <td class="size-fonte">
+              <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">
                 <span nbTooltip="Nome Fornecedor">{{i.pn_nome_cliente_fornecedor}}</span><br>
               </td>
-              <td class="size-fonte">
+              <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">
                 <span nbTooltip="Plano de Contas">{{i.plano_de_contas_nome}}</span><br>
               </td>
-              <td class="size-fonte">
+              <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">
                 <span nbTooltip="Valor">{{i.valor | number:'.2-2':'pt'}}</span><br>
               </td>
-              <td class="size-fonte">
-                <span nbTooltip="Valor">{{i.porcentagem_quitacao}}</span><br>
+              <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">
+                <span nbTooltip="Valor">{{i.porcentagem_quitacao | number:'.2-2':'pt'}}</span><br>
+              </td>
+              <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">
+                <span *ngIf="i.ultima_quitacao !== null"
+                  nbTooltip="Valor">{{i.ultima_quitacao | moment: 'DD/MM/YYYY'}}</span><br>
               </td>
               <td class="size-fonte">
-                <span nbTooltip="Valor">{{i.ultima_quitacao | number:'.2-2':'pt'}}</span><br>
+                <button *ngIf="i.porcentagem_quitacao !== 100" class="buttons-row" nbButton shape="round" size="tiny"
+                  status="success" nbTooltip="Salvar" (click)="quitarParcela(contentquitarparcela, i)">
+                  <i class="fa fa-check color"></i>
+                  <div class="espacamento">Quitar</div>
+                </button>
+                <button *ngIf="i.porcentagem_quitacao === 100" class="buttons-row" nbButton shape="round" size="tiny"
+                  status="success" nbTooltip="Salvar" disabled>
+                  <i class="fa fa-check color"></i>
+                  <div class="espacamento">Quitar</div>
+                </button>
               </td>
             </tr>
           </tbody>
@@ -277,6 +293,19 @@
           </tbody>
         </table>
       </div>
+      <ng-template #contentquitarparcela let-data let-ref="dialogRef" class="modalAdicionarParcelas">
+        <nb-card>
+          <nb-card-header>
+            <span>Quitar Parcela</span>
+            <button type="button" class="close" aria-label="Close" (click)="ref.close()" tabIndex="9">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </nb-card-header>
+          <nb-card-body>
+            <quitar-parcela></quitar-parcela>
+          </nb-card-body>
+        </nb-card>
+      </ng-template>
       <!--<div class="row justify-content-center">
         <td class="size-font">
           <ngb-pagination *ngIf="parcelas.length !== 0 || parcelas !== undefined" class="pagination"

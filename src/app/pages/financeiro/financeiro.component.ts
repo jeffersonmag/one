@@ -281,7 +281,7 @@ export class FinanceiroComponent implements OnInit, OnDestroy {
     const config = {
       status: type,
       destroyByClick: true,
-      duration: 5000,
+      duration: 10000,
       hasIcon: true,
       position: NbGlobalPhysicalPosition.TOP_RIGHT,
       preventDuplicates: true,

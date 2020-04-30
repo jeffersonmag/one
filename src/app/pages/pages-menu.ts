@@ -124,6 +124,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
         expanded: (window.sessionStorage.permissao_cadastro_tipo_canal_vendas === 'false'),
         hidden: (window.sessionStorage.permissao_cadastro_tipo_canal_vendas === 'false'),
       },
+      {
+        title: 'Configurações',
+        link: '/pages/cadastros/configuracoes',
+        icon: 'settings-outline',
+        home: false,
+        expanded: (window.sessionStorage.permissao_cadastro_cliente === 'false'),
+        hidden: (window.sessionStorage.permissao_cadastro_cliente === 'false'),
+      }
     ],
   },
 ];

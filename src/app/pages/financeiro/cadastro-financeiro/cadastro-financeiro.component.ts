@@ -20,6 +20,7 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
   edicaoFinanceiroParcela: boolean;
   criacaoFinanceiroParcela: boolean;
   exclusaoFinanceiroParcela: boolean;
+  key: string;
 
   currentPage = 1;
   itemsPerPage = 20;
@@ -184,6 +185,17 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
     }
   }
 
+  quitarParcela(modal, parcela?) {
+    this.erro = false;
+    this.parcelaUnica = parcela;
+    this.dialogReference = this.dialogService.open(modal,
+      {
+        hasBackdrop: true,
+        closeOnEsc: false,
+        hasScroll: true,
+      });
+  }
+
   editarDados() {
     this.total_parcelas = 0;
     for (let i of this.parcelas) {
@@ -272,6 +284,33 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
     )
       .then((s) => {
         this.options.makeToast('success', 'Sucesso!', 'Dados incluídos com sucesso!');
+        this.buscaParcelasDoDocumento(String(this.formulario.value.pk));
+        this.dialogReference.close();
+      })
+      .catch((e) => {
+        this.options.makeToast('danger', 'Erro!', e.error.message);
+        this.buscaParcelasDoDocumento(String(this.formulario.value.pk));
+      });
+  }
+
+  SalvarQuitarParcela(valor?, pk_documento?): any {
+    if (valor.data_pagamento_recebimento !== null && valor.data_pagamento_recebimento !== '' && valor.data_pagamento_recebimento !== undefined) {
+      var data_pagamento_recebimento = this.options.formataData(valor.data_pagamento_recebimento);
+    } else {
+      data_pagamento_recebimento = null;
+    }
+    this.FinanceiroApiService_.postQuitarParcelaFinanceiro({
+      'codigo_plano_conta': valor.codigo_plano_conta,
+      'valor_evento': Number(valor.valor_evento),
+      'financeiro_parcela_pk': valor.financeiro_parcela_pk,
+      'multa_mora': Number(valor.multa_mora),
+      'juros': Number(valor.juros),
+      'descontos': Number(valor.descontos),
+      'data_pagamento_recebimento': data_pagamento_recebimento
+    },
+    )
+      .then((s) => {
+        this.options.makeToast('success', 'Sucesso!', 'Parcela Quitada com sucesso!');
         this.buscaParcelasDoDocumento(String(this.formulario.value.pk));
         this.dialogReference.close();
       })
@@ -494,8 +533,9 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
         this.novaParcela = true;
         this.dialogReference = this.dialogService.open(modal,
           {
-            hasBackdrop: false,
+            hasBackdrop: true,
             closeOnEsc: false,
+            hasScroll: true,
           });
       }
     } else {
@@ -514,8 +554,9 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
       this.novaParcela = true;
       this.dialogReference = this.dialogService.open(modal,
         {
-          hasBackdrop: false,
+          hasBackdrop: true,
           closeOnEsc: false,
+          hasScroll: true,
         });
     }
   }
@@ -553,8 +594,52 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
       })
       .catch((e) => {
         // this.JoinAndClose();
-        this.options.makeToast('danger', 'Ocorreu um erro!', e.error.message);
+        let stringErros = '';
+        let error = e.error.errors;
+        let testeobj = []; //seu array de objetos
+        testeobj.push(error);
+        const values = Object.keys(error).map(key => error[key]);
+        const chave = Object.keys(error).map(key => key);
+        for (let i in values) {
+          stringErros = chave[Number(i)] + ': ' + values[Number(i)];
+          stringErros = this.buscaErro(stringErros, chave[Number(i)]);
+          this.options.makeToast('danger', 'Erro no campo: \n' + chave[Number(i)] + ' no cadastro', stringErros);
+        }
       });
+  }
+
+  buscaErro(mensagem, campo) {
+    var dicionario = {}; //criando o dicionário com valor de objeto vazio
+
+    dicionario["long"] = 'Valor do campo ' + campo + ' muito grande!'; //colocando um valor na chave "key"
+    dicionario["number"] = "Era esperado um número no campo " + campo;
+    dicionario["date"] = "Era esperado uma data no campo " + campo;
+
+    const chaveDicionario = Object.keys(dicionario).map(key => key);
+    const MensagemDicionario = Object.keys(dicionario).map(key => dicionario[key]);
+
+    for (let i in chaveDicionario) {
+      if (mensagem.search(chaveDicionario[Number(i)]) == -1) {
+        return mensagem;
+      } else {
+        return MensagemDicionario[Number(i)];
+      }
+    }
+
+    //fazendo uma verificação para ver se existe valor para a chave "erro" dentro do nosso dicionario
+    if (!dicionario["erro"]) {
+      console.log("ops, não existe valor para a chave erro"); //não existe valor
+    } else {
+      console.log("uhul! existe valor para a chave erro"); //existe valor
+    }
+
+    //fazendo uma verificação para ver se existe valor para a chave "key" dentro do nosso dicionario
+    if (!dicionario["key"]) {
+      console.log("ops, não existe valor para a chave key"); //não existe valor
+    } else {
+      console.log("uhul! existe valor para a chave key e seu valor é " + dicionario["key"]); //existe valor
+    }
+
   }
 
   editarParcelas(modal, financeiro?) {
@@ -563,8 +648,9 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
     this.novaParcela = false;
     this.dialogReference = this.dialogService.open(modal,
       {
-        hasBackdrop: false,
+        hasBackdrop: true,
         closeOnEsc: false,
+        hasScroll: true,
       });
   }
 

@@ -25,20 +25,21 @@ import {
   NbAutocompleteModule,
   NbDatepickerModule,
 } from '@nebular/theme';
-import { NgbPaginationModule, NgbModalModule, NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { NgxEchartsModule } from 'ngx-echarts';
 import { CommonModule } from '@angular/common';
-import { CadastroFinanceiroComponent } from './cadastro-financeiro.component';
+import { ConfiguracoesReceberComponent } from './configuracoes-receber/configuracoes-receber.component';
+import { ConfiguracoesPagarComponent } from './configuracoes-pagar/configuracoes-pagar.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { NbDateFnsDateModule } from '@nebular/date-fns';
-import { AdicionarParcelasComponent } from './adicionar-parcelas/adicionar-parcelas.component';
+import { NgbPaginationModule, NgbModalModule, NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { PipesModule } from '../../../pipes/pipes.module';
-import { QuitarParcelaComponent } from './quitar-parcela/quitar-parcela.component';
+import { NbDateFnsDateModule } from '@nebular/date-fns';
+
+
 
 @NgModule({
-  declarations: [CadastroFinanceiroComponent, AdicionarParcelasComponent, QuitarParcelaComponent],
+  declarations: [ConfiguracoesReceberComponent, ConfiguracoesPagarComponent],
   imports: [
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     NbButtonModule,
@@ -55,9 +56,6 @@ import { QuitarParcelaComponent } from './quitar-parcela/quitar-parcela.componen
     PipesModule,
     NgbPaginationModule,
   ],
-  entryComponents: [AdicionarParcelasComponent, QuitarParcelaComponent],
-  providers: [NgbActiveModal],
+  entryComponents: [ConfiguracoesReceberComponent, ConfiguracoesPagarComponent],
 })
-export class CadastroFinanceiroModule { }
-
-export class PageModule { }
+export class ConfiguracoesModule { }

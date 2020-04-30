@@ -58,6 +58,11 @@ export class CadastrosApiService {
     }
   }
 
+  getConfiguracoesGerais(dados) {
+    return this.requestService.get(`${environment.urlApi}/one/financeiro/configuracoes-gerais`,
+      null, true);
+  }
+
   postPlanoContas(dados) { // Criar Parceiro negocio
     return this.requestService.post(`${environment.urlApi}/cadastro-plano-de-contas`,
       dados, true);
@@ -340,6 +345,12 @@ export class CadastrosApiService {
   delTipoLojas(dados) {
     this.pk = dados.pk;
     return this.requestService.delete(`${environment.urlApi}/cadastro-loja?pk=${this.pk}`,
+      dados, true);
+  }
+
+  putConfiguracoesGerais(dados) {
+    this.pk = dados.pk;
+    return this.requestService.put(`${environment.urlApi}/one/financeiro/configuracoes-gerais`,
       dados, true);
   }
 }
