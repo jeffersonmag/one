@@ -12,8 +12,10 @@ import { Component, Input } from '@angular/core';
         </div>
       </div>
       <div class="details">
-        <div class="title">{{ title }}</div>
-        <div class="title">{{ dados }}</div>
+        <div *ngIf="title !== null" class="title">{{ title }}</div>
+        <div *ngIf="razao_social !== null" class="title">{{ razao_social }}</div>
+        <div *ngIf="dados !== null" class="title">{{ dados }}</div>
+        <div *ngIf="id !== null" class="title">{{ id }}</div>
       </div>
     </nb-card>
   `,
@@ -21,6 +23,8 @@ import { Component, Input } from '@angular/core';
 export class StatusComponent {
   @Input() title: string;
   @Input() dados: string;
+  @Input() id: string;
   @Input() type: string;
+  @Input() razao_social: string;
   @Input() on: boolean = true;
 }

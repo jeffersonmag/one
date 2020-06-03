@@ -1,6 +1,6 @@
 <div class="infinite-cards row">
   <div class="col-md-12">
-    <nb-card>
+    <nb-card *ngIf="!novaTela">
       <nb-card-header>
         Cadastro de parceiros de negócio
         <div class="icons-right">
@@ -108,13 +108,14 @@
           <div class="row" *ngIf="modoGrade">
             <div class="col-xxxl-3 col-md-4" *ngFor="let user of dados">
               <div *ngIf="permissaoUpdate">
-                <status [title]="user.nome" dados="CPF/CNPJ: {{user.cpf_cnpj}}" [type]="primary"
+                <status [title]="user.nome" razao_social="{{user.razao_social}}" dados="CPF/CNPJ: {{user.cpf_cnpj}}" id="ID: {{user.pk}}" [type]="primary"
                   (click)="editarParceiroNegocios(contentedit, user)" nbTooltip="Editar Parceiros de Negócio">
-                  <img class="container-image" src="assets/imgs/parceiro-icon.png">
+                  <div *ngIf="user.tipo_pessoa == 'F'"><img class="container-image" src="assets/imgs/pessoa-fisica.png"></div>
+                  <div *ngIf="user.tipo_pessoa == 'J'"><img class="container-image" src="assets/imgs/pessoa-juridica.png"></div>
                 </status>
               </div>
               <div *ngIf="!permissaoUpdate">
-                <status [title]="user.nome" dados="CPF/CNPJ: {{user.cpf_cnpj}}" [type]="primary"
+                <status [title]="user.nome" dados="CPF/CNPJ: {{user.cpf_cnpj}}\n ID: {{user.pk}}" [type]="primary"
                   nbTooltip="Sem permissão para editar Parceiros de Negócio.">
                   <img class="container-image" src="assets/imgs/parceiro-icon.png">
                 </status>
@@ -135,6 +136,17 @@
             </div>
           </div>
         </div>
+      </nb-card-body>
+    </nb-card>
+    <nb-card *ngIf="novaTela">
+      <nb-card-header>
+        <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Voltar" (click)="voltar()">
+          <nb-icon icon="arrow-back-outline" pack="eva" class="flip-icon"></nb-icon>
+        </button>
+        Cadastro de Parceiros de Negócio
+      </nb-card-header>
+      <nb-card-body>
+        <dados-cadastro-parceiro-negocio></dados-cadastro-parceiro-negocio>
       </nb-card-body>
     </nb-card>
   </div>

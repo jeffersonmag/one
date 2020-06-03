@@ -17,6 +17,7 @@ import { CanalVendasComponent } from './cadastros/canal-vendas/canal-vendas.comp
 import { TipoLojaComponent } from './cadastros/tipo-lojas/tipo-lojas.component';
 import { FinanceiroComponent } from './financeiro/financeiro.component';
 import { ConfiguracoesComponent } from './cadastros/configuracoes/configuracoes.component';
+import { GraficoComponent } from './grafico/grafico.component';
 
 
 //define o a página inicial
@@ -52,130 +53,136 @@ if (window.sessionStorage.permissao_dashboard_campanha) {
   home = 'cadastros/configuracoes';
 };
 
-  const routes: Routes = [{
-    path: '',
-    component: PagesComponent,
-    children: [
-      {
-        path: 'dashboard',
-        component: DashboardComponent,
-      },
-      {
-        path: 'dashboard-campanha',
-        component: DashboardCampanhaComponent,
-      },
+const routes: Routes = [{
+  path: '',
+  component: PagesComponent,
+  children: [
+    {
+      path: 'dashboard',
+      component: DashboardComponent,
+    },
+    {
+      path: 'dashboard-campanha',
+      component: DashboardCampanhaComponent,
+    },
 
-      {
-        path: 'pendencia-fisico',
-        component: PendenciaComponent,
-      },
+    {
+      path: 'grafico',
+      component: GraficoComponent,
+    },
 
-      {
-        path: 'esteira-producao',
-        component: EsteiraProducaoComponent,
-      },
+    {
+      path: 'pendencia-fisico',
+      component: PendenciaComponent,
+    },
 
-      {
-        path: 'financeiro',
-        component: FinanceiroComponent,
-      },
+    {
+      path: 'esteira-producao',
+      component: EsteiraProducaoComponent,
+    },
 
-      {
-        path: 'cadastros/clientes',
-        component: ClientesComponent,
-      },
+    {
+      path: 'financeiro',
+      component: FinanceiroComponent,
+    },
 
-      {
-        path: 'cadastros/parceiro-negocio',
-        component: ParceiroNegocioComponent,
-      },
+    {
+      path: 'cadastros/clientes',
+      component: ClientesComponent,
+    },
 
-      {
-        path: 'cadastros/bancos',
-        component: BancosComponent,
-      },
+    {
+      path: 'cadastros/parceiro-negocio',
+      component: ParceiroNegocioComponent,
+    },
 
-      {
-        path: 'cadastros/plano-contas',
-        component: PlanoContasComponent,
-      },
+    {
+      path: 'cadastros/bancos',
+      component: BancosComponent,
+    },
 
-      {
-        path: 'cadastros/centro-custos',
-        component: CentroCustosComponent,
-      },
+    {
+      path: 'cadastros/plano-contas',
+      component: PlanoContasComponent,
+    },
 
-      {
-        path: 'cadastros/projetos',
-        component: ProjetosComponent,
-      },
+    {
+      path: 'cadastros/centro-custos',
+      component: CentroCustosComponent,
+    },
 
-      {
-        path: 'cadastros/tipo-conta-corrente',
-        component: TipoContaCorrenteComponent,
-      },
+    {
+      path: 'cadastros/projetos',
+      component: ProjetosComponent,
+    },
 
-      {
-        path: 'cadastros/lojas',
-        component: LojasComponent,
-      },
+    {
+      path: 'cadastros/tipo-conta-corrente',
+      component: TipoContaCorrenteComponent,
+    },
 
-      {
-        path: 'cadastros/tipo-lojas',
-        component: TipoLojaComponent,
-      },
+    {
+      path: 'cadastros/lojas',
+      component: LojasComponent,
+    },
 
-      {
-        path: 'cadastros/canal-vendas',
-        component: CanalVendasComponent,
-      },
+    {
+      path: 'cadastros/tipo-lojas',
+      component: TipoLojaComponent,
+    },
 
-      {
-        path: 'cadastros/configuracoes',
-        component: ConfiguracoesComponent,
-      },
+    {
+      path: 'cadastros/canal-vendas',
+      component: CanalVendasComponent,
+    },
 
-      {
-        path: 'layout',
-        loadChildren: () => import('./layout/layout.module')
-          .then(m => m.LayoutModule),
-      },
-      {
-        path: 'forms',
-        loadChildren: () => import('./forms/forms.module')
-          .then(m => m.FormsModule),
-      },
-      {
-        path: 'ui-features',
-        loadChildren: () => import('./ui-features/ui-features.module')
-          .then(m => m.UiFeaturesModule),
-      },
-      {
-        path: 'extra-components',
-        loadChildren: () => import('./extra-components/extra-components.module')
-          .then(m => m.ExtraComponentsModule),
-      },
-      {
-        path: 'charts',
-        loadChildren: () => import('./charts/charts.module')
-          .then(m => m.ChartsModule),
-      },
-      {
-        path: 'tables',
-        loadChildren: () => import('./tables/tables.module')
-          .then(m => m.TablesModule),
-      },
-      {
-        path: '',
-        redirectTo: home,
-        pathMatch: 'full',
-      },
-    ],
-  }];
+    {
+      path: 'cadastros/configuracoes',
+      component: ConfiguracoesComponent,
+    },
 
-  @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule],
-  })
-  export class PagesRoutingModule {
-  }
+    {
+      path: 'layout',
+      loadChildren: () => import('./layout/layout.module')
+        .then(m => m.LayoutModule),
+    },
+    {
+      path: 'forms',
+      loadChildren: () => import('./forms/forms.module')
+        .then(m => m.FormsModule),
+    },
+    {
+      path: 'ui-features',
+      loadChildren: () => import('./ui-features/ui-features.module')
+        .then(m => m.UiFeaturesModule),
+    },
+    {
+      path: 'extra-components',
+      loadChildren: () => import('./extra-components/extra-components.module')
+        .then(m => m.ExtraComponentsModule),
+    },
+    {
+      path: 'charts',
+      loadChildren: () => import('./charts/charts.module')
+        .then(m => m.ChartsModule),
+    },
+    {
+      path: 'tables',
+      loadChildren: () => import('./tables/tables.module')
+        .then(m => m.TablesModule),
+    },
+    {
+      path: '',
+      redirectTo: home,
+      pathMatch: 'full',
+    },
+  ],
+}
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
+})
+export class PagesRoutingModule {
+}

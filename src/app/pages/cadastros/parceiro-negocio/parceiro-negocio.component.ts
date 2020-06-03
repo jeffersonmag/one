@@ -20,6 +20,8 @@ export class ParceiroNegocioComponent implements OnInit {
   windowReference: NbWindowRef;
   dialogReference: NbDialogRef<any>;
 
+  novaTela = false;
+
   index = 1;
   destroyByClick = true;
   duration = 5000;
@@ -398,29 +400,38 @@ export class ParceiroNegocioComponent implements OnInit {
   }
 
   cadastrarNovoParceiroNegocios(modal) {
+    this.novaTela = true;
     this.usuarioEdicao = [];
     this.criacaoUsuario = true;
     this.edicaoUsuario = false;
-    this.dialogReference = this.dialogService.open(modal,
+    /*this.dialogReference = this.dialogService.open(modal,
       {
-        hasBackdrop: false,
+        hasBackdrop: true,
         closeOnEsc: false,
-      });
+        hasScroll: true,
+      });*/
   }
 
   editarParceiroNegocios(modal, usuario) {
+    this.novaTela = true;
     this.usuarioEdicao = usuario;
     this.edicaoUsuario = true;
     this.criacaoUsuario = false;
-    this.dialogReference = this.dialogService.open(modal,
+    /*this.dialogReference = this.dialogService.open(modal,
       {
-        hasBackdrop: false,
+        hasBackdrop: true,
         closeOnEsc: false,
-      });
+        hasScroll: true,
+      });*/
+  }
+
+  voltar(){
+    this.novaTela = false;    
   }
 
   JoinAndClose() {
-    this.dialogReference.close();
+    //this.dialogReference.close();
+    this.novaTela = false;
     this.usuarioEdicao = [];
   }
 

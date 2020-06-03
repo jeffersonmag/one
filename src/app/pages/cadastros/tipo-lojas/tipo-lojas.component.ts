@@ -33,6 +33,8 @@ export class TipoLojaComponent implements OnInit {
 
   value = '';
 
+  novaTela = false; 
+
   criacaoUsuario: boolean = false;
   edicaoUsuario: boolean = false;
   ativaBotaoPesquisa: boolean = false;
@@ -62,6 +64,10 @@ export class TipoLojaComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  voltar(){
+    this.novaTela = false;    
   }
 
   modoExibicao(modo) {
@@ -150,28 +156,33 @@ export class TipoLojaComponent implements OnInit {
 
   cadastrarNovoTipoLojas(modal) {
     this.usuarioEdicao = [];
+    this.novaTela = true;
     this.criacaoUsuario = true;
     this.edicaoUsuario = false;
-    this.dialogReference = this.dialogService.open(modal,
+    /*this.dialogReference = this.dialogService.open(modal,
       {
-        hasBackdrop: false,
+        hasBackdrop: true,
         closeOnEsc: false,
-      });
+        hasScroll: true,
+      });*/
   }
 
   editarTipoLojas(modal, usuario) {
     this.usuarioEdicao = usuario;
+    this.novaTela = true;
     this.edicaoUsuario = true;
     this.criacaoUsuario = false;
-    this.dialogReference = this.dialogService.open(modal,
+    /*this.dialogReference = this.dialogService.open(modal,
       {
-        hasBackdrop: false,
+        hasBackdrop: true,
         closeOnEsc: false,
-      });
+        hasScroll: true,
+      });*/
   }
 
   JoinAndClose() {
-    this.dialogReference.close();
+    //this.dialogReference.close();
+    this.novaTela = false;
     this.usuarioEdicao = [];
   }
 

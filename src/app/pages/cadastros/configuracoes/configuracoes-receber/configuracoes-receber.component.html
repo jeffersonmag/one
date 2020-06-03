@@ -14,7 +14,7 @@
                         oninput="this.value = this.value.toUpperCase()" type="text"
                         (keyup)="onChangeSinteticaClientes()" [nbAutocomplete]="autoInputSinteticaClientes"
                         formControlName="padrao_plano_contas_pn_receber_nome" id="inputSinteticaClientes"
-                        autocomplete="doNotAutoComplete" class="campo" tabindex="16" />
+                        autocomplete="doNotAutoComplete" class="campo" tabindex="1" />
                     <nb-autocomplete #autoInputSinteticaClientes
                         (selectedChange)="onSelectionChangeSinteticaClientes($event)">
                         <nb-option *ngFor="let option of filteredDadosContaCaixa$ | async" [value]="option">
@@ -36,7 +36,7 @@
                         oninput="this.value = this.value.toUpperCase()" type="text" (keyup)="onChangeRazaoMultas()"
                         [nbAutocomplete]="autoInputRazaoMultas"
                         formControlName="padrao_plano_contas_multa_mora_recebida_nome" id="inputRazaoMultas"
-                        autocomplete="doNotAutoComplete" class="campo" tabindex="16" />
+                        autocomplete="doNotAutoComplete" class="campo" tabindex="2" />
                     <nb-autocomplete #autoInputRazaoMultas (selectedChange)="onSelectionChangeRazaoMultas($event)">
                         <nb-option *ngFor="let option of filteredDadosContaCaixa$ | async" [value]="option">
                             {{ option }}
@@ -56,7 +56,7 @@
                     <input #autoInputRazaoJuros nbInput fullWidth fieldSize="tiny"
                         oninput="this.value = this.value.toUpperCase()" type="text" (keyup)="onChangeRazaoJuros()"
                         [nbAutocomplete]="autoInputRazaoJuros" formControlName="padrao_plano_contas_juros_recebido_nome"
-                        id="inputContaCaixa" autocomplete="doNotAutoComplete" class="campo" tabindex="16" />
+                        id="inputContaCaixa" autocomplete="doNotAutoComplete" class="campo" tabindex="3" />
                     <nb-autocomplete #autoInputRazaoJuros (selectedChange)="onSelectionChangeRazaoJuros($event)">
                         <nb-option *ngFor="let option of filteredDadosContaCaixa$ | async" [value]="option">
                             {{ option }}
@@ -77,7 +77,7 @@
                         oninput="this.value = this.value.toUpperCase()" type="text" (keyup)="onChangeRazaoDescontos()"
                         [nbAutocomplete]="autoinputRazaoDescontos"
                         formControlName="padrao_plano_contas_descontos_concedidos_nome" id="inputRazaoDescontos"
-                        autocomplete="doNotAutoComplete" class="campo" tabindex="16" />
+                        autocomplete="doNotAutoComplete" class="campo" tabindex="4" />
                     <nb-autocomplete #autoinputRazaoDescontos
                         (selectedChange)="onSelectionChangeRazaoDescontos($event)">
                         <nb-option *ngFor="let option of filteredDadosContaCaixa$ | async" [value]="option">

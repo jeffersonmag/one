@@ -1,6 +1,6 @@
 <div class="infinite-cards row">
   <div class="col-md-12">
-    <nb-card>
+    <nb-card *ngIf="!novaTela">
       <nb-card-header>
         Cadastro de Tipo de Lojas
         <div class="icons-right">
@@ -121,6 +121,17 @@
             </div>
           </div>
         </div>
+      </nb-card-body>
+    </nb-card>
+    <nb-card *ngIf="novaTela">
+      <nb-card-header>
+        <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Voltar" (click)="voltar()">
+          <nb-icon icon="arrow-back-outline" pack="eva" class="flip-icon"></nb-icon>
+        </button>
+        <span>Editar Cadastro de Tipo de Lojas</span>
+      </nb-card-header>
+      <nb-card-body>
+        <dados-cadastro-tipo-lojas></dados-cadastro-tipo-lojas>
       </nb-card-body>
     </nb-card>
   </div>

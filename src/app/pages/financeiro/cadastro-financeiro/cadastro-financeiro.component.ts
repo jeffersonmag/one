@@ -12,7 +12,7 @@ import { NbDialogService, NbDialogRef } from '@nebular/theme';
   templateUrl: './cadastro-financeiro.component.html',
   styleUrls: ['./cadastro-financeiro.component.scss'],
 })
-export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
+export class CadastroFinanceiroComponent implements OnInit {
 
   dadosEditado: any;
   edicaoFinanceiroDocumento: boolean;
@@ -125,13 +125,6 @@ export class CadastroFinanceiroComponent implements OnInit, OnDestroy {
       valor_total_principal: [this.dadosEditado.valor_total_principal],
     });
 
-  }
-
-  ngOnDestroy() {
-    this.dadosEditado = [];
-    if (this.dialogReference !== null && this.dialogReference !== undefined) {
-      this.dialogReference.close();
-    }
   }
 
   buscaParcelasDoDocumento(valor?: string) {

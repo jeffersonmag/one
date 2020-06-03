@@ -25,7 +25,7 @@ import {
   NbAutocompleteModule,
   NbDatepickerModule,
   NbSidebarModule,
-  NbLayoutModule,
+  //NbLayoutModule,
   NbToggleComponent,
   NbToggleModule,
 } from '@nebular/theme';
@@ -38,7 +38,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FinanceiroComponent } from './financeiro.component';
 import { CadastroFinanceiroComponent } from './cadastro-financeiro/cadastro-financeiro.component';
 import { StatusComponent } from '../financeiro/status/status.component';
-import { NbDateFnsDateModule } from '@nebular/date-fns';
 import { AdicionarParcelasComponent } from './cadastro-financeiro/adicionar-parcelas/adicionar-parcelas.component';
 import { QuitarParcelaComponent } from './cadastro-financeiro/quitar-parcela/quitar-parcela.component';
 
@@ -78,10 +77,8 @@ import { QuitarParcelaComponent } from './cadastro-financeiro/quitar-parcela/qui
     NbDatepickerModule,
     NgbPaginationModule,
     NbSidebarModule,
-    NbLayoutModule,
+    //NbLayoutModule,
     NbToggleModule],
-  entryComponents: [],
-  providers: [NgbActiveModal],
 })
 export class FinanceiroModule { }
 

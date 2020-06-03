@@ -21,11 +21,9 @@ import {
   NbCheckboxModule,
   NbInputModule,
   NbPopoverModule,
-  NbDialogRef,
-  NbSearchService,
   NbSearchModule
 } from '@nebular/theme';
-import { NgbPaginationModule, NgbModalModule, NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule, NgbModalModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { CommonModule } from '@angular/common';
 import { EsteiraProducaoComponent, CustomModalOptions } from './esteira-producao.component';

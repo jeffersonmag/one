@@ -25,6 +25,8 @@ export class LojasComponent implements OnInit {
   mensagem: string = 'Ação realizada com sucesso!';
   pararSpinner: boolean = true;
 
+  novaTela = false; 
+
   permissoes: any = JSON.parse(window.sessionStorage.permissao_acesso);
   permissaoDelete: boolean = this.permissoes.cadastro_loja.acl.D;
   permissaoInsert: boolean = this.permissoes.cadastro_loja.acl.I;
@@ -62,6 +64,10 @@ export class LojasComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  voltar(){
+    this.novaTela = false;    
   }
 
   modoExibicao(modo) {
@@ -174,28 +180,33 @@ export class LojasComponent implements OnInit {
 
   cadastrarNovoLojas(modal) {
     this.lojasEdicao = [];
+    this.novaTela = true; 
     this.criacaoUsuario = true;
     this.edicaoUsuario = false;
-    this.dialogReference = this.dialogService.open(modal,
+    /*this.dialogReference = this.dialogService.open(modal,
       {
-        hasBackdrop: false,
+        hasBackdrop: true,
         closeOnEsc: false,
-      });
+        hasScroll: true,
+      });*/
   }
 
   editarLojas(modal, loja) {
     this.lojasEdicao = loja;
+    this.novaTela = true; 
     this.edicaoUsuario = true;
     this.criacaoUsuario = false;
-    this.dialogReference = this.dialogService.open(modal,
+    /*this.dialogReference = this.dialogService.open(modal,
       {
-        hasBackdrop: false,
+        hasBackdrop: true,
         closeOnEsc: false,
-      });
+        hasScroll: true,
+      });*/
   }
 
   JoinAndClose() {
-    this.dialogReference.close();
+    //this.dialogReference.close();
+    this.novaTela = false; 
     this.lojasEdicao = [];
   }
 

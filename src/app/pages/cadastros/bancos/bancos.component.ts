@@ -25,6 +25,8 @@ export class BancosComponent implements OnInit {
   mensagem: string = 'Ação realizada com sucesso!';
   pararSpinner: boolean = true;
 
+  novaTela = false;
+
   permissoes: any = JSON.parse(window.sessionStorage.permissao_acesso);
   permissaoDelete: boolean = this.permissoes.cadastro_bancos.acl.D;
   permissaoInsert: boolean = this.permissoes.cadastro_bancos.acl.I;
@@ -50,7 +52,9 @@ export class BancosComponent implements OnInit {
     private dialogService: NbDialogService,
     private modalService: NgbModal,
     private toastrService: NbToastrService) {
+  }
 
+  ngOnInit() {
     this.searchService.onSearchSubmit()
       .subscribe((data: any) => {
         this.value = data.term;
@@ -61,7 +65,8 @@ export class BancosComponent implements OnInit {
     this.buscaBancos('');
   }
 
-  ngOnInit() {
+  voltar(){
+    this.novaTela = false;    
   }
 
   modoExibicao(modo) {
@@ -150,28 +155,33 @@ export class BancosComponent implements OnInit {
 
   cadastrarNovoBanco(modal) {
     this.usuarioEdicao = [];
+    this.novaTela = true;
     this.criacaoUsuario = true;
     this.edicaoUsuario = false;
-    this.dialogReference = this.dialogService.open(modal,
+    /*this.dialogReference = this.dialogService.open(modal,
       {
-        hasBackdrop: false,
+        hasBackdrop: true,
         closeOnEsc: false,
-      });
+        hasScroll: true,
+      });*/
   }
 
   editarBanco(modal, usuario) {
     this.usuarioEdicao = usuario;
+    this.novaTela = true;
     this.edicaoUsuario = true;
     this.criacaoUsuario = false;
-    this.dialogReference = this.dialogService.open(modal,
+    /*this.dialogReference = this.dialogService.open(modal,
       {
-        hasBackdrop: false,
+        hasBackdrop: true,
         closeOnEsc: false,
-      });
+        hasScroll: true,
+      });*/
   }
 
   JoinAndClose() {
-    this.dialogReference.close();
+    //this.dialogReference.close();
+    this.novaTela = false;
     this.usuarioEdicao = [];
   }
 

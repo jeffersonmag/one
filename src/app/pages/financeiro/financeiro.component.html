@@ -26,8 +26,8 @@
     </div>
   </nb-card-header>
   <nb-card-body>
-    <nb-layout>
-      <!--<nb-layout-header collapsed *ngIf="exibirToggle">
+    <!--<nb-layout>
+      <nb-layout-header collapsed *ngIf="exibirToggle">
         <div class="row">
           <input nbInput class="label col-xl-4 col-form-label" id="pesquisa" placeholder="Pesquisa">
           <nb-toggle id="inputOrcavel" class="col-xl-4" status="success">Campo 1</nb-toggle>
@@ -58,7 +58,7 @@
         </nb-card>
       </ng-template>
       <!--</div>-->
-      <nb-layout-column>
+      <!--<nb-layout-column>-->
         <div *ngIf="ativaBotaoPesquisa">
           <button nbButton shape="round" size="small" status="info" nbTooltip="Limpar Filtro da Pesquisa"
             (click)="buscaDados('')">
@@ -163,8 +163,8 @@
             </div>
           </div>
         </div>
-      </nb-layout-column>
-    </nb-layout>
+      <!--</nb-layout-column>
+    </nb-layout>-->
   </nb-card-body>
 </nb-card>
 <!--</div>

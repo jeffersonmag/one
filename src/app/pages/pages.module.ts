@@ -17,6 +17,8 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { FinanceiroModule } from './financeiro/financeiro.module';
 import { StatusComponent } from './cadastros/status/status.component';
 import { FormsModule } from '@angular/forms';
+import { GraficoComponent } from './grafico/grafico.component';
+import { GraficoModule } from './grafico/grafico.module';
 
 export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
@@ -28,6 +30,7 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     DashboardModule,
     PendenciaModule,
     FinanceiroModule,
+    GraficoModule,
     EsteiraProducaoModule,
     NbStepperModule,
     NbPopoverModule,
@@ -39,7 +42,8 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     NbTreeGridModule,
     CadastrosModule,
     NbDateFnsDateModule.forChild({ format: 'dd/MM/yyyy' }),
-    FormsModule  ],
+    FormsModule,
+  ],
   declarations: [
     PagesComponent,
   ],

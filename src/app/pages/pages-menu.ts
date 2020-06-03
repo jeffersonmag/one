@@ -16,6 +16,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
 
   {
+    title: 'Gráfico',
+    icon: 'bar-chart-outline',
+    link: '/pages/grafico',
+    hidden: true,
+    home: false,
+  },
+
+  {
     title: 'Pendência de Físico',
     icon: 'browser',
     link: '/pages/pendencia-fisico',

@@ -30,6 +30,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
   codigoAba: number;
   modalReference: NgbModalRef;
   linearMode = false;
+  
   primeiroPasso: FormGroup;
   segundoPasso: FormGroup;
   terceiroPasso: FormGroup;

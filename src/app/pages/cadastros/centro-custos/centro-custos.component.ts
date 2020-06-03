@@ -13,6 +13,8 @@ import { CadastrosApiService } from '../../../api/cadastros';
 })
 export class CentroCustosComponent implements OnInit {
 
+  novaTela = false;
+
   modalReference: NgbModalRef;
   index = 1;
   destroyByClick = true;
@@ -62,6 +64,10 @@ export class CentroCustosComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  voltar(){
+    this.novaTela = false;    
   }
 
   modoExibicao(modo) {
@@ -150,28 +156,33 @@ export class CentroCustosComponent implements OnInit {
 
   cadastrarNovoCentroCustos(modal) {
     this.usuarioEdicao = [];
+    this.novaTela = true;
     this.criacaoUsuario = true;
     this.edicaoUsuario = false;
-    this.dialogReference = this.dialogService.open(modal,
+    /*this.dialogReference = this.dialogService.open(modal,
       {
-        hasBackdrop: false,
+        hasBackdrop: true,
         closeOnEsc: false,
-      });
+        hasScroll: true,
+      });*/
   }
 
   editarCentroCustos(modal, usuario) {
     this.usuarioEdicao = usuario;
+    this.novaTela = true;
     this.edicaoUsuario = true;
     this.criacaoUsuario = false;
-    this.dialogReference = this.dialogService.open(modal,
+    /*this.dialogReference = this.dialogService.open(modal,
       {
-        hasBackdrop: false,
+        hasBackdrop: true,
         closeOnEsc: false,
-      });
+        hasScroll: true,
+      });*/
   }
 
   JoinAndClose() {
-    this.dialogReference.close();
+    //this.dialogReference.close();
+    this.novaTela = false;
     this.usuarioEdicao = [];
   }
 

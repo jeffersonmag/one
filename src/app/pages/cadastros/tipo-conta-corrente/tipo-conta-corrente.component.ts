@@ -22,6 +22,8 @@ export class TipoContaCorrenteComponent implements OnInit {
   mensagem: string = 'Ação realizada com sucesso!';
   pararSpinner: boolean = true;
 
+  novaTela = false;
+
   permissoes: any = JSON.parse(window.sessionStorage.permissao_acesso);
   permissaoDelete: boolean = this.permissoes.cadastro_tipo_conta_corrente.acl.D;
   permissaoInsert: boolean = this.permissoes.cadastro_tipo_conta_corrente.acl.I;
@@ -59,6 +61,10 @@ export class TipoContaCorrenteComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  voltar(){
+    this.novaTela = false;    
   }
 
   modoExibicao(modo) {
@@ -149,26 +155,31 @@ export class TipoContaCorrenteComponent implements OnInit {
     this.usuarioEdicao = [];
     this.criacaoUsuario = true;
     this.edicaoUsuario = false;
-    this.dialogReference = this.dialogService.open(modal,
+    this.novaTela = true;
+    /*this.dialogReference = this.dialogService.open(modal,
       {
-        hasBackdrop: false,
+        hasBackdrop: true,
         closeOnEsc: false,
-      });
+        hasScroll: true,
+      });*/
   }
 
   editarTipoContaCorrente(modal, usuario) {
     this.usuarioEdicao = usuario;
     this.edicaoUsuario = true;
     this.criacaoUsuario = false;
-    this.dialogReference = this.dialogService.open(modal,
+    this.novaTela = true;
+    /*this.dialogReference = this.dialogService.open(modal,
       {
-        hasBackdrop: false,
+        hasBackdrop: true,
         closeOnEsc: false,
-      });
+        hasScroll: true,
+      });*/
   }
 
   JoinAndClose() {
-    this.dialogReference.close();
+    //this.dialogReference.close();
+    this.novaTela = false;
     this.usuarioEdicao = [];
   }
 

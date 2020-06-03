@@ -33,6 +33,8 @@ export class ProjetosComponent implements OnInit {
 
   value = '';
 
+  novaTela = false;
+
   criacaoUsuario: boolean = false;
   edicaoUsuario: boolean = false;
   ativaBotaoPesquisa: boolean = false;
@@ -176,26 +178,35 @@ export class ProjetosComponent implements OnInit {
     this.dadosEdicao = [];
     this.criacaoUsuario = true;
     this.edicaoUsuario = false;
-    this.dialogReference = this.dialogService.open(modal,
+    this.novaTela = true;
+    /*this.dialogReference = this.dialogService.open(modal,
       {
-        hasBackdrop: false,
+        hasBackdrop: true,
         closeOnEsc: false,
-      });
+        hasScroll: true,
+      });*/
+  }
+
+  voltar(){
+    this.novaTela = false;    
   }
 
   editarProjetos(modal, usuario) {
     this.dadosEdicao = usuario;
     this.edicaoUsuario = true;
     this.criacaoUsuario = false;
-    this.dialogReference = this.dialogService.open(modal,
+    this.novaTela = true;
+    /*this.dialogReference = this.dialogService.open(modal,
       {
-        hasBackdrop: false,
+        hasBackdrop: true,
         closeOnEsc: false,
-      });
+        hasScroll: true,
+      });*/
   }
 
   JoinAndClose() {
-    this.dialogReference.close();
+    //this.dialogReference.close();
+    this.novaTela = false;
     this.dadosEdicao = [];
   }
 
