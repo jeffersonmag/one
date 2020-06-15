@@ -17,7 +17,6 @@ import {
   NbTreeGridModule,
 } from '@nebular/theme';
 import { NgxEchartsModule } from 'ngx-echarts';
-
 import { ThemeModule } from '../../@theme/theme.module';
 import { PipesModule } from '../../pipes/pipes.module';
 import { DashboardCampanhaComponent } from './dashboard-campanha.component';
@@ -25,6 +24,8 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { OrderModule } from 'ngx-order-pipe';
+import { DxPivotGridModule, DxButtonModule } from 'devextreme-angular';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 @NgModule({
   imports: [
@@ -51,6 +52,8 @@ import { OrderModule } from 'ngx-order-pipe';
     Ng2SmartTableModule,
     NbTreeGridModule,
     OrderModule,
+    DxPivotGridModule,
+    DxButtonModule
   ],
   declarations: [
     DashboardCampanhaComponent,
@@ -61,3 +64,5 @@ export class DashboardCampanhaModule { }
 export class PageModule { }
 
 export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(DashboardCampanhaModule);

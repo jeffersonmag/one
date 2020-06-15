@@ -387,9 +387,9 @@
           </nb-card>
         </div>
 
-        <!--CARDS ROSA-->
+        <!--CARDS ROSA
         <div class="col-md-12 col-sm-12 col-lg-12 row justify-content-between">
-          <div *ngFor="let i of dadosProdutoCorbanCampanha.produto_corban_campanha">
+          <div *ngFor="let i of dadosProdutoCorbanCampanha.agrupador_elegibilidade">
             <nb-card *ngIf="i.length != 0" accent="danger" class="cardSnd">
               <nb-card-header>
                 <div class="produtoCorban">{{i.nome_produto_corban}}</div>
@@ -429,7 +429,15 @@
               </nb-card-body>
             </nb-card>
           </div>
-        </div>
+        </div>-->
+
+        <!--GRID DINAMICA
+        <dx-pivot-grid id="sales" [allowSortingBySummary]="true" [allowSorting]="true" [allowFiltering]="true"
+          [allowExpandAll]="true" [height]="300" [showBorders]="true" [showColumnGrandTotals]="false"
+          [showRowGrandTotals]="false" [dataSource]="gridDadosCampanha">
+          <dxo-export [enabled]="true" fileName="Agrupador"></dxo-export>
+          <dxo-field-chooser [enabled]="false"></dxo-field-chooser>
+        </dx-pivot-grid>-->
 
         <!--TABELA-->
         <nb-tabset [nbSpinner]="dadosCampanhaMetasSmartTable.length == 0 && dadosCampanhaMetasLoad"

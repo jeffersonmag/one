@@ -244,7 +244,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
         }
       }
       this.pendenciaSintetico = this.pendenciaSinteticoTemp;
-      this.findPendenciaInicial(0);
+      this.findPendenciaInicial(this.pendenciaSintetico[0].codigo_status_time_line);
     })
       .catch((e) => {
         console.log(e);

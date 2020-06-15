@@ -28,6 +28,25 @@ interface FSEntry {
   meta_total_campanha: number;
 }
 
+export class Agrupador {
+  codigo_instituicao: number;
+  codigo_produto_corban: number;
+  meta_diaria: number;
+  meta_producao: number;
+  nivel_atingimento: number;
+  nome_instituicao: string;
+  nome_produto_corban: string;
+  nota_nivel_atingido: number;
+  percentual_atingimento: number;
+  projecao: number;
+  qtd_elegivel_seguro: number;
+  qtd_realizado_seguro: number;
+  qtd_total_contratos_campanha: number;
+  ticket_medio: number;
+  tipo_operacao: string;
+  valor_atingido_meta_producao: number;
+}
+
 @Component({
   selector: 'ngx-dashboard',
   styleUrls: ['./dashboard-campanha.component.scss'],
@@ -428,6 +447,8 @@ export class DashboardCampanhaComponent implements OnDestroy {
     codigo_funcionario: '',
   };
 
+  gridDadosCampanha: any;
+
   constructor(
     private themeService: NbThemeService,
     private campanhasApiService: CampanhasApiService,
@@ -663,6 +684,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
           this.dadosCampanhaMetasLoad = false;
         } else {
           this.dadosCampanhaMetasLoad = false;
+          this.gridCampanhas(s[0]);
           this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas[0]);
         }
       })
@@ -670,6 +692,53 @@ export class DashboardCampanhaComponent implements OnDestroy {
         console.log(e);
         this.dadosCampanhaMetasLoad = false;
       });
+  }
+
+  gridCampanhas(dadosCampanha) {
+    let Dados = dadosCampanha.agrupador_elegibilidade;
+
+    this.gridDadosCampanha = {
+      store: Dados,
+      fields: [{
+        name: "Meta Diária",
+        caption: "Meta Diária",
+        valueField: "Meta Diária",
+        width: 120,
+        area: "column",
+      }, {
+        name: "Meta Diária",
+        caption: "Meta Diária",
+        valueField: "Meta Diária",
+        width: 120,
+        area: "column",
+      }, {
+        Caption: "Instituição",
+        dataField: "nome_instituicao",
+        area: "row",
+        visible: (dadosCampanha.agrupador_elegibilidade[0].nome_instituicao != null)
+      }, {
+        Caption: "Produto Corban",
+        dataField: "nome_produto_corban",
+        area: "row",
+        visible: (dadosCampanha.agrupador_elegibilidade[0].nome_produto_corban != null)
+      }, {
+        Caption: "Tipo Operação",
+        dataField: "tipo_operacao",
+        area: "row",
+        visible: (dadosCampanha.agrupador_elegibilidade[0].tipo_operacao != null)
+      }, {
+        groupName: "nome_instituicao",
+        groupInterval: "nome_produto_corban",
+        visible: false
+      }, {
+        caption: "Meta Diária",
+        dataField: "meta_diaria",
+        dataType: "number",
+        summaryType: "sum",
+        area: "data"
+      },]
+
+    }
   }
 
   findCampanhaMetaSmartTable(visao) {

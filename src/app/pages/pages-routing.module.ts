@@ -17,7 +17,7 @@ import { CanalVendasComponent } from './cadastros/canal-vendas/canal-vendas.comp
 import { TipoLojaComponent } from './cadastros/tipo-lojas/tipo-lojas.component';
 import { FinanceiroComponent } from './financeiro/financeiro.component';
 import { ConfiguracoesComponent } from './cadastros/configuracoes/configuracoes.component';
-import { GraficoComponent } from './grafico/grafico.component';
+//import { GraficoComponent } from './grafico/grafico.component';
 
 
 //define o a página inicial
@@ -66,10 +66,10 @@ const routes: Routes = [{
       component: DashboardCampanhaComponent,
     },
 
-    {
+    /*{
       path: 'grafico',
       component: GraficoComponent,
-    },
+    },*/
 
     {
       path: 'pendencia-fisico',

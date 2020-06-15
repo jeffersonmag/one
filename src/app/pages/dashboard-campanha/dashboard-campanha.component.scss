@@ -1,6 +1,7 @@
 @import "../../@theme/styles/themes";
 @import "~bootstrap/scss/mixins/breakpoints";
 @import "~@nebular/theme/styles/global/breakpoints";
+
 @include nb-install-component() {
   .solar-card nb-card-header {
     border: none;
@@ -11,6 +12,18 @@
       display: none;
     }
   }
+}
+
+::ng-deep #sales {
+  margin-top: 80px;
+}
+
+::ng-deep .long-title h3 {
+  font-family: 'Segoe UI Light', 'Helvetica Neue Light', 'Segoe UI', 'Helvetica Neue', 'Trebuchet MS', Verdana;
+  font-weight: 200;
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 :host /deep/ ng2-smart-table thead th {
