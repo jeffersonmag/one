@@ -24,8 +24,9 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { OrderModule } from 'ngx-order-pipe';
-import { DxPivotGridModule, DxButtonModule } from 'devextreme-angular';
+import { DxPivotGridModule, DxButtonModule, DxDataGridModule, DxTemplateModule, DxBulletModule } from 'devextreme-angular';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import config from 'devextreme/core/config';
 
 @NgModule({
   imports: [
@@ -53,13 +54,21 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
     NbTreeGridModule,
     OrderModule,
     DxPivotGridModule,
-    DxButtonModule
+    DxButtonModule,
+    DxDataGridModule,
+    DxTemplateModule,
+    DxBulletModule,
   ],
   declarations: [
     DashboardCampanhaComponent,
   ],
 })
-export class DashboardCampanhaModule { }
+export class DashboardCampanhaModule {
+
+  constructor () {
+    config({ decimalSeparator: ',' , thousandsSeparator: '.' });
+  }
+}
 
 export class PageModule { }
 

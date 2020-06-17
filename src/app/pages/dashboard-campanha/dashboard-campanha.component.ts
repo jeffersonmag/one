@@ -11,6 +11,7 @@ import { TicketMedioApiService } from '../../api/ticket-medio';
 import { NbPopoverDirective } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
 import { NbSortDirection, NbSortRequest } from '@nebular/theme';
+import config from 'devextreme/core/config';
 
 
 interface CardSettings {
@@ -447,7 +448,15 @@ export class DashboardCampanhaComponent implements OnDestroy {
     codigo_funcionario: '',
   };
 
-  gridDadosCampanha: any;
+  gridDadosCampanhaGrid: any;
+  gridDadosCampanhaPivotGrid: any;
+
+  banda1Campanha: String;
+  banda2PendenciaFisico: String;
+  mesAA: string;
+  mesA: string;
+  anoAtual: string;
+  anoPassado: string;
 
   constructor(
     private themeService: NbThemeService,
@@ -465,6 +474,8 @@ export class DashboardCampanhaComponent implements OnDestroy {
     // tslint:disable-next-line: comment-format
     // this.source.load(this.dadosCampanhaMetasSmartTable);
     // this.dataSource = this.dataSourceBuilder.create(this.dadosCampanhaMetasSmartTable);
+    config({ decimalSeparator: ',' , thousandsSeparator: '.' });
+
     this.findCampanha();
   }
 
@@ -679,13 +690,13 @@ export class DashboardCampanhaComponent implements OnDestroy {
       }
     )
       .then((s) => {
-        this.dadosCampanhaMetas = s;
+        this.dadosCampanhaMetas = s.dados_campanha;
         if (this.dadosCampanhaMetas.length == 0) {
           this.dadosCampanhaMetasLoad = false;
         } else {
           this.dadosCampanhaMetasLoad = false;
-          this.gridCampanhas(s[0]);
-          this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas[0]);
+          this.gridCampanhas(s);
+          this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas);
         }
       })
       .catch((e) => {
@@ -695,37 +706,82 @@ export class DashboardCampanhaComponent implements OnDestroy {
   }
 
   gridCampanhas(dadosCampanha) {
-    let Dados = dadosCampanha.agrupador_elegibilidade;
+    let caption = dadosCampanha.caption_fisico;
+    let Dados = dadosCampanha.dados_campanha_sintetico;
+    let gridAdd: any = [];
 
-    this.gridDadosCampanha = {
+    this.banda1Campanha = dadosCampanha.dados_campanha[0].nome_agrupamento;
+    this.banda2PendenciaFisico = 'Pendência de Físico';
+
+    this.mesAA = caption[0];
+    this.mesA = caption[1];
+    this.anoAtual = caption[2];
+    this.anoPassado = caption[3];
+
+    this.gridDadosCampanhaGrid = Dados;
+
+    for (var i = 0; i < Dados.length; i++) {
+      let valor = Dados[i];
+      gridAdd.push(
+        {
+          agrupador: valor.agrupador,
+          atingido: parseFloat(parseFloat(valor.atingido).toFixed(2)),
+          atingimento_projetado: parseFloat(parseFloat(valor.atingimento_projetado).toFixed(2)),
+          codigo_instituicao: valor.codigo_instituicao,
+          codigo_produto_corban: valor.codigo_produto_corban,
+          fisico_e_am_0: valor.fisico_e_am_0,
+          fisico_e_am_1: valor.fisico_e_am_1,
+          fisico_e_am_2: valor.fisico_e_am_2,
+          fisico_e_am_3: valor.fisico_e_am_3,
+          fisico_e_p_0: valor.fisico_e_p_0,
+          fisico_e_p_1: valor.fisico_e_p_1,
+          fisico_e_p_2: valor.fisico_e_p_2,
+          fisico_e_p_3: valor.fisico_e_p_3,
+          fisico_r_am_0: valor.fisico_r_am_0,
+          fisico_r_am_1: valor.fisico_r_am_1,
+          fisico_r_am_2: valor.fisico_r_am_2,
+          fisico_r_am_3: valor.fisico_r_am_3,
+          fisico_r_p_0: valor.fisico_r_p_0,
+          fisico_r_p_1: valor.fisico_r_p_1,
+          fisico_r_p_2: valor.fisico_r_p_2,
+          fisico_r_p_3: valor.fisico_r_p_3,
+          meta: parseFloat(parseFloat(valor.meta).toFixed(2)),
+          meta_du: parseFloat(parseFloat(valor.meta_du).toFixed(2)),
+          meta_du_recalculada: parseFloat(parseFloat(valor.meta_du_recalculada).toFixed(2)),
+          nivel: valor.nivel,
+          nome_instituicao: valor.nome_instituicao,
+          nome_produto_corban: valor.nome_produto_corban,
+          percentual_atingido: parseFloat(parseFloat(valor.percentual_atingido).toFixed(2)),
+          qtd_contratos: parseFloat(parseFloat(valor.qtd_contratos).toFixed(2)),
+          ticket_medio: parseFloat(parseFloat(valor.ticket_medio).toFixed(2)),
+          tipo_operacao: valor.tipo_operacao
+        });
+
+    }
+    this.gridDadosCampanhaGrid = gridAdd;
+    //this.source.load(this.dadosCampanhaMetasSmartTable);
+
+    /*this.gridDadosCampanhaPivotGrid = {
       store: Dados,
       fields: [{
-        name: "Meta Diária",
-        caption: "Meta Diária",
-        valueField: "Meta Diária",
-        width: 120,
-        area: "column",
-      }, {
-        name: "Meta Diária",
-        caption: "Meta Diária",
-        valueField: "Meta Diária",
-        width: 120,
+        name: "Campanha",
+        caption: "Campanha",
         area: "column",
       }, {
         Caption: "Instituição",
         dataField: "nome_instituicao",
         area: "row",
-        visible: (dadosCampanha.agrupador_elegibilidade[0].nome_instituicao != null)
+        //visible: (dadosCampanha.agrupador_elegibilidade[0].nome_instituicao != null)
       }, {
         Caption: "Produto Corban",
         dataField: "nome_produto_corban",
         area: "row",
-        visible: (dadosCampanha.agrupador_elegibilidade[0].nome_produto_corban != null)
+        //visible: (dadosCampanha.agrupador_elegibilidade[0].nome_produto_corban != null)
       }, {
         Caption: "Tipo Operação",
         dataField: "tipo_operacao",
         area: "row",
-        visible: (dadosCampanha.agrupador_elegibilidade[0].tipo_operacao != null)
+        //visible: (dadosCampanha.agrupador_elegibilidade[0].tipo_operacao != null)
       }, {
         groupName: "nome_instituicao",
         groupInterval: "nome_produto_corban",
@@ -736,9 +792,20 @@ export class DashboardCampanhaComponent implements OnDestroy {
         dataType: "number",
         summaryType: "sum",
         area: "data"
+      }, {
+        caption: "Valor Atingido",
+        dataField: "valor_atingido_meta_producao",
+        dataType: "number",
+        summaryType: "sum",
+        area: "data"
+      }, {
+        caption: "Meta Produção",
+        dataField: "meta_producao",
+        dataType: "number",
+        summaryType: "sum",
+        area: "data"
       },]
-
-    }
+    }*/
   }
 
   findCampanhaMetaSmartTable(visao) {
@@ -756,7 +823,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
       }
     )
       .then((s) => {
-        for (let i of s) {
+        for (let i of s.dados_campanha) {
           this.dadosCampanhaMetasSmartTable.push(
             {
               codigo_agrupamento: i.codigo_agrupamento,

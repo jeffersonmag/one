@@ -431,13 +431,62 @@
           </div>
         </div>-->
 
-        <!--GRID DINAMICA
-        <dx-pivot-grid id="sales" [allowSortingBySummary]="true" [allowSorting]="true" [allowFiltering]="true"
-          [allowExpandAll]="true" [height]="300" [showBorders]="true" [showColumnGrandTotals]="false"
-          [showRowGrandTotals]="false" [dataSource]="gridDadosCampanha">
-          <dxo-export [enabled]="true" fileName="Agrupador"></dxo-export>
-          <dxo-field-chooser [enabled]="false"></dxo-field-chooser>
-        </dx-pivot-grid>-->
+        <!--DATA GRID-->
+        <dx-data-grid id="gridContainer" [dataSource]="gridDadosCampanhaGrid" [remoteOperations]="false"
+          [allowColumnResizing]="true" [allowColumnReordering]="true" [rowAlternationEnabled]="true"
+          [showBorders]="true" [columnAutoWidth]="true">
+
+          <dxo-paging [pageSize]="10"></dxo-paging>
+          <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 25, 50, 100]"></dxo-pager>
+          <dxo-search-panel [visible]="true" [highlightCaseSensitive]="true"></dxo-search-panel>
+          <dxo-group-panel [visible]="true"></dxo-group-panel>
+          <dxo-grouping [autoExpandAll]="false"></dxo-grouping>
+
+          <dxi-column [(caption)]="this.banda1Campanha">
+            <dxi-column caption="Agrupador" dataField="agrupador"></dxi-column>
+            <dxi-column caption="Meta" dataField="meta" dataType="number" format="#,##0.##"></dxi-column>
+            <dxi-column caption="Atingido" dataField="atingido" dataType="number" format="#,##0.##"></dxi-column>
+            <dxi-column caption="Percentual Atingido" dataField="percentual_atingido" dataType="number"></dxi-column>
+            <dxi-column caption="Nível" dataField="nivel" dataType="number"></dxi-column>
+            <dxi-column caption="Atingimento Projetado" dataField="atingimento_projetado" dataType="number"
+              format="#,##0.##">
+            </dxi-column>
+            <dxi-column caption="Meta D.U." dataField="meta_du" dataType="number" format="#,##0.##"></dxi-column>
+            <dxi-column caption="Meta D.U. Recalculada" dataField="meta_du_recalculada" dataType="number"
+              format="#,##0.##"></dxi-column>
+            <dxi-column caption="Qtd de contratos" dataField="qtd_contratos" dataType="number"></dxi-column>
+            <dxi-column caption="Ticket Médio" dataField="ticket_medio" dataType="number" format="#,##0.##">
+            </dxi-column>
+
+          </dxi-column>
+          <dxi-column [(caption)]="this.banda2PendenciaFisico" isBand="true">
+            <dxi-column [(caption)]="this.mesAA">
+              <dxi-column caption="Entrega" dataField="fisico_e_p_0" dataType="number" encodeHtml="true"></dxi-column>
+              <dxi-column caption="Reabertura" dataField="fisico_r_p_0" dataType="number"></dxi-column>
+            </dxi-column>
+            <dxi-column [(caption)]="this.mesA">
+              <dxi-column caption="Entrega" dataField="fisico_e_p_1" dataType="number"></dxi-column>
+              <dxi-column caption="Reabertura" dataField="fisico_r_p_1" dataType="number"></dxi-column>
+            </dxi-column>
+            <dxi-column [(caption)]="this.anoAtual">
+              <dxi-column caption="Entrega" dataField="fisico_e_p_2" dataType="number"></dxi-column>
+              <dxi-column caption="Reabertura" dataField="fisico_r_p_2" dataType="number"></dxi-column>
+            </dxi-column>
+            <dxi-column [(caption)]="this.anoPassado">
+              <dxi-column caption="Entrega" dataField="fisico_e_p_3" dataType="number"></dxi-column>
+              <dxi-column caption="Reabertura" dataField="fisico_r_p_3" dataType="number"></dxi-column>
+            </dxi-column>
+          </dxi-column>
+        </dx-data-grid>
+
+        <!--PIVOT GRID DINAMICA
+          <dx-pivot-grid id="sales" [allowSortingBySummary]="true" [allowSorting]="true" [allowFiltering]="true"
+            [allowExpandAll]="true" [height]="300" [showBorders]="true" [showColumnGrandTotals]="false"
+            [showRowGrandTotals]="true" [dataSource]="gridDadosCampanhaPivotGrid">
+            <dxo-export [enabled]="true" fileName="Agrupador"></dxo-export>
+            <dxo-field-chooser [enabled]="false"></dxo-field-chooser>
+          </dx-pivot-grid>-->
+
 
         <!--TABELA-->
         <nb-tabset [nbSpinner]="dadosCampanhaMetasSmartTable.length == 0 && dadosCampanhaMetasLoad"
@@ -472,7 +521,8 @@
                         <th (click)="sort('meta_recalculada')" class="size-fonte-right">Meta Recalculada
                           <span class="cor-setinha" *ngIf="key =='meta_recalculada'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
-                        <th (click)="sort('projecao_total_campanha')" class="size-fonte-right">Total campanha projetado
+                        <th (click)="sort('projecao_total_campanha')" class="size-fonte-right">Total campanha
+                          projetado
                           <span class="cor-setinha"
                             *ngIf="key =='projecao_total_campanha'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
@@ -534,7 +584,8 @@
                         <th (click)="sort('meta_recalculada')" class="size-fonte-right">Meta Recalculada
                           <span class="cor-setinha" *ngIf="key =='meta_recalculada'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
-                        <th (click)="sort('projecao_total_campanha')" class="size-fonte-right">Total campanha projetado
+                        <th (click)="sort('projecao_total_campanha')" class="size-fonte-right">Total campanha
+                          projetado
                           <span class="cor-setinha"
                             *ngIf="key =='projecao_total_campanha'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
@@ -593,7 +644,8 @@
                         <th (click)="sort('meta_recalculada')" class="size-fonte-right">Meta Recalculada
                           <span *ngIf="key =='meta_recalculada'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
-                        <th (click)="sort('projecao_total_campanha')" class="size-fonte-right">Total campanha projetado
+                        <th (click)="sort('projecao_total_campanha')" class="size-fonte-right">Total campanha
+                          projetado
                           <span *ngIf="key =='projecao_total_campanha'">{{reverse ? '▴' : '▾'}}</span>
                         </th>
                         <th (click)="sort('total_hc_participantes')" class="size-fonte-right">HC
