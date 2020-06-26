@@ -56,8 +56,6 @@ import config from 'devextreme/core/config';
     DxPivotGridModule,
     DxButtonModule,
     DxDataGridModule,
-    DxTemplateModule,
-    DxBulletModule,
   ],
   declarations: [
     DashboardCampanhaComponent,

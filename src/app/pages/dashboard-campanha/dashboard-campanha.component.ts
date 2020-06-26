@@ -62,6 +62,9 @@ export class DashboardCampanhaComponent implements OnDestroy {
 
   solarValue: number;
 
+  espacoNivel = [];
+  qtd: any;
+
   statusCards: string;
 
   commonStatusCardsSet: CardSettings[] = [];
@@ -265,10 +268,6 @@ export class DashboardCampanhaComponent implements OnDestroy {
   dadosCampanhaMetasLoad = true;
   perfis = [
     {
-      id: 5,
-      label: 'Diretor',
-    },
-    {
       id: 4,
       label: 'Regional',
     },
@@ -301,7 +300,8 @@ export class DashboardCampanhaComponent implements OnDestroy {
     },
   ];
 
-  perfilAtivo = window.sessionStorage.codigo_perfil_atuacao;
+  //perfilAtivo = window.sessionStorage.codigo_perfil_atuacao;
+  perfilAtivo = 4;
 
   mes = [
     {
@@ -372,8 +372,6 @@ export class DashboardCampanhaComponent implements OnDestroy {
     metasCampanhas: true,
     produtoxsxCorbans: true,
   };
-
-  valor = 100.00;
 
   option: any = {};
   themeSubscription: any;
@@ -471,11 +469,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
       .subscribe(theme => {
         this.statusCards = this.statusCardsByThemes[theme.name];
       });
-    // tslint:disable-next-line: comment-format
-    // this.source.load(this.dadosCampanhaMetasSmartTable);
-    // this.dataSource = this.dataSourceBuilder.create(this.dadosCampanhaMetasSmartTable);
-    config({ decimalSeparator: ',' , thousandsSeparator: '.' });
-
+    config({ decimalSeparator: ',', thousandsSeparator: '.' });
     this.findCampanha();
   }
 
@@ -651,7 +645,6 @@ export class DashboardCampanhaComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.alive = false;
-    //this.themeSubscription.unsubscribe();
   }
 
   findCampanha() {
@@ -745,9 +738,10 @@ export class DashboardCampanhaComponent implements OnDestroy {
           fisico_r_p_1: valor.fisico_r_p_1,
           fisico_r_p_2: valor.fisico_r_p_2,
           fisico_r_p_3: valor.fisico_r_p_3,
+          folha: valor.folha,
           meta: parseFloat(parseFloat(valor.meta).toFixed(2)),
           meta_du: parseFloat(parseFloat(valor.meta_du).toFixed(2)),
-          meta_du_recalculada: parseFloat(parseFloat(valor.meta_du_recalculada).toFixed(2)),
+          meta_du_recalculado: parseFloat(parseFloat(valor.meta_du_recalculado).toFixed(2)),
           nivel: valor.nivel,
           nome_instituicao: valor.nome_instituicao,
           nome_produto_corban: valor.nome_produto_corban,
@@ -1034,14 +1028,6 @@ export class DashboardCampanhaComponent implements OnDestroy {
         console.log(e);
       });
   }
-
-  /*atualizarFiltro2(item) {
-    this.codigos.codigo_regional = '';
-    this.codigos.codigo_comercial = '';
-    this.codigos.codigo_loja = '';
-    this.codigos.codigo_funcionario = '';
-    this.atualizarFiltro(item);
-  }*/
 
   atualizarFiltro(item) {
     if (item.codigo_campanha !== 0) {

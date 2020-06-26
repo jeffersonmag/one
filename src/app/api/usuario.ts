@@ -18,11 +18,11 @@ export class UsuarioApiService {
   // 'codigo_conexao': 8 // máquina do Rafael Banco de produção
   dados(user) {
     return new Promise((resolve, reject) => {
-      const response = this.requestService.post(`${environment.urlApi}/dados-usuario`, {
+      const response = this.requestService.post(`${environment.urlToken}/dados-usuario`, {
         'cpf': user.cpf,
         'senha': String(user.senha).toUpperCase(),
         'projeto': 'CORBAN',
-        'at_cliente': 'RIBERCRED',
+        'at_cliente': 'RIBERCRED'
       });
       response
         .then((s) => {
