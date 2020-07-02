@@ -301,7 +301,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
   ];
 
   //perfilAtivo = window.sessionStorage.codigo_perfil_atuacao;
-  perfilAtivo = 4;
+  perfilAtivo = 2;
 
   mes = [
     {
@@ -667,6 +667,10 @@ export class DashboardCampanhaComponent implements OnDestroy {
       });
   }
 
+  calculateCellValue(data) {
+    return [data.agrupador].join(" ");
+  }
+
   findCampanhaMeta(visao) {
     this.dadosCampanhaMetasLoad = true;
     this.dadosCampanhaMetas = [];
@@ -688,8 +692,9 @@ export class DashboardCampanhaComponent implements OnDestroy {
           this.dadosCampanhaMetasLoad = false;
         } else {
           this.dadosCampanhaMetasLoad = false;
+          this.findCampanhaMetaSmartTable(visao);
           this.gridCampanhas(s);
-          this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas);
+          //this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas);
         }
       })
       .catch((e) => {
@@ -713,8 +718,8 @@ export class DashboardCampanhaComponent implements OnDestroy {
 
     this.gridDadosCampanhaGrid = Dados;
 
-    for (var i = 0; i < Dados.length; i++) {
-      let valor = Dados[i];
+    for (var y = 0; y < Dados.length; y++) {
+      let valor = Dados[y];
       gridAdd.push(
         {
           agrupador: valor.agrupador,
@@ -753,7 +758,34 @@ export class DashboardCampanhaComponent implements OnDestroy {
 
     }
     this.gridDadosCampanhaGrid = gridAdd;
-    //this.source.load(this.dadosCampanhaMetasSmartTable);
+
+    //Dados das Guias
+
+    /*for (let i of dadosCampanha.dados_campanha) {
+      this.dadosCampanhaMetasSmartTable.push(
+        {
+          codigo_agrupamento: i.codigo_agrupamento,
+          nome_agrupamento: String(i.nome_agrupamento),
+          meta_total_campanha: parseFloat(i.meta_total_campanha),
+          atingimento_total_campanha: parseFloat(i.atingimento_total_campanha),
+          perc_atingimento_total_campanha:
+            parseFloat((((i.atingimento_total_campanha).toFixed(2)
+              / (i.meta_total_campanha).toFixed(2)) * 100).toFixed(2)),
+          ticket_medio_campanha: parseFloat(parseFloat(i.ticket_medio_campanha).toFixed(0)),
+          meta_diaria_campanha: parseFloat((parseFloat(i.meta_total_campanha) / this.campanhaDias).toFixed(0)),
+          meta_recalculada:
+            parseFloat((((parseFloat(i.meta_total_campanha.toFixed(2)))
+              - parseFloat(i.atingimento_total_campanha.toFixed(2))) / this.campanhaPendencias)
+              .toFixed(0)),
+          projecao_total_campanha: parseFloat(parseFloat(i.projecao_total_campanha).toFixed(0)),
+          total_hc_participantes: i.total_hc_participantes,
+        });
+    }
+    this.source.load(this.dadosCampanhaMetasSmartTable);
+    this.dadosCampanhaMetasLoad = false;
+    if (this.dadosCampanhaMetas.length !== 0) {
+      this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas[0]);
+    } */
 
     /*this.gridDadosCampanhaPivotGrid = {
       store: Dados,
@@ -803,9 +835,11 @@ export class DashboardCampanhaComponent implements OnDestroy {
   }
 
   findCampanhaMetaSmartTable(visao) {
+
     this.dadosCampanhaMetasLoad = true;
     this.dadosCampanhaMetasSmartTable = [];
     let datasourcesmart: TreeNode<FSEntry>[];
+
     this.campanhasApiService.metas(
       {
         'codigo_campanha': this.filtro.campanha.codigo,
@@ -817,6 +851,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
       }
     )
       .then((s) => {
+        this.gridCampanhas(s);
         for (let i of s.dados_campanha) {
           this.dadosCampanhaMetasSmartTable.push(
             {
@@ -835,19 +870,65 @@ export class DashboardCampanhaComponent implements OnDestroy {
                   .toFixed(0)),
               projecao_total_campanha: parseFloat(parseFloat(i.projecao_total_campanha).toFixed(0)),
               total_hc_participantes: i.total_hc_participantes,
-            });
+            })
         }
-        this.source.load(this.dadosCampanhaMetasSmartTable);
         this.dadosCampanhaMetasLoad = false;
-        if (this.dadosCampanhaMetas.length !== 0) {
-          this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas[0]);
-        }
-      })
-      .catch((e) => {
+      }).catch((e) => {
         console.log(e);
         this.dadosCampanhaMetasLoad = false;
       });
   }
+  //this.source.load(this.dadosCampanhaMetasSmartTable);
+
+
+  /*if (this.dadosCampanhaMetas.length !== 0) {
+    this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas[0]);
+  }*/
+
+  /*this.campanhasApiService.metas(
+    {
+      'codigo_campanha': this.filtro.campanha.codigo,
+      'visao': visao,
+      'codigo_regional': this.codigos.codigo_regional,
+      'codigo_comercial': this.codigos.codigo_comercial,
+      'codigo_loja': this.codigos.codigo_loja,
+      'codigo_funcionario': this.codigos.codigo_funcionario,
+    }
+  )
+    .then((s) => {
+      for (let i of s.dados_campanha) {
+        this.dadosCampanhaMetasSmartTable.push(
+          {
+            codigo_agrupamento: i.codigo_agrupamento,
+            nome_agrupamento: String(i.nome_agrupamento),
+            meta_total_campanha: parseFloat(i.meta_total_campanha),
+            atingimento_total_campanha: parseFloat(i.atingimento_total_campanha),
+            perc_atingimento_total_campanha:
+              parseFloat((((i.atingimento_total_campanha).toFixed(2)
+                / (i.meta_total_campanha).toFixed(2)) * 100).toFixed(2)),
+            ticket_medio_campanha: parseFloat(parseFloat(i.ticket_medio_campanha).toFixed(0)),
+            meta_diaria_campanha: parseFloat((parseFloat(i.meta_total_campanha) / this.campanhaDias).toFixed(0)),
+            meta_recalculada:
+              parseFloat((((parseFloat(i.meta_total_campanha.toFixed(2)))
+                - parseFloat(i.atingimento_total_campanha.toFixed(2))) / this.campanhaPendencias)
+                .toFixed(0)),
+            projecao_total_campanha: parseFloat(parseFloat(i.projecao_total_campanha).toFixed(0)),
+            total_hc_participantes: i.total_hc_participantes,
+          });
+      }
+      this.source.load(this.dadosCampanhaMetasSmartTable);
+      this.dadosCampanhaMetasLoad = false;
+      if (this.dadosCampanhaMetas.length !== 0) {
+        this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas[0]);
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+      this.dadosCampanhaMetasLoad = false;
+    });*/
+
+
+
 
   updateSort(sortRequest: NbSortRequest): void {
     this.sortColumn = sortRequest.column;
@@ -1066,6 +1147,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
     });
     this.perfilAtivo = find.id;
     this.findCampanhaMetaSmartTable(find.id);
+    //this.findCampanhaMeta(find.id);
     this.perfilAtivo = window.sessionStorage.codigo_perfil_atuacao;
   }
 
