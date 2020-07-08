@@ -7,6 +7,27 @@
     border: none;
     padding-bottom: 0;
   }
+
+  nb-tabset {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    ::ng-deep ul {
+      // make same size as card header
+      border-color: transparent;
+      padding-bottom: 1px;
+      .tab-link {
+        padding: 1.1rem 2rem;
+      }
+    }
+  }
+
+  nb-tab {
+    flex: 1;
+    padding: 0 0 1.25rem;
+  }
+
   @include media-breakpoint-down(sm) {
     ngx-traffic {
       display: none;
@@ -14,11 +35,16 @@
   }
 }
 
+.tema {
+  margin-top: 2rem;
+  max-height: 500px;
+}
+
 ::ng-deep #sales {
   margin-top: 80px;
 }
 
-::ng-deep #gridContainer  {
+::ng-deep #gridContainer {
   font-size: 11px;
 }
 
@@ -34,7 +60,7 @@
 }
 
 ::ng-deep #gridContainer .folhaTrue {
-  font-weight: normal;  
+  font-weight: normal;
   font-size: 11px;
 }
 
@@ -44,7 +70,8 @@
 }
 
 ::ng-deep .long-title h3 {
-  font-family: 'Segoe UI Light', 'Helvetica Neue Light', 'Segoe UI', 'Helvetica Neue', 'Trebuchet MS', Verdana;
+  font-family: "Segoe UI Light", "Helvetica Neue Light", "Segoe UI",
+    "Helvetica Neue", "Trebuchet MS", Verdana;
   font-weight: 200;
   font-size: 28px;
   text-align: center;
@@ -449,6 +476,7 @@
   width: 100%;
   margin-left: 10px;
   margin-right: 10px;
+  margin-top: 1rem;
 }
 
 .table3 {

@@ -13,11 +13,17 @@ export class CampanhasApiService {
   ) { }
 
   perfil(dados = {}) {
-    return this.requestService.get(`${environment.urlApi}/campanhas-perfil`, dados, true);
+    return this.requestService.get(`${environment.urlApi}/campanha/one/campanhas-perfil`, dados, true);
   }
 
   metas(dados) {
     return this.requestService.get(`${environment.urlApi}/campanha/one/metas-campanha-perfil`, dados, true);
+  }
+
+  imprimirCSV(dados) {
+    var codigo_campanha = dados;
+    return this.requestService.postDownload(`${environment.urlApi}/campanha/one/metas-campanha-perfil-analitico?codigo_campanha=` + codigo_campanha,
+      dados, true, 'dashboard-campanha');
   }
 
 }

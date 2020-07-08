@@ -15,6 +15,7 @@ import {
   NbTooltipModule,
   NbPopoverModule,
   NbTreeGridModule,
+  NbToastrModule,
 } from '@nebular/theme';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { ThemeModule } from '../../@theme/theme.module';
@@ -63,8 +64,8 @@ import config from 'devextreme/core/config';
 })
 export class DashboardCampanhaModule {
 
-  constructor () {
-    config({ decimalSeparator: ',' , thousandsSeparator: '.' });
+  constructor() {
+    config({ decimalSeparator: ',', thousandsSeparator: '.' });
   }
 }
 

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
-import { NbThemeService, NbTreeGridDataSourceBuilder, NbTreeGridDataSource } from '@nebular/theme';
+import { NbThemeService, NbTreeGridDataSourceBuilder, NbTreeGridDataSource, NbComponentStatus, NbGlobalPosition, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
 import { number_format, str_pad } from 'locutus/php/strings/';
 import _ from 'lodash';
 import * as moment from 'moment';
@@ -262,6 +262,9 @@ export class DashboardCampanhaComponent implements OnDestroy {
   ticketGlobal = 0;
   porcentagemMetas = 0;
   dadosCampanhaMetas = [];
+  dadosCampanhaMetasTotalizador = [];
+
+  position: NbGlobalPosition = NbGlobalPhysicalPosition.TOP_RIGHT;
 
   dadosProdutoCorbanCampanha = [];
   dadosCampanhaMetasLoadCampanhas = true;
@@ -462,6 +465,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
     private diasUteisPeriodoApiService: DiasUteisPeriodoApiService,
     private ticketMedioApiService: TicketMedioApiService,
     private indiceContratosDigitadosApiService: IndiceContratosDigitadosApiService,
+    private toastrService: NbToastrService
   ) {
 
     this.themeService.getJsTheme()
@@ -687,6 +691,8 @@ export class DashboardCampanhaComponent implements OnDestroy {
       }
     )
       .then((s) => {
+        this.dadosCampanhaMetasSmartTable = [];
+        this.dadosCampanhaMetasTotalizador = s.dados_campanha_sintetico;
         this.dadosCampanhaMetas = s.dados_campanha;
         if (this.dadosCampanhaMetas.length == 0) {
           this.dadosCampanhaMetasLoad = false;
@@ -694,7 +700,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
           this.dadosCampanhaMetasLoad = false;
           this.findCampanhaMetaSmartTable(visao);
           this.gridCampanhas(s);
-          //this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas);
+          this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas);
         }
       })
       .catch((e) => {
@@ -708,7 +714,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
     let Dados = dadosCampanha.dados_campanha_sintetico;
     let gridAdd: any = [];
 
-    this.banda1Campanha = dadosCampanha.dados_campanha[0].nome_agrupamento;
+    this.banda1Campanha = this.nomeCampanhaSelecionado;
     this.banda2PendenciaFisico = 'Pendência de Físico';
 
     this.mesAA = caption[0];
@@ -758,88 +764,23 @@ export class DashboardCampanhaComponent implements OnDestroy {
 
     }
     this.gridDadosCampanhaGrid = gridAdd;
-
-    //Dados das Guias
-
-    /*for (let i of dadosCampanha.dados_campanha) {
-      this.dadosCampanhaMetasSmartTable.push(
-        {
-          codigo_agrupamento: i.codigo_agrupamento,
-          nome_agrupamento: String(i.nome_agrupamento),
-          meta_total_campanha: parseFloat(i.meta_total_campanha),
-          atingimento_total_campanha: parseFloat(i.atingimento_total_campanha),
-          perc_atingimento_total_campanha:
-            parseFloat((((i.atingimento_total_campanha).toFixed(2)
-              / (i.meta_total_campanha).toFixed(2)) * 100).toFixed(2)),
-          ticket_medio_campanha: parseFloat(parseFloat(i.ticket_medio_campanha).toFixed(0)),
-          meta_diaria_campanha: parseFloat((parseFloat(i.meta_total_campanha) / this.campanhaDias).toFixed(0)),
-          meta_recalculada:
-            parseFloat((((parseFloat(i.meta_total_campanha.toFixed(2)))
-              - parseFloat(i.atingimento_total_campanha.toFixed(2))) / this.campanhaPendencias)
-              .toFixed(0)),
-          projecao_total_campanha: parseFloat(parseFloat(i.projecao_total_campanha).toFixed(0)),
-          total_hc_participantes: i.total_hc_participantes,
-        });
-    }
-    this.source.load(this.dadosCampanhaMetasSmartTable);
-    this.dadosCampanhaMetasLoad = false;
-    if (this.dadosCampanhaMetas.length !== 0) {
-      this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas[0]);
-    } */
-
-    /*this.gridDadosCampanhaPivotGrid = {
-      store: Dados,
-      fields: [{
-        name: "Campanha",
-        caption: "Campanha",
-        area: "column",
-      }, {
-        Caption: "Instituição",
-        dataField: "nome_instituicao",
-        area: "row",
-        //visible: (dadosCampanha.agrupador_elegibilidade[0].nome_instituicao != null)
-      }, {
-        Caption: "Produto Corban",
-        dataField: "nome_produto_corban",
-        area: "row",
-        //visible: (dadosCampanha.agrupador_elegibilidade[0].nome_produto_corban != null)
-      }, {
-        Caption: "Tipo Operação",
-        dataField: "tipo_operacao",
-        area: "row",
-        //visible: (dadosCampanha.agrupador_elegibilidade[0].tipo_operacao != null)
-      }, {
-        groupName: "nome_instituicao",
-        groupInterval: "nome_produto_corban",
-        visible: false
-      }, {
-        caption: "Meta Diária",
-        dataField: "meta_diaria",
-        dataType: "number",
-        summaryType: "sum",
-        area: "data"
-      }, {
-        caption: "Valor Atingido",
-        dataField: "valor_atingido_meta_producao",
-        dataType: "number",
-        summaryType: "sum",
-        area: "data"
-      }, {
-        caption: "Meta Produção",
-        dataField: "meta_producao",
-        dataType: "number",
-        summaryType: "sum",
-        area: "data"
-      },]
-    }*/
   }
 
-  findCampanhaMetaSmartTable(visao) {
+  downloadCSV() {
+    this.campanhasApiService.imprimirCSV(this.filtro.campanha.codigo).then((s) => {
+    })
+      .catch((e) => {
+        let erro = e.error.message;
+        this.makeToast('danger', 'Erro', erro);
+        console.log(e)
+      });
+  }
 
+
+  findCampanhaMetaSmartTable(visao) {
     this.dadosCampanhaMetasLoad = true;
     this.dadosCampanhaMetasSmartTable = [];
     let datasourcesmart: TreeNode<FSEntry>[];
-
     this.campanhasApiService.metas(
       {
         'codigo_campanha': this.filtro.campanha.codigo,
@@ -852,6 +793,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
     )
       .then((s) => {
         this.gridCampanhas(s);
+        this.dadosCampanhaMetasSmartTable = [];
         for (let i of s.dados_campanha) {
           this.dadosCampanhaMetasSmartTable.push(
             {
@@ -872,62 +814,16 @@ export class DashboardCampanhaComponent implements OnDestroy {
               total_hc_participantes: i.total_hc_participantes,
             })
         }
+        //this.source.load(this.dadosCampanhaMetasSmartTable);
         this.dadosCampanhaMetasLoad = false;
+        if (this.dadosCampanhaMetas.length !== 0) {
+          this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas[0]);
+        }
       }).catch((e) => {
         console.log(e);
         this.dadosCampanhaMetasLoad = false;
       });
   }
-  //this.source.load(this.dadosCampanhaMetasSmartTable);
-
-
-  /*if (this.dadosCampanhaMetas.length !== 0) {
-    this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas[0]);
-  }*/
-
-  /*this.campanhasApiService.metas(
-    {
-      'codigo_campanha': this.filtro.campanha.codigo,
-      'visao': visao,
-      'codigo_regional': this.codigos.codigo_regional,
-      'codigo_comercial': this.codigos.codigo_comercial,
-      'codigo_loja': this.codigos.codigo_loja,
-      'codigo_funcionario': this.codigos.codigo_funcionario,
-    }
-  )
-    .then((s) => {
-      for (let i of s.dados_campanha) {
-        this.dadosCampanhaMetasSmartTable.push(
-          {
-            codigo_agrupamento: i.codigo_agrupamento,
-            nome_agrupamento: String(i.nome_agrupamento),
-            meta_total_campanha: parseFloat(i.meta_total_campanha),
-            atingimento_total_campanha: parseFloat(i.atingimento_total_campanha),
-            perc_atingimento_total_campanha:
-              parseFloat((((i.atingimento_total_campanha).toFixed(2)
-                / (i.meta_total_campanha).toFixed(2)) * 100).toFixed(2)),
-            ticket_medio_campanha: parseFloat(parseFloat(i.ticket_medio_campanha).toFixed(0)),
-            meta_diaria_campanha: parseFloat((parseFloat(i.meta_total_campanha) / this.campanhaDias).toFixed(0)),
-            meta_recalculada:
-              parseFloat((((parseFloat(i.meta_total_campanha.toFixed(2)))
-                - parseFloat(i.atingimento_total_campanha.toFixed(2))) / this.campanhaPendencias)
-                .toFixed(0)),
-            projecao_total_campanha: parseFloat(parseFloat(i.projecao_total_campanha).toFixed(0)),
-            total_hc_participantes: i.total_hc_participantes,
-          });
-      }
-      this.source.load(this.dadosCampanhaMetasSmartTable);
-      this.dadosCampanhaMetasLoad = false;
-      if (this.dadosCampanhaMetas.length !== 0) {
-        this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas[0]);
-      }
-    })
-    .catch((e) => {
-      console.log(e);
-      this.dadosCampanhaMetasLoad = false;
-    });*/
-
-
 
 
   updateSort(sortRequest: NbSortRequest): void {
@@ -1065,18 +961,40 @@ export class DashboardCampanhaComponent implements OnDestroy {
         console.log(e);
       });
 
-    this.diasUteisPeriodoApiService.periodo(
-      {
-        'data_inicial': this.campanhaSelecionada.data_inicio_campanha,
-        'data_final': moment().format('YYYY-MM-DD'),
-      },
-    )
-      .then((s) => {
-        this.campanhaDiasUteisCorridos = s.qtd_dias_uteis;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    var month = new Date();
+    var valor = this.campanhaSelecionada.data_inicio_campanha.substring(0, 10);
+    var monthCampanha = new Date(valor);
+    monthCampanha.setDate(monthCampanha.getDate() + 1);
+    var MesCorrente = this.mes[month.getMonth()].id;
+    var MesCampanha = this.mes[monthCampanha.getMonth()].id;
+
+    if (MesCorrente == MesCampanha) {
+      this.diasUteisPeriodoApiService.periodo(
+        {
+          'data_inicial': this.campanhaSelecionada.data_inicio_campanha,
+          'data_final': moment().format('YYYY-MM-DD'),
+        },
+      )
+        .then((s) => {
+          this.campanhaDiasUteisCorridos = s.qtd_dias_uteis;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } else {
+      this.diasUteisPeriodoApiService.periodo(
+        {
+          'data_inicial': this.campanhaSelecionada.data_inicio_campanha,
+          'data_final': this.campanhaSelecionada.data_fim_campanha,
+        },
+      )
+        .then((s) => {
+          this.campanhaDiasUteisCorridos = s.qtd_dias_uteis;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   }
 
   findTickets() {
@@ -1138,7 +1056,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
     });
     this.perfilAtivo = find.id;
     this.findCampanhaMeta(find.id);
-    this.perfilAtivo = window.sessionStorage.codigo_perfil_atuacao;
+    //this.perfilAtivo = window.sessionStorage.codigo_perfil_atuacao;
   }
 
   filtraCampanhaPerfilSmartTable(event) {
@@ -1148,7 +1066,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
     this.perfilAtivo = find.id;
     this.findCampanhaMetaSmartTable(find.id);
     //this.findCampanhaMeta(find.id);
-    this.perfilAtivo = window.sessionStorage.codigo_perfil_atuacao;
+    //this.perfilAtivo = window.sessionStorage.codigo_perfil_atuacao;
   }
 
   clickSmartTableLojas(event) {
@@ -1307,6 +1225,23 @@ export class DashboardCampanhaComponent implements OnDestroy {
     if (l.length === 2) {
       this[l[0]][l[1]] = t;
     }
+  }
+
+  makeToast(type: NbComponentStatus, title: string, body: string) {
+    const config = {
+      status: type,
+      destroyByClick: true,
+      duration: 5000,
+      hasIcon: true,
+      position: this.position,
+      preventDuplicates: true,
+    };
+    const titleContent = title ? `${title}` : '';
+
+    this.toastrService.show(
+      body,
+      `${titleContent}`,
+      config);
   }
 
   changeComponent(component) {
