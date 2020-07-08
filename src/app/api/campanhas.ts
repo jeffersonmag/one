@@ -22,8 +22,8 @@ export class CampanhasApiService {
 
   imprimirCSV(dados) {
     var codigo_campanha = dados;
-    return this.requestService.postDownload(`${environment.urlApi}/campanha/one/metas-campanha-perfil-analitico?codigo_campanha=` + codigo_campanha,
-      dados, true, 'dashboard-campanha');
+    return this.requestService.getDownload(`${environment.urlApi}/campanha/one/metas-campanha-perfil-analitico?codigo_campanha=` + codigo_campanha,
+    'text/csv;charset=ANSI', dados, true, 'dashboard-campanha');
   }
 
 }

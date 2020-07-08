@@ -80,6 +80,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
       dark: this.commonStatusCardsSet,
     };
 
+
   filtro = {
     campanha: {
       label: 'Campanha',
@@ -160,6 +161,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
 
   customColumn = 'Lojas';
   defaultColumns = ['Nome agrupamento'];
+  hc_total_campanha = 0;
 
 
   key: string = 'nome'; // Define um valor padrão, para quando inicializar o componente
@@ -694,6 +696,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
         this.dadosCampanhaMetasSmartTable = [];
         this.dadosCampanhaMetasTotalizador = s.dados_campanha_sintetico;
         this.dadosCampanhaMetas = s.dados_campanha;
+        this.hc_total_campanha = s.hc_total_campanha;
         if (this.dadosCampanhaMetas.length == 0) {
           this.dadosCampanhaMetasLoad = false;
         } else {
@@ -767,6 +770,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
   }
 
   downloadCSV() {
+    this.makeToast('info', 'Aguarde...', 'O Download está sendo feito');
     this.campanhasApiService.imprimirCSV(this.filtro.campanha.codigo).then((s) => {
     })
       .catch((e) => {

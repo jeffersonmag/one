@@ -280,6 +280,7 @@ export class EsteiraProducaoComponent implements OnInit, OnDestroy {
   }
 
   downloadCSV() {
+    this.makeToast('info', 'Aguarde...', 'O Download está sendo feito');
     this.EsteiraProducaoApiService.imprimirCSV(null).then((s) => {
     })
       .catch((e) => {

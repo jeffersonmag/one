@@ -551,6 +551,7 @@ export class PendenciaComponent implements OnInit, OnDestroy {
   }
 
   downloadCSV() {
+    this.makeToast('info', 'Aguarde...', 'O Download está sendo feito');
     this.pendenciaFisicoApiService.imprimirCSV({
       'data_de': '',
       'data_ate': '',
