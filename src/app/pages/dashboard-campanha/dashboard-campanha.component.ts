@@ -703,7 +703,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
           this.dadosCampanhaMetasLoad = false;
           this.findCampanhaMetaSmartTable(visao);
           this.gridCampanhas(s);
-          this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas);
+          this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas[0]);
         }
       })
       .catch((e) => {
@@ -798,7 +798,9 @@ export class DashboardCampanhaComponent implements OnDestroy {
       .then((s) => {
         this.gridCampanhas(s);
         this.dadosCampanhaMetasSmartTable = [];
-        for (let i of s.dados_campanha) {
+        this.dadosCampanhaMetasSmartTable = s.dados_campanha;
+
+        /*for (let i of s.dados_campanha) {
           this.dadosCampanhaMetasSmartTable.push(
             {
               codigo_agrupamento: i.codigo_agrupamento,
@@ -817,7 +819,8 @@ export class DashboardCampanhaComponent implements OnDestroy {
               projecao_total_campanha: parseFloat(parseFloat(i.projecao_total_campanha).toFixed(0)),
               total_hc_participantes: i.total_hc_participantes,
             })
-        }
+        }*/
+
         //this.source.load(this.dadosCampanhaMetasSmartTable);
         this.dadosCampanhaMetasLoad = false;
         if (this.dadosCampanhaMetas.length !== 0) {

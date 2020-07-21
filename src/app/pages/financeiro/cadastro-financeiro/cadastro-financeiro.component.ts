@@ -49,7 +49,9 @@ export class CadastroFinanceiroComponent implements OnInit {
   @ViewChild('autoInputProjetos', { static: false }) inputProjetos;
 
   dadosTD: any[];
-  nomesTD: any[];
+  nomesTD: string[];
+  nome = "";
+  value: any;
   parcelas: any[];
   parcelaUnica: any[];
   pk_filteredDadosTD = [];
@@ -412,20 +414,23 @@ export class CadastroFinanceiroComponent implements OnInit {
     }
   }
 
-  onChangeTD() {
+  onChangeTD(event) {
     this.FinanceiroApiService_.getTipoDocumentoFinanceiroBuscaAutomatica(
       {
-        'pesquisa': this.inputTD.nativeElement.value,
+        'pesquisa': String(event.value).toLocaleUpperCase(),
       },
     )
       .then((s) => {
-        var nomes = [];
+        var nomes: string[];
+        nomes = [];
         this.dadosTD = s;
         for (let i of s) {
           nomes.push(String(i.nome));
         }
+
         this.nomesTD = nomes;
         this.filteredDadosTD$ = of(nomes); // this.getFilteredOptionsPN(this.inputPN.nativeElement.value);
+        this.nomesTD = nomes;
       })
       .catch((e) => {
         console.log(e);

@@ -65,8 +65,8 @@ export class BancosComponent implements OnInit {
     this.buscaBancos('');
   }
 
-  voltar(){
-    this.novaTela = false;    
+  voltar() {
+    this.novaTela = false;
   }
 
   modoExibicao(modo) {

@@ -61,7 +61,7 @@
     </div>
   </ng-template>
 
-  <button nbbutton disabled *ngIf="edicaoFinanceiroDocumento && !permissaoExclusao" class="buttons-row" shape="round"
+  <button nbButton disabled *ngIf="edicaoFinanceiroDocumento && !permissaoExclusao" class="buttons-row" shape="round"
     size="tiny" status="danger">
     <i class="fa fa-times color"></i>
     <div class="espacamento" nbTooltip="Sem permissão para excluir">Excluir</div>
@@ -75,7 +75,7 @@
       <div class="form-group row">
         <label for="inputTD" class="label col-sm-3 col-form-label">Tipo de documento</label>
         <div class="col-sm-9">
-          <input #autoInputTD nbInput fullWidth fieldSize="tiny" oninput="this.value = this.value.toUpperCase()"
+          <!--<input #autoInputTD nbInput fullWidth fieldSize="tiny" oninput="this.value = this.value.toUpperCase()"
             type="text" (keyup)="onChangeTD()" [nbAutocomplete]="autoTD"
             formControlName="tipo_documentos_financeiro_nome" id="inputTD" tabindex="1" autocomplete="off" />
           <nb-autocomplete #autoTD (selectedChange)="onSelectionChangeTD($event)">
@@ -83,6 +83,15 @@
               {{ option }}
             </nb-option>
           </nb-autocomplete>
+          <div class="dx-field-value">
+            <dx-autocomplete fullWidth placeholder="" [(value)]="nome" [dataSource]="nomesTD"
+              (onValueChanged)="onSelectionChangeTD($event)" (onKeyUp)="onChangeTD()">
+            </dx-autocomplete>
+          </div>-->
+          <dx-autocomplete fullWidth (oninput)="this.value = this.value.toUpperCase()" [minSearchLength]="3"
+            [searchTimeout]="500" placeholder="" [(value)]="nome" [dataSource]="nomesTD"
+            (onValueChanged)="onChangeTD($event)" formControlName="tipo_documentos_financeiro_nome">
+          </dx-autocomplete>
           <input nbInput type="hidden" id="inputTDpk" name="inputTDFpk" value={{tipo_documentos_financeiro_pk}}
             formControlName="tipo_documentos_financeiro_pk">
         </div>
@@ -232,67 +241,67 @@
 
   <nb-tabset>
     <nb-tab tabTitle="FATURAS">
-      <div class="maxContent">
-        <table class="tabela" equalColumnsWidth>
-          <thead>
-            <tr>
-              <th class="text-left">Parcela</th>
-              <th class="text-left">Vencimento</th>
-              <th class="text-left">Loja</th>
-              <th class="text-left">Fornecedor</th>
-              <th class="text-left">Conta Caixa</th>
-              <th class="text-left">Valor</th>
-              <th class="text-left">Porcentagem Quitação</th>
-              <th class="text-left">Última Quitação</th>
-              <th class="text-left">Ação</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let i of parcelas">
-              <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">{{i.parcela}} DE {{i.parcela_de}}
-              </td>
-              <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">
-                {{i.data_vencimento | moment: 'DD/MM/YYYY'}}</td>
-              <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">
-                <span nbTooltip="Nome Loja">{{i.loja_nome}}</span><br>
-              </td>
-              <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">
-                <span nbTooltip="Nome Fornecedor">{{i.pn_nome_cliente_fornecedor}}</span><br>
-              </td>
-              <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">
-                <span nbTooltip="Plano de Contas">{{i.plano_de_contas_nome}}</span><br>
-              </td>
-              <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">
-                <span nbTooltip="Valor">{{i.valor | number:'.2-2':'pt'}}</span><br>
-              </td>
-              <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">
-                <span nbTooltip="Valor">{{i.porcentagem_quitacao | number:'.2-2':'pt'}}</span><br>
-              </td>
-              <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">
-                <span *ngIf="i.ultima_quitacao !== null"
-                  nbTooltip="Valor">{{i.ultima_quitacao | moment: 'DD/MM/YYYY'}}</span><br>
-              </td>
-              <td class="size-fonte">
-                <button *ngIf="i.porcentagem_quitacao !== 100" class="buttons-row" nbButton shape="round" size="tiny"
-                  status="success" nbTooltip="Salvar" (click)="quitarParcela(contentquitarparcela, i)">
-                  <i class="fa fa-check color"></i>
-                  <div class="espacamento">Quitar</div>
-                </button>
-                <button *ngIf="i.porcentagem_quitacao === 100" class="buttons-row" nbButton shape="round" size="tiny"
-                  status="success" nbTooltip="Salvar" disabled>
-                  <i class="fa fa-check color"></i>
-                  <div class="espacamento">Quitar</div>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-          <tbody *ngIf="parcelas.length == 0 || parcelas === undefined">
-            <tr>
-              <td colspan="8"> NENHUMA PARCELA ENCONTRADA </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <!--<div class="maxContent">-->
+      <table class="tabela" equalColumnsWidth>
+        <thead>
+          <tr>
+            <th class="text-left">Parcela</th>
+            <th class="text-left">Vencimento</th>
+            <th class="text-left">Loja</th>
+            <th class="text-left">Fornecedor</th>
+            <th class="text-left">Conta Caixa</th>
+            <th class="text-left">Valor</th>
+            <th class="text-left">Porcentagem Quitação</th>
+            <th class="text-left">Última Quitação</th>
+            <th class="text-left">Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of parcelas">
+            <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">{{i.parcela}} DE {{i.parcela_de}}
+            </td>
+            <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">
+              {{i.data_vencimento | moment: 'DD/MM/YYYY'}}</td>
+            <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">
+              <span nbTooltip="Nome Loja">{{i.loja_nome}}</span><br>
+            </td>
+            <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">
+              <span nbTooltip="Nome Fornecedor">{{i.pn_nome_cliente_fornecedor}}</span><br>
+            </td>
+            <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">
+              <span nbTooltip="Plano de Contas">{{i.plano_de_contas_nome}}</span><br>
+            </td>
+            <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">
+              <span nbTooltip="Valor">{{i.valor | number:'.2-2':'pt'}}</span><br>
+            </td>
+            <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">
+              <span nbTooltip="Valor">{{i.porcentagem_quitacao | number:'.2-2':'pt'}}</span><br>
+            </td>
+            <td class="size-fonte" (click)="editarParcelas(contentaddparcela, i)">
+              <span *ngIf="i.ultima_quitacao !== null"
+                nbTooltip="Valor">{{i.ultima_quitacao | moment: 'DD/MM/YYYY'}}</span><br>
+            </td>
+            <td class="size-fonte">
+              <button *ngIf="i.porcentagem_quitacao !== 100" class="buttons-row" nbButton shape="round" size="tiny"
+                status="success" nbTooltip="Salvar" (click)="quitarParcela(contentquitarparcela, i)">
+                <i class="fa fa-check color"></i>
+                <div class="espacamento">Quitar</div>
+              </button>
+              <button *ngIf="i.porcentagem_quitacao === 100" class="buttons-row" nbButton shape="round" size="tiny"
+                status="success" nbTooltip="Salvar" disabled>
+                <i class="fa fa-check color"></i>
+                <div class="espacamento">Quitar</div>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="parcelas.length == 0 || parcelas === undefined">
+          <tr>
+            <td colspan="8"> NENHUMA PARCELA ENCONTRADA </td>
+          </tr>
+        </tbody>
+      </table>
+      <!--</div>-->
       <ng-template #contentquitarparcela let-data let-ref="dialogRef" class="modalAdicionarParcelas">
         <nb-card>
           <nb-card-header>

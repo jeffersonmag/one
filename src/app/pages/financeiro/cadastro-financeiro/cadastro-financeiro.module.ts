@@ -35,6 +35,7 @@ import { NbDateFnsDateModule } from '@nebular/date-fns';
 import { AdicionarParcelasComponent } from './adicionar-parcelas/adicionar-parcelas.component';
 import { PipesModule } from '../../../pipes/pipes.module';
 import { QuitarParcelaComponent } from './quitar-parcela/quitar-parcela.component';
+import { DxTemplateModule, DxAutocompleteModule } from 'devextreme-angular';
 
 @NgModule({
   declarations: [CadastroFinanceiroComponent, AdicionarParcelasComponent, QuitarParcelaComponent],
@@ -54,6 +55,8 @@ import { QuitarParcelaComponent } from './quitar-parcela/quitar-parcela.componen
     NbCardModule,
     PipesModule,
     NgbPaginationModule,
+    DxAutocompleteModule,
+    DxTemplateModule
   ],
   entryComponents: [AdicionarParcelasComponent, QuitarParcelaComponent],
   providers: [NgbActiveModal],

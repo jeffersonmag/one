@@ -8,15 +8,17 @@
     <nb-card [nbSpinner]="dadosCampanhaMetasLoad" nbSpinnerStatus="success">
       <nb-card-header>
         Dashboard de Campanhas
-        <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Download CSV">
-          <nb-icon icon="download-outline" pack="eva" class="flip-icon" (click)="downloadCSV()">
-          </nb-icon>
-        </button>
         <button nbButton ghost size="small" [nbPopover]="list" nbPopoverPlacement="bottom">
           <nb-icon status="info" class="toggle-icon" icon="hard-drive-outline" pack="eva"
             nbTooltip="Listagem de Campanhas">
           </nb-icon>
         </button>
+        <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Download CSV">
+          <nb-icon icon="download-outline" pack="eva" class="flip-icon" (click)="downloadCSV()">
+          </nb-icon>
+        </button>
+        <!--<nb-icon status="info" *ngIf="revealed.campanhas" class="toggle-icon" icon="chevron-up-outline" pack="eva"
+          (click)="toggleView('campanhas')"></nb-icon>-->
         <div class="popover-container">
           <ng-template #list>
             <nb-card class="margin-bottom-0">
@@ -36,8 +38,6 @@
             </nb-card>
           </ng-template>
         </div>
-        <!--<nb-icon status="info" *ngIf="revealed.campanhas" class="toggle-icon" icon="chevron-up-outline" pack="eva"
-          (click)="toggleView('campanhas')"></nb-icon>-->
       </nb-card-header>
       <nb-card-body *ngIf="dadosCampanhaMetas.length == 0 && dadosCampanhaMetasLoadCampanhas">
         <p>Sem dados para exibir</p>
@@ -440,13 +440,9 @@
           [allowColumnReordering]="true" [showBorders]="true" [columnAutoWidth]="false">
 
           <dxo-paging [enabled]="false"></dxo-paging>
-          <!--<dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 25, 50, 100]"></dxo-pager>-->
           <dxo-search-panel [visible]="true" [highlightCaseSensitive]="true"></dxo-search-panel>
-          <!--<dxo-group-panel [visible]="false"></dxo-group-panel>
-          <dxo-grouping [autoExpandAll]="true"></dxo-grouping>-->
           <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
           <dxo-sorting mode="none"></dxo-sorting>
-          <!--<dxo-column-chooser [enabled]="true"></dxo-column-chooser>-->
 
           <dxi-column [(caption)]="this.banda1Campanha" encodeHtml="false" [fixed]="true">
             <dxo-column-fixing enabled="true"></dxo-column-fixing>
@@ -510,13 +506,6 @@
               </dxi-column>
             </dxi-column>
           </dxi-column>
-
-          <!-- 
-            class.inc = vermelho sem negrito
-            class.dec = vermelho com negrito
-            folhaFalse = preto com negrito
-            other = preto normal
-           -->
 
           <div *dxTemplate="let cell of 'verificaTemplate_ep0'"
             [class.inc]="cell.data.fisico_e_am_0 == true && cell.data.folha == true"
@@ -592,15 +581,15 @@
 
 
         <!--TABELA-->
-        <nb-tabset [nbSpinner]="dadosCampanhaMetasSmartTable.length == 0 && dadosCampanhaMetasLoad"
-          nbSpinnerStatus="info" class="tema" fullWidth (changeTab)="filtraCampanhaPerfilSmartTable($event)">
+        <nb-tabset [nbSpinner]="dadosCampanhaMetasSmartTable.length == 0" class="tema" fullWidth
+          (changeTab)="filtraCampanhaPerfilSmartTable($event)">
           <nb-tab [tabTitle]="'LOJAS'" [active]="true" badgeStatus="info" fullWidth>
-            <!--<div class="container">-->
             <dx-data-grid id="gridContainer" [dataSource]="dadosCampanhaMetasSmartTable" [remoteOperations]="false"
               [allowColumnResizing]="true" [allowColumnReordering]="false" [rowAlternationEnabled]="true"
               [showBorders]="true" [columnAutoWidth]="true" fullWidth>
 
-              <dxo-paging [enabled]="false"></dxo-paging>
+              <dxo-paging [pageSize]="100"></dxo-paging>
+              <dxo-pager [showPageSizeSelector]="false" [allowedPageSizes]="[10, 25, 50, 100]"></dxo-pager>
               <dxo-search-panel [visible]="true" [highlightCaseSensitive]="true"></dxo-search-panel>
               <dxo-group-panel [visible]="true"></dxo-group-panel>
               <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
@@ -637,8 +626,9 @@
                 <span (click)="clickSmartTableLojas(cell.data)">{{cell.text}}</span>
               </div>
             </dx-data-grid>
+          </nb-tab>
 
-            <!--<nb-card>
+          <!--<nb-card>
                 <nb-card-body>
                   <table class="tabela" equalColumnsWidth>
                     <thead>
@@ -695,11 +685,9 @@
                   </table><br>
                 </nb-card-body>
               </nb-card>-->
-            <!--</div>-->
-          </nb-tab>
+          <!--</div>-->
 
           <nb-tab [tabTitle]="'REGIONAIS'" [active]="true" badgeStatus="info">
-            <!--<div class="container">-->
             <dx-data-grid id="gridContainer" [dataSource]="dadosCampanhaMetasSmartTable" [remoteOperations]="false"
               [allowColumnResizing]="true" [allowColumnReordering]="false" [rowAlternationEnabled]="true"
               [showBorders]="true" [columnAutoWidth]="true">
@@ -741,9 +729,9 @@
                 <span (click)="clickSmartTableRegionais(cell.data)">{{cell.text}}</span>
               </div>
             </dx-data-grid>
+          </nb-tab>
 
-
-            <!--<nb-card>
+          <!--<nb-card>
                 <nb-card-body>
                   <table class="tabela" equalColumnsWidth>
                     <thead>
@@ -800,11 +788,9 @@
                   </table>
                 </nb-card-body>
               </nb-card>-->
-            <!--</div>-->
-          </nb-tab>
+          <!--</div>-->
 
           <nb-tab [tabTitle]="'CONSULTORES'" [active]="false" badgeStatus="warning">
-            <!--<div class="container">-->
             <dx-data-grid id="gridContainer" [dataSource]="dadosCampanhaMetasSmartTable" [remoteOperations]="false"
               [allowColumnResizing]="true" [allowColumnReordering]="false" [rowAlternationEnabled]="true"
               [showBorders]="true" [columnAutoWidth]="true">
@@ -846,9 +832,10 @@
                 <span (click)="clickSmartTablePromotores(cell.data)">{{cell.text}}</span>
               </div>
             </dx-data-grid>
+          </nb-tab>
+        </nb-tabset>
 
-
-            <!--<nb-card>
+        <!--<nb-card>
                 <nb-card-body>
                   <table class="tabela" equalColumnsWidth>
                     <thead>
@@ -901,9 +888,7 @@
                   </table>
                 </nb-card-body>
               </nb-card>-->
-            <!--</div>-->
-          </nb-tab>
-        </nb-tabset><br>
+        <!--</div>-->
 
         <!--GRAFICO-->
         <div class="col-md-12 col-lg-12 col-lg-12 row justify-content-between">

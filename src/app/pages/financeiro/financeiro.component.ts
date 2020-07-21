@@ -33,6 +33,8 @@ export class FinanceiroComponent implements OnInit {
     public selectedFiltro: string;
     public dadosFiltro: string;
 
+    novaTela = false;
+
     permissoes: any = JSON.parse(window.sessionStorage.permissao_acesso);
     permissaoDelete: boolean = this.permissoes.manutencao_financeiro.acl.D;
     permissaoInsert: boolean = this.permissoes.manutencao_financeiro.acl.I;
@@ -151,6 +153,10 @@ export class FinanceiroComponent implements OnInit {
         return dataFormatada;
     }
 
+    voltar() {
+        this.novaTela = false;
+    }
+
 
     alteraDados(valor?) {
         if (valor.data_emissao !== null && valor.data_emissao !== '' && valor.data_emissao !== undefined) {
@@ -244,24 +250,26 @@ export class FinanceiroComponent implements OnInit {
         this.dadosFinanceiroDocumento = [];
         this.criacaoFinanceiroDocumento = true;
         this.edicaoFinanceiroDocumento = false;
-        this.dialogReference = this.dialogService.open(modal,
+        this.novaTela = true;
+        /*this.dialogReference = this.dialogService.open(modal,
             {
                 hasBackdrop: true,
                 closeOnEsc: false,
                 hasScroll: true,
-            });
+            });*/
     }
 
     editarFinanceiro(modal, financeiro) {
         this.dadosFinanceiroDocumento = financeiro;
         this.edicaoFinanceiroDocumento = true;
         this.criacaoFinanceiroDocumento = false;
-        this.dialogReference = this.dialogService.open(modal,
+        this.novaTela = true;
+        /*this.dialogReference = this.dialogService.open(modal,
             {
                 hasBackdrop: true,
                 closeOnEsc: false,
                 hasScroll: true,
-            });
+            });*/
     }
 
     JoinAndClose() {
