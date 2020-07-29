@@ -17,6 +17,7 @@ import { CanalVendasComponent } from './cadastros/canal-vendas/canal-vendas.comp
 import { TipoLojaComponent } from './cadastros/tipo-lojas/tipo-lojas.component';
 import { FinanceiroComponent } from './financeiro/financeiro.component';
 import { ConfiguracoesComponent } from './cadastros/configuracoes/configuracoes.component';
+import { TabelaComissaoComponent } from './tabela-comissao/tabela-comissao.component';
 //import { GraficoComponent } from './grafico/grafico.component';
 
 
@@ -29,6 +30,8 @@ if (window.sessionStorage.permissao_dashboard_campanha) {
   home = 'esteira-producao';
 } else if (window.sessionStorage.permissao_cadastro_financeiro) {
   home = 'financeiro';
+} else if (window.sessionStorage.permissao_cadastro_financeiro) {
+  home = 'tabela-comissao';
 } else if (window.sessionStorage.permissao_cadastro_bancos) {
   home = 'cadastros/parceiro-negocio';
 } else if (window.sessionStorage.permissao_cadastro_cliente) {
@@ -79,6 +82,11 @@ const routes: Routes = [{
     {
       path: 'esteira-producao',
       component: EsteiraProducaoComponent,
+    },
+
+    {
+      path: 'tabela-comissao',
+      component: TabelaComissaoComponent,
     },
 
     {

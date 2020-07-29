@@ -3,8 +3,6 @@
     <div class="col-12">
         <nb-flip-card [showToggleButton]="false" [flipped]="flipped">
             <nb-card-front>
-                <nb-card *ngIf="propostasInconsistencias.length == 0 && !pararSpinner">Nenhuma informação encontrada
-                </nb-card>
                 <nb-card [nbSpinner]="propostasInconsistencias.length == 0 && pararSpinner" nbSpinnerStatus="danger">
                     <nb-card-header>
                         Esteira de Produção
@@ -227,6 +225,9 @@
                     </div>
                 </div>-->
                     </nb-card-body>
+                </nb-card>
+                <nb-card *ngIf="propostasInconsistencias.length == 0 && !pararSpinner">
+                    <nb-card-header>Nenhuma informação encontrada</nb-card-header>
                 </nb-card>
             </nb-card-front>
             <nb-card-back>

@@ -214,7 +214,7 @@ export class RequestService {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     };
-    console.log('_options: ', token);
+    // console.log('_options: ', token);
     if (token) {
       h['Authorization'] = token;
     }
@@ -237,7 +237,7 @@ export class RequestService {
       'Content-Type': 'application/json',
       Accept: 'application/json',
     };
-    console.log('_options: ', token);
+    // console.log('_options: ', token);
     if (token) {
       h['Authorization'] = token;
     }
@@ -252,7 +252,7 @@ export class RequestService {
     return {
       headers: headers,
       params: params,
-      responseType: 'blob' as 'json'
+      responseType: 'blob' as 'json',
     };
   }
 
@@ -263,7 +263,7 @@ export class RequestService {
     };
 
     let b = parametros;
-    console.log('_options: ', token);
+    // console.log('_options: ', token);
     if (token) {
       h['Authorization'] = token;
     }

@@ -18,7 +18,6 @@ export class TelaComponent implements OnInit {
     senha: ''
   }
 
-
   constructor(
     private usuarioApiService: UsuarioApiService,
     private router: Router,
@@ -26,7 +25,24 @@ export class TelaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.sessionService.clean();
     this.sessionService.remove('token');
+    this.sessionService.remove('codigo_perfil_atuacao');
+    this.sessionService.remove('permissao_acesso');
+    this.sessionService.remove('permissao_dashboard_campanha');
+    this.sessionService.remove('permissao_pendencia_fisico');
+    this.sessionService.remove('permissao_esteira_producao');
+    this.sessionService.remove('permissao_cadastro_cliente');
+    this.sessionService.remove('permissao_cadastro_parceiro_negocio');
+    this.sessionService.remove('permissao_cadastro_bancos');
+    this.sessionService.remove('permissao_cadastro_plano_de_contas');
+    this.sessionService.remove('permissao_cadastro_centro_de_custos');
+    this.sessionService.remove('permissao_cadastro_projetos');
+    this.sessionService.remove('permissao_cadastro_tipo_conta_corrente');
+    this.sessionService.remove('permissao_cadastro_lojas');
+    this.sessionService.remove('permissao_cadastro_tipo_lojas');
+    this.sessionService.remove('permissao_cadastro_tipo_canal_vendas');
+    this.sessionService.remove('permissao_cadastro_financeiro');
   }
 
   onSubmit(f: NgForm) {
@@ -50,7 +66,6 @@ export class TelaComponent implements OnInit {
     }
 
     if (f.valid) {
-
       this.usuarioApiService.dados({
         "cpf": f.value.cpf,
         "senha": f.value.senha
@@ -62,6 +77,5 @@ export class TelaComponent implements OnInit {
           this.erro_api = e;
         })
     }
-
   }
 }

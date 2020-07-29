@@ -83,13 +83,11 @@
               {{ option }}
             </nb-option>
           </nb-autocomplete>
-          <div class="dx-field-value">
             <dx-autocomplete fullWidth placeholder="" [(value)]="nome" [dataSource]="nomesTD"
               (onValueChanged)="onSelectionChangeTD($event)" (onKeyUp)="onChangeTD()">
-            </dx-autocomplete>
-          </div>-->
-          <dx-autocomplete fullWidth (oninput)="this.value = this.value.toUpperCase()" [minSearchLength]="3"
-            [searchTimeout]="500" placeholder="" [(value)]="nome" [dataSource]="nomesTD"
+            </dx-autocomplete>-->
+          <dx-autocomplete fullWidth (oninput)="this.value = this.value.toUpperCase()" [ngClass]="nomeTD.toUpperCase()" [minSearchLength]="3"
+            [searchTimeout]="500" placeholder="" [(value)]="nomeTD" [dataSource]="nomesTD"
             (onValueChanged)="onChangeTD($event)" formControlName="tipo_documentos_financeiro_nome">
           </dx-autocomplete>
           <input nbInput type="hidden" id="inputTDpk" name="inputTDFpk" value={{tipo_documentos_financeiro_pk}}
@@ -102,14 +100,18 @@
       <div class="form-group row">
         <label for="inputEmissorDocFiscal" class="label col-sm-3 col-form-label">Emissor Doc Fiscal</label>
         <div class="col-sm-9">
-          <input #autoInputPN nbInput fullWidth fieldSize="tiny" oninput="this.value = this.value.toUpperCase()"
+          <!--<input #autoInputPN nbInput fullWidth fieldSize="tiny" oninput="this.value = this.value.toUpperCase()"
             type="text" (keyup)="onChangePN()" [nbAutocomplete]="auto" formControlName="pn_nome_emissor_documento"
             id="inputEmissorDocFiscal" tabindex="6" autocomplete="off" />
           <nb-autocomplete #auto (selectedChange)="onSelectionChangePN($event)">
             <nb-option *ngFor="let option of filteredDadosPN$ | async" [value]="option">
               {{ option }}
             </nb-option>
-          </nb-autocomplete>
+          </nb-autocomplete>-->
+          <dx-autocomplete fullWidth (oninput)="this.value = this.value.toUpperCase()" [minSearchLength]="3"
+            [searchTimeout]="500" placeholder="" [(value)]="nomePN" [dataSource]="nomesPN"
+            (onValueChanged)="onChangePN($event)" formControlName="pn_nome_emissor_documento">
+          </dx-autocomplete>
           <input nbInput type="hidden" id="inputEmissorDocFiscalpk" name="inputEmissorDocFiscalpk" value={{pn_codigo}}
             formControlName="pn_pk_emissor_documento">
         </div>

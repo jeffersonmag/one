@@ -1,0 +1,72 @@
+::ng-deep .left .list .hotel {
+  float: left;
+}
+
+.left {
+  float: left;
+  width: 370px;
+  height: 570px;
+  padding: 20px;
+  background: rgba(191, 191, 191, 0.15);
+}
+
+::ng-deep .right {
+  overflow: hidden;
+  padding-left: 1em;
+}
+
+.dados {
+  font-weight: bold;
+}
+
+.comissaorepasse {
+  padding-top: 1em;
+}
+
+.tabela {
+  width: 100%;
+  border-color: #dddddd;
+
+  tr {
+    border: 0.05px solid #dddddd;
+    border-color: #dddddd;
+    -webkit-background-clip: padding-box; /* for Safari */
+    background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
+    border-spacing: 0;
+    border-collapse: collapse;
+    table-layout: auto;
+    //opacity: 0.6;
+
+    th {
+      padding: 0.6px;
+      border-left: 0.05px solid #dddddd;
+      border-right: 0.05px solid #dddddd;
+      border-spacing: 0;
+      border-collapse: collapse;
+      font-size: 11px;
+      height: 1px;
+      //opacity: 0.6;
+    }
+
+    td {
+      padding: 0.6px;
+      border-left: 0.05px solid #dddddd;
+      border-right: 0.05px solid #dddddd;
+      border-spacing: 0;
+      border-collapse: collapse;
+      font-size: 11px;
+      height: 1px;
+      //opacity: 0.6;
+    }
+  }
+}
+
+::ng-deep #gridContainer .template {
+  font-size: 11px;
+}
+
+.name {
+  font-size: 11px;
+  line-height: 12px;
+  opacity: 0.7;
+}

@@ -50,7 +50,8 @@ export class CadastroFinanceiroComponent implements OnInit {
 
   dadosTD: any[];
   nomesTD: string[];
-  nome = "";
+  nomeTD = "";
+  nomePN = "";
   value: any;
   parcelas: any[];
   parcelaUnica: any[];
@@ -430,7 +431,6 @@ export class CadastroFinanceiroComponent implements OnInit {
 
         this.nomesTD = nomes;
         this.filteredDadosTD$ = of(nomes); // this.getFilteredOptionsPN(this.inputPN.nativeElement.value);
-        this.nomesTD = nomes;
       })
       .catch((e) => {
         console.log(e);
@@ -461,14 +461,15 @@ export class CadastroFinanceiroComponent implements OnInit {
     }
   }
 
-  onChangePN() {
+  onChangePN(event) {
     this.FinanceiroApiService_.getParceiroNegociosBuscaAutomatica(
       {
-        'pesquisa': this.inputPN.nativeElement.value,
+        'pesquisa': String(event.value).toLocaleUpperCase(),
       },
     )
       .then((s) => {
-        var nomes = [];
+        var nomes: string[];
+        nomes = [];
         this.dadosPN = s;
         for (let i of s) {
           nomes.push(String(i.nome));

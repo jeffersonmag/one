@@ -874,6 +874,8 @@ export class DashboardCampanhaComponent implements OnDestroy {
         });
         this.gerarGrafico();
 
+        // CARD 02 - DATA HOJE
+
         if (this.contratosPagos[0].mes == this.mesVigente) {
           this.indiceContratosDigitadosApiService.pagos({
             'codigo_campanha': this.filtro.campanha.codigo,
@@ -889,6 +891,8 @@ export class DashboardCampanhaComponent implements OnDestroy {
             .catch((e) => {
               console.log(e);
             });
+
+          // CARD 03 - DATA ONTEM
 
           this.indiceContratosDigitadosApiService.pagos({
             'codigo_campanha': this.filtro.campanha.codigo,

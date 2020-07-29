@@ -6,5 +6,5 @@
 export const environment = {
   production: true,
   urlAutentication: 'https://autenticador.rbc.com.br:10725/autenticador/v1/TServerMetodoToken/Token',
-  urlApi: 'https://serv-prod-01.ribercred.com.br:10740/api/dados-usuario',
+  urlApi: 'https://teste-linux-rbc.brazilsouth.cloudapp.azure.com:10740/api/dados-usuario',
 };

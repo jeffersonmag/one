@@ -1,12 +1,6 @@
 import { NbMenuItem } from '@nebular/theme';
 
-export const MENU_ITEMS: NbMenuItem[] = [
-  /*{
-    title: 'Dashboard',
-    icon: 'home-outline',
-    link: '/pages/dashboard',
-    home: true,
-  },*/
+export var MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Dashboard de Campanhas',
     icon: 'globe-2-outline',
@@ -29,6 +23,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/pendencia-fisico',
     hidden: (window.sessionStorage.permissao_pendencia_fisico === 'false'),
     home: (window.sessionStorage.permissao_pendencia_fisico === 'false'),
+  },
+
+  {
+    title: 'Tabela de Comissão e Repasse',
+    link: '/pages/tabela-comissao',
+    icon: 'book-open-outline',
+    home: false,
+    expanded: (window.sessionStorage.permissao_cadastro_financeiro === 'false'),
+    hidden: (window.sessionStorage.permissao_cadastro_financeiro === 'false'),
   },
 
   {
@@ -60,14 +63,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         expanded: (window.sessionStorage.permissao_cadastro_bancos === 'false'),
         hidden: (window.sessionStorage.permissao_cadastro_bancos === 'false'),
       },
-      /*{
-        title: 'Clientes',
-        link: '/pages/cadastros/clientes',
-        icon: 'people-outline',
-        home: false,
-        expanded: (window.sessionStorage.permissao_cadastro_cliente === 'false'),
-        hidden: (window.sessionStorage.permissao_cadastro_cliente === 'false'),
-      },*/
+
       {
         title: 'Parceiros de Negócio',
         link: '/pages/cadastros/parceiro-negocio',
@@ -139,7 +135,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         home: false,
         expanded: (window.sessionStorage.permissao_cadastro_cliente === 'false'),
         hidden: (window.sessionStorage.permissao_cadastro_cliente === 'false'),
-      }
+      },
     ],
   },
 ];

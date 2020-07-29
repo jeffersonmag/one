@@ -1,0 +1,91 @@
+<nb-card>
+  <nb-card-header>Tabela de Comissão e Repasse</nb-card-header>
+  <nb-card-body>
+    <div class="left">
+      <dx-list class="list" [dataSource]="dadosTabelaComissao" [grouped]="false" [searchEnabled]="true"
+        [searchExpr]="['convenio', 'instituicao', 'parceria']" instituicao selectionMode="single"
+        (onSelectionChanged)=listSelectionChanged($event)>
+        <div *dxTemplate="let item of 'item'">
+          <div>
+            <div class="tabela-comissao">
+              <div *ngIf="item.convenio != null" class="name">Convênio</div>
+              <div class="dados">{{item.convenio}}</div>
+              <div *ngIf="item.instituicao != null" class="name">Instituição</div>
+              <div class="dados">{{item.instituicao}}</div>
+              <div *ngIf="item.parceria != null" class="name">Parceria</div>
+              <div class="dados">{{item.parceria}}</div>
+              <div *ngIf="item.vigencia_inicial_parceria != null" class="name">Vigência</div>
+              <div class="dados">{{item.vigencia_inicial_parceria | moment: 'DD/MM/YYYY'}} A
+                {{item.vigencia_final_parceria | moment: 'DD/MM/YYYY'}}</div>
+            </div>
+          </div>
+        </div>
+      </dx-list>
+    </div>
+    <div class="right">
+      <table class="tabela" equalColumnsWidth [nbSpinner]="carregando" nbSpinnerStatus="info">
+        <thead>
+          <tr>
+            <th>CÓDIGO</th>
+            <td>{{dataGridTabelaComissaoRepasse.id}}</td>
+          </tr>
+          <tr>
+            <th>PARCERIA</th>
+            <td>{{dataGridTabelaComissaoRepasse.parceria}}</td>
+          </tr>
+          <tr>
+            <th>INSTITUIÇÃO</th>
+            <td>{{dataGridTabelaComissaoRepasse.instituicao}}</td>
+          </tr>
+          <tr>
+            <th>CONVÊNIO</th>
+            <td>{{dataGridTabelaComissaoRepasse.convenio}}</td>
+          </tr>
+          <tr>
+            <th>VIGÊNCIA</th>
+            <td>{{dataGridTabelaComissaoRepasse.vigencia_inicial_parceria | moment: 'DD/MM/YYYY' }} A
+              {{dataGridTabelaComissaoRepasse.vigencia_final_parceria | moment: 'DD/MM/YYYY'}}</td>
+          </tr>
+          <tr>
+            <th>OBSERVAÇÃO</th>
+            <td>{{dataGridTabelaComissaoRepasse.observacao}}</td>
+          </tr>
+          <tr>
+            <th>OBSERVAÇÃO 2</th>
+            <td>{{dataGridTabelaComissaoRepasse.observacao1}}</td>
+          </tr>
+        </thead>
+      </table>
+      <div class="comissaorepasse">
+        <dx-data-grid id="gridContainer" [dataSource]="dataGridTabelaComissaoRepasse.repasses"
+          [allowColumnResizing]="true" [allowColumnReordering]="true" [showBorders]="true" [columnAutoWidth]="true">
+
+          <dxo-paging [enabled]="false"></dxo-paging>
+          <dxo-search-panel [visible]="true" [highlightCaseSensitive]="true"></dxo-search-panel>
+          <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+          <dxo-sorting mode="none"></dxo-sorting>
+
+          <dxi-column caption="TABELA" dataField="tabela" cellTemplate="template"></dxi-column>
+          <dxi-column caption="CÓDIGO" dataField="codigo_tabela_instituicao" dataType="number" cellTemplate="template">
+          </dxi-column>
+          <dxi-column caption="OPERAÇÃO" dataField="operacao" cellTemplate="template"></dxi-column>
+          <dxi-column caption="PRAZO" dataField="prazo" cellTemplate="template"></dxi-column>
+          <dxi-column caption="$%" dataField="valor_porcentagem" cellTemplate="template"></dxi-column>
+          <dxi-column caption="À VISTA" dataField="pagar_avista" dataType="number" format="#,##0.##"
+            cellTemplate="template"></dxi-column>
+          <dxi-column caption="TX MANUTENCÃO DIFERIDA" dataField="pagar_tx_manutencao" dataType="number"
+            format="#,##0.##" cellTemplate="template"></dxi-column>
+          <dxi-column caption="TX MANUTENÇÃO ANTECIPADA" dataField="pagar_tx_manutencao_antecipada" dataType="number"
+            format="#,##0.##" cellTemplate="template">
+          </dxi-column>
+          <dxi-column caption="BÔNUS" dataField="pagar_bonus" dataType="number" format="#,##0.##"
+            cellTemplate="template"></dxi-column>
+
+          <div *dxTemplate="let cell of 'template'" [class.template]="true">
+            <span>{{cell.text}}</span>
+          </div>
+        </dx-data-grid>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

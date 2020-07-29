@@ -14,8 +14,10 @@ export class UsuarioApiService {
     private sessionService: SessionService,
   ) { }
 
+
   // 'codigo_conexao': 9 // usar esse parametro em ambiente de teste completo banco e máquina
   // 'codigo_conexao': 8 // máquina do Rafael Banco de produção
+
   dados(user) {
     return new Promise((resolve, reject) => {
       const response = this.requestService.post(`${environment.urlToken}/dados-usuario`, {
@@ -26,6 +28,24 @@ export class UsuarioApiService {
       });
       response
         .then((s) => {
+          this.sessionService.clean();
+          this.sessionService.remove('token');
+          this.sessionService.remove('codigo_perfil_atuacao');
+          this.sessionService.remove('permissao_acesso');
+          this.sessionService.remove('permissao_dashboard_campanha');
+          this.sessionService.remove('permissao_pendencia_fisico');
+          this.sessionService.remove('permissao_esteira_producao');
+          this.sessionService.remove('permissao_cadastro_cliente');
+          this.sessionService.remove('permissao_cadastro_parceiro_negocio');
+          this.sessionService.remove('permissao_cadastro_bancos');
+          this.sessionService.remove('permissao_cadastro_plano_de_contas');
+          this.sessionService.remove('permissao_cadastro_centro_de_custos');
+          this.sessionService.remove('permissao_cadastro_projetos');
+          this.sessionService.remove('permissao_cadastro_tipo_conta_corrente');
+          this.sessionService.remove('permissao_cadastro_lojas');
+          this.sessionService.remove('permissao_cadastro_tipo_lojas');
+          this.sessionService.remove('permissao_cadastro_tipo_canal_vendas');
+          this.sessionService.remove('permissao_cadastro_financeiro');
           this.sessionService.set('user', s);
           this.sessionService.set('token', s.token);
           this.sessionService.set('codigo_perfil_atuacao', s.codigo_perfil_atuacao);

@@ -48,6 +48,8 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { NgxCpfCnpjModule } from 'ngx-cpf-cnpj';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgxCurrencyModule } from "ngx-currency";
+import { DxTileViewModule, DxButtonModule, DxListModule } from 'devextreme-angular';
+
 
 export let options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 

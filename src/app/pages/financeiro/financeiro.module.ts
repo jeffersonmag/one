@@ -43,7 +43,8 @@ import { QuitarParcelaComponent } from './cadastro-financeiro/quitar-parcela/qui
 import { DxAutocompleteModule, DxTemplateModule } from 'devextreme-angular';
 
 @NgModule({
-  declarations: [FinanceiroComponent, CadastroFinanceiroComponent, StatusComponent, AdicionarParcelasComponent, QuitarParcelaComponent],
+  declarations: [FinanceiroComponent, CadastroFinanceiroComponent,
+    StatusComponent, AdicionarParcelasComponent, QuitarParcelaComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,
