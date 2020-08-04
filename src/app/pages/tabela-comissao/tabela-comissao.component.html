@@ -3,8 +3,8 @@
   <nb-card-body>
     <div class="left">
       <dx-list class="list" [dataSource]="dadosTabelaComissao" [grouped]="false" [searchEnabled]="true"
-        [searchExpr]="['convenio', 'instituicao', 'parceria']" instituicao selectionMode="single"
-        (onSelectionChanged)=listSelectionChanged($event)>
+        [searchExpr]="['convenio', 'instituicao', 'parceria', 'vigencia_inicial_parceria', 'vigencia_final_parceria']"
+        instituicao selectionMode="single" (onSelectionChanged)=listSelectionChanged($event)>
         <div *dxTemplate="let item of 'item'">
           <div>
             <div class="tabela-comissao">
@@ -71,14 +71,14 @@
           <dxi-column caption="OPERAÇÃO" dataField="operacao" cellTemplate="template"></dxi-column>
           <dxi-column caption="PRAZO" dataField="prazo" cellTemplate="template"></dxi-column>
           <dxi-column caption="$%" dataField="valor_porcentagem" cellTemplate="template"></dxi-column>
-          <dxi-column caption="À VISTA" dataField="pagar_avista" dataType="number" format="#,##0.##"
+          <dxi-column caption="À VISTA" dataField="pagar_avista" dataType="number" format="#,##0.00"
             cellTemplate="template"></dxi-column>
           <dxi-column caption="TX MANUTENCÃO DIFERIDA" dataField="pagar_tx_manutencao" dataType="number"
-            format="#,##0.##" cellTemplate="template"></dxi-column>
+            format="#,##0.00" cellTemplate="template"></dxi-column>
           <dxi-column caption="TX MANUTENÇÃO ANTECIPADA" dataField="pagar_tx_manutencao_antecipada" dataType="number"
-            format="#,##0.##" cellTemplate="template">
+            format="#,##0.00" cellTemplate="template">
           </dxi-column>
-          <dxi-column caption="BÔNUS" dataField="pagar_bonus" dataType="number" format="#,##0.##"
+          <dxi-column caption="BÔNUS" dataField="pagar_bonus" dataType="number" format="#,##0.00"
             cellTemplate="template"></dxi-column>
 
           <div *dxTemplate="let cell of 'template'" [class.template]="true">

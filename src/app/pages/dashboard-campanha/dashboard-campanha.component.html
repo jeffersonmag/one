@@ -471,6 +471,12 @@
             <dxi-column caption="Ticket Médio" dataField="ticket_medio" [width]="70" dataType="number" format="#,##0.##"
               cellTemplate="folhaNegrito" encodeHtml="false">
             </dxi-column>
+            <dxi-column caption="HC" dataField="hc" [width]="60" dataType="number" format="#,##0.##"
+              cellTemplate="folhaNegrito" encodeHtml="false">
+            </dxi-column>
+            <dxi-column caption="Atingido HC" dataField="atingimento_hc" [width]="60" format="#,##0.##"
+              cellTemplate="folhaNegrito" encodeHtml="false">
+            </dxi-column>
           </dxi-column>
           <dxi-column [(caption)]="this.banda2PendenciaFisico" isBand="true" encodeHtml="false">
             <dxi-column [(caption)]="this.mesAA" encodeHtml="false">
@@ -594,7 +600,7 @@
               <dxo-group-panel [visible]="true"></dxo-group-panel>
               <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
 
-              <dxi-column caption="Lojas" dataField="nome_agrupamento" [width]="315" cellTemplate="folhaNegrito"
+              <dxi-column caption="Lojas" dataField="nome_agrupamento" [width]="305" cellTemplate="folhaNegrito"
                 encodeHtml="true">
               </dxi-column>
               <dxi-column caption="Meta Total" dataField="meta_total_campanha" dataType="number" format="#,##0.##"
@@ -619,6 +625,9 @@
                 format="#,##0.##" cellTemplate="folhaNegrito">
               </dxi-column>
               <dxi-column caption="HC" dataField="total_hc_participantes" dataType="number" format="#,##0.##"
+                cellTemplate="folhaNegrito">
+              </dxi-column>
+              <dxi-column caption="Atingido HC" dataField="atingimento_hc" dataType="number" format="#,##0.##"
                 cellTemplate="folhaNegrito">
               </dxi-column>
 
@@ -697,7 +706,7 @@
               <dxo-group-panel [visible]="true"></dxo-group-panel>
               <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
 
-              <dxi-column caption="Regionais" dataField="nome_agrupamento" [width]="315" cellTemplate="folhaNegrito"
+              <dxi-column caption="Regionais" dataField="nome_agrupamento" [width]="305" cellTemplate="folhaNegrito"
                 encodeHtml="true">
               </dxi-column>
               <dxi-column caption="Meta Total" dataField="meta_total_campanha" dataType="number" format="#,##0.##"
@@ -724,9 +733,59 @@
               <dxi-column caption="HC" dataField="total_hc_participantes" dataType="number" format="#,##0.##"
                 cellTemplate="folhaNegrito">
               </dxi-column>
+              <dxi-column caption="Atingido HC" dataField="atingimento_hc" dataType="number" format="#,##0.##"
+                cellTemplate="folhaNegrito">
+              </dxi-column>
 
               <div *dxTemplate="let cell of 'folhaNegrito'" [class.folhaFalse]="false" [class.folhaTrue]="true">
                 <span (click)="clickSmartTableRegionais(cell.data)">{{cell.text}}</span>
+              </div>
+            </dx-data-grid>
+          </nb-tab>
+
+          <nb-tab [tabTitle]="'COMERCIAIS'" [active]="false" badgeStatus="warning">
+            <dx-data-grid id="gridContainer" [dataSource]="dadosCampanhaMetasSmartTable" [remoteOperations]="false"
+              [allowColumnResizing]="true" [allowColumnReordering]="false" [rowAlternationEnabled]="true"
+              [showBorders]="true" [columnAutoWidth]="true">
+
+              <dxo-paging [enabled]="false"></dxo-paging>
+              <dxo-search-panel [visible]="true" [highlightCaseSensitive]="true"></dxo-search-panel>
+              <dxo-group-panel [visible]="true"></dxo-group-panel>
+              <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+
+              <dxi-column caption="Consultores" dataField="nome_agrupamento" [width]="305" cellTemplate="folhaNegrito"
+                encodeHtml="true">
+              </dxi-column>
+              <dxi-column caption="Meta Total" dataField="meta_total_campanha" dataType="number" format="#,##0.##"
+                cellTemplate="folhaNegrito">
+              </dxi-column>
+              <dxi-column caption="Atingido" dataField="atingimento_total_campanha" dataType="number" format="#,##0.##"
+                cellTemplate="folhaNegrito">
+              </dxi-column>
+              <dxi-column caption="% Atingido" dataField="perc_atingimento_total_campanha" dataType="number"
+                format="#,##0.##" cellTemplate="folhaNegrito">
+              </dxi-column>
+              <dxi-column caption="Ticket Médio" dataField="ticket_medio_campanha" dataType="number" format="#,##0.##"
+                cellTemplate="folhaNegrito">
+              </dxi-column>
+              <dxi-column caption="Meta Diária" dataField="meta_diaria_campanha" dataType="number" format="#,##0.##"
+                cellTemplate="folhaNegrito">
+              </dxi-column>
+              <dxi-column caption="Meta Recalculada" dataField="meta_recalculada" dataType="number" format="#,##0.##"
+                cellTemplate="folhaNegrito">
+              </dxi-column>
+              <dxi-column caption="Total campanha projetado" dataField="projecao_total_campanha" dataType="number"
+                format="#,##0.##" cellTemplate="folhaNegrito">
+              </dxi-column>
+              <dxi-column caption="HC" dataField="total_hc_participantes" dataType="number" format="#,##0.##"
+                cellTemplate="folhaNegrito">
+              </dxi-column>
+              <dxi-column caption="Atingido HC" dataField="atingimento_hc" dataType="number" format="#,##0.##"
+                cellTemplate="folhaNegrito">
+              </dxi-column>
+
+              <div *dxTemplate="let cell of 'folhaNegrito'" [class.folhaFalse]="false" [class.folhaTrue]="true">
+                <span (click)="clickSmartTablePromotores(cell.data)">{{cell.text}}</span>
               </div>
             </dx-data-grid>
           </nb-tab>
@@ -800,7 +859,7 @@
               <dxo-group-panel [visible]="true"></dxo-group-panel>
               <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
 
-              <dxi-column caption="Consultores" dataField="nome_agrupamento" [width]="315" cellTemplate="folhaNegrito"
+              <dxi-column caption="Consultores" dataField="nome_agrupamento" [width]="305" cellTemplate="folhaNegrito"
                 encodeHtml="true">
               </dxi-column>
               <dxi-column caption="Meta Total" dataField="meta_total_campanha" dataType="number" format="#,##0.##"
@@ -825,6 +884,9 @@
                 format="#,##0.##" cellTemplate="folhaNegrito">
               </dxi-column>
               <dxi-column caption="HC" dataField="total_hc_participantes" dataType="number" format="#,##0.##"
+                cellTemplate="folhaNegrito">
+              </dxi-column>
+              <dxi-column caption="Atingido HC" dataField="atingimento_hc" dataType="number" format="#,##0.##"
                 cellTemplate="folhaNegrito">
               </dxi-column>
 

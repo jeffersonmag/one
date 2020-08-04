@@ -67,6 +67,8 @@ export class DashboardCampanhaComponent implements OnDestroy {
 
   statusCards: string;
 
+  flagBloqueioPrimeiraChamado = true;
+
   commonStatusCardsSet: CardSettings[] = [];
 
   nomeCampanhaSelecionado: string;
@@ -302,6 +304,10 @@ export class DashboardCampanhaComponent implements OnDestroy {
     {
       id: 4,
       label: 'REGIONAIS',
+    },
+    {
+      id: 3,
+      label: 'COMERCIAIS',
     },
   ];
 
@@ -694,6 +700,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
     )
       .then((s) => {
         this.dadosCampanhaMetasSmartTable = [];
+        this.dadosCampanhaMetasSmartTable = s.dados_campanha;
         this.dadosCampanhaMetasTotalizador = s.dados_campanha_sintetico;
         this.dadosCampanhaMetas = s.dados_campanha;
         this.hc_total_campanha = s.hc_total_campanha;
@@ -701,7 +708,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
           this.dadosCampanhaMetasLoad = false;
         } else {
           this.dadosCampanhaMetasLoad = false;
-          this.findCampanhaMetaSmartTable(visao);
+          //this.findCampanhaMetaSmartTable(visao);
           this.gridCampanhas(s);
           this.findDadosProdutoCorbanCampanha(this.dadosCampanhaMetas[0]);
         }
@@ -762,7 +769,9 @@ export class DashboardCampanhaComponent implements OnDestroy {
           percentual_atingido: parseFloat(parseFloat(valor.percentual_atingido).toFixed(2)),
           qtd_contratos: parseFloat(parseFloat(valor.qtd_contratos).toFixed(2)),
           ticket_medio: parseFloat(parseFloat(valor.ticket_medio).toFixed(2)),
-          tipo_operacao: valor.tipo_operacao
+          tipo_operacao: valor.tipo_operacao,
+          hc: valor.hc,
+          atingimento_hc: valor.atingimento_hc,
         });
 
     }
@@ -1075,7 +1084,11 @@ export class DashboardCampanhaComponent implements OnDestroy {
       return String(o.label) === String(event.tabTitle);
     });
     this.perfilAtivo = find.id;
-    this.findCampanhaMetaSmartTable(find.id);
+    if (!this.flagBloqueioPrimeiraChamado) {
+      this.flagBloqueioPrimeiraChamado = false;
+      this.findCampanhaMetaSmartTable(find.id);
+    }
+    this.flagBloqueioPrimeiraChamado = false;
     //this.findCampanhaMeta(find.id);
     //this.perfilAtivo = window.sessionStorage.codigo_perfil_atuacao;
   }

@@ -32,7 +32,7 @@ if (window.sessionStorage.permissao_dashboard_campanha) {
   home = 'financeiro';
 } else if (window.sessionStorage.permissao_cadastro_financeiro) {
   home = 'tabela-comissao';
-} else if (window.sessionStorage.permissao_cadastro_bancos) {
+} else if (window.sessionStorage.permissao_tabela_comissao) {
   home = 'cadastros/parceiro-negocio';
 } else if (window.sessionStorage.permissao_cadastro_cliente) {
   home = 'cadastros/clientes';

@@ -72,6 +72,8 @@ export class UsuarioApiService {
             s.permissao_acesso.cadastro_tipo_canal_venda.acesso);
           this.sessionService.set('permissao_cadastro_financeiro',
             s.permissao_acesso.manutencao_financeiro.acesso);
+            this.sessionService.set('permissao_tabela_comissao',
+            s.permissao_acesso.tabela_comissao.acesso);
           resolve(s);
         })
         .catch((e) => {
