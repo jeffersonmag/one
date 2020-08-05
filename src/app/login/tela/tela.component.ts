@@ -15,7 +15,7 @@ export class TelaComponent implements OnInit {
   public erro_api = '';
   public userValid = {
     cpf: '',
-    senha: ''
+    senha: '',
   }
 
   constructor(

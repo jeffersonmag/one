@@ -1111,6 +1111,15 @@ export class DashboardCampanhaComponent implements OnDestroy {
     this.findDadosProdutoCorbanCampanhaFiltro(event.codigo_agrupamento, 4);
   }
 
+  clickSmartTableComerciais(event) {
+    //const codigoAgrupamento = _.find(this.dadosCampanhaMetasSmartTable, (o: any) => {
+    //  return String(o.nome_agrupamento) === String(event.data.nome_agrupamento);
+    //});
+    this.nomePromotorSelecionado = event.nome_agrupamento;
+    this.ativaBotaoPromotoresTableSmart = true;
+    this.findDadosProdutoCorbanCampanhaFiltro(event.codigo_agrupamento, 3);
+  }
+
   clickSmartTablePromotores(event) {
     //const codigoAgrupamento = _.find(this.dadosCampanhaMetasSmartTable, (o: any) => {
     //  return String(o.nome_agrupamento) === String(event.data.nome_agrupamento);
@@ -1119,6 +1128,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
     this.ativaBotaoPromotoresTableSmart = true;
     this.findDadosProdutoCorbanCampanhaFiltro(event.codigo_agrupamento, 1);
   }
+
 
   clickSmartTableLimpar(filtro) {
     /*const codigoAgrupamento = _.find(this.dadosCampanhaMetasSmartTable, (o: any) => {
