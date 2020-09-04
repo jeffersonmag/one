@@ -13,6 +13,6 @@ export const environment = {
   urlAutentication: 'https://serv-prod-01.ribercred.com.br:10725/autenticador/v1/TServerMetodoToken/Token',
   // urlApi: 'https://autenticador.rbc.com.br:10740/api'
   // urlApi: 'http://192.168.60.98:10740/api', // ambiente de teste
-  urlApi: 'https://teste-linux-rbc.brazilsouth.cloudapp.azure.com:10740/api',
-  urlToken: 'https://teste-linux-rbc.brazilsouth.cloudapp.azure.com:10740/api', // ambiente de teste
+  urlApi: 'https://serv-api-01.ribercred.com.br:10740/api',
+  urlToken: 'https://serv-api-01.ribercred.com.br:10740/api', // ambiente de teste
 };
