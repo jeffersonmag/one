@@ -4,6 +4,7 @@ import { NbMenuModule, NbStepperModule, NbProgressBarModule, NbPopoverModule, Nb
 import { ThemeModule } from '../@theme/theme.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { DashboardCampanhaModule } from './dashboard-campanha/dashboard-campanha.module';
+import { DashboardProducaoModule } from './dashboard-producao/dashboard-producao.module';
 import { PendenciaModule } from './pendencia-fisico/pendencia.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
@@ -18,6 +19,7 @@ import { FinanceiroModule } from './financeiro/financeiro.module';
 import { StatusComponent } from './cadastros/status/status.component';
 import { FormsModule } from '@angular/forms';
 import { TabelaComissaoModule } from './tabela-comissao/tabela-comissao.module';
+
 //import { GraficoComponent } from './grafico/grafico.component';
 //import { GraficoModule } from './grafico/grafico.module';
 
@@ -36,6 +38,7 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     NbStepperModule,
     NbPopoverModule,
     DashboardCampanhaModule,
+    DashboardProducaoModule,
     NgIdleKeepaliveModule.forRoot(),
     NgIdleModule,
     NbProgressBarModule,

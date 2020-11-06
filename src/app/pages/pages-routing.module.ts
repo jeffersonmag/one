@@ -18,12 +18,15 @@ import { TipoLojaComponent } from './cadastros/tipo-lojas/tipo-lojas.component';
 import { FinanceiroComponent } from './financeiro/financeiro.component';
 import { ConfiguracoesComponent } from './cadastros/configuracoes/configuracoes.component';
 import { TabelaComissaoComponent } from './tabela-comissao/tabela-comissao.component';
+import { DashboardProducaoComponent } from './dashboard-producao/dashboard-producao.component';
 //import { GraficoComponent } from './grafico/grafico.component';
 
 
 //define o a página inicial
 if (window.sessionStorage.permissao_dashboard_campanha) {
   var home: string = 'dashboard-campanha';
+}  else if (window.sessionStorage.permissao_dashboard_campanha) {
+  home = 'dashboard-producao';
 } else if (window.sessionStorage.permissao_pendencia_fisico) {
   home = 'pendencia-fisico';
 } else if (window.sessionStorage.permissao_esteira_producao) {
@@ -67,6 +70,10 @@ const routes: Routes = [{
     {
       path: 'dashboard-campanha',
       component: DashboardCampanhaComponent,
+    },
+    {
+      path: 'dashboard-producao',
+      component: DashboardProducaoComponent,
     },
 
     /*{

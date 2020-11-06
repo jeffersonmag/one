@@ -10,6 +10,14 @@ export var MENU_ITEMS: NbMenuItem[] = [
   },
 
   {
+    title: 'Dashboard de Produção',
+    icon: 'trending-up-outline',
+    link: '/pages/dashboard-producao',
+    hidden: (window.sessionStorage.permissao_dashboard_campanha === 'false'),
+    home: (window.sessionStorage.permissao_dashboard_campanha === 'false'),
+  },
+
+  {
     title: 'Gráfico',
     icon: 'bar-chart-outline',
     link: '/pages/grafico',

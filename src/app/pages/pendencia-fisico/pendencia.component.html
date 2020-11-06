@@ -107,7 +107,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-left">Proposta</th>
-                                                <th class="text-left">Cliente</th>
+                                                <!--<th class="text-left">Cliente</th>-->
                                                 <th class="text-left">Loja</th>
                                                 <th class="text-left">Tipo de Operação</th>
                                                 <th class="text-left">Convênio</th>
@@ -126,7 +126,7 @@
                                         <tbody *ngIf="pendencia.length != 0 && pararSpinner">
                                             <tr *ngFor="let i of pendencia | slice: pageSize | slice: 0:itemsPerPage">
                                                 <td class="size-fonte">{{i.proposta}} </td>
-                                                <td class="size-fonte">{{i.nome_cliente}}</td>
+                                                <!--<td class="size-fonte">{{i.nome_cliente}}</td>-->
                                                 <td class="size-fonte">
                                                     <span nbTooltip="Nome Digitador">{{i.nome_agente}}</span><br>
                                                     <span nbTooltip="Nome Fantasia">{{i.nome_loja}}</span><br>
