@@ -30,6 +30,7 @@ export class UsuarioApiService {
         .then((s) => {
           this.sessionService.clean();
           this.sessionService.remove('token');
+          this.sessionService.remove('cpf_usuario_logado');          
           this.sessionService.remove('codigo_perfil_atuacao');
           this.sessionService.remove('permissao_acesso');
           this.sessionService.remove('permissao_dashboard_campanha');

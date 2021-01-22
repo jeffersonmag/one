@@ -12,6 +12,8 @@ import { UsuarioApiService } from './../../api/usuario';
 })
 export class TelaComponent implements OnInit {
 
+  private usuarioApiService: UsuarioApiService
+
   public erro_api = '';
   public userValid = {
     cpf: '',
@@ -19,14 +21,15 @@ export class TelaComponent implements OnInit {
   }
 
   constructor(
-    private usuarioApiService: UsuarioApiService,
     private router: Router,
     private sessionService: SessionService,
-  ) { }
+  ) { 
+  }
 
   ngOnInit() {
     this.sessionService.clean();
     this.sessionService.remove('token');
+    this.sessionService.remove('cpf_usuario_logado');
     this.sessionService.remove('codigo_perfil_atuacao');
     this.sessionService.remove('permissao_acesso');
     this.sessionService.remove('permissao_dashboard_campanha');
