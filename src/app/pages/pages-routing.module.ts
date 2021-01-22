@@ -19,6 +19,7 @@ import { FinanceiroComponent } from './financeiro/financeiro.component';
 import { ConfiguracoesComponent } from './cadastros/configuracoes/configuracoes.component';
 import { TabelaComissaoComponent } from './tabela-comissao/tabela-comissao.component';
 import { DashboardProducaoComponent } from './dashboard-producao/dashboard-producao.component';
+import { ComissoesPagasComponent } from './comissoes-pagas/comissoes-pagas.component';
 //import { GraficoComponent } from './grafico/grafico.component';
 
 
@@ -31,6 +32,8 @@ if (window.sessionStorage.permissao_dashboard_campanha) {
   home = 'pendencia-fisico';
 } else if (window.sessionStorage.permissao_esteira_producao) {
   home = 'esteira-producao';
+}  else if (window.sessionStorage.permissao_cadastro_financeiro) {
+  home = 'comissoes-pagas';
 } else if (window.sessionStorage.permissao_cadastro_financeiro) {
   home = 'financeiro';
 } else if (window.sessionStorage.permissao_cadastro_financeiro) {
@@ -89,6 +92,11 @@ const routes: Routes = [{
     {
       path: 'esteira-producao',
       component: EsteiraProducaoComponent,
+    },
+
+    {
+      path: 'comissoes-pagas',
+      component: ComissoesPagasComponent,
     },
 
     {

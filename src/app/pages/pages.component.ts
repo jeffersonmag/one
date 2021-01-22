@@ -31,15 +31,15 @@ export class PagesComponent implements OnInit, OnDestroy {
       title: 'Dashboard de Produção',
       icon: 'trending-up-outline',
       link: '/pages/dashboard-producao',
-      hidden: (window.sessionStorage.permissao_dashboard_campanha === 'false'),
-      home: (window.sessionStorage.permissao_dashboard_campanha === 'false'),
+      hidden: true,
+      home: false,
     },
 
     {
-      title: 'Gráfico',
+      title: 'Comissões Pagas',
       icon: 'bar-chart-outline',
-      link: '/pages/grafico',
-      hidden: true,
+      link: '/pages/comissoes-pagas',
+      hidden: false,
       home: false,
     },
 

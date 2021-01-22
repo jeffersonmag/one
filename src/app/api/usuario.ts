@@ -48,6 +48,7 @@ export class UsuarioApiService {
           this.sessionService.remove('permissao_cadastro_financeiro');
           this.sessionService.set('user', s);
           this.sessionService.set('token', s.token);
+          this.sessionService.set('cpf_usuario_logado', user.cpf);
           this.sessionService.set('codigo_perfil_atuacao', s.codigo_perfil_atuacao);
           this.sessionService.set('permissao_acesso', s.permissao_acesso);
           this.sessionService.set('permissao_dashboard_campanha', s.permissao_acesso.dashboard_campanha.acesso);
@@ -72,7 +73,7 @@ export class UsuarioApiService {
             s.permissao_acesso.cadastro_tipo_canal_venda.acesso);
           this.sessionService.set('permissao_cadastro_financeiro',
             s.permissao_acesso.manutencao_financeiro.acesso);
-            this.sessionService.set('permissao_tabela_comissao',
+          this.sessionService.set('permissao_tabela_comissao',
             s.permissao_acesso.tabela_comissao.acesso);
           resolve(s);
         })
