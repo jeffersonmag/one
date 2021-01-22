@@ -41,17 +41,17 @@
   },
   "dependencies": {
     "@agm/core": "^1.1.0",
-    "@angular/animations": "^9.0.0-rc.11",
+    "@angular/animations": "^10.2.4",
     "@angular/cdk": "^11.1.0",
-    "@angular/common": "^9.0.0-rc.11",
-    "@angular/compiler": "^9.0.0-rc.11",
-    "@angular/core": "^9.0.0-rc.11",
-    "@angular/forms": "^9.0.0-rc.11",
-    "@angular/localize": "^9.0.0-rc.0",
+    "@angular/common": "^10.2.4",
+    "@angular/compiler": "^10.2.4",
+    "@angular/core": "^10.2.4",
+    "@angular/forms": "^10.2.4",
+    "@angular/localize": "^10.2.4",
     "@angular/material": "^8.2.3",
-    "@angular/platform-browser": "^9.0.0-rc.11",
-    "@angular/platform-browser-dynamic": "^9.0.0-rc.11",
-    "@angular/router": "^9.0.0-rc.11",
+    "@angular/platform-browser": "^10.2.4",
+    "@angular/platform-browser-dynamic": "^10.2.4",
+    "@angular/router": "^10.2.4",
     "@asymmetrik/ngx-leaflet": "3.0.1",
     "@nebular/auth": "^6.0.0",
     "@nebular/date-fns": "^6.0.0",
@@ -116,15 +116,15 @@
     "tslib": "^1.10.0",
     "typeface-exo": "0.0.22",
     "web-animations-js": "^2.3.2",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.901.12",
-    "@angular-devkit/core": "^9.0.7",
-    "@angular-devkit/schematics": "^9.0.7",
-    "@angular/cli": "^9.0.0-rc.11",
-    "@angular/compiler-cli": "^9.0.7",
-    "@angular/language-service": "9.0.0-rc.11",
+    "@angular-devkit/build-angular": "^0.1002.1",
+    "@angular-devkit/core": "^10.2.1",
+    "@angular-devkit/schematics": "^10.2.1",
+    "@angular/cli": "^10.2.1",
+    "@angular/compiler-cli": "^10.2.4",
+    "@angular/language-service": "10.2.4",
     "@compodoc/compodoc": "^1.1.11",
     "@fortawesome/fontawesome-free": "^5.12.0",
     "@schematics/angular": "^9.0.7",
@@ -155,6 +155,6 @@
     "ts-node": "3.2.2",
     "tslint": "^5.20.1",
     "tslint-language-service": "^0.9.9",
-    "typescript": "3.7.5"
+    "typescript": "4.0.5"
   }
 }
