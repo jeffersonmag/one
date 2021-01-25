@@ -21,7 +21,9 @@ import {
 
 } from '@nebular/theme';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { MatInputModule, MatChipsModule, MatIconModule} from '@angular/material';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import {PlatformModule} from '@angular/cdk/platform';
 
 import { ThemeModule } from '../../@theme/theme.module';

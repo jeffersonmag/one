@@ -30,7 +30,7 @@ import { NbMomentDateModule } from '@nebular/moment';
 import { PlanoContasComponent } from './plano-contas/plano-contas.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { UiSwitchModule } from 'ngx-ui-switch';
-import { MatSlideToggleModule } from '@angular/material';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CentroCustosComponent } from './centro-custos/centro-custos.component';
 import { ProjetosComponent } from './projetos/projetos.component';
 import { DadosCadastroCentroCustosComponent } from './centro-custos/dados-cadastro-centro-custos/dados-cadastro-centro-custos.component';
