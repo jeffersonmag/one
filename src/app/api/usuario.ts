@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '../../environments/environment';
 import { RequestService } from '../services/request.service';
-import { SessionService } from './../services/session.service';
+import { SessionService } from '../services/session.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,14 +11,12 @@ export class UsuarioApiService {
 
   constructor(
     private requestService: RequestService,
-    private sessionService: SessionService,
+    private sessionService: SessionService
   ) { }
-
-
   // 'codigo_conexao': 9 // usar esse parametro em ambiente de teste completo banco e máquina
   // 'codigo_conexao': 8 // máquina do Rafael Banco de produção
 
-  dados(user) {
+  dados(user: any) {
     return new Promise((resolve, reject) => {
       const response = this.requestService.post(`${environment.urlToken}/dados-usuario`, {
         'cpf': user.cpf,
@@ -30,7 +28,7 @@ export class UsuarioApiService {
         .then((s) => {
           this.sessionService.clean();
           this.sessionService.remove('token');
-          this.sessionService.remove('cpf_usuario_logado');          
+          this.sessionService.remove('cpf_usuario_logado');
           this.sessionService.remove('codigo_perfil_atuacao');
           this.sessionService.remove('permissao_acesso');
           this.sessionService.remove('permissao_dashboard_campanha');

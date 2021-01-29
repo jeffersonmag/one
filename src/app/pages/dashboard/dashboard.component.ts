@@ -68,7 +68,13 @@ export class DashboardComponent implements OnDestroy, AfterViewInit {
   ticketPerfil = 0;
   ticketGlobal = 0;
   dadosCampanhaMetas = [];
-  dadosProdutoCorbanCampanha = {};
+  dadosProdutoCorbanCampanha = {
+    'meta_total_campanha':0,
+    'atingimento_total_campanha':0,
+    'projecao_total_campanha':0,
+    'meta_diaria_campanha':0,
+    'ticket_medio_campanha':0,
+  };
   dadosCampanhaMetasLoad = true;
   perfis = [
     {
@@ -364,7 +370,13 @@ export class DashboardComponent implements OnDestroy, AfterViewInit {
   findCampanhaMeta(visao = 5) {
     this.dadosCampanhaMetasLoad = true;
     this.dadosCampanhaMetas = [];
-    this.dadosProdutoCorbanCampanha = {};
+    this.dadosProdutoCorbanCampanha = {
+      'meta_total_campanha':0,
+      'atingimento_total_campanha':0,
+      'projecao_total_campanha':0,
+      'meta_diaria_campanha':0,
+      'ticket_medio_campanha':0,
+    };
     this.campanhasApiService.metas(
       {
         "codigo_campanha": this.filtro.campanha.codigo,

@@ -13,7 +13,6 @@
           "options": {
             "aot": false,
             "preserveSymlinks": true,
-            "rebaseRootRelativeCssUrls": true,
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -42,7 +41,8 @@
               "node_modules/leaflet/dist/leaflet.css",
               "src/app/@theme/styles/styles.scss",
               "node_modules/devextreme/dist/css/dx.common.css",
-              "node_modules/devextreme/dist/css/dx.light.css"
+              "node_modules/devextreme/dist/css/dx.light.css",
+              "node_modules/@nebular/theme/styles/prebuilt/default.css"
             ],
             "scripts": [
               "node_modules/pace-js/pace.min.js",
@@ -128,7 +128,8 @@
               "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
               "src/app/@theme/styles/styles.scss",
               "node_modules/devextreme/dist/css/dx.common.css",
-              "node_modules/devextreme/dist/css/dx.light.css"
+              "node_modules/devextreme/dist/css/dx.light.css",
+              "node_modules/@nebular/theme/styles/prebuilt/default.css"
             ],
             "assets": [
               "src/assets",
@@ -205,7 +206,8 @@
             "styles": [
               "node_modules/devextreme/dist/css/dx.common.css",
               "node_modules/devextreme/dist/css/dx.light.css",
-              "projects/cadastros/src/styles.scss"
+              "projects/cadastros/src/styles.scss",
+              "node_modules/@nebular/theme/styles/prebuilt/default.css"
             ],
             "scripts": []
           },
@@ -220,7 +222,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,

@@ -89,8 +89,8 @@ export class CoreModule {
     throwIfAlreadyLoaded(parentModule, 'CoreModule');
   }
 
-  static forRoot(): ModuleWithProviders {
-    return <ModuleWithProviders>{
+  static forRoot(): ModuleWithProviders<unknown> {
+    return <ModuleWithProviders<unknown>>{
       ngModule: CoreModule,
       providers: [
         ...NB_CORE_PROVIDERS,

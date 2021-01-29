@@ -79,11 +79,6 @@ const routes: Routes = [{
       component: DashboardProducaoComponent,
     },
 
-    /*{
-      path: 'grafico',
-      component: GraficoComponent,
-    },*/
-
     {
       path: 'pendencia-fisico',
       component: PendenciaComponent,

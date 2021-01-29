@@ -5,9 +5,9 @@
                 <nb-card>
                     <nb-card-header>
                         Pendência de Físico
-                        <button nbButton status="info" status="info" ghost [size]="large"
-                            nbTooltip="Listagem de Borderô" (click)="listarBordero(listaBorderoModal)"
-                            data-toggle="modal" data-target="#listaBorderoModal">
+                        <button nbButton status="info" status="info" ghost size="large" nbTooltip="Listagem de Borderô"
+                            (click)="listarBordero(listaBorderoModal)" data-toggle="modal"
+                            data-target="#listaBorderoModal">
                             <nb-icon icon="layers-outline" pack="eva" class="flip-icon"></nb-icon>
                         </button>
                         <ng-template #listaBorderoModal let-c="close" let-d="dismiss">
@@ -19,11 +19,11 @@
                             </div>
                             <listagem-bordero></listagem-bordero>
                         </ng-template>
-                        <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Download CSV">
+                        <button nbButton status="info" status="info" ghost size="large" nbTooltip="Download CSV">
                             <nb-icon icon="download-outline" pack="eva" class="flip-icon" (click)="downloadCSV()">
                             </nb-icon>
                         </button>
-                        <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Filtros"
+                        <button nbButton status="info" status="info" ghost size="large" nbTooltip="Filtros"
                             (click)="revelar()">
                             <nb-icon icon="funnel-outline" pack="eva" class="flip-icon"></nb-icon>
                         </button>
@@ -141,10 +141,10 @@
                                                     <span nbTooltip="Nome Instituição">{{i.nome_instituicao}}</span>
                                                 </td>
                                                 <td class="size-fonte">
-                                                    <span
-                                                        nbTooltip="Data Entrada Operação">{{i.data_entrada_operacao | moment: 'DD/MM/YYYY'}}</span><br>
-                                                    <span
-                                                        nbTooltip="Data Status">{{i.data_status | moment: 'DD/MM/YYYY'}}</span>
+                                                    <span nbTooltip="Data Entrada Operação">{{i.data_entrada_operacao |
+                                                        moment: 'DD/MM/YYYY'}}</span><br>
+                                                    <span nbTooltip="Data Status">{{i.data_status | moment:
+                                                        'DD/MM/YYYY'}}</span>
                                                 </td>
                                                 <td class="size-fonte-center">
                                                     <button nbButton status="info" *ngIf="i.dias_pendentes <= 7"

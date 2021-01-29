@@ -1,20 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { UsuarioApiService } from '../../api/usuario';
+import { RequestService } from '../../services/request.service';
 import { SessionService } from '../../services/session.service';
-import { UsuarioApiService } from './../../api/usuario';
+
 
 @Component({
   selector: 'ngx-tela',
   templateUrl: './tela.component.html',
-  styleUrls: ['./tela.component.scss']
+  styleUrls: ['./tela.component.scss'],
 })
 export class TelaComponent implements OnInit {
 
-  private usuarioApiService: UsuarioApiService
-
-  public erro_api = '';
+  public erro_api = ''
   public userValid = {
     cpf: '',
     senha: '',
@@ -23,13 +22,13 @@ export class TelaComponent implements OnInit {
   constructor(
     private router: Router,
     private sessionService: SessionService,
-  ) { 
-  }
+    private usuarioApiService : UsuarioApiService
+  ) { }
 
   ngOnInit() {
     this.sessionService.clean();
     this.sessionService.remove('token');
-    this.sessionService.remove('cpf_usuario_logado');
+    //this.sessionService.remove('cpf_usuario_logado');
     this.sessionService.remove('codigo_perfil_atuacao');
     this.sessionService.remove('permissao_acesso');
     this.sessionService.remove('permissao_dashboard_campanha');
@@ -51,7 +50,7 @@ export class TelaComponent implements OnInit {
   onSubmit(f: NgForm) {
     // console.log(f.value);  // { first: '', last: '' }
     // console.log(f.valid);  // false
-    // console.log(f);
+    // console.log(f)
 
     this.userValid = {
       cpf: '',

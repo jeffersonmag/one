@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { RequestService } from '../services/request.service';
 
 import { LoginComponent } from './login.component';
 import { TelaComponent } from './tela/tela.component';
@@ -25,7 +26,8 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule,],
+  providers: [RequestService]
 })
 export class LoginRoutingModule {
 }

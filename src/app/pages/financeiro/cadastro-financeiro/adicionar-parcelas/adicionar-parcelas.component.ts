@@ -49,7 +49,7 @@ export class AdicionarParcelasComponent implements OnInit {
   criacaoFinanceiroParcela: boolean;
   exclusaoFinanceiroParcela: boolean;
 
-  constructor(protected options: CadastroFinanceiroComponent,
+  constructor(public options: CadastroFinanceiroComponent,
     private formBuilder: FormBuilder,
     private modal: NgbModal,
     private FinanceiroApiService: FinanceiroApiService) {

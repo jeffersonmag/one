@@ -19,8 +19,8 @@ import { FinanceiroModule } from './financeiro/financeiro.module';
 import { StatusComponent } from './cadastros/status/status.component';
 import { FormsModule } from '@angular/forms';
 import { TabelaComissaoModule } from './tabela-comissao/tabela-comissao.module';
-import { ComissoesPagasComponent } from './comissoes-pagas/comissoes-pagas.component';
 import { ComissoesPagasModule } from './comissoes-pagas/comissoes-pagas.module';
+import { RequestService } from '../services/request.service';
 
 //import { GraficoComponent } from './grafico/grafico.component';
 //import { GraficoModule } from './grafico/grafico.module';
@@ -54,6 +54,8 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
   declarations: [
     PagesComponent,
   ],
+  providers:
+  [ RequestService ]
 })
 export class PagesModule {
 }

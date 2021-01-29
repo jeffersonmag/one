@@ -29,6 +29,7 @@ import { COSMIC_THEME } from './styles/theme.cosmic';
 import { DARK_THEME } from './styles/theme.dark';
 import { DEFAULT_THEME } from './styles/theme.default';
 import { ProgressBarModalComponent } from './components/header/progressbar-modal.component';
+import { RequestService } from '../services/request.service';
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -70,8 +71,8 @@ const PIPES = [
   entryComponents: [ProgressBarModalComponent]
 })
 export class ThemeModule {
-  static forRoot(): ModuleWithProviders {
-    return <ModuleWithProviders>{
+  static forRoot(): ModuleWithProviders<unknown> {
+    return <ModuleWithProviders<unknown>>{
       ngModule: ThemeModule,
       providers: [
         ...NbThemeModule.forRoot(
@@ -79,7 +80,7 @@ export class ThemeModule {
             name: 'default',
           },
           [DEFAULT_THEME, COSMIC_THEME, CORPORATE_THEME, DARK_THEME],
-        ).providers,
+        ).providers
       ],
     };
   }

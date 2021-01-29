@@ -6,10 +6,10 @@
                 <nb-card [nbSpinner]="propostasInconsistencias.length == 0 && pararSpinner" nbSpinnerStatus="danger">
                     <nb-card-header>
                         Esteira de Produção
-                        <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Filtros">
+                        <button nbButton status="info" status="info" ghost size="large" nbTooltip="Filtros">
                             <nb-icon icon="funnel-outline" pack="eva" class="flip-icon" (click)="revelar()"></nb-icon>
                         </button>
-                        <button nbButton status="info" status="info" ghost [size]="large" nbTooltip="Download CSV">
+                        <button nbButton status="info" status="info" ghost size="large" nbTooltip="Download CSV">
                             <nb-icon icon="download-outline" pack="eva" class="flip-icon" (click)="downloadCSV()">
                             </nb-icon>
                         </button>

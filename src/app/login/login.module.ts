@@ -12,6 +12,7 @@ import {
   NbSelectModule,
   NbUserModule,
 } from '@nebular/theme';
+import { RequestService } from '../services/request.service';
 
 import { ThemeModule } from './../@theme/theme.module';
 import { DashboardModule } from './../pages/dashboard/dashboard.module';
@@ -38,7 +39,7 @@ import { TelaComponent } from './tela/tela.component';
     FormInputsComponent,
     FormLayoutsComponent,
     ButtonsComponent,
-    DatepickerComponent,
+    DatepickerComponent
   ],
   imports: [
     LoginRoutingModule,
@@ -57,6 +58,9 @@ import { TelaComponent } from './tela/tela.component';
     NbIconModule,
     FormsModule,
   ],
+  providers : [
+    RequestService
+  ]
 })
 export class LoginModule {
 }

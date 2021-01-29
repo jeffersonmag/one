@@ -73,4 +73,4 @@ export class PageModule { }
 
 export class AppModule { }
 
-platformBrowserDynamic().bootstrapModule(DashboardCampanhaModule);
+//platformBrowserDynamic().bootstrapModule(DashboardCampanhaModule);

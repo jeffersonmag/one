@@ -49,6 +49,8 @@ import { NgxCpfCnpjModule } from 'ngx-cpf-cnpj';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgxCurrencyModule } from "ngx-currency";
 import { DxTileViewModule, DxButtonModule, DxListModule } from 'devextreme-angular';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
 
 
 export let options: Partial<IConfig> | (() => Partial<IConfig>) = {};
@@ -103,6 +105,9 @@ export const customCurrencyMaskConfig = {
     NgIdleModule,
     NbProgressBarModule,
     Ng2SmartTableModule,
+    DxTileViewModule,
+    DxButtonModule,
+    DxListModule,
     NbTreeGridModule,
     NgxMaskModule.forRoot(options),
     NbDateFnsDateModule.forRoot({ format: 'dd/MM/yyyy' }),
@@ -145,5 +150,7 @@ export class PageModule { }
 
 
 export class CadastroModule { }
+
+//platformBrowserDynamic().bootstrapModule(AppModule);
 
 
