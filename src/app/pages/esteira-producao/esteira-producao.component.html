@@ -67,8 +67,9 @@
                                         (click)="filtroFindPropostasInconsistentes(valor.codigo_status_agrupado_inconsistencia)"
                                         status="{{valor.cor}}">
                                         <span class="fonte-card">{{ valor.status_agrupado_inconsistencia }}</span>
-                                        <span
-                                            class="fonte-card-num">{{  valor.qtd_total_de_propostas_inconsistentes_status  }}/{{  qtd_total_de_propostas_inconsistentes  }}
+                                        <span class="fonte-card-num">{{
+                                            valor.qtd_total_de_propostas_inconsistentes_status }}/{{
+                                            qtd_total_de_propostas_inconsistentes }}
                                         </span>
                                     </nb-alert>
                                 </div>
@@ -102,8 +103,8 @@
                                 <tr
                                     *ngFor="let i of propostasInconsistencias | slice: pageSize | slice: 0:itemsPerPage">
                                     <td><button nbButton [size]="small" status="success" hero
-                                            (click)="copyToClipboard(i.proposta)"
-                                            nbTooltip="Clique para copiar">{{ i.proposta }}</button>
+                                            (click)="copyToClipboard(i.proposta)" nbTooltip="Clique para copiar">{{
+                                            i.proposta }}</button>
                                     </td>
                                     <td class="size-fonte">
                                         <i class="fa fa-address-card color"></i>
@@ -133,11 +134,11 @@
                                     </td>
                                     <td class="size-fonte">
                                         <span nbTooltip="Data de Digitação">
-                                            <i
-                                                class="fa fa-calendar-check color"></i>{{ i.data_entrada_operacao | moment: 'DD/MM/YYYY' }}</span><br>
+                                            <i class="fa fa-calendar-check color"></i>{{ i.data_entrada_operacao |
+                                            moment: 'DD/MM/YYYY' }}</span><br>
                                         <span nbTooltip="Data de Status">
-                                            <i
-                                                class="fa fa-calendar-minus color"></i>{{ i.data_status | moment: 'DD/MM/YYYY' }}</span>
+                                            <i class="fa fa-calendar-minus color"></i>{{ i.data_status | moment:
+                                            'DD/MM/YYYY' }}</span>
                                     </td>
                                     <td class="size-fonte">
                                         {{ i.nome_convenio }}<br>

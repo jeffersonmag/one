@@ -4,16 +4,24 @@
             <nb-card-header>
                 Comissões Pagas
             </nb-card-header>
-            <nb-card-body>
-                <nb-tabset fullWidth>
-                    <nb-tab tabTitle="Users">
-                        <p>List of <strong>users</strong>.</p>
-                    </nb-tab>
-                    <nb-tab tabTitle="Orders">
-                        <p>List of <strong>orders</strong>.</p>
-                    </nb-tab>
-                    <nb-tab tabTitle="Mês">
-                        <p>List of <strong>mes</strong>.</p>
+            <nb-card-body *ngIf="comissoesPagasMeses.length < 1">
+                <p> Sem dados de comissões a serem exebidos.</p>
+            </nb-card-body>
+            <nb-card-body *ngIf="comissoesPagasMeses.length > 0">
+                <nb-tabset fullWidth (changeTab)="filtraMesTabComissoesPagas($event)">
+                    <nb-tab *ngFor="let cp of mesesAbas" [tabTitle]="mes[cp.vencimento_mes - 1].mesExtenso">
+                        <dx-data-grid id="gridContainer" [dataSource]="comissoesPagas" [remoteOperations]="false"
+                            [allowColumnReordering]="true" [rowAlternationEnabled]="true" [showBorders]="true">
+                            <dxi-column dataField="vencimento" caption="Data" dataType="date" format="dd/MM/yyyy">
+                            </dxi-column>
+                            <dxi-column dataField="valor" caption="Valor" dataType="number" format="currency"
+                                format="#,##0.##"></dxi-column>
+                            <dxi-column dataField="status" caption="Status" dataType="string"></dxi-column>
+                            <dxo-master-detail [enabled]="true" template="detail"></dxo-master-detail>
+                            <div *dxTemplate="let comissoesPagasMeses of 'detail'">
+                                <detail-grid [key]="comissoesPagasMeses.codigo"></detail-grid>
+                            </div>
+                        </dx-data-grid>
                     </nb-tab>
                 </nb-tabset>
             </nb-card-body>

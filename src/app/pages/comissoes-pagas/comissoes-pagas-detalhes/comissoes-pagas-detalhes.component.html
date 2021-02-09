@@ -1,0 +1,23 @@
+<div *ngIf="buscandoDados" [nbSpinner]="comissoesPagasDetalhe == undefined " nbSpinnerStatus="success">
+    <p><strong>Buscando Dados...</strong></p>
+</div>
+<dx-data-grid [dataSource]="comissoesPagasAnalitico" [remoteOperations]="false" [allowColumnResizing]="true"
+    [allowColumnReordering]="false" [rowAlternationEnabled]="true" [showBorders]="true" [columnAutoWidth]="true"
+    fullWidth>
+    <dxi-column dataField="nome_cliente" caption="Cliente" dataType="string"></dxi-column>
+    <dxi-column dataField="idade" caption="Idade" dataType="string"></dxi-column>
+    <dxi-column dataField="nome_convenio" caption="Convênio" dataType="string"></dxi-column>
+    <dxi-column dataField="tipo_operacao" caption="Operação" dataType="string"></dxi-column>
+    <dxi-column dataField="proposta" caption="Proposta" dataType="string"></dxi-column>
+    <dxi-column dataField="data_entrada_operacao" caption="Data Entrada" dataType="date"></dxi-column>
+    <dxi-column dataField="data_status" caption="Data Status" dataType="date"></dxi-column>
+    <dxi-column dataField="qtd_parcelas" caption="Parcelas" dataType="string"></dxi-column>
+    <dxi-column dataField="base_calculo" caption="Base Cálculo" dataType="number" format="currency" format="#,##0.##">
+    </dxi-column>
+    <dxi-column dataField="perc_pago_comissao" caption="% Comissão" dataType="number" format="currency"
+        format="#,##0.##">
+    </dxi-column>
+    <dxi-column dataField="valor_pago_comissao" caption="$ Comissão" dataType="number" format="currency"
+        format="#,##0.##">
+    </dxi-column>
+</dx-data-grid>

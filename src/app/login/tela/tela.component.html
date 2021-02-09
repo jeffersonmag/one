@@ -16,7 +16,8 @@
       <span class="text-danger"> {{userValid.senha}}</span>
     </div>
     <div style="text-align: center;">
-      <button type="submit" nbButton status="info" ghost>Entrar</button>
+      <button *ngIf= "ativarBotao" type="submit" nbButton status="info" ghost>Entrar</button>
+      <button *ngIf= "!ativarBotao" nbButton disabled>Fazendo Login...</button>
     </div>
 
   </form>

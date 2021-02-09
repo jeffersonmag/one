@@ -26,13 +26,13 @@ import { ComissoesPagasComponent } from './comissoes-pagas/comissoes-pagas.compo
 //define o a página inicial
 if (window.sessionStorage.permissao_dashboard_campanha) {
   var home: string = 'dashboard-campanha';
-}  else if (window.sessionStorage.permissao_dashboard_campanha) {
+} else if (window.sessionStorage.permissao_dashboard_campanha) {
   home = 'dashboard-producao';
 } else if (window.sessionStorage.permissao_pendencia_fisico) {
   home = 'pendencia-fisico';
 } else if (window.sessionStorage.permissao_esteira_producao) {
   home = 'esteira-producao';
-}  else if (window.sessionStorage.permissao_cadastro_financeiro) {
+} else if (window.sessionStorage.permissao_cadastro_financeiro) {
   home = 'comissoes-pagas';
 } else if (window.sessionStorage.permissao_cadastro_financeiro) {
   home = 'financeiro';

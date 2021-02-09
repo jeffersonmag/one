@@ -28,6 +28,7 @@ import { OrderModule } from 'ngx-order-pipe';
 import { DxPivotGridModule, DxButtonModule, DxDataGridModule, DxTemplateModule, DxBulletModule } from 'devextreme-angular';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import config from 'devextreme/core/config';
+import { ComissoesPagasDetalhesComponent } from './comissoes-pagas-detalhes/comissoes-pagas-detalhes.component';
 
 
 
@@ -57,11 +58,13 @@ import config from 'devextreme/core/config';
     NbTreeGridModule,
     OrderModule,
     DxPivotGridModule,
-    DxButtonModule,
     DxDataGridModule,
+    DxTemplateModule,
+    DxButtonModule,
   ],
   declarations: [
-    ComissoesPagasComponent
+    ComissoesPagasComponent,
+    ComissoesPagasDetalhesComponent
   ]
 })
 export class ComissoesPagasModule { }

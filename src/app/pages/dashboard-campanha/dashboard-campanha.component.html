@@ -338,7 +338,8 @@
                     <td *ngIf="mes[contratosPagosSinteticos.mes_campanha_inicial-1].mesExtenso != null"
                       class="mes-setado2">
                       {{ mes[contratosPagosSinteticos.mes_campanha_inicial-1].mesExtenso | uppercase }}
-                      <span></span></td>
+                      <span></span>
+                    </td>
                   </tr>
                   <tr>
                     <td class="ano-setado2">{{contratosPagosSinteticos.ano_campanha_inicial}}</td>
@@ -367,7 +368,8 @@
                 <tr>
                   <td>
                     <div class="values">
-                      {{((contratosPagosSinteticos.valor_elegivel_total_digitado / campanhaDiasUteisCorridos) * campanhaDias).toFixed(0) | number:'.':'pt'}}
+                      {{((contratosPagosSinteticos.valor_elegivel_total_digitado / campanhaDiasUteisCorridos) *
+                      campanhaDias).toFixed(0) | number:'.':'pt'}}
                     </div>
                   </td>
                 </tr>
@@ -379,7 +381,8 @@
                 <tr>
                   <td>
                     <div class="values">
-                      {{((contratosPagosSinteticos.valor_elegivel_total_pago / campanhaDiasUteisCorridos) * campanhaDias).toFixed(0) | number:'.':'pt'}}
+                      {{((contratosPagosSinteticos.valor_elegivel_total_pago / campanhaDiasUteisCorridos) *
+                      campanhaDias).toFixed(0) | number:'.':'pt'}}
                     </div>
                   </td>
                 </tr>

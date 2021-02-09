@@ -14,6 +14,7 @@ import { SessionService } from '../../services/session.service';
 export class TelaComponent implements OnInit {
 
   public erro_api = ''
+  public ativarBotao : boolean = true;
   public userValid = {
     cpf: '',
     senha: '',
@@ -68,6 +69,7 @@ export class TelaComponent implements OnInit {
     }
 
     if (f.valid) {
+      this.ativarBotao = false;
       this.usuarioApiService.dados({
         "cpf": f.value.cpf,
         "senha": f.value.senha
@@ -77,6 +79,7 @@ export class TelaComponent implements OnInit {
         })
         .catch((e) => {
           this.erro_api = e;
+          this.ativarBotao = true;
         })
     }
   }

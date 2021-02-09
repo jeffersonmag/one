@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ComissoesPagasApiService } from '../../api/comissoes-pagas';
-import { SessionService } from '../../services/session.service';
+import _ from 'lodash';
 
 @Component({
   selector: 'ngx-comissoes-pagas',
@@ -75,26 +75,47 @@ export class ComissoesPagasComponent implements OnInit {
   mesAtual = '';
   mesAnterior = '';
   mesAAnterior = '';
+  comissoesPagasMeses: any[];
+  comissoesPagas: any[];
+  mesesAbas = [];
 
   constructor(
     private ComissoesApiService: ComissoesPagasApiService
-  ) { 
+  ) {
     this.buscarComissoesPagas();
   }
 
-  buscarComissoesPagas(){
+  buscarComissoesPagas() {
     this.ComissoesApiService.ComissoesPagasSintetico(
       {
-        'cpf_cliente': window.sessionStorage.cpf_usuario_logado
+        'cpf_cliente': String(window.sessionStorage.cpf_usuario_logado)
+        // 'cpf_cliente': '25932858850'
       }
     )
       .then((s) => {
-        this.mesAtual = s;               
+        this.comissoesPagasMeses = s;
+        for (let i of this.comissoesPagasMeses) {
+          this.mesesAbas.push(i = {
+            "vencimento_mes": i.vencimento_mes,
+          })
+        }
+        this.mesesAbas = this.mesesAbas.filter(function (a) {
+          return !this[JSON.stringify(a)] && (this[JSON.stringify(a)] = true);
+        }, Object.create(null))
       })
       .catch((e) => {
         console.log(e);
       });
+  }
 
+  filtraMesTabComissoesPagas(event) {
+    let mes = _.find(this.mes, (o: any) => {
+      if (String(o.mesExtenso) === String(event.tabTitle)) {
+        return String(o.id)
+      }
+    })
+    this.comissoesPagas = this.comissoesPagasMeses.filter(comissao => comissao.vencimento_mes == mes.id);
+    console.log(this.comissoesPagas);
   }
 
   ngOnInit(): void {

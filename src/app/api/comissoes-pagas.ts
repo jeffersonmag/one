@@ -13,11 +13,11 @@ export class ComissoesPagasApiService {
   ) { }
 
   ComissoesPagasSintetico(dados) {
-    return this.requestService.get(`${environment.urlApi}/comissoes-pagas-sintetico`, dados, true);
+    return this.requestService.post(`${environment.urlApi}/comissoes-pagas-sintetico`, dados, true);
   }
 
-  ComissoesPagasAnalitico(dados = {}) {
-    return this.requestService.get(`${environment.urlApi}/comissoes-pagas-analitico`, dados, true);
+  ComissoesPagasAnalitico(dados) {
+    return this.requestService.post(`${environment.urlApi}/comissoes-pagas-analitico`, dados, true);
   }
 
 }
