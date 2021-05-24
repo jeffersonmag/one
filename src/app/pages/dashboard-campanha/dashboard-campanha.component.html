@@ -590,8 +590,9 @@
 
 
         <!--TABELA-->
-        <nb-tabset [nbSpinner]="dadosCampanhaMetasSmartTable.length == 0" class="tema" fullWidth
-          (changeTab)="filtraCampanhaPerfilSmartTable($event)">
+
+        <nb-tabset *ngIf="perfilAtivo != 1" [nbSpinner]="dadosCampanhaMetasSmartTable.length == 0" class="tema"
+          fullWidth (changeTab)="filtraCampanhaPerfilSmartTable($event)">
           <nb-tab [tabTitle]="'LOJAS'" [active]="true" badgeStatus="info" fullWidth>
             <dx-data-grid id="gridContainer" [dataSource]="dadosCampanhaMetasSmartTable" [remoteOperations]="false"
               [allowColumnResizing]="true" [allowColumnReordering]="false" [rowAlternationEnabled]="true"
@@ -852,6 +853,56 @@
               </nb-card>-->
           <!--</div>-->
 
+          <nb-tab [tabTitle]="'CONSULTORES'" [active]="false" badgeStatus="warning">
+            <dx-data-grid id="gridContainer" [dataSource]="dadosCampanhaMetasSmartTable" [remoteOperations]="false"
+              [allowColumnResizing]="true" [allowColumnReordering]="false" [rowAlternationEnabled]="true"
+              [showBorders]="true" [columnAutoWidth]="true">
+
+              <dxo-paging [enabled]="false"></dxo-paging>
+              <dxo-search-panel [visible]="true" [highlightCaseSensitive]="true"></dxo-search-panel>
+              <dxo-group-panel [visible]="true"></dxo-group-panel>
+              <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+
+              <dxi-column caption="Consultores" dataField="nome_agrupamento" [width]="305" cellTemplate="folhaNegrito"
+                encodeHtml="true">
+              </dxi-column>
+              <dxi-column caption="Meta Total" dataField="meta_total_campanha" dataType="number" format="#,##0.##"
+                cellTemplate="folhaNegrito">
+              </dxi-column>
+              <dxi-column caption="Atingido" dataField="atingimento_total_campanha" dataType="number" format="#,##0.##"
+                cellTemplate="folhaNegrito">
+              </dxi-column>
+              <dxi-column caption="% Atingido" dataField="perc_atingimento_total_campanha" dataType="number"
+                format="#,##0.##" cellTemplate="folhaNegrito">
+              </dxi-column>
+              <dxi-column caption="Ticket Médio" dataField="ticket_medio_campanha" dataType="number" format="#,##0.##"
+                cellTemplate="folhaNegrito">
+              </dxi-column>
+              <dxi-column caption="Meta Diária" dataField="meta_diaria_campanha" dataType="number" format="#,##0.##"
+                cellTemplate="folhaNegrito">
+              </dxi-column>
+              <dxi-column caption="Meta Recalculada" dataField="meta_recalculada" dataType="number" format="#,##0.##"
+                cellTemplate="folhaNegrito">
+              </dxi-column>
+              <dxi-column caption="Total campanha projetado" dataField="projecao_total_campanha" dataType="number"
+                format="#,##0.##" cellTemplate="folhaNegrito">
+              </dxi-column>
+              <dxi-column caption="HC" dataField="total_hc_participantes" dataType="number" format="#,##0.##"
+                cellTemplate="folhaNegrito">
+              </dxi-column>
+              <dxi-column caption="Atingido HC" dataField="atingimento_hc" dataType="number" format="#,##0.##"
+                cellTemplate="folhaNegrito">
+              </dxi-column>
+
+              <div *dxTemplate="let cell of 'folhaNegrito'" [class.folhaFalse]="false" [class.folhaTrue]="true">
+                <span (click)="clickSmartTablePromotores(cell.data)">{{cell.text}}</span>
+              </div>
+            </dx-data-grid>
+          </nb-tab>
+        </nb-tabset>
+
+        <nb-tabset *ngIf="perfilAtivo == 1" [nbSpinner]="dadosCampanhaMetasSmartTable.length == 0" class="tema"
+          fullWidth (changeTab)="filtraCampanhaPerfilSmartTable($event)">
           <nb-tab [tabTitle]="'CONSULTORES'" [active]="false" badgeStatus="warning">
             <dx-data-grid id="gridContainer" [dataSource]="dadosCampanhaMetasSmartTable" [remoteOperations]="false"
               [allowColumnResizing]="true" [allowColumnReordering]="false" [rowAlternationEnabled]="true"

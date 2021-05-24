@@ -28,6 +28,8 @@ if (window.sessionStorage.permissao_dashboard_campanha) {
   var home: string = 'dashboard-campanha';
 } else if (window.sessionStorage.permissao_dashboard_campanha) {
   home = 'dashboard-producao';
+} else if (window.sessionStorage.permissao_comissoes_pagas) {
+  home = 'comissoes-pagas';
 } else if (window.sessionStorage.permissao_pendencia_fisico) {
   home = 'pendencia-fisico';
 } else if (window.sessionStorage.permissao_esteira_producao) {

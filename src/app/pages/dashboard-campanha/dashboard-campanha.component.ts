@@ -174,7 +174,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
     this.dadosCampanhaMetasSmartTable.sort(function (a, b) { return a.string(this.key) - b.string(this.key); });
   }
 
-  allColumns = [this.customColumn, ...this.defaultColumns];
+  allColumns = [this.customColumn, this.defaultColumns];
 
   settingsPromotores = {
     hideSubHeader: true,
@@ -311,7 +311,7 @@ export class DashboardCampanhaComponent implements OnDestroy {
     },
   ];
 
-  //perfilAtivo = window.sessionStorage.codigo_perfil_atuacao;
+
   perfilAtivo = 2;
 
   mes = [
@@ -482,6 +482,9 @@ export class DashboardCampanhaComponent implements OnDestroy {
         this.statusCards = this.statusCardsByThemes[theme.name];
       });
     config({ decimalSeparator: ',', thousandsSeparator: '.' });
+    if (window.sessionStorage.codigo_perfil_atuacao == 1) {
+      this.perfilAtivo = 1;
+    }
     this.findCampanha();
   }
 

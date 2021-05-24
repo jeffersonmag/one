@@ -32,6 +32,7 @@ export class UsuarioApiService {
           this.sessionService.remove('codigo_perfil_atuacao');
           this.sessionService.remove('permissao_acesso');
           this.sessionService.remove('permissao_dashboard_campanha');
+          this.sessionService.remove('permissao_comissoes_pagas');
           this.sessionService.remove('permissao_pendencia_fisico');
           this.sessionService.remove('permissao_esteira_producao');
           this.sessionService.remove('permissao_cadastro_cliente');
@@ -51,6 +52,7 @@ export class UsuarioApiService {
           this.sessionService.set('codigo_perfil_atuacao', s.codigo_perfil_atuacao);
           this.sessionService.set('permissao_acesso', s.permissao_acesso);
           this.sessionService.set('permissao_dashboard_campanha', s.permissao_acesso.dashboard_campanha.acesso);
+          this.sessionService.set('permissao_comissoes_pagas', s.permissao_acesso.comissoes_pagas.acesso);
           this.sessionService.set('permissao_pendencia_fisico', s.permissao_acesso.pendencia_fisico.acesso);
           this.sessionService.set('permissao_esteira_producao', s.permissao_acesso.esteira_producao.acesso);
           this.sessionService.set('permissao_cadastro_cliente', s.permissao_acesso.cadastro_cliente_teste_1.acesso);

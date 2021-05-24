@@ -9,7 +9,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: true,
+  production: false,
   urlAutentication: 'https://serv-prod-01.ribercred.com.br:10725/autenticador/v1/TServerMetodoToken/Token',
   // urlApi: 'https://autenticador.rbc.com.br:10740/api'
   // urlApi: 'https://127.0.0.1:10740/api', // ambiente de teste

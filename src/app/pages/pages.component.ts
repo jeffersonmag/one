@@ -36,16 +36,16 @@ export class PagesComponent implements OnInit, OnDestroy {
     },
 
     {
-      title: 'Comissões Pagas',
-      icon: 'bar-chart-outline',
+      title: 'Prêmio',
+      icon: 'award-outline',
       link: '/pages/comissoes-pagas',
-      hidden: false,
-      home: false,
+      hidden: (window.sessionStorage.permissao_comissoes_pagas === 'false'),
+      home: (window.sessionStorage.permissao_comissoes_pagas === 'false'),
     },
 
     {
       title: 'Pendência de Físico',
-      icon: 'browser',
+      icon: 'checkmark-square-outline',
       link: '/pages/pendencia-fisico',
       hidden: (window.sessionStorage.permissao_pendencia_fisico === 'false'),
       home: (window.sessionStorage.permissao_pendencia_fisico === 'false'),

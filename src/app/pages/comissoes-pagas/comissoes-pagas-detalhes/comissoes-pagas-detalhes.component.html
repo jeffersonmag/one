@@ -1,9 +1,10 @@
 <div *ngIf="buscandoDados" [nbSpinner]="comissoesPagasDetalhe == undefined " nbSpinnerStatus="success">
     <p><strong>Buscando Dados...</strong></p>
 </div>
-<dx-data-grid [dataSource]="comissoesPagasAnalitico" [remoteOperations]="false" [allowColumnResizing]="true"
-    [allowColumnReordering]="false" [rowAlternationEnabled]="true" [showBorders]="true" [columnAutoWidth]="true"
+<dx-data-grid [dataSource]="comissoesPagasAnalitico" [remoteOperations]="true" [allowColumnResizing]="true"
+    [allowColumnReordering]="false" [rowAlternationEnabled]="true" [showBorders]="true" [columnAutoWidth]="false"
     fullWidth>
+    <dxo-paging [pageSize]="50"></dxo-paging>
     <dxi-column dataField="nome_cliente" caption="Cliente" dataType="string"></dxi-column>
     <dxi-column dataField="idade" caption="Idade" dataType="string"></dxi-column>
     <dxi-column dataField="nome_convenio" caption="Convênio" dataType="string"></dxi-column>
