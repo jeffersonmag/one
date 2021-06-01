@@ -26,7 +26,7 @@
     "conventional-changelog": "conventional-changelog",
     "start": "ng serve --port 3000 --host 0.0.0.0 --proxy-config proxy.config.js",
     "build": "ng build --base-href http://rbc.com.br/one/ --deploy-url http://rbc.com.br/one/",
-    "build-serve": "node --max_old_space_size=8048 ./node_modules/@angular/cli/bin/ng serve",
+    "build-serve": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng serve",
     "build:prod": "npm run build -- --prod --aot",
     "test": "ng test",
     "test:coverage": "rimraf coverage && npm run test -- --code-coverage",
