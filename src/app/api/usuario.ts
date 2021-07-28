@@ -22,7 +22,7 @@ export class UsuarioApiService {
         'cpf': user.cpf,
         'senha': String(user.senha).toUpperCase(),
         'projeto': 'CORBAN',
-        'at_cliente': 'RIBERCRED'
+        'at_cliente': 'VAZOLI'
       });
       response
         .then((s) => {

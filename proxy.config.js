@@ -10,7 +10,7 @@
 const proxy = [
   {
     context: '/api',
-    target: 'https://serv-prod-01.ribercred.com.br:10740',
+    target: 'https://api.cobco.com.br:10740',
     pathRewrite: {'^/api' : ''}
   }
 ];
