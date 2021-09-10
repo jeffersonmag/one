@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NbMenuModule, NbStepperModule, NbProgressBarModule, NbPopoverModule, NbTreeGridModule, NbSidebarModule, NbSelectModule, NbDatepickerModule, NbDialogModule, NbWindowModule, NbToastrModule, NbChatModule, NbToggleComponent } from '@nebular/theme';
+import { NbMenuModule, NbStepperModule, NbProgressBarModule, NbPopoverModule, NbTreeGridModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { DashboardModule } from './dashboard/dashboard.module';
@@ -14,9 +14,8 @@ import { NgIdleModule } from '@ng-idle/core';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { CadastrosModule } from './cadastros/cadastros.module';
 import { NbDateFnsDateModule } from '@nebular/date-fns';
-import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { IConfig } from 'ngx-mask';
 import { FinanceiroModule } from './financeiro/financeiro.module';
-import { StatusComponent } from './cadastros/status/status.component';
 import { FormsModule } from '@angular/forms';
 import { TabelaComissaoModule } from './tabela-comissao/tabela-comissao.module';
 import { ComissoesPagasModule } from './comissoes-pagas/comissoes-pagas.module';

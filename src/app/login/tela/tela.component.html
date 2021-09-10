@@ -1,24 +1,29 @@
 <div class="fundo">
-  <div class="erro" *ngIf="erro_api != ''">✖ {{erro_api}}</div>
-  <div style="text-align: center;"><img src="assets/imgs/logo_empresa.png" /></div>
-  <!--<h4 style="text-align: center;">CORBAN ONE</h4>-->
-  <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
-    <div class="form-group">
-      <label for="CPF" class="label">CPF</label>
-      <input type="tel" name="cpf" ngModel required #cpf="ngModel" nbInput fullWidth id="cpf" placeholder="CPF"
-        type="number">
-      <span class="text-danger"> {{userValid.cpf}}</span>
+  <div class="row">
+    <div class="col">
+      <div class="erro" *ngIf="erro_api != ''">✖ {{erro_api}}</div>
+      <!--<h4 style="text-align: center;">CORBAN ONE</h4>-->
+      <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate style="margin-top: 30px;">
+        <div class="form-group">
+          <label for="CPF" class="label">CPF</label>
+          <input type="tel" name="cpf" ngModel required #cpf="ngModel" nbInput fullWidth id="cpf" placeholder="CPF"
+            type="number">
+          <span class="text-danger"> {{userValid.cpf}}</span>
+        </div>
+        <div class="form-group">
+          <label for="senha" class="label">Senha</label>
+          <input type="password" name="senha" ngModel required #senha="ngModel" nbInput fullWidth id="senha"
+            placeholder="Senha" oninput="this.value = this.value.toUpperCase()">
+          <span class="text-danger"> {{userValid.senha}}</span>
+        </div>
+        <div style="text-align: center;">
+          <button *ngIf="ativarBotao" type="submit" nbButton status="info" ghost>Entrar</button>
+          <button *ngIf="!ativarBotao" nbButton disabled>Fazendo Login...</button>
+        </div>
+      </form>
     </div>
-    <div class="form-group">
-      <label for="senha" class="label">Senha</label>
-      <input type="password" name="senha" ngModel required #senha="ngModel" nbInput fullWidth id="senha"
-        placeholder="Senha" oninput="this.value = this.value.toUpperCase()">
-      <span class="text-danger"> {{userValid.senha}}</span>
+    <div class="col">
+      <div style="text-align: center;"><img style="width:300px;" src="assets/imgs/logo_empresa.png" /></div>
     </div>
-    <div style="text-align: center;">
-      <button *ngIf= "ativarBotao" type="submit" nbButton status="info" ghost>Entrar</button>
-      <button *ngIf= "!ativarBotao" nbButton disabled>Fazendo Login...</button>
-    </div>
-
-  </form>
+  </div>
 </div>

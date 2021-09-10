@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <nb-card>
             <nb-card-header>
-                Prêmio
+                Comissões
             </nb-card-header>
             <nb-card-body *ngIf="comissoesPagasMeses.length < 1">
                 <p> Sem dados de comissões a serem exebidos.</p>
@@ -16,7 +16,8 @@
                             </dxi-column>
                             <dxi-column dataField="valor" caption="Valor" dataType="number" format="currency"
                                 format="#,##0.##"></dxi-column>
-                            <dxi-column dataField="nivel_elegivel_comissao" caption="Nível" dataType="string"></dxi-column>
+                            <dxi-column dataField="nivel_elegivel_comissao" caption="Nível" dataType="string">
+                            </dxi-column>
                             <dxi-column dataField="status" caption="Status" dataType="string"></dxi-column>
                             <dxi-column dataField="descricao" caption="Descrição" dataType="string"></dxi-column>
                             <dxo-master-detail [enabled]="true" template="detail"></dxo-master-detail>

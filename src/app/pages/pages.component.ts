@@ -20,7 +20,7 @@ export class PagesComponent implements OnInit, OnDestroy {
 
   menu: NbMenuItem[] = [
     {
-      title: 'Dashboard de Campanhas',
+      title: 'Produção',
       icon: 'globe-2-outline',
       link: '/pages/dashboard-campanha',
       hidden: (window.sessionStorage.permissao_dashboard_campanha === 'false'),
@@ -36,7 +36,7 @@ export class PagesComponent implements OnInit, OnDestroy {
     },
 
     {
-      title: 'Prêmio',
+      title: 'Comissões',
       icon: 'award-outline',
       link: '/pages/comissoes-pagas',
       hidden: (window.sessionStorage.permissao_comissoes_pagas === 'false'),
