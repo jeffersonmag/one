@@ -20,6 +20,7 @@ import { ConfiguracoesComponent } from './cadastros/configuracoes/configuracoes.
 import { TabelaComissaoComponent } from './tabela-comissao/tabela-comissao.component';
 import { DashboardProducaoComponent } from './dashboard-producao/dashboard-producao.component';
 import { ComissoesPagasComponent } from './comissoes-pagas/comissoes-pagas.component';
+import { ComissoesComponent } from './comissoes/comissoes.component';
 //import { GraficoComponent } from './grafico/grafico.component';
 
 
@@ -92,8 +93,8 @@ const routes: Routes = [{
     },
 
     {
-      path: 'comissoes-pagas',
-      component: ComissoesPagasComponent,
+      path: 'comissoes',
+      component: ComissoesComponent,
     },
 
     {

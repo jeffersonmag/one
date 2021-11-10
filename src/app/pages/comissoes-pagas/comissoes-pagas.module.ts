@@ -22,12 +22,9 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { PipesModule } from '../../pipes/pipes.module';
 import { ComissoesPagasComponent } from './comissoes-pagas.component';
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
-import { NgCircleProgressModule } from 'ng-circle-progress';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { OrderModule } from 'ngx-order-pipe';
 import { DxPivotGridModule, DxButtonModule, DxDataGridModule, DxTemplateModule, DxBulletModule } from 'devextreme-angular';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import config from 'devextreme/core/config';
 import { ComissoesPagasDetalhesComponent } from './comissoes-pagas-detalhes/comissoes-pagas-detalhes.component';
 
 

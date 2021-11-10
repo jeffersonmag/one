@@ -20,6 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { TabelaComissaoModule } from './tabela-comissao/tabela-comissao.module';
 import { ComissoesPagasModule } from './comissoes-pagas/comissoes-pagas.module';
 import { RequestService } from '../services/request.service';
+import { ComissoesComponent } from './comissoes/comissoes.component';
 
 //import { GraficoComponent } from './grafico/grafico.component';
 //import { GraficoModule } from './grafico/grafico.module';
@@ -51,7 +52,6 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     FormsModule,
   ],
   declarations: [
-    PagesComponent,
   ],
   providers:
   [ RequestService ]

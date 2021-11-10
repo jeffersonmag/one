@@ -11,7 +11,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": false,
+            "aot": true,
             "preserveSymlinks": true,
             "outputPath": "dist",
             "index": "src/index.html",
@@ -198,7 +198,7 @@
             "main": "projects/cadastros/src/main.ts",
             "polyfills": "projects/cadastros/src/polyfills.ts",
             "tsConfig": "projects/cadastros/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "projects/cadastros/src/favicon.ico",
               "projects/cadastros/src/assets"
