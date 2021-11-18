@@ -84,7 +84,7 @@ export const customCurrencyMaskConfig = {
   imports: [HttpClientModule,
     NgbToastModule,
     AppRoutingModule,
-    //ThemeModule.forRoot(),
+    ThemeModule.forRoot(),
     FormsModule,
     NbStepperModule,
     NbSidebarModule.forRoot(),
@@ -97,7 +97,7 @@ export const customCurrencyMaskConfig = {
     NbChatModule.forRoot({
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
-    //CoreModule.forRoot(),
+    CoreModule.forRoot(),
     PipesModule,
     HttpClientModule,
     NgbModule,

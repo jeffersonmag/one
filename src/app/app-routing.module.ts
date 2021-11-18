@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { CadastrosApiService } from './api/cadastros';
 import { CampanhasApiService } from './api/campanhas';
+import { ComissoesApiService } from './api/comissoes';
 import { ComissoesPagasApiService } from './api/comissoes-pagas';
 import { DiasUteisPeriodoApiService } from './api/dias-uteis-periodo';
 import { EsteiraProducaoApiService } from './api/esteira-producao';
@@ -42,6 +43,7 @@ const config: ExtraOptions = {
     CampanhasApiService,
     CadastrosApiService,
     ComissoesPagasApiService,
+    ComissoesApiService,
     DiasUteisPeriodoApiService,
     EsteiraProducaoApiService,
     FinanceiroApiService,

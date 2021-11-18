@@ -74,6 +74,10 @@ const routes: Routes = [{
       component: DashboardComponent,
     },
     {
+      path: 'comissoes',
+      component: ComissoesComponent,
+    },
+    {
       path: 'dashboard-campanha',
       component: DashboardCampanhaComponent,
     },
@@ -90,11 +94,6 @@ const routes: Routes = [{
     {
       path: 'esteira-producao',
       component: EsteiraProducaoComponent,
-    },
-
-    {
-      path: 'comissoes',
-      component: ComissoesComponent,
     },
 
     {

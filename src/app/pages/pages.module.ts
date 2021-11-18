@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
-import { NbMenuModule, NbStepperModule, NbProgressBarModule, NbPopoverModule, NbTreeGridModule } from '@nebular/theme';
+import {
+  NbMenuModule, NbStepperModule, NbIconModule, NbProgressBarModule, NbButtonModule,
+  NbTooltipModule, NbPopoverModule, NbTreeGridModule, NbCardModule
+} from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { DashboardModule } from './dashboard/dashboard.module';
@@ -21,6 +24,8 @@ import { TabelaComissaoModule } from './tabela-comissao/tabela-comissao.module';
 import { ComissoesPagasModule } from './comissoes-pagas/comissoes-pagas.module';
 import { RequestService } from '../services/request.service';
 import { ComissoesComponent } from './comissoes/comissoes.component';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NbMomentDateModule } from '@nebular/moment';
 
 //import { GraficoComponent } from './grafico/grafico.component';
 //import { GraficoModule } from './grafico/grafico.module';
@@ -50,11 +55,19 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     CadastrosModule,
     NbDateFnsDateModule.forChild({ format: 'dd/MM/yyyy' }),
     FormsModule,
+    NbCardModule,
+    NgbPaginationModule,
+    NbMomentDateModule,
+    NbIconModule,
+    NbButtonModule,
+    NbTooltipModule
   ],
   declarations: [
+    PagesComponent,
+    ComissoesComponent,
   ],
   providers:
-  [ RequestService ]
+    [RequestService]
 })
 export class PagesModule {
 }

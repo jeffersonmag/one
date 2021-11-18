@@ -1,0 +1,37 @@
+.tabela {
+  width: 100%;
+  max-height: 300px;
+  overflow: auto;
+
+  tr {
+    border-bottom: 1px solid #ccc;
+
+    th,
+    td {
+      padding: 7px;
+    }
+  }
+
+  .active {
+    background: #007bff94;
+  }
+}
+
+.size-fonte {
+  font-size: 11px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.pagination {
+  margin-top: 2em;
+  float: left;
+}
+
+.status_pago {
+  color: #48a868
+}
+
+.status_previsto {
+  color: #e23237
+}

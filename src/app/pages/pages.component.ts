@@ -38,7 +38,7 @@ export class PagesComponent implements OnInit, OnDestroy {
     {
       title: 'Comissões',
       icon: 'award-outline',
-      link: '/pages/comissoes-pagas',
+      link: '/pages/comissoes',
       hidden: (window.sessionStorage.permissao_comissoes_pagas === 'false'),
       home: (window.sessionStorage.permissao_comissoes_pagas === 'false'),
     },

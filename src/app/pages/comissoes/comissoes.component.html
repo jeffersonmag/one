@@ -1,11 +1,52 @@
-<div class="infinite-cards row">
-    <div class="col-md-12">
-        <nb-card>
-            <nb-card-header>
-                Comissões
-            </nb-card-header>
-            <nb-card-body>
-            </nb-card-body>
-        </nb-card>
+<nb-card>
+  <nb-card-header>Comissões</nb-card-header>
+  <nb-card-body>
+    <div class="container">
+      <table class="tabela">
+        <thead>
+          <tr>
+            <th class="text-left">DATA</th>
+            <th class="text-left">CONTA CORRENTE DE CRÉDITO</th>
+            <th class="text-left">UNIDADE</th>
+            <th class="text-left">VALOR</th>
+            <th class="text-left">AÇÕES</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="comissao">
+          <tr *ngFor="let val of comissao | slice: pageSize | slice: 0:itemsPerPage">
+            <td class="size-fonte">
+              {{ val.data_pagamento | slice:0:10 | date: 'dd/MM/yyyy' }}<br>
+              <span *ngIf="val.status == 'Pago'" class="status_pago">{{ val.status | uppercase }}</span>
+              <span *ngIf="val.status == 'Previsto'" class="status_previsto">{{ val.status | uppercase }}</span>
+            </td>
+            <td class="size-fonte">
+              {{ val.nome_banco }}<br>
+              AGÊNCIA: {{ val.agencia }}<span *ngIf="val.digito_agencia != null">-{{ val.digito_agencia }}</span><br>
+              CONTA: {{ val.conta }}<span *ngIf="val.digito_conta != null">-{{ val.digito_conta }}</span><br>
+              FAVORECIDO: {{ val.favorecido }} - {{ val.documento_favorecido }}
+            </td>
+            <td class="size-fonte">
+              {{ val.codigo_loja }}<br>
+              {{ val.nome_loja }}
+            </td>
+            <td class="size-fonte">{{ val.valor | number:'.2-2':'pt' }}</td>
+            <td class="size-fonte">
+              <button nbButton status="info" status="info" ghost size="large" nbTooltip="Download CSV">
+                <nb-icon icon="download-outline" pack="eva" class="flip-icon"
+                  (click)="downloadCSVAnalitico(val.codigo)">
+                </nb-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-</div>
+    <div class="row justify-content-center">
+      <td class="size-font">
+        <ngb-pagination class="pagination" [collectionSize]="comissao.length" #numPages [maxSize]="15"
+          [pageSize]="itemsPerPage" [(page)]="currentPage" (pageChange)="onPageChange(currentPage)">
+        </ngb-pagination>
+      </td>
+    </div>
+  </nb-card-body>
+</nb-card>
