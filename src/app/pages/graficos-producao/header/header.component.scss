@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+
+.vl {
+  border-left: 1.5px solid rgb(138, 135, 135);
+  height: 3rem;
+  opacity: 0.2;
+  margin-left: 1.8rem;
+}
+
+.contain {
+  margin: 0px 2.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.txtT {
+  font-family: "Open Sans";
+  font-size: 1.5rem;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.txtTable {
+  font-family: "Open Sans";
+  font-size: 1.5rem;
+  font-weight: bolder;
+  text-align: center;
+  padding-left: 1.7rem;
+}
+
+.txtT2 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1rem;
+  max-width: 9rem;
+  min-width: 4rem;
+  text-align: center;
+  margin: -20px;
+}
+
+.txtTable2 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1rem;
+  max-width: 9.7rem;
+  min-width: 6rem;
+  text-align: center;
+  padding-left: 1.7rem;
+  margin: -20px;
+}

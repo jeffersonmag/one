@@ -67,6 +67,7 @@
     "@ngx-translate/core": "^12.1.2",
     "@ngx-translate/http-loader": "^4.0.0",
     "@swimlane/ngx-charts": "^13.0.4",
+    "angular-google-charts": "^2.2.2",
     "angular-svg-round-progressbar": "^3.0.1",
     "angular-tree-component": "7.2.0",
     "angular2-chartjs": "0.4.1",

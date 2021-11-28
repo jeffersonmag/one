@@ -28,6 +28,14 @@ export class PagesComponent implements OnInit, OnDestroy {
     },
 
     {
+      title: 'Gráficos de Produção',
+      icon: 'loader-outline',
+      link: '/pages/graficos-producao',
+      hidden: (window.sessionStorage.permissao_dashboard_campanha === 'false'),
+      home: (window.sessionStorage.permissao_dashboard_campanha === 'false'),
+    },
+
+    {
       title: 'Dashboard de Produção',
       icon: 'trending-up-outline',
       link: '/pages/dashboard-producao',

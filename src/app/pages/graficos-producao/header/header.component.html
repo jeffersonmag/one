@@ -1,0 +1,38 @@
+<mat-card>
+  <div class="contain">
+    <table class="table3">
+      <tr>
+        <td class="txtT">{{ diasUteis }}</td>
+        <td class="txtTable">{{ diasUteisRestantes }}</td>
+        <div class="vl"></div>
+        <td class="txtTable">{{ metaTotal | number:'.0-0':'pt' }}</td>
+        <td class="txtTable">{{ realizado | number:'.0-0':'pt' }}</td>
+        <td class="txtTable">{{ projetado | number:'.0-0':'pt' }}</td>
+        <div class="vl"></div>
+        <td class="txtTable">{{ metaDiaria | number:'.0-0':'pt' }}</td>
+        <td class="txtTable">{{ metaDiariaRecalculada | number:'.0-0':'pt' }}</td>
+        <div class="vl"></div>
+        <td class="txtTable">{{ propostas}}</td>
+        <td class="txtTable">{{ clientes }}</td>
+        <td class="txtTable">{{ ticketMedio | number:'.0-0':'pt' }}</td>
+      </tr>
+      <tr>
+        <td class="txtT2">Dias Úteis</td>
+        <td class="txtTable2">Dias Úteis restantes</td>
+        <div class="vl"></div>
+        <td class="txtTable2">Meta Total</td>
+        <td class="txtTable2">Realizado</td>
+        <td class="txtTable2">Projetado</td>
+        <div class="vl"></div>
+        <td class="txtTable2">Meta Diária</td>
+        <td class="txtTable2">Meta Diária Recalculada</td>
+        <div class="vl"></div>
+        <td class="txtTable2">Propostas</td>
+        <td class="txtTable2">Clientes</td>
+        <td class="txtTable2">Ticket Médio</td>
+      </tr>
+    </table>
+  </div>
+</mat-card>
+<!--<mat-progress-bar mode="determinate" [value]="barraProgresso"></mat-progress-bar>-->
+<nb-progress-bar [value]="barraProgresso" status="primary" size="tiny"></nb-progress-bar>

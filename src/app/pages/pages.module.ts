@@ -25,6 +25,8 @@ import { ComissoesPagasModule } from './comissoes-pagas/comissoes-pagas.module';
 import { RequestService } from '../services/request.service';
 import { ComissoesComponent } from './comissoes/comissoes.component';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { GraficosProducaoModule } from './graficos-producao/graficos-producao.module';
+import { GoogleChartsModule } from 'angular-google-charts';
 import { NbMomentDateModule } from '@nebular/moment';
 
 //import { GraficoComponent } from './grafico/grafico.component';
@@ -43,11 +45,13 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     EsteiraProducaoModule,
     TabelaComissaoModule,
     ComissoesPagasModule,
+    GraficosProducaoModule,
     NbStepperModule,
     NbPopoverModule,
     DashboardCampanhaModule,
     DashboardProducaoModule,
     NgIdleKeepaliveModule.forRoot(),
+    GoogleChartsModule.forRoot(),
     NgIdleModule,
     NbProgressBarModule,
     Ng2SmartTableModule,
